@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>IkeMtz</Company>
+    <ProjectGuid>9D63F8C6-E3AF-407D-B4C7-DDCE78F51499</ProjectGuid> 
+    <PackageProjectUrl>https://dev.azure.com/ikemtz/_git/NRSRx</PackageProjectUrl>
+    <PackageLicense>https://dev.azure.com/ikemtz/_git/NRSRx?path=%2FLICENSE&amp;version=GBmaster&amp;fullScreen=true</PackageLicense>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />
+  </ItemGroup>
+</Project>

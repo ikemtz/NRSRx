@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://dev.azure.com/ikemtz/_git/NRSRx</PackageProjectUrl>
+    <RepositoryUrl>https://dev.azure.com/ikemtz/_git/NRSRx</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <ProjectGuid>2E1659A1-57F2-4B37-A1E8-2B25B5183055</ProjectGuid>
+    <Company>IkeMtz</Company>
+    <PackageLicense>https://dev.azure.com/ikemtz/_git/NRSRx?path=/LICENSE&amp;version=GBmaster&amp;fullScreen=true</PackageLicense>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="pub\**" />
+    <EmbeddedResource Remove="pub\**" />
+    <None Remove="pub\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+  </ItemGroup>
+</Project>

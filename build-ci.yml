@@ -1,0 +1,48 @@
+resources:
+- repo: self
+queue:
+  name: Hosted Ubuntu 1604
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+
+    projects: '$(Parameters.RestoreBuildProjects)'
+
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    projects: 'Core/**/*.csproj'
+
+    arguments: '--configuration $(BuildConfiguration)'
+
+
+- task: DotNetCoreCLI@2
+  displayName: Pack
+  inputs:
+    command: pack
+
+    packagesToPack: 'Core/**/*.csproj'
+
+    nobuild: true
+
+
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+
+    projects: '$(Parameters.TestProjects)'
+
+    arguments: '--configuration $(BuildConfiguration)'
+
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+
+

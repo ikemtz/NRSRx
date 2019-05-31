@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- Configurations for data collectors -->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>
+            <!-- Match the public key token of a signed assembly: -->
+            <PublicKeyTokens>
+              <Exclude>
+                <!-- Moq.dll -->
+                <PublicKeyToken>^69f491c39445e920$</PublicKeyToken>
+
+                <!-- Newtonsoft.Json -->
+                <PublicKeyToken>^30ad4fe6b2a6aeed$</PublicKeyToken>
+                
+                <!-- Microsoft.Azure.ServiceBus -->
+                <PublicKeyToken>^7e34167dcc6d6d8c$</PublicKeyToken>
+                
+                <!-- Microsoft.AspNetCore.OData.Versioning.ApiExplorer -->
+                <PublicKeyToken>^adb9793829ddae60</PublicKeyToken>
+
+                <!-- Microsoft.CodeAnalysis.CSharp.Analyzers -->
+                <PublicKeyToken>^31bf3856ad364e35</PublicKeyToken>
+              </Exclude>
+            </PublicKeyTokens>
+            <!-- Match attributes on any code element: -->
+            <Attributes>
+              <Exclude>
+                <!-- Don't forget "Attribute" at the end of the name -->
+                <Attribute>^System\.Diagnostics\.DebuggerHiddenAttribute$</Attribute>
+                <Attribute>^System\.Diagnostics\.DebuggerNonUserCodeAttribute$</Attribute>
+                <Attribute>^System\.Runtime\.CompilerServices.CompilerGeneratedAttribute$</Attribute>
+                <Attribute>^System\.CodeDom\.Compiler.GeneratedCodeAttribute$</Attribute>
+                <Attribute>^System\.Diagnostics\.CodeAnalysis.ExcludeFromCodeCoverageAttribute$</Attribute>
+              </Exclude>
+            </Attributes>
+            <!-- We recommend you do not change the following values: -->
+            <UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
+            <AllowLowIntegrityProcesses>True</AllowLowIntegrityProcesses>
+            <CollectFromChildProcesses>True</CollectFromChildProcesses>
+            <CollectAspDotNet>False</CollectAspDotNet>
+
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+
+    </DataCollectors>
+  </DataCollectionRunSettings>
+
+</RunSettings>
