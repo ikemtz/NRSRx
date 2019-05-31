@@ -1,6 +1,6 @@
 name: 1.$(Year:yy).$(DayOfYear)$(Rev:.rr)
 pool:
-  name: Hosted Ubuntu 1604
+  name: Hosted Windows 2019 with VS2019
 
 steps:
 - task: UseDotNet@2
