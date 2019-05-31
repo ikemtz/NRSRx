@@ -25,8 +25,8 @@ steps:
   inputs:
     command: pack
     packagesToPack: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
-    nobuild: true
+    arguments: '--configuration $(BuildConfiguration) --include-source'
+    nobuild: false
     versioningScheme: byBuildNumber
 
 - task: DotNetCoreCLI@2
