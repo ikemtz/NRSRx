@@ -24,7 +24,8 @@ steps:
   displayName: Pack
   inputs:
     command: pack
-    packagesToPack: '**/*.csproj'
+    packagesToPack: 'src/**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
     nobuild: true
     versioningScheme: byBuildNumber
 
