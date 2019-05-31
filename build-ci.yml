@@ -1,48 +1,41 @@
-resources:
-- repo: self
-queue:
+name: 1.$(Year:yy).$(DayOfYear)$(Rev:.rr)
+pool:
   name: Hosted Ubuntu 1604
 
 steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk 2.x'
+  inputs:
+    version: 2.x
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: restore
-
-    projects: '$(Parameters.RestoreBuildProjects)'
-
+    projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
-    projects: 'Core/**/*.csproj'
-
+    projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
-
 
 - task: DotNetCoreCLI@2
   displayName: Pack
   inputs:
     command: pack
-
-    packagesToPack: 'Core/**/*.csproj'
-
+    packagesToPack: '**/*.csproj'
     nobuild: true
-
+    versioningScheme: byBuildNumber
 
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
-
-    projects: '$(Parameters.TestProjects)'
-
-    arguments: '--configuration $(BuildConfiguration)'
-
+    projects: '**/*[Tt]ests/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
-
-
