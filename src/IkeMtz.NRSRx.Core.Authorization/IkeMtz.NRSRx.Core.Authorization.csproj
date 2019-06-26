@@ -1,12 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <ProjectGuid>1598570D-FF97-41D1-94D6-F0A1E777275A</ProjectGuid>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>
-
 </Project>
