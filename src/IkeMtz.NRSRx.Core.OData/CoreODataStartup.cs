@@ -16,7 +16,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Linq;
-using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
@@ -114,7 +113,6 @@ namespace IkeMtz.NRSRx.Core.OData
                      }
                      SetupMvcOptions(services, options);
                  })
-                 .AddMessagePackFormatters()
                  .AddXmlSerializerFormatters()
                  .AddJsonOptions(opt =>
                  {
