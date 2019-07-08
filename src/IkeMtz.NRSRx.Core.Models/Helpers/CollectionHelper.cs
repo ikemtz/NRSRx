@@ -10,8 +10,8 @@ namespace IkeMtz.NRSRx.Core
     public static void SyncCollections(IEnumerable<Entity> sourceCollection, ICollection<Entity> destinationCollection,
         Action<Entity, Entity> updateLogic = null)
     {
-      var sourceIds = sourceCollection.Select(t => t.Id);
-      var destIds = destinationCollection.Select(t => t.Id);
+      var sourceIds = sourceCollection.Select(t => t.Id).ToList();
+      var destIds = destinationCollection.Select(t => t.Id).ToList();
 
       //Add New Records to destination
       foreach (var dest in sourceCollection.Where(src => !destIds.Contains(src.Id)))
