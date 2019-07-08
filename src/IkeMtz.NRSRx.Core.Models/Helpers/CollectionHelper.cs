@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace IkeMtz.NRSRx.Core.EntityFramework
+namespace IkeMtz.NRSRx.Core
 {
   public static class CollectionHelper<Entity> where Entity : IIdentifiable
   {
@@ -14,23 +14,25 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       var destIds = destinationCollection.Select(t => t.Id);
 
       //Add New Records to destination
-      sourceCollection.Where(src => !destIds.Contains(src.Id)).ToList().ForEach(destinationCollection.Add);
+      foreach (var dest in sourceCollection.Where(src => !destIds.Contains(src.Id)))
+      {
+        destinationCollection.Add(dest);
+      }
 
       //synchronize removed items
-      destIds.Where(dstId => !sourceIds.Contains(dstId))
-          .ToList()
-          .ForEach(dstId => destinationCollection.Remove(destinationCollection.First(dst => dst.Id == dstId)));
+      foreach (var destId in destIds.Where(dstId => !sourceIds.Contains(dstId)))
+      {
+        destinationCollection.Remove(destinationCollection.First(dst => dst.Id == destId));
+      }
 
       //If update record logic has been provided, run it
       if (updateLogic != null)
       {
-        sourceCollection.Where(src => destIds.Contains(src.Id))
-            .ToList()
-            .ForEach(srcItem =>
+        foreach (var srcItem in sourceCollection.Where(src => destIds.Contains(src.Id)))
         {
           var destItem = destinationCollection.First(dst => dst.Id == srcItem.Id);
           updateLogic(srcItem, destItem);
-        });
+        }
       }
     }
   }
