@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Core.Authorization
     private readonly string expandKey = "$expand";
     private readonly string expandClause;
 
-    public ExpandPermissionsFilterAttribute(string[] allowedPermissions, string expandClause, bool allowScopes = true, string permissionClaimType = "permissions", char permissionClaimSeperator = ',', string scopeClaimType = "scope")
+    public ExpandPermissionsFilterAttribute(string[] allowedPermissions, string expandClause, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
      : base(allowedPermissions, allowScopes, permissionClaimType, permissionClaimSeperator, scopeClaimType)
     {
       this.expandClause = expandClause;
@@ -27,13 +27,15 @@ namespace IkeMtz.NRSRx.Core.Authorization
         {
           if (expandKey.Equals(t.Key, StringComparison.InvariantCultureIgnoreCase))
           {
-            return new KeyValuePair<string, StringValues>(t.Key,
-               string.Join(',', t.Value.ToString()
+            var val = string.Join(',', t.Value.ToString()
                .Split(',')
-               .Where(w => !w.Equals(this.expandClause, StringComparison.InvariantCultureIgnoreCase))));
+               .Where(w => !w.Equals(this.expandClause, StringComparison.InvariantCultureIgnoreCase)));
+            return new KeyValuePair<string, StringValues>(t.Key, val);
           }
           return t;
-        }).ToDictionary(x => x.Key, x => x.Value);
+        })
+          .Where(t => !string.IsNullOrWhiteSpace(t.Value.ToString()))
+          .ToDictionary(x => x.Key, x => x.Value);
         ctx.HttpContext.Request.Query = new QueryCollection(collection);
       }
     }

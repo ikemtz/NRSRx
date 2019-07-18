@@ -8,7 +8,7 @@ namespace IkeMtz.NRSRx.Core.Authorization
   public class PermissionsFilterAttribute : BaseActionFilterAttribute
   {
 
-    public PermissionsFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = "permissions", char permissionClaimSeperator = ',', string scopeClaimType = "scope")
+    public PermissionsFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
       : base(allowedPermissions, allowScopes, permissionClaimType, permissionClaimSeperator, scopeClaimType)
     {
     }

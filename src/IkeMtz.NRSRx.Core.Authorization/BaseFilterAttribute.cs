@@ -8,13 +8,15 @@ namespace IkeMtz.NRSRx.Core.Authorization
 {
   public class BaseActionFilterAttribute : ActionFilterAttribute
   {
+    public const string DefaultPermissionClaimType = "permissions";
+    public const string DefaultScopeClaimType = "scope";
     protected readonly string[] allowedPermissions;
     protected readonly string permissionClaimType;
     protected readonly char permissionClaimSeperator;
     protected readonly bool allowScopes;
     protected readonly string scopeClaimType;
 
-    public BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = "permissions", char permissionClaimSeperator = ',', string scopeClaimType = "scope")
+    public BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
     {
       this.allowedPermissions = allowedPermissions;
       this.permissionClaimSeperator = permissionClaimSeperator;
