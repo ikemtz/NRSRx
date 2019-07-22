@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace IkeMtz.NRSRx.Core.Authorization
 {
-  public class BaseActionFilterAttribute : ActionFilterAttribute
+  public abstract class BaseActionFilterAttribute : ActionFilterAttribute
   {
     public const string DefaultPermissionClaimType = "permissions";
     public const string DefaultScopeClaimType = "scope";
@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Core.Authorization
     protected readonly bool allowScopes;
     protected readonly string scopeClaimType;
 
-    public BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
+    public  BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
     {
       this.allowedPermissions = allowedPermissions;
       this.permissionClaimSeperator = permissionClaimSeperator;
@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Core.Authorization
       this.scopeClaimType = scopeClaimType;
     }
 
-    protected bool HasPermission(ActionExecutingContext context)
+    public bool HasPermission(ActionExecutingContext context)
     {
       if (HasMatchingPermissionClaim(permissionClaimType, context.HttpContext.User.Claims, x => JsonConvert.DeserializeObject<string[]>(x)))
       {
@@ -35,10 +35,10 @@ namespace IkeMtz.NRSRx.Core.Authorization
       return allowScopes && HasMatchingPermissionClaim(scopeClaimType, context.HttpContext.User.Claims, x=> x.Split(' '));
     }
 
-    private bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, Func<string, string[]> permissionsSeperator)
+    public bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, Func<string, string[]> permissionsSeperator)
     {
       var claim = claims.FirstOrDefault(f => type.Equals(f?.Type, StringComparison.CurrentCultureIgnoreCase));
-      if (claim != null)
+      if (claim != null && !string.IsNullOrWhiteSpace(claim.Value))
       {
         var userPermissions = permissionsSeperator(claim.Value);
         return userPermissions.Any(a => allowedPermissions.Any(t => a.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
