@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Authorization
     {
       if (!HasPermission(context))
       {
-        var errMsg = string.Format($"Permission {0} filter missing or is missing: { string.Join(',', allowedPermissions)}.", allowScopes ? "/Scope" : "");
+        var errMsg = string.Format($"You do not have one of the required permissions {0}.", string.Join(',', allowedPermissions));
         context.Result = new UnauthorizedObjectResult(errMsg);
       }
     }

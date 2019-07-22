@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,19 +28,19 @@ namespace IkeMtz.NRSRx.Core.Authorization
 
     protected bool HasPermission(ActionExecutingContext context)
     {
-      if (HasMatchingPermissionClaim(permissionClaimType, context.HttpContext.User.Claims, permissionClaimSeperator))
+      if (HasMatchingPermissionClaim(permissionClaimType, context.HttpContext.User.Claims, x => JsonConvert.DeserializeObject<string[]>(x)))
       {
         return true;
       }
-      return allowScopes && HasMatchingPermissionClaim(scopeClaimType, context.HttpContext.User.Claims, ' ');
+      return allowScopes && HasMatchingPermissionClaim(scopeClaimType, context.HttpContext.User.Claims, x=> x.Split(' '));
     }
 
-    private bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, char sepereator)
+    private bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, Func<string, string[]> permissionsSeperator)
     {
       var claim = claims.FirstOrDefault(f => type.Equals(f?.Type, StringComparison.CurrentCultureIgnoreCase));
       if (claim != null)
       {
-        var userPermissions = claim.Value.Split(sepereator).Select(t => t);
+        var userPermissions = permissionsSeperator(claim.Value);
         return userPermissions.Any(a => allowedPermissions.Any(t => a.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
       }
       return false;
