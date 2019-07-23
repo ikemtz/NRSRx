@@ -55,6 +55,17 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
+    public void Permissions_Fail_NoPerms_Test()
+    {
+      var claims = new Claim[] { };
+      var ctx = ActionExecutingContextFactory(claims);
+      var attrib = new PermissionsFilterAttribute(new[] { "v1:w:data", "v2:2:data" });
+      attrib.OnActionExecuting(ctx);
+      Assert.IsInstanceOfType(ctx.Result, typeof(UnauthorizedObjectResult));
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
     public void Permissions_Pass_Many2Many_Test()
     {
       var claims = new[] {
