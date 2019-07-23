@@ -14,6 +14,14 @@ steps:
     command: restore
     projects: '**/*.csproj'
 
+- task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
+  displayName: 'Set Assembly Manifest Data'
+  inputs:
+    VersionNumber: '$(Build.BuildNumber)'
+    FileVersionNumber: '$(Build.BuildNumber)'
+    InformationalVersion: '$(Build.BuildNumber)'
+    PackageVersion: '$(Build.BuildNumber)'
+
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
