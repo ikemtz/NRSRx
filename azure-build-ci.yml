@@ -25,7 +25,7 @@ steps:
   inputs:
     command: pack
     packagesToPack: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --include-source /p:Version=$(Build.BuildNumber)'
+    arguments: '--configuration $(BuildConfiguration) --include-source'
     nobuild: false
     versioningScheme: byBuildNumber
 
