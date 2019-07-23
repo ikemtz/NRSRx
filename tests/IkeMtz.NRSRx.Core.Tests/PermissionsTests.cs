@@ -45,7 +45,8 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Permissions_Fail_Test()
     {
       var claims = new[] {
-        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "[\"v4:w:data\",\"v3:w:data\"]") };
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v4:w:data"),
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v3:w:data") };
       var ctx = ActionExecutingContextFactory(claims);
       var attrib = new PermissionsFilterAttribute(new[] { "v1:w:data", "v2:2:data" });
       attrib.OnActionExecuting(ctx);
@@ -57,7 +58,8 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Permissions_Pass_Many2Many_Test()
     {
       var claims = new[] {
-        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "[\"v1:w:data\",\"v3:w:data\"]") };
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v1:w:data"),
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v3:w:data") };
       var ctx = ActionExecutingContextFactory(claims);
       var attrib = new PermissionsFilterAttribute(new[] { "v1:w:data", "v2:2:data" });
       attrib.OnActionExecuting(ctx);
@@ -69,7 +71,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Permissions_Pass_OneOfMany_Test()
     {
       var claims = new[] {
-        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "[\"v1:w:data\"]") };
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v1:w:data"),
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v4:w:data"),
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v6:w:data")};
       var ctx = ActionExecutingContextFactory(claims);
       var attrib = new PermissionsFilterAttribute(new[] { "v1:w:data", "v2:2:data" });
       attrib.OnActionExecuting(ctx);
@@ -81,7 +85,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Permissions_Pass_Single_Test()
     {
       var claims = new[] {
-        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "[\"v1:w:data\"]") };
+        new Claim(BaseActionFilterAttribute.DefaultPermissionClaimType, "v1:w:data") };
       var ctx = ActionExecutingContextFactory(claims);
       var attrib = new PermissionsFilterAttribute(new[] { "v1:w:data" });
       attrib.OnActionExecuting(ctx);
