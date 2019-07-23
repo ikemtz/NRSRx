@@ -18,14 +18,14 @@ steps:
   displayName: 'dotnet build'
   inputs:
     projects: '**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--configuration $(BuildConfiguration) /p:Version=$(buildNumber)'
 
 - task: DotNetCoreCLI@2
   displayName: Pack
   inputs:
     command: pack
     packagesToPack: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --include-source'
+    arguments: '--configuration $(BuildConfiguration) --include-source /p:Version=$(buildNumber)'
     nobuild: false
     versioningScheme: byBuildNumber
 
