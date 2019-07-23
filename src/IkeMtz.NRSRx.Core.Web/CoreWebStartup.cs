@@ -69,8 +69,8 @@ namespace IkeMtz.NRSRx.Core.Web
       services.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this));
       services.AddSwaggerGen(options =>
       {
-              // add a custom operation filter which sets default values
-              options.OperationFilter<SwaggerDefaultValues>();
+        // add a custom operation filter which sets default values
+        options.OperationFilter<SwaggerDefaultValues>();
         var audiences = GetIdentityAudiences();
         if (audiences != null && audiences.Length != 0)
         {

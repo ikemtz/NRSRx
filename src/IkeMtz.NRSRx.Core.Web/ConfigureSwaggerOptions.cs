@@ -27,9 +27,10 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       this.provider = provider;
       this.apiTitle = startup.MicroServiceTitle;
-      this.buildNumber = startup.StartupAssembly
-        .GetCustomAttribute<AssemblyDescriptionAttribute>()
-        ?.Description ?? "Unknown";
+      this.buildNumber = startup.StartupAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ??
+      startup.StartupAssembly.GetCustomAttribute<AssemblyVersionAttribute>()?.Version ??
+      startup.StartupAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ??
+      "unknown";
     }
 
     /// <inheritdoc />
@@ -49,7 +50,7 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         Title = apiTitle,
         Version = description.ApiVersion.ToString(),
-        Description = $"Build Number: {this.buildNumber}"
+        Description = $"<div style='color:gray;font-weight:bold'>Build #: <span style='font-weight:bolder'>{this.buildNumber}</span></div>"
       };
 
       if (description.IsDeprecated)
