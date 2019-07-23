@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Linq;
+using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
@@ -25,7 +27,9 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       this.provider = provider;
       this.apiTitle = startup.MicroServiceTitle;
-      this.buildNumber = startup.StartupAssembly.GetName().Version.ToString();
+      this.buildNumber = startup.StartupAssembly
+        .GetCustomAttribute<AssemblyDescriptionAttribute>()
+        ?.Description ?? "Unknown";
     }
 
     /// <inheritdoc />
