@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OData.Versioning.ApiExplorer" Version="3.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.OData.Versioning.ApiExplorer" Version="3.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>

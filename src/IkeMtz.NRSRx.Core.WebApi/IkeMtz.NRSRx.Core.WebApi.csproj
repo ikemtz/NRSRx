@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="3.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
     <PackageReference Include="WebApiContrib.Core.Formatter.MessagePack" Version="2.1.0" />
   </ItemGroup>

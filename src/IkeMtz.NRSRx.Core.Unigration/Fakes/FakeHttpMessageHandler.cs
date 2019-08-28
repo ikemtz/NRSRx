@@ -7,10 +7,8 @@ namespace IkeMtz.NRSRx.Core.Unigration.Fakes
 {
   public class FakeHttpMessageHandler : HttpMessageHandler
   {
-    public virtual HttpResponseMessage Send(HttpRequestMessage request)
-    {
-      throw new NotImplementedException("Now we can setup this method with our mocking framework");
-    }
+    public Func<HttpRequestMessage, HttpResponseMessage> ResponseLogic { get; set; }
+    public virtual HttpResponseMessage Send(HttpRequestMessage request) => this.ResponseLogic(request);
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
