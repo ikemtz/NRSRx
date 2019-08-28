@@ -18,13 +18,22 @@ namespace IkeMtz.NRSRx.Core.Unigration.Fakes
       return Task.FromResult(Send(request));
     }
 
-    public HttpResponseMessage HttpJsonResponseFactory(object obj)
+    public static HttpResponseMessage HttpJsonResponseFactory(object obj)
     {
       var msg = new HttpResponseMessage(HttpStatusCode.OK)
       {
         Content = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")
       };
       return msg;
+    }
+
+    public static HttpClient FakeHttpClientFactory(Func<HttpRequestMessage, HttpResponseMessage> responseLogic)
+    {
+      var msgHandler = new FakeHttpMessageHandler()
+      {
+        ResponseLogic = responseLogic,
+      };
+      return new HttpClient(msgHandler);
     }
   }
 }
