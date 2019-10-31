@@ -32,8 +32,13 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
     private readonly QueueClient queueClient;
     public ServiceBusQueuePublisher(IConfiguration configuration)
     {
-      var queueName = $"{getQueueName().Replace("-","")}QueConnStr";
-      queueClient = new QueueClient(configuration.GetValue<string>(queueName), getQueueName(), ReceiveMode.PeekLock);
+      var connectionStringName = $"{getQueueName().Replace("-","")}QueConnStr";
+      var connectionString = configuration.GetValue<string>(connectionStringName);
+      if (string.IsNullOrWhiteSpace(connectionString))
+      {
+        throw new NullReferenceException($"Connection string: ${connectionStringName} value is missing");
+      }
+      queueClient = new QueueClient(connectionString, getQueueName(), ReceiveMode.PeekLock);
     }
 
     public ServiceBusQueuePublisher(string queueConnectionString)
