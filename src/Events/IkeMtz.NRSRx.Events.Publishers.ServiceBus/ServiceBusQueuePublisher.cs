@@ -32,7 +32,8 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
     private readonly QueueClient queueClient;
     public ServiceBusQueuePublisher(IConfiguration configuration)
     {
-      queueClient = new QueueClient(configuration.GetValue<string>($"{getQueueName()}QueConnStr"), getQueueName(), ReceiveMode.PeekLock);
+      var queueName = $"{getQueueName().Replace("-","")}QueConnStr";
+      queueClient = new QueueClient(configuration.GetValue<string>(queueName), getQueueName(), ReceiveMode.PeekLock);
     }
 
     public ServiceBusQueuePublisher(string queueConnectionString)
