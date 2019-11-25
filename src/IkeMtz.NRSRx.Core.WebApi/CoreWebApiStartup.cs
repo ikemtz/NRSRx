@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System;
 using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.WebApi
@@ -23,6 +21,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddControllers();
       SetupLogging(services);
       SetupSwagger(services);
       SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
@@ -33,9 +32,9 @@ namespace IkeMtz.NRSRx.Core.WebApi
           .AddApplicationPart(StartupAssembly);
     }
 
-    public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
-      if (env.IsDevelopment())
+      if (env.EnvironmentName.Equals("Development", StringComparison.CurrentCultureIgnoreCase))
       {
         app.UseDeveloperExceptionPage();
       }
@@ -43,26 +42,19 @@ namespace IkeMtz.NRSRx.Core.WebApi
       {
         app.UseHsts();
       }
-
-      var option = new RewriteOptions();
-      option.AddRedirect("^$", "swagger");
-      app.UseRewriter(option);
-
       app.UseAuthentication()
-          .UseMvc()
-          .UseSwagger()
-          .UseSwaggerUI(options =>
-          {
-            // build a swagger endpoint for each discovered API version
-            foreach (var description in provider.ApiVersionDescriptions)
-            {
-              options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-            }
-
-            options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
-            options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-          })
-          ;
+       .UseSwagger()
+       .UseSwaggerUI(options =>
+       {
+         // build a swagger endpoint for each discovered API version
+         foreach (var description in provider.ApiVersionDescriptions)
+         {
+           options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+         }
+         options.RoutePrefix = string.Empty;
+         options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
+         options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
+       });
     }
 
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
@@ -76,11 +68,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
            })
            .AddMessagePackFormatters()
            .AddXmlSerializerFormatters()
-           .AddJsonOptions(opt =>
-           {
-             opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-             opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-           })
            .SetCompatibilityVersion(CompatibilityVersion.Latest);
       services
           .AddApiVersioning(options =>

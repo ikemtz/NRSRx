@@ -6,8 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -75,17 +76,32 @@ namespace IkeMtz.NRSRx.Core.Web
         if (audiences != null && audiences.Length != 0)
         {
           var audience = audiences.FirstOrDefault();
-          options.AddSecurityDefinition("Bearer", new OAuth2Scheme()
-          {
-            Flow = "implicit",
-            AuthorizationUrl = $"{ Configuration.GetValue<string>("SwaggerIdentityProviderUrl")}authorize?audience={audience}",
 
-            Scopes = SwaggerScopes,
-          });
-          options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+          options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+          {
+            Type = SecuritySchemeType.OAuth2,
+            In = ParameterLocation.Header,
+            Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+            Scheme = JwtBearerDefaults.AuthenticationScheme,
+            Flows = new OpenApiOAuthFlows
+            {
+              Implicit = new OpenApiOAuthFlow
               {
-                        { "Bearer", new string[] { } }
-              });
+                AuthorizationUrl = new Uri($"{Configuration.GetValue<string>("SwaggerIdentityProviderUrl")}authorize?audience={audience}"),
+                Scopes = SwaggerScopes,
+              },
+            }
+          });
+          options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme}
+                        },
+                       Array.Empty<string>()
+                    }
+                });
         }
       });
     }

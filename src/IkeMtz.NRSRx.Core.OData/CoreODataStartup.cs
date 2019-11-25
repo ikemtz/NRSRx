@@ -12,8 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Linq;
 
@@ -37,9 +35,9 @@ namespace IkeMtz.NRSRx.Core.OData
           .AddApplicationPart(StartupAssembly);
     }
 
-    public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
-      if (env.IsDevelopment())
+      if (env.EnvironmentName.Equals("Development", StringComparison.CurrentCultureIgnoreCase))
       {
         app.UseDeveloperExceptionPage();
       }
@@ -114,11 +112,7 @@ namespace IkeMtz.NRSRx.Core.OData
              SetupMvcOptions(services, options);
            })
            .AddXmlSerializerFormatters()
-           .AddJsonOptions(opt =>
-           {
-             opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-             opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-           })
+      
            .SetCompatibilityVersion(CompatibilityVersion.Latest);
     }
   }
