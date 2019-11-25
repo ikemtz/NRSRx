@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       _httpContextAccessor = httpContextAccessor;
     }
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
       CalculateValues();
       AddAuditables();

@@ -32,18 +32,18 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
     private readonly QueueClient queueClient;
     public ServiceBusQueuePublisher(IConfiguration configuration)
     {
-      var connectionStringName = $"{getQueueName().Replace("-","")}QueConnStr";
+      var connectionStringName = $"{GetQueueName().Replace("-","")}QueConnStr";
       var connectionString = configuration.GetValue<string>(connectionStringName);
       if (string.IsNullOrWhiteSpace(connectionString))
       {
         throw new NullReferenceException($"Connection string: ${connectionStringName} value is missing");
       }
-      queueClient = new QueueClient(connectionString, getQueueName(), ReceiveMode.PeekLock);
+      queueClient = new QueueClient(connectionString, GetQueueName(), ReceiveMode.PeekLock);
     }
 
     public ServiceBusQueuePublisher(string queueConnectionString)
     {
-      queueClient = new QueueClient(queueConnectionString, getQueueName(), ReceiveMode.PeekLock);
+      queueClient = new QueueClient(queueConnectionString, GetQueueName(), ReceiveMode.PeekLock);
     }
 
     public Task PublishAsync(Entity payload, Action<Message> messageCustomizationLogic = null)
@@ -55,7 +55,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
       return queueClient.SendAsync(msg);
     }
 
-    private string getQueueName()
+    private string GetQueueName()
     {
       var eventType = new Event();
       return $"{typeof(Entity).Name}{eventType.EventSuffix}";
