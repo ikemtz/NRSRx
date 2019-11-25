@@ -11,7 +11,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 
   public class CollectionUpdater<Entity, IdentityType> where Entity : IIdentifiable<IdentityType>
   {
-    private readonly static List<PropertyInfo> entityProperties = typeof(Entity).GetProperties().Where(t => !t.Name.Equals("Id")).ToList();
+    private readonly static List<PropertyInfo> entityProperties = typeof(Entity).GetProperties().Where(t => !t.Name.Equals("Id") && t.CanWrite).ToList();
     public void Update(ICollection<Entity> sourceCollection, ICollection<Entity> targetCollection)
     {
       sourceCollection.ToList().ForEach(sourceEntity =>
