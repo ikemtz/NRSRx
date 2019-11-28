@@ -6,7 +6,7 @@ steps:
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk 3.x'
   inputs:
-    version: 3.0.1
+    version: 3.0.101
 
 - task: DotNetCoreCLI@2
   displayName: Restore
