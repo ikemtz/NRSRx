@@ -31,15 +31,21 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
   where Event : EventType, new()
   {
     private readonly QueueClient queueClient;
+    private readonly JsonSerializerSettings jsonSerializerSettings;
     public ServiceBusQueuePublisher(IConfiguration configuration)
     {
-      var connectionStringName = $"{GetQueueName().Replace("-","")}QueConnStr";
+      var connectionStringName = $"{GetQueueName().Replace("-", "")}QueConnStr";
       var connectionString = configuration.GetValue<string>(connectionStringName);
       if (string.IsNullOrWhiteSpace(connectionString))
       {
         throw new NullReferenceException($"Connection string: ${connectionStringName} value is missing");
       }
       queueClient = new QueueClient(connectionString, GetQueueName(), ReceiveMode.PeekLock);
+      jsonSerializerSettings = new JsonSerializerSettings()
+      {
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+      };
     }
 
     public ServiceBusQueuePublisher(string queueConnectionString)
@@ -49,11 +55,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 
     public Task PublishAsync(Entity payload, Action<Message> messageCustomizationLogic = null)
     {
-      var json = JsonConvert.SerializeObject(payload, new JsonSerializerSettings()
-      {
-        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-      });
+      var json = JsonConvert.SerializeObject(payload, jsonSerializerSettings);
       var buffer = Encoding.UTF8.GetBytes(json);
       var msg = new Message(buffer);
       messageCustomizationLogic?.Invoke(msg);
