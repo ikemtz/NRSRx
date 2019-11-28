@@ -3,6 +3,7 @@ using IkeMtz.NRSRx.Core.Models;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,11 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 
     public Task PublishAsync(Entity payload, Action<Message> messageCustomizationLogic = null)
     {
-      var json = JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings);
+      var json = JsonConvert.SerializeObject(payload, new JsonSerializerSettings()
+      {
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+      });
       var buffer = Encoding.UTF8.GetBytes(json);
       var msg = new Message(buffer);
       messageCustomizationLogic?.Invoke(msg);
