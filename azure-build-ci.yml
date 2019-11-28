@@ -3,7 +3,7 @@ pool:
   name: Hosted Windows 2019 with VS2019
 
 steps:
-- task: UseDotNet@1
+- task: UseDotNet@2
   displayName: 'Use .NET Core sdk 3.x'
   inputs:
     version: 3.0.1
