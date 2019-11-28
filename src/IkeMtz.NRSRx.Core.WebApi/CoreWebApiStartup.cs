@@ -21,7 +21,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddControllers();
       SetupLogging(services);
       SetupSwagger(services);
       SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
@@ -29,7 +28,9 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
       SetupCoreEndpointFunctionality(services)
-          .AddApplicationPart(StartupAssembly);
+         .AddApplicationPart(StartupAssembly)
+         .AddControllersAsServices();
+      services.AddControllers();
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
@@ -42,6 +43,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       {
         app.UseHsts();
       }
+      app.UseRouting();
       app.UseAuthentication()
        .UseSwagger()
        .UseSwaggerUI(options =>
@@ -55,6 +57,10 @@ namespace IkeMtz.NRSRx.Core.WebApi
          options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
          options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
        });
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
     }
 
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
@@ -74,7 +80,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
           {
             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
             options.ReportApiVersions = true;
-
             options.ApiVersionReader = new UrlSegmentApiVersionReader();
           })
           .AddVersionedApiExplorer(options =>

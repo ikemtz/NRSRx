@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <Description>Sample ASP.NET Core WebApi REST Service</Description>
+    <AssemblyVersion>7.7.7.7</AssemblyVersion>
+    <FileVersion>6.6.6.6</FileVersion>
+    <UserSecretsId>97c33e60-6130-4b0e-b6b2-2de949afa442</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
+  </ItemGroup>
+
+</Project>
