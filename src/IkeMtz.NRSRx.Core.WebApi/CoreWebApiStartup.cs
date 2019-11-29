@@ -45,6 +45,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       }
       app.UseRouting();
       app.UseAuthentication()
+       .UseAuthorization()
        .UseSwagger()
        .UseSwaggerUI(options =>
        {
