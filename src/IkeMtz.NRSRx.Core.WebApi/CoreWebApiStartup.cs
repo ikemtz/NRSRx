@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
-using System;
 using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.WebApi
@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
-      if (env.EnvironmentName.Equals("Development", StringComparison.CurrentCultureIgnoreCase))
+      if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }

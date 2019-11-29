@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData;
 using System;
@@ -37,7 +37,7 @@ namespace IkeMtz.NRSRx.Core.OData
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
-      if (env.EnvironmentName.Equals("Development", StringComparison.CurrentCultureIgnoreCase))
+      if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }
@@ -46,11 +46,8 @@ namespace IkeMtz.NRSRx.Core.OData
         app.UseHsts();
       }
 
-      var option = new RewriteOptions();
-      option.AddRedirect("^$", "swagger");
-      app.UseRewriter(option);
-
       app.UseAuthentication()
+          .UseAuthorization()
           .UseSwagger()
           .UseSwaggerUI(options =>
           {
@@ -58,6 +55,7 @@ namespace IkeMtz.NRSRx.Core.OData
             {
               options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
             }
+            options.RoutePrefix = string.Empty;
             options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
             options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
           });
@@ -84,7 +82,8 @@ namespace IkeMtz.NRSRx.Core.OData
       services.AddApiVersioning(options => options.ReportApiVersions = true);
 
       services
-          .AddOData().EnableApiVersioning();
+          .AddOData()
+          .EnableApiVersioning();
       services.AddODataApiExplorer(
           options =>
           {
@@ -112,7 +111,7 @@ namespace IkeMtz.NRSRx.Core.OData
              SetupMvcOptions(services, options);
            })
            .AddXmlSerializerFormatters()
-      
+
            .SetCompatibilityVersion(CompatibilityVersion.Latest);
     }
   }

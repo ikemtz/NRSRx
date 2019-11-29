@@ -1,17 +1,18 @@
-using IkeMtz.NRSRx.Core.WebApi;
+using IkeMtz.NRSRx.Core.OData;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
-namespace IkeMtz.NRSRx.Core.TestWebApp
+namespace IkeMtz.NRSRx.Core.Tests.OData
 {
-  public class Startup : CoreWebApiStartup
+  public class Startup : CoreODataStartup
   {
-    public Startup(IConfiguration configuration) : base(configuration)
-    {
-    }
 
     public override string MicroServiceTitle => "Test WebApi Application";
 
     public override Assembly StartupAssembly => this.GetType().Assembly;
+
+    public Startup(IConfiguration configuration) : base(configuration)
+    {
+    }
   }
 }
