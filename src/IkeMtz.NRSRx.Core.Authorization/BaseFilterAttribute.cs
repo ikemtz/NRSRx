@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Authorization
     protected readonly bool allowScopes;
     protected readonly string scopeClaimType;
 
-    public BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
+    protected BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
     {
       this.allowedPermissions = allowedPermissions;
       this.permissionClaimSeperator = permissionClaimSeperator;

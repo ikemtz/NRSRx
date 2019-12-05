@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://dev.azure.com/ikemtz/_git/NRSRx</PackageProjectUrl>
     <RepositoryUrl>https://dev.azure.com/ikemtz/_git/NRSRx</RepositoryUrl>
