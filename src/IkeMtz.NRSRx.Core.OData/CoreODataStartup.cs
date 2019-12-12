@@ -58,7 +58,6 @@ namespace IkeMtz.NRSRx.Core.OData
             options.RoutePrefix = string.Empty;
             options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
             options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-            options.RoutePrefix = string.Empty;
           });
 
       var models = modelBuilder.GetEdmModels().ToList();
