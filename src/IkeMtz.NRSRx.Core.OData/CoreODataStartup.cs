@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
@@ -48,10 +47,6 @@ namespace IkeMtz.NRSRx.Core.OData
         app.UseHsts();
       }
 
-      var option = new RewriteOptions();
-      option.AddRedirect("^$", "swagger");
-      app.UseRewriter(option);
-
       app.UseAuthentication()
           .UseSwagger()
           .UseSwaggerUI(options =>
@@ -62,6 +57,7 @@ namespace IkeMtz.NRSRx.Core.OData
             }
             options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
             options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
+            options.RoutePrefix = string.Empty;
           });
 
       var models = modelBuilder.GetEdmModels().ToList();

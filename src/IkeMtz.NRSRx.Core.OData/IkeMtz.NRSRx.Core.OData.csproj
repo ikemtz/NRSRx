@@ -16,7 +16,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.OData.Versioning.ApiExplorer" Version="3.2.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />

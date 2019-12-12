@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
@@ -44,10 +43,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
         app.UseHsts();
       }
 
-      var option = new RewriteOptions();
-      option.AddRedirect("^$", "swagger");
-      app.UseRewriter(option);
-
       app.UseAuthentication()
           .UseMvc()
           .UseSwagger()
@@ -61,6 +56,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
 
             options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
             options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
+            options.RoutePrefix = string.Empty;
           })
           ;
     }
