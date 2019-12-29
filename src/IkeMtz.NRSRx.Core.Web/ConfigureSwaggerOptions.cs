@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
@@ -43,9 +43,9 @@ namespace IkeMtz.NRSRx.Core.Web
       }
     }
 
-    private Info CreateInfoForApiVersion(ApiVersionDescription description)
+    private OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
     {
-      var info = new Info()
+      var info = new OpenApiInfo()
       {
         Title = apiTitle,
         Version = description.ApiVersion.ToString(),

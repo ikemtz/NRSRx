@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Core.TestWebApp
     {
     }
 
-    public override string MicroServiceTitle => "Test Web Application";
+    public override string MicroServiceTitle => "Test WebApi Application";
 
     public override Assembly StartupAssembly => this.GetType().Assembly;
   }

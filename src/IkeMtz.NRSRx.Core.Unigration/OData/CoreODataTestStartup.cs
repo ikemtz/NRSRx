@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       base.SetupMiscDependencies(services);
     }
 
-    public override void Configure(IApplicationBuilder app, IHostingEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
+    public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
       modelBuilder.ModelConfigurations.Add(new ModelConfiguration());
       TestContext = app.ApplicationServices.GetService<TestContext>();

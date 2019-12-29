@@ -5,14 +5,12 @@ using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNet.OData.Formatter.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Linq;
 
@@ -36,7 +34,7 @@ namespace IkeMtz.NRSRx.Core.OData
           .AddApplicationPart(StartupAssembly);
     }
 
-    public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
       if (env.IsDevelopment())
       {
@@ -48,6 +46,7 @@ namespace IkeMtz.NRSRx.Core.OData
       }
 
       app.UseAuthentication()
+          .UseAuthorization()
           .UseSwagger()
           .UseSwaggerUI(options =>
           {
@@ -55,9 +54,9 @@ namespace IkeMtz.NRSRx.Core.OData
             {
               options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
             }
+            options.RoutePrefix = string.Empty;
             options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
             options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-            options.RoutePrefix = string.Empty;
           });
 
       var models = modelBuilder.GetEdmModels().ToList();
@@ -81,8 +80,6 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       services.AddApiVersioning(options => options.ReportApiVersions = true);
 
-      services
-          .AddOData().EnableApiVersioning();
       services.AddODataApiExplorer(
           options =>
           {
@@ -94,7 +91,7 @@ namespace IkeMtz.NRSRx.Core.OData
             // can also be used to control the format of the API version in route templates
             options.SubstituteApiVersionInUrl = true;
           });
-      return services
+      var mvcBuilder = services
            .AddMvc(options =>
            {
              options.EnableEndpointRouting = false;
@@ -108,14 +105,12 @@ namespace IkeMtz.NRSRx.Core.OData
                inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
              }
              SetupMvcOptions(services, options);
-           })
-           .AddXmlSerializerFormatters()
-           .AddJsonOptions(opt =>
-           {
-             opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-             opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-           })
-           .SetCompatibilityVersion(CompatibilityVersion.Latest);
+           });
+
+      services
+          .AddOData()
+          .EnableApiVersioning();
+      return mvcBuilder;
     }
   }
 }

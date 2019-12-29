@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.WebApi
@@ -29,10 +28,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
       SetupCoreEndpointFunctionality(services)
-          .AddApplicationPart(StartupAssembly);
+         .AddApplicationPart(StartupAssembly)
+         .AddControllersAsServices();
+      services.AddControllers();
     }
 
-    public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
       if (env.IsDevelopment())
       {
@@ -42,23 +43,25 @@ namespace IkeMtz.NRSRx.Core.WebApi
       {
         app.UseHsts();
       }
-
+      app.UseRouting();
       app.UseAuthentication()
-          .UseMvc()
-          .UseSwagger()
-          .UseSwaggerUI(options =>
-          {
-            // build a swagger endpoint for each discovered API version
-            foreach (var description in provider.ApiVersionDescriptions)
-            {
-              options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-            }
-
-            options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
-            options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-            options.RoutePrefix = string.Empty;
-          })
-          ;
+       .UseAuthorization()
+       .UseSwagger()
+       .UseSwaggerUI(options =>
+       {
+         // build a swagger endpoint for each discovered API version
+         foreach (var description in provider.ApiVersionDescriptions)
+         {
+           options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+         }
+         options.RoutePrefix = string.Empty;
+         options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
+         options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
+       });
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
     }
 
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
@@ -72,18 +75,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
            })
            .AddMessagePackFormatters()
            .AddXmlSerializerFormatters()
-           .AddJsonOptions(opt =>
-           {
-             opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-             opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-           })
            .SetCompatibilityVersion(CompatibilityVersion.Latest);
       services
           .AddApiVersioning(options =>
           {
             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
             options.ReportApiVersions = true;
-
             options.ApiVersionReader = new UrlSegmentApiVersionReader();
           })
           .AddVersionedApiExplorer(options =>

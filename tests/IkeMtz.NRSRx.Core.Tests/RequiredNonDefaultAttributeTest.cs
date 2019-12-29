@@ -62,7 +62,6 @@ namespace IkeMtz.NRSRx.Core.Tests
 
         [TestMethod]
         [TestCategory("Unigration")]
-
         public async Task ValidateSuccess()
         {
             using (var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>()))
