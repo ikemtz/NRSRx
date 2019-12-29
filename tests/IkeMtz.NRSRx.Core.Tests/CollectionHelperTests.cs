@@ -1,8 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -19,7 +17,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         dest.Value = src.Value;
       });
-      Assert.AreEqual(2, destList.Count());
+      Assert.AreEqual(2, destList.Count);
     }
 
     [TestMethod]
@@ -32,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         dest.Value = src.Value;
       });
-      Assert.AreEqual(2, destList.Count());
+      Assert.AreEqual(2, destList.Count);
     }
   }
 }
