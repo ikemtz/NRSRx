@@ -7,10 +7,13 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryType>Git</RepositoryType>
     <Company>IkeMtz</Company>
-    <RepositoryUrl>https://github.com/ikemtz/NRSRx</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ikemtz/NRSRx.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/ikemtz/NRSRx</PackageProjectUrl>
     <PackageLicense>https://raw.githubusercontent.com/ikemtz/NRSRx/master/LICENSE</PackageLicense>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CA1000</NoWarn>
