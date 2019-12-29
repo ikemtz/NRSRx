@@ -2,9 +2,22 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ProjectGuid>1598570D-FF97-41D1-94D6-F0A1E777275A</ProjectGuid>
+    
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>Git</RepositoryType>
+    <Company>IkeMtz</Company>
+    <RepositoryUrl>https://github.com/ikemtz/NRSRx</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ikemtz/NRSRx</PackageProjectUrl>
+    <PackageLicense>https://raw.githubusercontent.com/ikemtz/NRSRx/master/LICENSE</PackageLicense>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

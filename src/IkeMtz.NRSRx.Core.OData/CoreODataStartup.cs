@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace IkeMtz.NRSRx.Core.OData
@@ -34,6 +35,8 @@ namespace IkeMtz.NRSRx.Core.OData
           .AddApplicationPart(StartupAssembly);
     }
 
+    [SuppressMessage("Design", "CA1062:Validate arguments of public methods",
+      Justification = "VersionedODataModelBuilder is provided by the OData API version library.")]
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
       if (env.IsDevelopment())

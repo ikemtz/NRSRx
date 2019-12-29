@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace IkeMtz.NRSRx.Core.Models
 {
@@ -6,9 +6,9 @@ namespace IkeMtz.NRSRx.Core.Models
     {
     }
 
-    public interface IIdentifiable<out IdentityType>
+    public interface IIdentifiable<out TIdentityType>
     {
-        IdentityType Id { get; }
+        TIdentityType Id { get; }
     }
 }
 

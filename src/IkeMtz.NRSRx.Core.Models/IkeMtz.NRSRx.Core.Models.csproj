@@ -1,13 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://dev.azure.com/ikemtz/_git/NRSRx</PackageProjectUrl>
-    <RepositoryUrl>https://dev.azure.com/ikemtz/_git/NRSRx</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
     <ProjectGuid>2E1659A1-57F2-4B37-A1E8-2B25B5183055</ProjectGuid>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>Git</RepositoryType>
     <Company>IkeMtz</Company>
-    <PackageLicense>https://dev.azure.com/ikemtz/_git/NRSRx?path=/LICENSE&amp;version=GBmaster&amp;fullScreen=true</PackageLicense>
+    <RepositoryUrl>https://github.com/ikemtz/NRSRx</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ikemtz/NRSRx</PackageProjectUrl>
+    <PackageLicense>https://raw.githubusercontent.com/ikemtz/NRSRx/master/LICENSE</PackageLicense>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CA1000</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="pub\**" />
@@ -15,6 +21,14 @@
     <None Remove="pub\**" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />

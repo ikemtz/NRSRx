@@ -9,6 +9,9 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 end_of_line = lf
 
+# S3925: "ISerializable" should be implemented correctly
+dotnet_diagnostic.S3925.severity = none
+
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false

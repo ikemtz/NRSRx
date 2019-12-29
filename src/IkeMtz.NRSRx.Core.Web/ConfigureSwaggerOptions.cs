@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.Web
@@ -24,6 +25,10 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="provider">The <see cref="IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
     public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, CoreWebStartup startup)
     {
+      if (startup == null)
+      {
+        throw new ArgumentNullException(nameof(startup));
+      }
       this.provider = provider;
       this.apiTitle = startup.MicroServiceTitle;
       this.buildNumber = startup.StartupAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ??

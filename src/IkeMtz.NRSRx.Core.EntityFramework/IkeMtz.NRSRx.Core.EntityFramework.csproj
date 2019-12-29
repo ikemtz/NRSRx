@@ -1,13 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://dev.azure.com/ikemtz/_git/NRSRx</PackageProjectUrl>
-    <RepositoryUrl>https://dev.azure.com/ikemtz/_git/NRSRx</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
     <ProjectGuid>00E643EF-9E58-48FA-9FB9-4736B272DA4B</ProjectGuid>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>Git</RepositoryType>
     <Company>IkeMtz</Company>
-    <PackageLicense>https://dev.azure.com/ikemtz/_git/NRSRx?path=/LICENSE&amp;version=GBmaster&amp;fullScreen=true</PackageLicense>
+    <RepositoryUrl>https://github.com/ikemtz/NRSRx</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ikemtz/NRSRx</PackageProjectUrl>
+    <PackageLicense>https://raw.githubusercontent.com/ikemtz/NRSRx/master/LICENSE</PackageLicense>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="pub\**" />
@@ -16,7 +19,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />

@@ -5,11 +5,19 @@ using System.Linq;
 
 namespace IkeMtz.NRSRx.Core
 {
-  public static class CollectionHelper<Entity> where Entity : IIdentifiable
+  public static class CollectionHelper<TEntity> where TEntity : IIdentifiable
   {
-    public static void SyncCollections(IEnumerable<Entity> sourceCollection, ICollection<Entity> destinationCollection,
-        Action<Entity, Entity> updateLogic = null)
+    public static void SyncCollections(IEnumerable<TEntity> sourceCollection, ICollection<TEntity> destinationCollection,
+        Action<TEntity, TEntity> updateLogic = null)
     {
+      if (sourceCollection == null)
+      {
+        throw new ArgumentNullException(nameof(sourceCollection));
+      }
+      else if (destinationCollection == null)
+      {
+        throw new ArgumentNullException(nameof(destinationCollection));
+      }
       var sourceIds = sourceCollection.Select(t => t.Id).ToList();
       var destIds = destinationCollection.Select(t => t.Id).ToList();
 

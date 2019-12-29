@@ -1,57 +1,66 @@
-﻿using IkeMtz.NRSRx.Core.Models;
+using IkeMtz.NRSRx.Core.Models;
 using Microsoft.AspNet.OData.Builder;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
-    public class ODataConfigurationBuilder<Entity>
-      : ODataConfigurationBuilder<Entity, Guid> where Entity : class, IIdentifiable<Guid>
+  public class ODataConfigurationBuilder<TEntity>
+    : ODataConfigurationBuilder<TEntity, Guid> where TEntity : class, IIdentifiable<Guid>
+  {
+  }
+
+#pragma warning disable CA1052 // Static holder types should be Static or NotInheritable
+#pragma warning disable S1118 // Utility classes should not have public constructors
+  public class ODataConfigurationBuilder<TEntity, TIdentifiableType> where TEntity : class, IIdentifiable<TIdentifiableType>
+#pragma warning restore S1118 // Utility classes should not have public constructors
+#pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
+  {
+    private const string DATE_SUFFIX = "Date";
+    public static EntitySetConfiguration<TEntity> EntitySetBuilder(ODataModelBuilder builder, string setName = null)
     {
+      if (builder == null)
+      {
+        throw new ArgumentNullException(nameof(builder));
+      }
+      if (string.IsNullOrWhiteSpace(setName))
+      {
+        // Need to pluralize the entity name
+        setName = $"{typeof(TEntity).Name}s";
+      }
+
+      var set = builder.EntitySet<TEntity>(setName);
+      TransformEntityEdmDates(set.EntityType);
+      return set;
     }
 
-    public class ODataConfigurationBuilder<Entity, IdentifiableType> where Entity : class, IIdentifiable<IdentifiableType>
+    private static void TransformEntityEdmDates(EntityTypeConfiguration<TEntity> config)
     {
-        private const string DATE_SUFFIX = "Date";
-        public static EntitySetConfiguration<Entity> EntitySetBuilder(ODataModelBuilder builder, string setName = null)
-        {
-            if (string.IsNullOrWhiteSpace(setName))
-            {
-                // Need to pluralize the entity name
-                setName = $"{typeof(Entity).Name}s";
-            }
+      var entityParam = Expression.Parameter(typeof(TEntity), nameof(TEntity).ToLower(CultureInfo.CurrentCulture));
+      var entityProperties = typeof(TEntity).GetProperties()
+          .Where(propertyInfo => propertyInfo.Name.EndsWith(DATE_SUFFIX, StringComparison.CurrentCultureIgnoreCase));
 
-            var set = builder.EntitySet<Entity>(setName);
-            TransformEntityEdmDates(set.EntityType);
-            return set;
-        }
+      var dateType = typeof(DateTime);
+      entityProperties.Where(propertyInfo => dateType == propertyInfo.PropertyType)
+         .ToList()
+         .ForEach(propertyInfo =>
+         {
+           var propertyExpression = Expression.Property(entityParam, propertyInfo);
+           var dateLambda = Expression.Lambda<Func<TEntity, DateTime>>(propertyExpression, new[] { entityParam });
+           config.Property(dateLambda).AsDate();
+         });
 
-        private static void TransformEntityEdmDates(EntityTypeConfiguration<Entity> config)
-        {
-            var entityParam = Expression.Parameter(typeof(Entity), nameof(Entity).ToLower());
-            var entityProperties = typeof(Entity).GetProperties()
-                .Where(propertyInfo => propertyInfo.Name.EndsWith(DATE_SUFFIX));
-
-            var dateType = typeof(DateTime);
-            entityProperties.Where(propertyInfo => dateType == propertyInfo.PropertyType)
-               .ToList()
-               .ForEach(propertyInfo =>
-               {
-                   var propertyExpression = Expression.Property(entityParam, propertyInfo);
-                   var dateLambda = Expression.Lambda<Func<Entity, DateTime>>(propertyExpression, new[] { entityParam });
-                   config.Property(dateLambda).AsDate();
-               });
-
-            dateType = typeof(DateTime?);
-            entityProperties.Where(propertyInfo => dateType == propertyInfo.PropertyType)
-            .ToList()
-            .ForEach(propertyInfo =>
-            {
-                var propertyExpression = Expression.Property(entityParam, propertyInfo);
-                var dateLambda = Expression.Lambda<Func<Entity, DateTime?>>(propertyExpression, new[] { entityParam });
-                config.Property(dateLambda).AsDate();
-            });
-        }
+      dateType = typeof(DateTime?);
+      entityProperties.Where(propertyInfo => dateType == propertyInfo.PropertyType)
+      .ToList()
+      .ForEach(propertyInfo =>
+      {
+        var propertyExpression = Expression.Property(entityParam, propertyInfo);
+        var dateLambda = Expression.Lambda<Func<TEntity, DateTime?>>(propertyExpression, new[] { entityParam });
+        config.Property(dateLambda).AsDate();
+      });
     }
+  }
 }

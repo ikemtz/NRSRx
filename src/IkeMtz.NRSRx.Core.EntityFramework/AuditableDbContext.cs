@@ -10,11 +10,11 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public class AuditableDbContext : DbContext, IAuditableDbContext
   {
-    protected readonly IHttpContextAccessor _httpContextAccessor;
+    protected  IHttpContextAccessor HttpContextAccessor { get; }
     public AuditableDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor)
         : base(options)
     {
-      _httpContextAccessor = httpContextAccessor;
+      HttpContextAccessor = httpContextAccessor;
     }
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     private void AddAuditables()
     {
       var entities = ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Added));
-      var currentUsername = _httpContextAccessor.HttpContext.User.Identity.Name;
+      var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
 
       foreach (var auditable in entities
           .Select(t => t.Entity as IAuditable)
@@ -69,7 +69,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     private void UpdateAuditables()
     {
       var entities = ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Modified));
-      var currentUsername = _httpContextAccessor.HttpContext.User.Identity.Name;
+      var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
 
       foreach (var auditable in entities
          .Select(t => t.Entity as IAuditable)

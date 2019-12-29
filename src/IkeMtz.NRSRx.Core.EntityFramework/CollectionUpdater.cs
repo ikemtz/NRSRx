@@ -6,13 +6,13 @@ using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
-  public class CollectionUpdater<Entity> : CollectionUpdater<Entity, Guid> where Entity : IIdentifiable<Guid>
+  public class CollectionUpdater<TEntity> : CollectionUpdater<TEntity, Guid> where TEntity : IIdentifiable<Guid>
   { }
 
-  public class CollectionUpdater<Entity, IdentityType> where Entity : IIdentifiable<IdentityType>
+  public class CollectionUpdater<TEntity, TIdentityType> where TEntity : IIdentifiable<TIdentityType>
   {
-    private readonly static List<PropertyInfo> entityProperties = typeof(Entity).GetProperties().Where(t => !t.Name.Equals("Id") && t.CanWrite).ToList();
-    public void Update(ICollection<Entity> sourceCollection, ICollection<Entity> targetCollection)
+    private readonly static List<PropertyInfo> entityProperties = typeof(TEntity).GetProperties().Where(t => !t.Name.Equals("Id", StringComparison.OrdinalIgnoreCase) && t.CanWrite).ToList();
+    public void Update(ICollection<TEntity> sourceCollection, ICollection<TEntity> targetCollection)
     {
       sourceCollection.ToList().ForEach(sourceEntity =>
       {

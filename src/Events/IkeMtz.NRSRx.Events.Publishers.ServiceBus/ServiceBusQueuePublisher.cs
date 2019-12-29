@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 {
-  public class ServiceBusQueuePublisher<Entity, Event> :
-      ServiceBusQueuePublisher<Entity, Event, Guid>,
-      IPublisher<Entity, Event, Message>
-   where Entity : IIdentifiable<Guid>
-   where Event : EventType, new()
+  public class ServiceBusQueuePublisher<TEntity, TEvent> :
+      ServiceBusQueuePublisher<TEntity, TEvent, Guid>,
+      IPublisher<TEntity, TEvent, Message>
+   where TEntity : IIdentifiable<Guid>
+   where TEvent : EventType, new()
   {
     public ServiceBusQueuePublisher(IConfiguration configuration) : base(configuration)
     {
@@ -24,10 +24,10 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
     }
   }
 
-  public class ServiceBusQueuePublisher<Entity, Event, IdentityType> :
-      IPublisher<Entity, Event, Message, IdentityType>
-  where Entity : IIdentifiable<IdentityType>
-  where Event : EventType, new()
+  public class ServiceBusQueuePublisher<TEntity, TEvent, TIdentityType> :
+      IPublisher<TEntity, TEvent, Message, TIdentityType>
+  where TEntity : IIdentifiable<TIdentityType>
+  where TEvent : EventType, new()
   {
     private readonly QueueClient queueClient;
     public ServiceBusQueuePublisher(IConfiguration configuration)
@@ -36,7 +36,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
       var connectionString = configuration.GetValue<string>(connectionStringName);
       if (string.IsNullOrWhiteSpace(connectionString))
       {
-        throw new NullReferenceException($"Connection string: ${connectionStringName} value is missing");
+        throw new ConnectionStringMissingException(connectionStringName);
       }
       queueClient = new QueueClient(connectionString, GetQueueName(), ReceiveMode.PeekLock);
 
@@ -47,7 +47,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
       queueClient = new QueueClient(queueConnectionString, GetQueueName(), ReceiveMode.PeekLock);
     }
 
-    public Task PublishAsync(Entity payload, Action<Message> messageCustomizationLogic = null)
+    public Task PublishAsync(TEntity payload, Action<Message> messageCustomizationLogic = null)
     {
       var json = JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings);
       var buffer = Encoding.UTF8.GetBytes(json);
@@ -58,8 +58,8 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 
     private string GetQueueName()
     {
-      var eventType = new Event();
-      return $"{typeof(Entity).Name}{eventType.EventSuffix}";
+      var eventType = new TEvent();
+      return $"{typeof(TEntity).Name}{eventType.EventSuffix}";
     }
   }
 }

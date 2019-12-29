@@ -8,26 +8,26 @@ namespace Microsoft.Extensions.DependencyInjection
 {
   public static class ServiceBusQueueDependencyRegistration
   {
-    public static void AddServiceBusQueuePublishers<Entity>(this IServiceCollection services)
-    where Entity : IIdentifiable
+    public static void AddServiceBusQueuePublishers<TEntity>(this IServiceCollection services)
+    where TEntity : IIdentifiable
     {
-      services.AddSingleton<IPublisher<Entity, CreatedEvent, Message>>(t =>
-           new ServiceBusQueuePublisher<Entity, CreatedEvent>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<Entity, UpdatedEvent, Message>>(t =>
-          new ServiceBusQueuePublisher<Entity, UpdatedEvent>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<Entity, DeletedEvent, Message>>(t =>
-          new ServiceBusQueuePublisher<Entity, DeletedEvent>(t.GetService<IConfiguration>()));
+      services.AddSingleton<IPublisher<TEntity, CreatedEvent, Message>>(t =>
+           new ServiceBusQueuePublisher<TEntity, CreatedEvent>(t.GetService<IConfiguration>()));
+      services.AddSingleton<IPublisher<TEntity, UpdatedEvent, Message>>(t =>
+          new ServiceBusQueuePublisher<TEntity, UpdatedEvent>(t.GetService<IConfiguration>()));
+      services.AddSingleton<IPublisher<TEntity, DeletedEvent, Message>>(t =>
+          new ServiceBusQueuePublisher<TEntity, DeletedEvent>(t.GetService<IConfiguration>()));
     }
 
-    public static void AddServiceBusQueuePublishers<Entity, IdentityType>(this IServiceCollection services)
-  where Entity : IIdentifiable<IdentityType>
+    public static void AddServiceBusQueuePublishers<TEntity, TIdentityType>(this IServiceCollection services)
+  where TEntity : IIdentifiable<TIdentityType>
     {
-      services.AddSingleton<IPublisher<Entity, CreatedEvent, Message, IdentityType>>(t =>
-          new ServiceBusQueuePublisher<Entity, CreatedEvent, IdentityType>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<Entity, UpdatedEvent, Message, IdentityType>>(t =>
-          new ServiceBusQueuePublisher<Entity, UpdatedEvent, IdentityType>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<Entity, DeletedEvent, Message, IdentityType>>(t =>
-          new ServiceBusQueuePublisher<Entity, DeletedEvent, IdentityType>(t.GetService<IConfiguration>()));
+      services.AddSingleton<IPublisher<TEntity, CreatedEvent, Message, TIdentityType>>(t =>
+          new ServiceBusQueuePublisher<TEntity, CreatedEvent, TIdentityType>(t.GetService<IConfiguration>()));
+      services.AddSingleton<IPublisher<TEntity, UpdatedEvent, Message, TIdentityType>>(t =>
+          new ServiceBusQueuePublisher<TEntity, UpdatedEvent, TIdentityType>(t.GetService<IConfiguration>()));
+      services.AddSingleton<IPublisher<TEntity, DeletedEvent, Message, TIdentityType>>(t =>
+          new ServiceBusQueuePublisher<TEntity, DeletedEvent, TIdentityType>(t.GetService<IConfiguration>()));
     }
   }
 }

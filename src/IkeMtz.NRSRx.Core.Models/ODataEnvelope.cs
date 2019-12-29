@@ -5,22 +5,22 @@ using System.Linq;
 
 namespace IkeMtz.NRSRx.Core.Models
 {
-  public class ODataEnvelope<Entity> : ODataEnvelope<Entity, Guid>
-       where Entity : class, IIdentifiable, new()
+  public class ODataEnvelope<TEntity> : ODataEnvelope<TEntity, Guid>
+       where TEntity : class, IIdentifiable, new()
   {
   }
 
-  public class ODataEnvelope<Entity, IdentityType> where Entity : class, IIdentifiable<IdentityType>, new()
+  public class ODataEnvelope<TEntity, TIdentityType> where TEntity : class, IIdentifiable<TIdentityType>, new()
   {
     [JsonProperty("value")]
-    public IEnumerable<Entity> Value { get; set; }
+    public IEnumerable<TEntity> Value { get; set; }
 
     [JsonProperty("@odata.count")]
     public int Count { get; set; }
 
-    public static ODataEnvelope<Entity, IdentityType> Create(IEnumerable<Entity> t)
+    public static ODataEnvelope<TEntity, TIdentityType> Create(IEnumerable<TEntity> t)
     {
-      return new ODataEnvelope<Entity, IdentityType>()
+      return new ODataEnvelope<TEntity, TIdentityType>()
       {
         Count = t.Count(),
         Value = t
