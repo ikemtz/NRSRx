@@ -62,19 +62,19 @@ namespace IkeMtz.NRSRx.Core.Web
 
     private string[] GetIdentityAudiences()
     {
-      return Configuration.GetValue<string>("IdentityAudiences")?.Split(',');
+      return Configuration.GetValue<string>("IdentityAudiences")?.Split(',') ?? Array.Empty<string>();
     }
 
     public void SetupSwagger(IServiceCollection services)
     {
-      var swaggerIdentityProviderUrl = Configuration.GetValue<string>("SwaggerIdentityProviderUrl");
       services.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this));
       services.AddSwaggerGen(options =>
       {
         // add a custom operation filter which sets default values
         options.OperationFilter<SwaggerDefaultValues>();
         var audiences = GetIdentityAudiences();
-        if (audiences != null && audiences.Length != 0 && !string.IsNullOrWhiteSpace(swaggerIdentityProviderUrl))
+        var swaggerIdentityProviderUrl = Configuration.GetValue<string>("SwaggerIdentityProviderUrl");
+        if (audiences.Any() && !string.IsNullOrWhiteSpace(swaggerIdentityProviderUrl))
         {
           var audience = audiences.FirstOrDefault();
 
