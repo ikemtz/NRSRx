@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [ValidateModel]
     public IActionResult IsValid(TestModel model)
     {
-      return Ok();
+      return Ok(model);
     }
   }
 
