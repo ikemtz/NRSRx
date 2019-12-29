@@ -5,7 +5,6 @@ using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNet.OData.Formatter.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -81,9 +80,6 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       services.AddApiVersioning(options => options.ReportApiVersions = true);
 
-      services
-          .AddOData()
-          .EnableApiVersioning();
       services.AddODataApiExplorer(
           options =>
           {
@@ -95,7 +91,7 @@ namespace IkeMtz.NRSRx.Core.OData
             // can also be used to control the format of the API version in route templates
             options.SubstituteApiVersionInUrl = true;
           });
-      return services
+      var mvcBuilder = services
            .AddMvc(options =>
            {
              options.EnableEndpointRouting = false;
@@ -109,10 +105,12 @@ namespace IkeMtz.NRSRx.Core.OData
                inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
              }
              SetupMvcOptions(services, options);
-           })
-           .AddXmlSerializerFormatters()
+           });
 
-           .SetCompatibilityVersion(CompatibilityVersion.Latest);
+      services
+          .AddOData()
+          .EnableApiVersioning();
+      return mvcBuilder;
     }
   }
 }
