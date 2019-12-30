@@ -62,4 +62,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)\symbols'
+    ArtifactName: 'symbol_drop'
+
