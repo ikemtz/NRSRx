@@ -13,6 +13,9 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>ProfilePic.jpg</PackageIcon>
+    <PackageIconUrl />
 
   </PropertyGroup>
   <ItemGroup>
@@ -30,5 +33,11 @@
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.Web\IkeMtz.NRSRx.Core.Web.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\build\ProfilePic.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>

@@ -49,3 +49,17 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- task: DotNetCoreCLI@2
+  displayName: Pack Symbols
+  inputs:
+    command: pack
+    packagesToPack: 'src/**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --include-source --include-symbols'
+    nobuild: false
+    versioningScheme: byBuildNumber
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)\symbols'
