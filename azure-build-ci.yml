@@ -51,11 +51,12 @@ steps:
     PathtoPublish: '$(build.artifactstagingdirectory)'
 
 - task: DotNetCoreCLI@2
+  displayName: Pack Symbols
   inputs:
     command: 'pack'
     packagesToPack: 'src/**/*.csproj'
     configuration: 'Debug'
-    nobuild: true
+    nobuild: false
     includesymbols: true
     includesource: true
     versioningScheme: 'off'
