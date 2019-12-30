@@ -51,16 +51,18 @@ steps:
     PathtoPublish: '$(build.artifactstagingdirectory)'
 
 - task: DotNetCoreCLI@2
-  displayName: Pack Symbols
   inputs:
-    command: pack
+    command: 'pack'
     packagesToPack: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --include-source --include-symbols --version-suffix=symbols '
-    nobuild: false
-    versioningScheme: byBuildNumber
+    configuration: 'Debug'
+    nobuild: true
+    includesymbols: true
+    includesource: true
+    versioningScheme: 'off'
+    buildProperties: 'version-suffix=symbols'
+    verbosityPack: 'Minimal'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
     ArtifactName: 'symbol_drop'
-
