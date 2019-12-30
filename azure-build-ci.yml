@@ -34,7 +34,7 @@ steps:
   inputs:
     command: pack
     packagesToPack: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --include-source'
+    arguments: '--configuration $(BuildConfiguration)'
     nobuild: false
     versioningScheme: byBuildNumber
 
@@ -55,7 +55,7 @@ steps:
   inputs:
     command: pack
     packagesToPack: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --include-source --include-symbols'
+    arguments: '--configuration $(BuildConfiguration) --include-source --include-symbols --version-suffix=symbols '
     nobuild: false
     versioningScheme: byBuildNumber
 
