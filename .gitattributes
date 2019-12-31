@@ -1,0 +1,11 @@
+*.sh            text eol=lf
+*.ps1           text eol=lf
+*.ts            text eol=lf
+*.cs            text eol=lf
+*.js            text eol=lf
+*.json          text eol=lf
+*.html          text eol=lf
+*.scss          text eol=lf
+*.yml           text eol=lf
+*.YAML          text eol=lf
+*.Dockerfile    text eol=lf

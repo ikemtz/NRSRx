@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		azure-build-ci.yml = azure-build-ci.yml
 		azure-release-cd.yml = azure-release-cd.yml
@@ -44,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Core.Tests.WebApi", "tests\IkeMtz.NRSRx.Core.Tests.WebApi\IkeMtz.NRSRx.Core.Tests.WebApi.csproj", "{6AD80169-BF50-44AF-A758-569DAEAAEC48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Core.Tests.OData", "tests\IkeMtz.NRSRx.Core.Tests.OData\IkeMtz.NRSRx.Core.Tests.OData.csproj", "{FB7EB739-FC97-4292-9E0A-E7F17FC31E99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Core.Tests.OData", "tests\IkeMtz.NRSRx.Core.Tests.OData\IkeMtz.NRSRx.Core.Tests.OData.csproj", "{FB7EB739-FC97-4292-9E0A-E7F17FC31E99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
