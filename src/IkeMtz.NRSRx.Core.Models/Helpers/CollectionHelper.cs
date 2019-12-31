@@ -1,7 +1,7 @@
-using IkeMtz.NRSRx.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.NRSRx.Core
 {

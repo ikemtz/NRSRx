@@ -1,9 +1,9 @@
-using IkeMtz.NRSRx.Core.Models;
-using Microsoft.AspNet.OData.Builder;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using IkeMtz.NRSRx.Core.Models;
+using Microsoft.AspNet.OData.Builder;
 
 namespace IkeMtz.NRSRx.Core.OData
 {

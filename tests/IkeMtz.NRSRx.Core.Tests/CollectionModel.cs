@@ -1,5 +1,5 @@
-using IkeMtz.NRSRx.Core.Models;
 using System;
+using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Id = Guid.NewGuid();
       Value = Guid.NewGuid().ToString();
     }
-    public Guid Id { get;  }
+    public Guid Id { get; }
     public string Value { get; set; }
   }
 }

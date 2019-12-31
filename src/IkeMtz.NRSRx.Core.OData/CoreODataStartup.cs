@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
@@ -11,9 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
@@ -27,12 +27,12 @@ namespace IkeMtz.NRSRx.Core.OData
     public void ConfigureServices(IServiceCollection services)
     {
       SetupLogging(services);
-      SetupSwagger(services);
       SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
       SetupCoreEndpointFunctionality(services)
           .AddApplicationPart(StartupAssembly);
+      SetupSwagger(services);
     }
 
     [SuppressMessage("Design", "CA1062:Validate arguments of public methods",
@@ -47,53 +47,38 @@ namespace IkeMtz.NRSRx.Core.OData
       {
         app.UseHsts();
       }
-
-      app.UseAuthentication()
-          .UseAuthorization()
-          .UseSwagger()
-          .UseSwaggerUI(options =>
+      app
+          .UseMvc(routeBuilder =>
           {
-            foreach (var description in provider.ApiVersionDescriptions)
+            routeBuilder.SetTimeZoneInfo(TimeZoneInfo.Utc);
+            routeBuilder.Select().Expand().OrderBy().MaxTop(100).Filter().Count();
+
+            var models = modelBuilder.GetEdmModels().ToList();
+            var singleton = Microsoft.OData.ServiceLifetime.Singleton;
+            routeBuilder.MapVersionedODataRoutes("odata-bypath", "odata/v{version:apiVersion}", models, oBuilder =>
             {
-              options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-            }
-            options.RoutePrefix = string.Empty;
-            options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
-            options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
+              oBuilder.AddService<ODataSerializerProvider, NrsrxODataSerializerProvider>(singleton);
+            });
           });
 
-      var models = modelBuilder.GetEdmModels().ToList();
-      var singleton = Microsoft.OData.ServiceLifetime.Singleton;
+      app.UseAuthentication()
+          .UseAuthorization();
       app
-           .UseMvc(routeBuilder =>
-           {
-             routeBuilder.SetTimeZoneInfo(TimeZoneInfo.Utc);
-             routeBuilder.Select().Expand().OrderBy().MaxTop(100).Filter().Count();
-             routeBuilder.MapVersionedODataRoutes("odata", "odata/v{version:apiVersion}", models, oBuilder =>
-                    {
-                      models.ToList().ForEach(t => oBuilder.AddService(singleton, sp => t));
-                      oBuilder
-                            .AddService<ODataSerializerProvider, NrsrxODataSerializerProvider>(singleton);
-                    });
-
-           });
+          .UseSwagger()
+          .UseSwaggerUI(options =>
+            {
+              foreach (var description in provider.ApiVersionDescriptions)
+              {
+                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+              }
+              options.RoutePrefix = string.Empty;
+              options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
+              options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
+            });
     }
 
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
     {
-      services.AddApiVersioning(options => options.ReportApiVersions = true);
-
-      services.AddODataApiExplorer(
-          options =>
-          {
-            // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
-            // note: the specified format code will format the version as "'v'major[.minor][-status]"
-            options.GroupNameFormat = "'v'VVV";
-
-            // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
-            // can also be used to control the format of the API version in route templates
-            options.SubstituteApiVersionInUrl = true;
-          });
       var mvcBuilder = services
            .AddMvc(options =>
            {
@@ -109,10 +94,22 @@ namespace IkeMtz.NRSRx.Core.OData
              }
              SetupMvcOptions(services, options);
            });
+      services.AddApiVersioning(options => options.ReportApiVersions = true);
 
       services
-          .AddOData()
-          .EnableApiVersioning();
+        .AddOData()
+        .EnableApiVersioning();
+      services.AddODataApiExplorer(
+          options =>
+          {
+            // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+            // note: the specified format code will format the version as "'v'major[.minor][-status]"
+            options.GroupNameFormat = "'v'VVV";
+
+            // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+            // can also be used to control the format of the API version in route templates
+            options.SubstituteApiVersionInUrl = true;
+          });
       return mvcBuilder;
     }
   }

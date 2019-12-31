@@ -1,7 +1,8 @@
+using System.Linq;
+using IkeMtz.NRSRx.Core.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using static Microsoft.AspNet.OData.Query.AllowedQueryOptions;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -18,12 +19,14 @@ namespace IkeMtz.NRSRx.Core.Tests.OData.Controllers.V1
     }
 
     [ODataRoute]
-    [ProducesResponseType(typeof(ODataValue<IEnumerable<PostalState>>), Status200OK)]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(ODataEnvelope<PostalState, string>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = All)]
-    public IEnumerable<PostalState> Get()
+    public IQueryable<PostalState> Get()
     {
-      return PostalStatesColleciton;
+      return PostalStatesColleciton.AsQueryable();
     }
+
     private static readonly PostalState[] PostalStatesColleciton = new[] {
         new PostalState(){Id="AL", Name="Alabama"},
         new PostalState(){Id="AK", Name="Alaska"},

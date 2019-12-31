@@ -5,7 +5,7 @@ namespace IkeMtz.NRSRx.Core
 {
   public static class Constants
   {
-    private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings()
+    private static readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings()
     {
       ContractResolver = new CamelCasePropertyNamesContractResolver(),
       ReferenceLoopHandling = ReferenceLoopHandling.Ignore

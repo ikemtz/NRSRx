@@ -1,7 +1,7 @@
+using System.Reflection;
 using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {

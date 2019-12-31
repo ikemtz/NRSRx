@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace IkeMtz.NRSRx.Core.Authorization
 {
@@ -31,14 +31,14 @@ namespace IkeMtz.NRSRx.Core.Authorization
       {
         return true;
       }
-      return allowScopes && HasMatchingPermissionClaim(scopeClaimType, context.HttpContext.User.Claims, x => x.SelectMany(t=> t.Split(' ')));
+      return allowScopes && HasMatchingPermissionClaim(scopeClaimType, context.HttpContext.User.Claims, x => x.SelectMany(t => t.Split(' ')));
     }
 
     public bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, Func<IEnumerable<string>, IEnumerable<string>> permissionsSeperator)
     {
       var permissions = claims
         .Where(f => type.Equals(f?.Type, StringComparison.CurrentCultureIgnoreCase))
-        .Select(t=> t.Value)
+        .Select(t => t.Value)
         .Where(t => !string.IsNullOrWhiteSpace(t));
       if (permissions.Any())
       {

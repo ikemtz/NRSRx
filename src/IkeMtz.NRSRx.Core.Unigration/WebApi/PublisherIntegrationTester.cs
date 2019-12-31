@@ -1,9 +1,9 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace IkeMtz.NRSRx.Core.Unigration.WebApi
 {

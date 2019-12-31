@@ -1,8 +1,8 @@
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {

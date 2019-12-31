@@ -1,6 +1,6 @@
+using System.Reflection;
 using IkeMtz.NRSRx.Core.OData;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.Tests.OData
 {

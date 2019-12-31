@@ -1,6 +1,6 @@
+using System.Reflection;
 using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.TestWebApp
 {

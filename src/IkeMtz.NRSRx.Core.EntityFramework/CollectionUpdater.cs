@@ -1,8 +1,8 @@
-using IkeMtz.NRSRx.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
@@ -11,7 +11,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 
   public class CollectionUpdater<TEntity, TIdentityType> where TEntity : IIdentifiable<TIdentityType>
   {
-    private readonly static List<PropertyInfo> entityProperties = typeof(TEntity).GetProperties().Where(t => !t.Name.Equals("Id", StringComparison.OrdinalIgnoreCase) && t.CanWrite).ToList();
+    private static readonly List<PropertyInfo> entityProperties = typeof(TEntity).GetProperties().Where(t => !t.Name.Equals("Id", StringComparison.OrdinalIgnoreCase) && t.CanWrite).ToList();
     public void Update(ICollection<TEntity> sourceCollection, ICollection<TEntity> targetCollection)
     {
       sourceCollection.ToList().ForEach(sourceEntity =>

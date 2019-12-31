@@ -1,11 +1,11 @@
+using System;
+using System.Text;
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 {

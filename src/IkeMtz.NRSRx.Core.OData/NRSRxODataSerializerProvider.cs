@@ -1,7 +1,7 @@
-using Microsoft.AspNet.OData.Formatter.Serialization;
-using Microsoft.OData.Edm;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNet.OData.Formatter.Serialization;
+using Microsoft.OData.Edm;
 
 namespace IkeMtz.NRSRx.Core.OData
 {

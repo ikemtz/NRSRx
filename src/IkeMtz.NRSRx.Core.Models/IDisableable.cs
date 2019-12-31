@@ -1,7 +1,7 @@
-﻿namespace IkeMtz.NRSRx.Core.Models
+namespace IkeMtz.NRSRx.Core.Models
 {
-    public interface IDisableable
-    {
-        bool IsEnabled { get; set; }
-    }
+  public interface IDisableable
+  {
+    bool IsEnabled { get; set; }
+  }
 }

@@ -1,16 +1,16 @@
-using IkeMtz.NRSRx.Core.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public class AuditableDbContext : DbContext, IAuditableDbContext
   {
-    protected  IHttpContextAccessor HttpContextAccessor { get; }
+    protected IHttpContextAccessor HttpContextAccessor { get; }
     public AuditableDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor)
         : base(options)
     {

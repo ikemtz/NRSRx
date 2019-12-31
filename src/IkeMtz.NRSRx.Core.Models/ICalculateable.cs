@@ -1,7 +1,7 @@
-﻿namespace IkeMtz.NRSRx.Core.Models
+namespace IkeMtz.NRSRx.Core.Models
 {
-    public interface ICalculateable
-    {
-        void CalculateValues();
-    }
+  public interface ICalculateable
+  {
+    void CalculateValues();
+  }
 }

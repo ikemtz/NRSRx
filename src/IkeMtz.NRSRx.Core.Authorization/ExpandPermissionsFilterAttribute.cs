@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Http.Internal;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Primitives;
 
 namespace IkeMtz.NRSRx.Core.Authorization
 {

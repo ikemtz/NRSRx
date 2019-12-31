@@ -1,7 +1,7 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.Core.Models
 {
@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Models
     public IEnumerable<TEntity> Value { get; set; }
 
     [JsonProperty("@odata.count")]
-    public int Count { get; set; }
+    public int? Count { get; set; }
 
     public static ODataEnvelope<TEntity, TIdentityType> Create(IEnumerable<TEntity> t)
     {

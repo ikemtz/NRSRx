@@ -1,10 +1,10 @@
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.OpenApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 {

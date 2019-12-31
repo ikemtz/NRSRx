@@ -1,15 +1,12 @@
+using System.Collections.Generic;
+using System.Security.Claims;
 using IkeMtz.NRSRx.Core.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Text;
-using System.Linq;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {

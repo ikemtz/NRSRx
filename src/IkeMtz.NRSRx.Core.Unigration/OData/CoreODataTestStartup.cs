@@ -1,3 +1,4 @@
+using System.Reflection;
 using IkeMtz.NRSRx.Core.OData;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Builder;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {

@@ -14,6 +14,6 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
     public ConnectionStringMissingException(string connectionStringName, Exception innerException) : base($"Connection string: ${connectionStringName} value is missing", innerException)
     {
       ConnectionStringName = connectionStringName;
-    } 
+    }
   }
 }

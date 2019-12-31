@@ -1,8 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
