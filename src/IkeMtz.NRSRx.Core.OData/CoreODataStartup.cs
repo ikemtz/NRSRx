@@ -47,6 +47,9 @@ namespace IkeMtz.NRSRx.Core.OData
       {
         app.UseHsts();
       }
+
+      app.UseAuthentication()
+          .UseAuthorization();
       app
           .UseMvc(routeBuilder =>
           {
@@ -61,8 +64,6 @@ namespace IkeMtz.NRSRx.Core.OData
             });
           });
 
-      app.UseAuthentication()
-          .UseAuthorization();
       app
           .UseSwagger()
           .UseSwaggerUI(options =>
