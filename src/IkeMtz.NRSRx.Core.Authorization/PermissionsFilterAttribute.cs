@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace IkeMtz.NRSRx.Core.Authorization
 {
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-  public class PermissionsFilterAttribute : BaseActionFilterAttribute
+  public sealed class PermissionsFilterAttribute : BaseActionFilterAttribute
   {
 
     public PermissionsFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
       : base(allowedPermissions, allowScopes, permissionClaimType, permissionClaimSeperator, scopeClaimType)
     {
     }
-
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {

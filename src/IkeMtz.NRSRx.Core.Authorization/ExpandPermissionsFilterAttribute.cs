@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 
 namespace IkeMtz.NRSRx.Core.Authorization
 {
-  public class ExpandPermissionsFilterAttribute : BaseActionFilterAttribute
+  public sealed class ExpandPermissionsFilterAttribute : BaseActionFilterAttribute
   {
     private readonly string expandKey = "$expand";
     private readonly string expandClause;
@@ -18,12 +18,11 @@ namespace IkeMtz.NRSRx.Core.Authorization
       this.expandClause = expandClause;
     }
 
-
-    public override void OnActionExecuting(ActionExecutingContext ctx)
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
-      if (!HasPermission(ctx))
+      if (!HasPermission(context))
       {
-        var collection = ctx.HttpContext.Request.Query.Select(t =>
+        var collection = context.HttpContext.Request.Query.Select(t =>
         {
           if (expandKey.Equals(t.Key, StringComparison.InvariantCultureIgnoreCase))
           {
@@ -36,7 +35,7 @@ namespace IkeMtz.NRSRx.Core.Authorization
         })
           .Where(t => !string.IsNullOrWhiteSpace(t.Value.ToString()))
           .ToDictionary(x => x.Key, x => x.Value);
-        ctx.HttpContext.Request.Query = new QueryCollection(collection);
+        context.HttpContext.Request.Query = new QueryCollection(collection);
       }
     }
   }
