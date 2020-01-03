@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.WebApi
@@ -72,6 +73,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
              options.EnableEndpointRouting = true;
              options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
              SetupMvcOptions(services, options);
+           })
+           .AddNewtonsoftJson(options =>
+           {
+             options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+             options.UseCamelCasing(true);
+             options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
            })
            .AddMessagePackFormatters()
            .AddXmlSerializerFormatters()
