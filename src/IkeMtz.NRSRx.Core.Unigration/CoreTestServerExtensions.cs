@@ -35,18 +35,18 @@ namespace IkeMtz.NRSRx.Core.Unigration
                   }
                   else
                   {
-                    testContext.WriteLine("*** UnauthorizedAccessException ***");
-                    testContext.WriteLine(" No Authorization header provided. ");
+                    testContext?.WriteLine("*** UnauthorizedAccessException ***");
+                    testContext?.WriteLine(" No Authorization header provided. ");
                     x.Fail(new UnauthorizedAccessException("No Authorization header provided."));
                   }
                   return Task.CompletedTask;
                 },
           OnAuthenticationFailed = x =>
            {
-             testContext.WriteLine("*** Authentication Failed ***");
-             testContext.WriteLine($"Exception: {x.Exception?.Message}");
-             testContext.WriteLine($"Failure: {x.Result?.Failure?.Message}");
-             x.Request.Headers?.ToList().ForEach(header => testContext.WriteLine($"Header - {header.Key}: {header.Value}"));
+             testContext?.WriteLine("*** Authentication Failed ***");
+             testContext?.WriteLine($"Exception: {x.Exception?.Message}");
+             testContext?.WriteLine($"Failure: {x.Result?.Failure?.Message}");
+             x.Request?.Headers?.ToList().ForEach(header => testContext?.WriteLine($"Header - {header.Key}: {header.Value}"));
              return Task.CompletedTask;
            }
 
