@@ -59,7 +59,7 @@ steps:
     nobuild: false
     includesymbols: true
     includesource: true
-    versioningScheme: 'off'
+    versioningScheme: byBuildNumber
     buildProperties: 'version-suffix=symbols'
     verbosityPack: 'Minimal'
 

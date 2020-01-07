@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using static Microsoft.AspNet.OData.Query.AllowedQueryOptions;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
-
 namespace IkeMtz.NRSRx.Core.Tests.OData.Controllers.V1
 {
   [ApiVersion("1.0")]

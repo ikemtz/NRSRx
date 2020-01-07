@@ -33,10 +33,9 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var result = await resp.Content.ReadAsStringAsync();
 
-      var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result);
+      var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
       Assert.AreEqual($"{version}.0", doc.Info.Version);
       return doc;
-
     }
   }
 }

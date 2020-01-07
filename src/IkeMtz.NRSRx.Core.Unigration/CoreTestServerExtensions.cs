@@ -25,20 +25,31 @@ namespace IkeMtz.NRSRx.Core.Unigration
         {
           OnMessageReceived = x =>
                 {
-                var bearer = x.Request.Headers["Authorization"].ToString().Split(" ").Last();
-                if (!string.IsNullOrWhiteSpace(bearer))
-                {
-                  var token = new JwtSecurityToken(bearer);
-                  var identity = new ClaimsIdentity(token.Claims, "IntegrationTest");
-                  x.Principal = new ClaimsPrincipal(new[] { identity });
-                  x.Success();
-                }
-                else
-                {
-                  x.Fail(new UnauthorizedAccessException("No Authorization header provided."));
-                }
-                return Task.CompletedTask;
-              }
+                  var bearer = x.Request.Headers["Authorization"].ToString().Split(" ").Last();
+                  if (!string.IsNullOrWhiteSpace(bearer))
+                  {
+                    var token = new JwtSecurityToken(bearer);
+                    var identity = new ClaimsIdentity(token.Claims, "IntegrationTest");
+                    x.Principal = new ClaimsPrincipal(new[] { identity });
+                    x.Success();
+                  }
+                  else
+                  {
+                    testContext.WriteLine("*** UnauthorizedAccessException ***");
+                    testContext.WriteLine(" No Authorization header provided. ");
+                    x.Fail(new UnauthorizedAccessException("No Authorization header provided."));
+                  }
+                  return Task.CompletedTask;
+                },
+          OnAuthenticationFailed = x =>
+           {
+             testContext.WriteLine("*** Authentication Failed ***");
+             testContext.WriteLine($"Exception: {x.Exception?.Message}");
+             testContext.WriteLine($"Failure: {x.Result?.Failure?.Message}");
+             x.Request.Headers?.ToList().ForEach(header => testContext.WriteLine($"Header - {header.Key}: {header.Value}"));
+             return Task.CompletedTask;
+           }
+
         };
         options.Authority = Configuration.GetValue<string>("IdentityProvider") ?? JwtTokenIssuer;
         options.Audience = JwtTokenAud;
