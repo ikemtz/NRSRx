@@ -81,15 +81,13 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
       // Create a scope to obtain a reference to the database
       // context (ApplicationDbContext).
-      using (var scope = sp.CreateScope())
-      {
-        var scopedServices = scope.ServiceProvider;
-        var db = scopedServices.GetRequiredService<T>();
-        // Ensure the database is created.
-        db.Database.EnsureCreated();
-        callback(db);
-        db.SaveChanges();
-      }
+      using var scope = sp.CreateScope();
+      var scopedServices = scope.ServiceProvider;
+      var db = scopedServices.GetRequiredService<T>();
+      // Ensure the database is created.
+      db.Database.EnsureCreated();
+      callback(db);
+      db.SaveChanges();
     }
 
     public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage resp)
@@ -101,7 +99,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
         var result = JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
         return result;
       }
-      return default(T);
+      return default;
     }
 
     public IWebHostBuilder TestHostBuilder<SiteStartup, TestStartup>()
