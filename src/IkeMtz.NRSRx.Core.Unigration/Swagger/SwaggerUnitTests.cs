@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -32,6 +33,11 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var result = await resp.Content.ReadAsStringAsync();
+
+      // This was required because there's a type mismatch on the OpenApi Doc spec
+      string pattern = @",\s*\""additionalProperties\""\: false";
+      result = Regex.Replace(result, pattern, "");
+
 
       var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
       Assert.AreEqual($"{version}.0", doc.Info.Version);
