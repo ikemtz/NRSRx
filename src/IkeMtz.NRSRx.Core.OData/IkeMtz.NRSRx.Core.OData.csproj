@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ProjectGuid>{E41D1A2D-73BF-4710-A7CD-66510E8CD22E}</ProjectGuid>
+    <ProjectGuid>E41D1A2D-73BF-4710-A7CD-66510E8CD22E</ProjectGuid>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
