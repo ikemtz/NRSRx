@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Id = Guid.NewGuid();
       Value = Guid.NewGuid().ToString();
     }
-    public Guid Id { get; }
+    public Guid Id { get; set; }
     public string Value { get; set; }
   }
 }

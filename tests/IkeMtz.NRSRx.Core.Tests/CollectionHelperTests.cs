@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using IkeMtz.NRSRx.Core.Unigration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using IkeMtz.NRSRx.Core.EntityFramework;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -11,9 +13,11 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void RemoveItemsFromCollection()
     {
-      var srcList = new List<CollectionModel> { new CollectionModel(), new CollectionModel() };
-      var destList = new List<CollectionModel> { srcList.First(), srcList.Last(), new CollectionModel() };
-      CollectionHelper<CollectionModel>.SyncCollections(srcList, destList, (src, dest) =>
+      var context = new DbContextFactory().CreateInMemoryAuditableDbContext<TestAuditableDbContext>();
+      var srcList = new[] { new CollectionModel(), new CollectionModel() };
+      context.CollectionModel.AddRange(new[] { srcList.First(), srcList.Last(), new CollectionModel() });
+      var destList = context.CollectionModel.ToList();
+      context.SyncCollections(srcList, destList, (src, dest) =>
       {
         dest.Value = src.Value;
       });
@@ -24,9 +28,10 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void AddItemsToCollection()
     {
-      var srcList = new List<CollectionModel> { new CollectionModel(), new CollectionModel() };
+      var context = new DbContextFactory().CreateInMemoryAuditableDbContext<TestAuditableDbContext>();
+      var srcList = new[] { new CollectionModel(), new CollectionModel() };
       var destList = new List<CollectionModel> { };
-      CollectionHelper<CollectionModel>.SyncCollections(srcList, destList, (src, dest) =>
+      context.SyncCollections(srcList, destList, (src, dest) =>
       {
         dest.Value = src.Value;
       });

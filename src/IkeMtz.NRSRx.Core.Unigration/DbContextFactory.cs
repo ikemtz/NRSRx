@@ -6,7 +6,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
 {
   public class DbContextFactory
   {
-
     public TAuditableDbContext CreateInMemoryAuditableDbContext<TAuditableDbContext>()
         where TAuditableDbContext : AuditableDbContext
     {

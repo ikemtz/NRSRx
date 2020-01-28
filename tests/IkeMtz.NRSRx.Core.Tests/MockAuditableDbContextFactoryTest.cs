@@ -34,12 +34,12 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
-    public async Task MockContextFactoryTest()
+    public async Task MockDbContextFactoryTest()
     {
       var modelA = new MyModel();
       var modelB = new MyModel();
       var fac = new DbContextFactory();
-      using (var ctx = fac.CreateInMemoryDbContext<TestContext>())
+      using (var ctx = fac.CreateInMemoryDbContext<TestDbContext>())
       {
         ctx.MyModel.Add(modelA);
         ctx.MyModel.Add(modelB);
@@ -68,11 +68,5 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
     public DbSet<MyModel> MyModel { get; set; }
   }
-  public class TestContext : DbContext
-  {
-    public TestContext(DbContextOptions options) : base(options)
-    {
-    }
-    public DbSet<MyModel> MyModel { get; set; }
-  }
+
 }

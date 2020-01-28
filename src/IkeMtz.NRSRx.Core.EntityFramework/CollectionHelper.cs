@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
 
-namespace IkeMtz.NRSRx.Core
+namespace IkeMtz.NRSRx.Core.EntityFramework
 {
-  public static class CollectionHelper<TEntity> where TEntity : IIdentifiable
+  public static class ContextCollectionSyncer
   {
-    public static void SyncCollections(IEnumerable<TEntity> sourceCollection, ICollection<TEntity> destinationCollection,
-        Action<TEntity, TEntity> updateLogic = null)
+    public static void SyncCollections<TEntity>(this AuditableDbContext auditableContext, IEnumerable<TEntity> sourceCollection, ICollection<TEntity> destinationCollection,
+        Action<TEntity, TEntity> updateLogic = null) where TEntity : IIdentifiable
     {
       if (sourceCollection == null)
       {
@@ -18,8 +18,12 @@ namespace IkeMtz.NRSRx.Core
       {
         throw new ArgumentNullException(nameof(destinationCollection));
       }
-      var sourceIds = sourceCollection.Select(t => t.Id).ToList();
-      var destIds = destinationCollection.Select(t => t.Id).ToList();
+      else if (auditableContext == null)
+      {
+        throw new ArgumentNullException(nameof(auditableContext));
+      }
+      var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
+      var destIds = destinationCollection.Select(t => t.Id).ToArray();
 
       //Add New Records to destination
       foreach (var dest in sourceCollection.Where(src => !destIds.Contains(src.Id)))
@@ -30,7 +34,9 @@ namespace IkeMtz.NRSRx.Core
       //synchronize removed items
       foreach (var destId in destIds.Where(dstId => !sourceIds.Contains(dstId)))
       {
-        destinationCollection.Remove(destinationCollection.First(dst => dst.Id == destId));
+        var entityFrameworkBoundObject = destinationCollection.First(dst => dst.Id == destId);
+        destinationCollection.Remove(entityFrameworkBoundObject);
+        auditableContext.Remove(entityFrameworkBoundObject);
       }
 
       //If update record logic has been provided, run it
