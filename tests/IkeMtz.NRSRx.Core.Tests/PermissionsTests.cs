@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using IkeMtz.NRSRx.Core.Authorization;
@@ -54,7 +55,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void Permissions_Fail_NoPerms_Test()
     {
-      var claims = System.Array.Empty<Claim>();
+      var claims = Array.Empty<Claim>();
       var ctx = ActionExecutingContextFactory(claims);
       var attrib = new PermissionsFilterAttribute(new[] { "v1:w:data", "v2:2:data" });
       attrib.OnActionExecuting(ctx);
