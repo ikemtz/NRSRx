@@ -54,7 +54,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void Permissions_Fail_NoPerms_Test()
     {
-      var claims = new Claim[] { };
+      var claims = System.Array.Empty<Claim>();
       var ctx = ActionExecutingContextFactory(claims);
       var attrib = new PermissionsFilterAttribute(new[] { "v1:w:data", "v2:2:data" });
       attrib.OnActionExecuting(ctx);
@@ -103,8 +103,10 @@ namespace IkeMtz.NRSRx.Core.Tests
     private ActionExecutingContext ActionExecutingContextFactory(IEnumerable<Claim> userClaims)
     {
       var identity = new ClaimsIdentity(userClaims);
-      var httpCtx = new DefaultHttpContext();
-      httpCtx.User = new ClaimsPrincipal(identity);
+      var httpCtx = new DefaultHttpContext
+      {
+        User = new ClaimsPrincipal(identity)
+      };
       var actCtx = new ActionContext(httpCtx, new RouteData(), new ActionDescriptor());
       var filterMetaData = new List<IFilterMetadata>();
       var actionArguments = new Dictionary<string, object>();
