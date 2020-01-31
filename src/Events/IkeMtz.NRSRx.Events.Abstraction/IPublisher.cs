@@ -12,8 +12,9 @@ namespace IkeMtz.NRSRx.Events
   }
 
   public interface IPublisher<TEntity, TEvent, out TMessageType, TIdentityType>
-  where TEntity : IIdentifiable<TIdentityType>
-  where TEvent : EventType, new()
+    where TIdentityType : IComparable
+    where TEntity : IIdentifiable<TIdentityType>
+    where TEvent : EventType, new()
   {
     Task PublishAsync(TEntity payload, Action<TMessageType> messageCustomizationLogic = null);
   }

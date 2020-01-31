@@ -26,8 +26,9 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 
   public class ServiceBusQueuePublisher<TEntity, TEvent, TIdentityType> :
       IPublisher<TEntity, TEvent, Message, TIdentityType>
-  where TEntity : IIdentifiable<TIdentityType>
-  where TEvent : EventType, new()
+    where TIdentityType : IComparable
+    where TEntity : IIdentifiable<TIdentityType>
+    where TEvent : EventType, new()
   {
     private readonly QueueClient queueClient;
     public ServiceBusQueuePublisher(IConfiguration configuration)

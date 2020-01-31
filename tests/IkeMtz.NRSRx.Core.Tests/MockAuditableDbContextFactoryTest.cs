@@ -19,17 +19,15 @@ namespace IkeMtz.NRSRx.Core.Tests
       var modelA = new MyModel();
       var modelB = new MyModel();
       var fac = new DbContextFactory();
-      using (var ctx = fac.CreateInMemoryAuditableDbContext<TestAuditableContext>())
-      {
-        ctx.MyModel.Add(modelA);
-        ctx.MyModel.Add(modelB);
-        await ctx.SaveChangesAsync();
-        Assert.AreEqual(2, await ctx.MyModel.CountAsync());
-        modelA.UpdatedBy = "Not Me";
-        await ctx.SaveChangesAsync();
-        Assert.AreEqual("NRSRx Test User", modelA.UpdatedBy);
-        Assert.IsNull(modelB.UpdatedOnUtc);
-      }
+      using var ctx = fac.CreateInMemoryAuditableDbContext<TestAuditableContext>();
+      ctx.MyModel.Add(modelA);
+      ctx.MyModel.Add(modelB);
+      await ctx.SaveChangesAsync();
+      Assert.AreEqual(2, await ctx.MyModel.CountAsync());
+      modelA.UpdatedBy = "Not Me";
+      await ctx.SaveChangesAsync();
+      Assert.AreEqual("NRSRx Test User", modelA.UpdatedBy);
+      Assert.IsNull(modelB.UpdatedOnUtc);
     }
 
     [TestMethod]
@@ -39,17 +37,15 @@ namespace IkeMtz.NRSRx.Core.Tests
       var modelA = new MyModel();
       var modelB = new MyModel();
       var fac = new DbContextFactory();
-      using (var ctx = fac.CreateInMemoryDbContext<TestDbContext>())
-      {
-        ctx.MyModel.Add(modelA);
-        ctx.MyModel.Add(modelB);
-        await ctx.SaveChangesAsync();
-        Assert.AreEqual(2, await ctx.MyModel.CountAsync());
-        modelA.UpdatedBy = "Not Me";
-        await ctx.SaveChangesAsync();
-        Assert.AreEqual("Not Me", modelA.UpdatedBy);
-        Assert.IsNull(modelB.UpdatedOnUtc);
-      }
+      using var ctx = fac.CreateInMemoryDbContext<TestDbContext>();
+      ctx.MyModel.Add(modelA);
+      ctx.MyModel.Add(modelB);
+      await ctx.SaveChangesAsync();
+      Assert.AreEqual(2, await ctx.MyModel.CountAsync());
+      modelA.UpdatedBy = "Not Me";
+      await ctx.SaveChangesAsync();
+      Assert.AreEqual("Not Me", modelA.UpdatedBy);
+      Assert.IsNull(modelB.UpdatedOnUtc);
     }
   }
 

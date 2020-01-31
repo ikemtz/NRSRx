@@ -1,3 +1,4 @@
+using System;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.NRSRx.Events.Publishers.ServiceBus;
@@ -20,7 +21,8 @@ namespace Microsoft.Extensions.DependencyInjection
     }
 
     public static void AddServiceBusQueuePublishers<TEntity, TIdentityType>(this IServiceCollection services)
-  where TEntity : IIdentifiable<TIdentityType>
+      where TIdentityType : IComparable
+      where TEntity : IIdentifiable<TIdentityType>
     {
       services.AddSingleton<IPublisher<TEntity, CreatedEvent, Message, TIdentityType>>(t =>
           new ServiceBusQueuePublisher<TEntity, CreatedEvent, TIdentityType>(t.GetService<IConfiguration>()));

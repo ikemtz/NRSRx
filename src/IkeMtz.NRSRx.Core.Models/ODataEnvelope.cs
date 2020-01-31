@@ -10,7 +10,9 @@ namespace IkeMtz.NRSRx.Core.Models
   {
   }
 
-  public class ODataEnvelope<TEntity, TIdentityType> where TEntity : class, IIdentifiable<TIdentityType>, new()
+  public class ODataEnvelope<TEntity, TIdentityType>
+    where TIdentityType: IComparable
+    where TEntity : class, IIdentifiable<TIdentityType>, new()
   {
     [JsonProperty("value")]
     public IEnumerable<TEntity> Value { get; set; }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
@@ -46,7 +47,8 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
   }
 
   public class PublisherIntegrationTester<Entity, MessageType, IdentityType> : PublisherIntegrationTester<Entity>
-      where Entity : IIdentifiable<IdentityType>
+    where IdentityType : IComparable
+    where Entity : IIdentifiable<IdentityType>
   {
     public Mock<IPublisher<Entity, CreateEvent, MessageType, IdentityType>> CreatePublisher { get; }
     public Mock<IPublisher<Entity, CreatedEvent, MessageType, IdentityType>> CreatedPublisher { get; }

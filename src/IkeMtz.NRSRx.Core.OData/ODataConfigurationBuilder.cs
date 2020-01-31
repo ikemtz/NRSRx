@@ -14,7 +14,9 @@ namespace IkeMtz.NRSRx.Core.OData
 
 #pragma warning disable CA1052 // Static holder types should be Static or NotInheritable
 #pragma warning disable S1118 // Utility classes should not have public constructors
-  public class ODataConfigurationBuilder<TEntity, TIdentifiableType> where TEntity : class, IIdentifiable<TIdentifiableType>
+  public class ODataConfigurationBuilder<TEntity, TIdentifiableType>
+    where TIdentifiableType : IComparable
+    where TEntity : class, IIdentifiable<TIdentifiableType>
 #pragma warning restore S1118 // Utility classes should not have public constructors
 #pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
   {
