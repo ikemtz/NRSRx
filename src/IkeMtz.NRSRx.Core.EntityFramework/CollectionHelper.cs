@@ -29,6 +29,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       foreach (var dest in sourceCollection.Where(src => !destIds.Contains(src.Id)))
       {
         destinationCollection.Add(dest);
+        auditableContext.Add(dest);
       }
 
       //synchronize removed items
