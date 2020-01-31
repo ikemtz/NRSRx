@@ -48,6 +48,14 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
           updateLogic(srcItem, destItem);
         }
       }
+      else
+      {
+        foreach (var srcItem in sourceCollection.Where(src => destIds.Contains(src.Id)))
+        {
+          var destItem = destinationCollection.First(dst => dst.Id == srcItem.Id);
+          SimpleMapper<TEntity>.Instance.ApplyChanges(srcItem, destItem);
+        }
+      }
     }
   }
 }
