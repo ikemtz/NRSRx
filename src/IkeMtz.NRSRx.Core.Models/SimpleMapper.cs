@@ -77,11 +77,11 @@ namespace IkeMtz.NRSRx.Core.Models
     {
       if (sourceEntity == null)
       {
-        throw new NullReferenceException($"{sourceEntity} must not be null.");
+        throw new ArgumentNullException(nameof(sourceEntity));
       }
       else if (destinationEntity == null)
       {
-        throw new NullReferenceException($"{destinationEntity} must not be null.");
+        throw new ArgumentNullException(nameof(destinationEntity));
       }
       else
       {
