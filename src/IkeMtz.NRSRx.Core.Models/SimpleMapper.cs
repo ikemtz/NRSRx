@@ -6,7 +6,7 @@ using System.Reflection;
 namespace IkeMtz.NRSRx.Core.Models
 {
   public class SimpleMapper<TEntity> : SimpleMapper<TEntity, TEntity, Guid>
-    where TEntity : IIdentifiable<Guid>
+    where TEntity : IIdentifiable<Guid>, new()
   {
     internal SimpleMapper()
     {
@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Models
   public class SimpleMapper<TSourceEntity, TDestinationEntity, TIdentityType>
     where TIdentityType : IComparable
     where TSourceEntity : IIdentifiable<TIdentityType>
-    where TDestinationEntity : IIdentifiable<TIdentityType>
+    where TDestinationEntity : IIdentifiable<TIdentityType>, new()
   {
     protected static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
     protected static readonly string[] IgnoredInterfaces = { nameof(IIdentifiable), typeof(IIdentifiable<>).Name, typeof(ICollection<>).Name };
@@ -69,12 +69,19 @@ namespace IkeMtz.NRSRx.Core.Models
         mapper(sourceEntity, destinationEntity);
       }
     }
+
+    public TDestinationEntity Convert(TSourceEntity source)
+    {
+      var result = new TDestinationEntity();
+      ApplyChanges(source, result);
+      return result;
+    }
   }
 
   public class SimpleMapper<TSourceEntity, TDestinationEntity> :
     SimpleMapper<TSourceEntity, TDestinationEntity, Guid>
     where TSourceEntity : IIdentifiable<Guid>
-    where TDestinationEntity : IIdentifiable<Guid>
+    where TDestinationEntity : IIdentifiable<Guid>, new()
   {
   }
 }
