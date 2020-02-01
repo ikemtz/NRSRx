@@ -65,37 +65,6 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.AreEqual(source.SampleNullableDecimal, dest.SampleNullableDecimal);
       Assert.AreEqual(source.SampleNullableGuid, dest.SampleNullableGuid);
     }
-
-
-    [TestMethod, TestCategory("Unit")]
-    public void ValidateSimpleMapperDifferentTypes()
-    {
-      var source = new ValidationTestObjectA()
-      {
-        Id = Guid.NewGuid(),
-        SampleDecimal = 65.99m,
-        SampleGuid = Guid.NewGuid(),
-        SampleInt = 69,
-        SampleString = "Happy Days",
-        SampleObject = "Sample Object",
-        SampleNullableInt = 69 + 2,
-        SampleNullableDecimal = 99.345m,
-        SampleNullableGuid = Guid.NewGuid(),
-      };
-      source.SampleStrings.Add("This better work!");
-      var dest = SimpleMapper<ValidationTestObjectA, ValidationTestObjectB>.Instance.Convert(source);
-      Assert.AreNotEqual(source.Id, dest.Id);
-      Assert.AreEqual(0, dest.SampleStrings.Count);
-      Assert.AreEqual(source.SampleDecimal, dest.SampleDecimal);
-      Assert.AreEqual(source.SampleGuid, dest.SampleGuid);
-      Assert.AreEqual(source.SampleInt, dest.SampleInt);
-      Assert.AreEqual(source.SampleString, dest.SampleString);
-      Assert.AreEqual(source.SampleObject, dest.SampleObject);
-
-      Assert.AreEqual(source.SampleNullableInt, dest.SampleNullableInt);
-      Assert.AreEqual(source.SampleNullableDecimal, dest.SampleNullableDecimal);
-      Assert.AreEqual(source.SampleNullableGuid, dest.SampleNullableGuid);
-    }
   }
 
   public class ValidationTestObjectA : IIdentifiable

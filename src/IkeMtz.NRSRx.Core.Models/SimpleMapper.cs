@@ -5,6 +5,19 @@ using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.Models
 {
+  internal static class SimpleMapperHelper
+  {
+    internal static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
+    internal static readonly string[] IgnoredInterfaces = { nameof(IIdentifiable), typeof(IIdentifiable<>).Name, typeof(ICollection<>).Name };
+  }
+
+  public class SimpleMapper<TSourceEntity, TDestinationEntity> :
+    SimpleMapper<TSourceEntity, TDestinationEntity, Guid>
+    where TSourceEntity : class
+    where TDestinationEntity : class, IIdentifiable<Guid>, new()
+  {
+  }
+
   public class SimpleMapper<TEntity> : SimpleMapper<TEntity, TEntity, Guid>
     where TEntity : class, IIdentifiable<Guid>, new()
   {
@@ -25,8 +38,6 @@ namespace IkeMtz.NRSRx.Core.Models
     where TSourceEntity : class
     where TDestinationEntity : class, IIdentifiable<TIdentityType>, new()
   {
-    protected static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
-    protected static readonly string[] IgnoredInterfaces = { nameof(IIdentifiable), typeof(IIdentifiable<>).Name, typeof(ICollection<>).Name };
     private IEnumerable<Action<TSourceEntity, TDestinationEntity>> _propertyMappers;
     private static SimpleMapper<TSourceEntity, TDestinationEntity, TIdentityType> _instance;
     public static SimpleMapper<TSourceEntity, TDestinationEntity, TIdentityType> Instance
@@ -45,9 +56,9 @@ namespace IkeMtz.NRSRx.Core.Models
     {
     }
     protected virtual IEnumerable<PropertyInfo> FilteredSourceProperties => typeof(TSourceEntity).GetRuntimeProperties()
-        .Where(prop => !IgnoredProperties.Contains(prop.Name, StringComparer.CurrentCulture))
+        .Where(prop => !SimpleMapperHelper.IgnoredProperties.Contains(prop.Name, StringComparer.CurrentCulture))
         .Where(prop => !prop.PropertyType.GetTypeInfo().GetInterfaces().Select(t => t.Name).Any(t =>
-          IgnoredInterfaces.Contains(t, StringComparer.CurrentCulture)));
+          SimpleMapperHelper.IgnoredInterfaces.Contains(t, StringComparer.CurrentCulture)));
 
     protected virtual IEnumerable<Action<TSourceEntity, TDestinationEntity>> PopulatePropertyMappings()
     {
@@ -64,9 +75,20 @@ namespace IkeMtz.NRSRx.Core.Models
 
     public void ApplyChanges(TSourceEntity sourceEntity, TDestinationEntity destinationEntity)
     {
-      foreach (var mapper in this._propertyMappers)
+      if (sourceEntity == null)
       {
-        mapper(sourceEntity, destinationEntity);
+        throw new NullReferenceException($"{sourceEntity} must not be null.");
+      }
+      else if (destinationEntity == null)
+      {
+        throw new NullReferenceException($"{destinationEntity} must not be null.");
+      }
+      else
+      {
+        foreach (var mapper in this._propertyMappers)
+        {
+          mapper(sourceEntity, destinationEntity);
+        }
       }
     }
 
@@ -76,12 +98,5 @@ namespace IkeMtz.NRSRx.Core.Models
       ApplyChanges(source, result);
       return result;
     }
-  }
-
-  public class SimpleMapper<TSourceEntity, TDestinationEntity> :
-    SimpleMapper<TSourceEntity, TDestinationEntity, Guid>
-    where TSourceEntity : class
-    where TDestinationEntity : class, IIdentifiable<Guid>, new()
-  {
   }
 }
