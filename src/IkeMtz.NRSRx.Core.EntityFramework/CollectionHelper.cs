@@ -8,7 +8,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
   public static class ContextCollectionSyncer
   {
     public static void SyncCollections<TEntity>(this IAuditableDbContext auditableContext, IEnumerable<TEntity> sourceCollection, ICollection<TEntity> destinationCollection,
-        Action<TEntity, TEntity> updateLogic = null) where TEntity : IIdentifiable, new()
+        Action<TEntity, TEntity> updateLogic = null) where TEntity : class, IIdentifiable, new()
     {
       if (sourceCollection == null)
       {
