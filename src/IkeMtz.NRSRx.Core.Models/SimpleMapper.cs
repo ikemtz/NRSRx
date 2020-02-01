@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Models
   public class SimpleMapper<TSourceEntity, TDestinationEntity, TIdentityType>
     where TIdentityType : IComparable
     where TSourceEntity : IIdentifiable<TIdentityType>
-    where TDestinationEntity : IIdentifiable<TIdentityType>, new()
+    where TDestinationEntity : new()
   {
     protected static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
     protected static readonly string[] IgnoredInterfaces = { nameof(IIdentifiable), typeof(IIdentifiable<>).Name, typeof(ICollection<>).Name };
@@ -81,7 +81,7 @@ namespace IkeMtz.NRSRx.Core.Models
   public class SimpleMapper<TSourceEntity, TDestinationEntity> :
     SimpleMapper<TSourceEntity, TDestinationEntity, Guid>
     where TSourceEntity : IIdentifiable<Guid>
-    where TDestinationEntity : IIdentifiable<Guid>, new()
+    where TDestinationEntity : new()
   {
   }
 }
