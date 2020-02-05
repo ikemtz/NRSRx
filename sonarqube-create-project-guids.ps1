@@ -1,4 +1,5 @@
 $paths = Get-ChildItem -Path $PSScriptRoot -include *.csproj -Recurse
+Write-Host $paths.count "project(s) found"
 $projectGuids = @()
 foreach ($pathobject in $paths) {
     $path = $pathobject.fullname
@@ -16,15 +17,11 @@ foreach ($pathobject in $paths) {
     elseif($projectGuids.Contains($node.InnerText)){
         Write-Host "Duplicate found"
         $node.InnerText = [guid]::NewGuid().ToString().ToUpper()
-        $doc.Save($path)
-        
-    $projectGuids += $node.InnerText.ToUpper();
+        $doc.Save($path)        
+        $projectGuids += $node.InnerText.ToUpper();
     }
     else{
-    $projectGuids += $node.InnerText;
+        $projectGuids += $node.InnerText;
+        Write-Host $path "already has a valid ProjectGuid"
     }
-}
-foreach($g in $projectGuids | Sort-Object)
-{
-Write-Host $g
 }
