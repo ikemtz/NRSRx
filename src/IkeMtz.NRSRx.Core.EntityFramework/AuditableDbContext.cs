@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
@@ -16,6 +17,32 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       HttpContextAccessor = httpContextAccessor;
     }
+
+    public override ValueTask<EntityEntry> AddAsync(object entity, CancellationToken cancellationToken = default)
+    {
+      if (entity is IAuditable)
+      {
+        var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
+        var auditable = entity as IAuditable;
+        auditable.CreatedOnUtc = DateTime.UtcNow;
+        auditable.CreatedBy = currentUsername;
+      }
+
+      return base.AddAsync(entity, cancellationToken);
+    }
+
+    public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
+    {
+      if (entity is IAuditable)
+      {
+        var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
+        var auditable = entity as IAuditable;
+        auditable.CreatedOnUtc = DateTime.UtcNow;
+        auditable.CreatedBy = currentUsername;
+      }
+      return base.AddAsync(entity, cancellationToken);
+    }
+
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
       CalculateValues();
@@ -25,7 +52,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     }
     private void CalculateValues()
     {
-      var entities = ChangeTracker.Entries().Where(x => x.Entity is ICalculateable);
+      var entities = base.ChangeTracker.Entries().Where(x => x.Entity is ICalculateable);
 
       foreach (var calculateable in entities
           .Select(t => t.Entity as ICalculateable)
@@ -33,7 +60,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       {
         calculateable.CalculateValues();
       }
-      entities = ChangeTracker.Entries().Where(x => x.Entity is IAggregratedByParents);
+      entities = base.ChangeTracker.Entries().Where(x => x.Entity is IAggregratedByParents);
 
       foreach (var aggretable in entities
           .Select(t => t.Entity as IAggregratedByParents)
@@ -48,7 +75,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 
     private void AddAuditables()
     {
-      var entities = ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Added));
+      var entities = base.ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Added));
       var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
 
       foreach (var auditable in entities
@@ -68,7 +95,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 
     private void UpdateAuditables()
     {
-      var entities = ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Modified));
+      var entities = base.ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Modified));
       var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
 
       foreach (var auditable in entities
