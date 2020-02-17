@@ -22,6 +22,11 @@
     <NoWarn>1701;1702;CA1822</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Logging\NewFolder\**" />
+    <EmbeddedResource Remove="Logging\NewFolder\**" />
+    <None Remove="Logging\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
@@ -41,9 +46,6 @@
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logging\NewFolder\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\build\ProfilePic.jpg">

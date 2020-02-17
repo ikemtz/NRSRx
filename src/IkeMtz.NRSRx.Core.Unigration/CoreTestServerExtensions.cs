@@ -65,6 +65,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
       // Build the service provider.
       var serviceProvider = services
           .AddEntityFrameworkInMemoryDatabase()
+          .AddScoped<ILoggerFactory>(provider => new LoggerFactory(new[] {
+            new TestContextLoggerProvider(provider.GetService<TestContext>()) }))
           .BuildServiceProvider();
       var testContext = serviceProvider.GetService<TestContext>();
       services.AddDbContext<T>(options =>
@@ -73,7 +75,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
         options.UseInternalServiceProvider(serviceProvider);
         options.EnableSensitiveDataLogging(true);
         options.EnableDetailedErrors(true);
-        options.UseLoggerFactory(new LoggerFactory(new[] { new TestContextLoggerProvider(testContext) }));
       });
     }
   }
