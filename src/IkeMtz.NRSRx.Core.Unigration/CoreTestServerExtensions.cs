@@ -3,11 +3,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
@@ -70,6 +72,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
         options.UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}");
         options.UseInternalServiceProvider(serviceProvider);
         options.EnableSensitiveDataLogging(true);
+        options.EnableDetailedErrors(true);
+        options.UseLoggerFactory(new LoggerFactory(new[] { new TestContextLoggerProvider(testContext) }));
       });
     }
   }

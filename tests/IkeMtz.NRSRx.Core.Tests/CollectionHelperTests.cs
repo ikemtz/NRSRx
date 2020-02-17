@@ -9,11 +9,13 @@ namespace IkeMtz.NRSRx.Core.Tests
   [TestClass]
   public class CollectionHelperTests
   {
+    public TestContext TestContext { get; set; }
+
     [TestMethod]
     [TestCategory("Unit")]
     public void RemoveItemsFromCollection()
     {
-      var context = new DbContextFactory().CreateInMemoryAuditableDbContext<TestAuditableDbContext>();
+      var context = new DbContextFactory().CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
       context.CollectionModel.AddRange(new[] { srcList.First(), srcList.Last(), new CollectionModel() });
       var destList = context.CollectionModel.ToList();
@@ -28,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void AddItemsToCollection()
     {
-      var context = new DbContextFactory().CreateInMemoryAuditableDbContext<TestAuditableDbContext>();
+      var context = new DbContextFactory().CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
       var destList = new List<CollectionModel> { };
       context.SyncCollections(srcList, destList, (src, dest) =>

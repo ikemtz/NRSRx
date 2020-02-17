@@ -12,6 +12,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   [TestClass]
   public class MockAuditableDbContextFactoryTests
   {
+    public TestContext TestContext { get; set; }
     [TestMethod]
     [TestCategory("Unit")]
     public async Task MockAuditableContextFactoryTest()
@@ -19,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var modelA = new MyModel();
       var modelB = new MyModel();
       var fac = new DbContextFactory();
-      using var ctx = fac.CreateInMemoryAuditableDbContext<TestAuditableContext>();
+      using var ctx = fac.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
       ctx.MyModel.Add(modelA);
       ctx.MyModel.Add(modelB);
       await ctx.SaveChangesAsync();
@@ -37,7 +38,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var modelA = new MyModel();
       var modelB = new MyModel();
       var fac = new DbContextFactory();
-      using var ctx = fac.CreateInMemoryDbContext<TestDbContext>();
+      using var ctx = fac.CreateInMemoryDbContext<TestDbContext>(TestContext);
       ctx.MyModel.Add(modelA);
       ctx.MyModel.Add(modelB);
       await ctx.SaveChangesAsync();
