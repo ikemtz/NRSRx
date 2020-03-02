@@ -58,5 +58,53 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
         }
       }
     }
+
+    public static void SyncCollections<TSourceEntity, TDestinationEntity>(this IAuditableDbContext auditableContext, IEnumerable<TSourceEntity> sourceCollection, ICollection<TDestinationEntity> destinationCollection,
+    Action<TSourceEntity, TDestinationEntity> updateLogic = null) where TSourceEntity : class, IInsertableDto, new()
+      where TDestinationEntity : class, IIdentifiable, new()
+    {
+      if (sourceCollection == null)
+      {
+        throw new ArgumentNullException(nameof(sourceCollection));
+      }
+      else if (destinationCollection == null)
+      {
+        throw new ArgumentNullException(nameof(destinationCollection));
+      }
+      else if (auditableContext == null)
+      {
+        throw new ArgumentNullException(nameof(auditableContext));
+      }
+      var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
+      var destIds = destinationCollection.Select(t => t.Id).ToArray();
+
+      updateLogic ??= SimpleMapper<TSourceEntity, TDestinationEntity>.Instance.ApplyChanges;
+      //Updating Existing records
+      foreach (var srcItem in sourceCollection.Where(src => destIds.Any(t => t == src.Id)))
+      {
+        var destItem = destinationCollection.First(dst => dst.Id == srcItem.Id);
+        updateLogic(srcItem, destItem);
+      }
+
+      //Create New Records to destination
+      foreach (var srcItem in sourceCollection.Where(src => !destIds.Any(t => t == src.Id)))
+      {
+        var destItem = new TDestinationEntity();
+        updateLogic(srcItem, destItem);
+        if (srcItem.Id.GetValueOrDefault() != Guid.Empty)
+        {
+          destItem.Id = srcItem.Id.Value;
+        }
+        destinationCollection.Add(destItem);
+        auditableContext.Add(destItem);
+      }
+
+      //Delete Records from destination
+      foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t == src.Id)))
+      {
+        destinationCollection.Remove(destItem);
+        auditableContext.Remove(destItem);
+      }
+    }
   }
 }

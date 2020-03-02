@@ -6,9 +6,9 @@ namespace IkeMtz.NRSRx.Core.Models
   {
   }
 
-  public interface IIdentifiable<out TIdentityType> where TIdentityType : IComparable
+  public interface IIdentifiable<TIdentityType> where TIdentityType : IComparable
   {
-    TIdentityType Id { get; }
+    TIdentityType Id { get; set; }
   }
 }
 
