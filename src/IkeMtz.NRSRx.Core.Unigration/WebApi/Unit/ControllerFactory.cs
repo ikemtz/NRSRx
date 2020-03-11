@@ -7,7 +7,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi.Unit
   {
     public static Controller Create(params object[] args)
     {
-      Controller controller = null;
+      Controller controller;
       try
       {
         controller = (Controller)Activator.CreateInstance(typeof(Controller), args);

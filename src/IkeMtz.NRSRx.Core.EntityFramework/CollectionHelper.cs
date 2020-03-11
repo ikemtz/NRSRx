@@ -29,15 +29,15 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       foreach (var dest in sourceCollection.Where(src => !destIds.Contains(src.Id)))
       {
         destinationCollection.Add(dest);
-        auditableContext.Add(dest);
+        _ = auditableContext.Add(dest);
       }
 
       //synchronize removed items
       foreach (var destId in destIds.Where(dstId => !sourceIds.Contains(dstId)))
       {
         var entityFrameworkBoundObject = destinationCollection.First(dst => dst.Id == destId);
-        destinationCollection.Remove(entityFrameworkBoundObject);
-        auditableContext.Remove(entityFrameworkBoundObject);
+        _ = destinationCollection.Remove(entityFrameworkBoundObject);
+        _ = auditableContext.Remove(entityFrameworkBoundObject);
       }
 
       //If update record logic has been provided, run it
@@ -96,14 +96,14 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
           destItem.Id = srcItem.Id.Value;
         }
         destinationCollection.Add(destItem);
-        auditableContext.Add(destItem);
+        _ = auditableContext.Add(destItem);
       }
 
       //Delete Records from destination
       foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t == src.Id)))
       {
-        destinationCollection.Remove(destItem);
-        auditableContext.Remove(destItem);
+        _ = destinationCollection.Remove(destItem);
+        _ = auditableContext.Remove(destItem);
       }
     }
   }

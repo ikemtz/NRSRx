@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
-      SetupCoreEndpointFunctionality(services)
+      _ = SetupCoreEndpointFunctionality(services)
           .AddApplicationPart(StartupAssembly);
       SetupSwagger(services);
     }
@@ -41,30 +41,33 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        _ = app.UseDeveloperExceptionPage();
       }
       else
       {
-        app.UseHsts();
+        _ = app.UseHsts();
       }
 
-      app.UseAuthentication()
+      _ = app.UseAuthentication()
           .UseAuthorization();
-      app
+      _ = app
           .UseMvc(routeBuilder =>
           {
-            routeBuilder.SetTimeZoneInfo(TimeZoneInfo.Utc);
-            routeBuilder.Select().Expand().OrderBy().MaxTop(100).Filter().Count();
-
             var models = modelBuilder.GetEdmModels().ToList();
             var singleton = Microsoft.OData.ServiceLifetime.Singleton;
-            routeBuilder.MapVersionedODataRoutes("odata-bypath", "odata/v{version:apiVersion}", models, oBuilder =>
+            _ = routeBuilder
+            .SetTimeZoneInfo(TimeZoneInfo.Utc)
+            .Select()
+            .Expand()
+            .OrderBy()
+            .MaxTop(100)
+            .Filter()
+            .Count()
+            .MapVersionedODataRoutes("odata-bypath", "odata/v{version:apiVersion}", models, oBuilder =>
             {
-              oBuilder.AddService<ODataSerializerProvider, NrsrxODataSerializerProvider>(singleton);
+              _ = oBuilder.AddService<ODataSerializerProvider, NrsrxODataSerializerProvider>(singleton);
             });
-          });
-
-      app
+          })
           .UseSwagger()
           .UseSwaggerUI(options =>
             {
@@ -95,12 +98,10 @@ namespace IkeMtz.NRSRx.Core.OData
              }
              SetupMvcOptions(services, options);
            });
-      services.AddApiVersioning(options => options.ReportApiVersions = true);
-
-      services
-        .AddOData()
-        .EnableApiVersioning();
-      services.AddODataApiExplorer(
+      _ = services.AddApiVersioning(options => options.ReportApiVersions = true)
+          .AddOData()
+          .EnableApiVersioning();
+      _ = services.AddODataApiExplorer(
           options =>
           {
             // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service

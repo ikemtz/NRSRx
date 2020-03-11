@@ -14,9 +14,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
       var principal = new ClaimsPrincipal(new[] { identity });
       var httpCtx = new Mock<HttpContext>();
-      httpCtx.SetupGet(t => t.User).Returns(principal);
+      _ = httpCtx.SetupGet(t => t.User).Returns(principal);
       var contextAccessor = new Mock<IHttpContextAccessor>();
-      contextAccessor.SetupGet(t => t.HttpContext).Returns(httpCtx.Object);
+      _ = contextAccessor.SetupGet(t => t.HttpContext).Returns(httpCtx.Object);
       return contextAccessor.Object;
     }
   }

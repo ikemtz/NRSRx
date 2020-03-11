@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
@@ -13,8 +12,6 @@ namespace IkeMtz.NRSRx.Core.Web
   /// Once they are fixed and published, this class can be removed.</remarks>
   public class SwaggerDefaultValues : IOperationFilter
   {
-    [SuppressMessage("Design", "CA1062:Validate arguments of public methods",
-      Justification = "The OpenApiOperation and OperationFilterContext will be provided by the Swagger libraries")]
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
       var apiDescription = context.ApiDescription;

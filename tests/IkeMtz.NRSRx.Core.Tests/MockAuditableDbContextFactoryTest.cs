@@ -21,12 +21,12 @@ namespace IkeMtz.NRSRx.Core.Tests
       var modelB = new MyModel();
       var fac = new DbContextFactory();
       using var ctx = fac.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
-      ctx.MyModel.Add(modelA);
-      ctx.MyModel.Add(modelB);
-      await ctx.SaveChangesAsync();
+      _ = ctx.MyModel.Add(modelA);
+      _ = ctx.MyModel.Add(modelB);
+      _ = await ctx.SaveChangesAsync();
       Assert.AreEqual(2, await ctx.MyModel.CountAsync());
       modelA.UpdatedBy = "Not Me";
-      await ctx.SaveChangesAsync();
+      _ = await ctx.SaveChangesAsync();
       Assert.AreEqual("NRSRx Test User", modelA.UpdatedBy);
       Assert.IsNull(modelB.UpdatedOnUtc);
     }
@@ -39,12 +39,12 @@ namespace IkeMtz.NRSRx.Core.Tests
       var modelB = new MyModel();
       var fac = new DbContextFactory();
       using var ctx = fac.CreateInMemoryDbContext<TestDbContext>(TestContext);
-      ctx.MyModel.Add(modelA);
-      ctx.MyModel.Add(modelB);
-      await ctx.SaveChangesAsync();
+    _ =  ctx.MyModel.Add(modelA);
+    _ =  ctx.MyModel.Add(modelB);
+      _ = await ctx.SaveChangesAsync();
       Assert.AreEqual(2, await ctx.MyModel.CountAsync());
       modelA.UpdatedBy = "Not Me";
-      await ctx.SaveChangesAsync();
+      _ = await ctx.SaveChangesAsync();
       Assert.AreEqual("Not Me", modelA.UpdatedBy);
       Assert.IsNull(modelB.UpdatedOnUtc);
     }

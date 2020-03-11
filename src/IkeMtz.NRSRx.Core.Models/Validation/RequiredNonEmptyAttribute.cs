@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace IkeMtz.NRSRx.Core.Models.Validation
@@ -14,7 +13,6 @@ namespace IkeMtz.NRSRx.Core.Models.Validation
     {
     }
 
-    [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "ValidationContext is provided by the framework and would never bel null")]
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
       if (value is null || (value is ICollection && !((IEnumerable<object>)value).Any()))

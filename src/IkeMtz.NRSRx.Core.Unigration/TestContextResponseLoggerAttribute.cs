@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class TestContextResponseLoggerAttribute : ResultFilterAttribute
+  public sealed class TestContextResponseLoggerAttribute : ResultFilterAttribute
   {
     private readonly TestContext _testContext;
     public TestContextResponseLoggerAttribute(TestContext testContext)

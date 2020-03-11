@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupLogging(IServiceCollection services)
     {
-      services
+      _ = services
           .AddApplicationInsightsTelemetry(Configuration.GetValue<string>("InstrumentationKey"));
     }
 
@@ -48,7 +48,7 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupAuthentication(AuthenticationBuilder builder)
     {
-      builder
+      _ = builder
           .AddJwtBearer(options =>
           {
             options.Authority = Configuration.GetValue<string>("IdentityProvider");
@@ -67,8 +67,9 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public void SetupSwagger(IServiceCollection services)
     {
-      services.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this));
-      services.AddSwaggerGen(options =>
+      _ = services
+        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
+        .AddSwaggerGen(options =>
       {
         // add a custom operation filter which sets default values
         options.OperationFilter<SwaggerDefaultValues>();

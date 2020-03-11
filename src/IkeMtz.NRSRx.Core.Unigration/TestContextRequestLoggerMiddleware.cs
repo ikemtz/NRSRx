@@ -30,8 +30,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
           reader.Dispose();
           return Task.CompletedTask;
         });
-        string stringBuffer = await reader.ReadToEndAsync();
-        context.Request.Body.Seek(0, SeekOrigin.Begin);
+        var stringBuffer = await reader.ReadToEndAsync();
+        _ = context.Request.Body.Seek(0, SeekOrigin.Begin);
         TestContext.WriteLine($"Request Content: {stringBuffer}");
       }
       await _next.Invoke(context);

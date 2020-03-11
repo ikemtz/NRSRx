@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public const string JwtTokenAud = "@IkeMtz";
     public static void SetupTestAuthentication(this AuthenticationBuilder builder, IConfiguration Configuration, TestContext testContext)
     {
-      builder
+      _ = builder
       .AddJwtBearer(options =>
       {
         options.Events = new JwtBearerEvents()
@@ -69,12 +69,12 @@ namespace IkeMtz.NRSRx.Core.Unigration
             new TestContextLoggerProvider(provider.GetService<TestContext>()) }))
           .BuildServiceProvider();
       var testContext = serviceProvider.GetService<TestContext>();
-      services.AddDbContext<T>(options =>
+      _ = services.AddDbContext<T>(options =>
       {
-        options.UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}");
-        options.UseInternalServiceProvider(serviceProvider);
-        options.EnableSensitiveDataLogging(true);
-        options.EnableDetailedErrors(true);
+        _ = options.UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}");
+        _ = options.UseInternalServiceProvider(serviceProvider);
+        _ = options.EnableSensitiveDataLogging(true);
+        _ = options.EnableDetailedErrors(true);
       });
     }
   }

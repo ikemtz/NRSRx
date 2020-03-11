@@ -14,7 +14,8 @@ namespace IkeMtz.NRSRx.Core.Unigration.Logging
     {
       builder
           .SetMinimumLevel(LogLevel.Trace)
-          .Services.Add(ServiceDescriptor.Singleton<ILoggerProvider, TestContextLoggerProvider>((x) => new TestContextLoggerProvider(testContext)));
+          .Services
+          .Add(ServiceDescriptor.Singleton<ILoggerProvider, TestContextLoggerProvider>((x) => new TestContextLoggerProvider(testContext)));
       return builder;
     }
   }

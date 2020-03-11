@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi.Unit
     {
       var validationContext = new ValidationContext(model, null, null);
       var validationResults = new List<ValidationResult>();
-      Validator.TryValidateObject(model, validationContext, validationResults, true);
+      _ = Validator.TryValidateObject(model, validationContext, validationResults, true);
       foreach (var validationResult in validationResults)
       {
         Controller.ModelState.AddModelError(validationResult.MemberNames.FirstOrDefault() ?? string.Empty, validationResult.ErrorMessage);

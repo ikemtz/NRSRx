@@ -67,7 +67,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
         grant_type = "client_credentials"
       };
       var resp = await client.PostAsJsonAsync(TestServerConfiguration.GetValue<string>("IntegrationTestTokenUrl"), payload);
-      resp.EnsureSuccessStatusCode();
+      _ = resp.EnsureSuccessStatusCode();
       var respBody = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Auth0 HttpResponse: {respBody}");
       dynamic o = JsonConvert.DeserializeObject(respBody);
@@ -85,14 +85,14 @@ namespace IkeMtz.NRSRx.Core.Unigration
       var scopedServices = scope.ServiceProvider;
       var db = scopedServices.GetRequiredService<T>();
       // Ensure the database is created.
-      db.Database.EnsureCreated();
+      _ = db.Database.EnsureCreated();
       callback(db);
-      db.SaveChanges();
+      _ = db.SaveChanges();
     }
 
     public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage resp)
     {
-      resp.EnsureSuccessStatusCode();
+      _ = resp.EnsureSuccessStatusCode();
       if (resp.Content != null)
       {
         var content = await resp.Content.ReadAsStringAsync();
@@ -107,20 +107,22 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       return new WebHostBuilder()
           .ConfigureAppConfiguration((hostingContext, config) =>
-           {
-             config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
-             var appAssembly = typeof(SiteStartup).Assembly;
-             config.AddUserSecrets(appAssembly, optional: true);
-           })
+          {
+            var appAssembly = typeof(SiteStartup).Assembly;
+            _ = config
+             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+             .AddUserSecrets(appAssembly, optional: true);
+          })
            .ConfigureLogging(logging =>
            {
-             logging.AddTestContext(TestContext);
+             _ = logging.AddTestContext(TestContext);
            })
            .UseStartup<TestStartup>()
            .ConfigureServices((webHostBuilderContext, serviceCollection) =>
            {
-             serviceCollection.AddSingleton(TestContext);
-             serviceCollection.AddScoped(x => TestContext);
+             _ = serviceCollection
+             .AddSingleton(TestContext)
+             .AddScoped(x => TestContext);
              TestServerConfiguration = webHostBuilderContext.Configuration;
            });
     }

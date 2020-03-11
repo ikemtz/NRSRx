@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.Core.OData
          {
            var propertyExpression = Expression.Property(entityParam, propertyInfo);
            var dateLambda = Expression.Lambda<Func<TEntity, DateTime>>(propertyExpression, new[] { entityParam });
-           config.Property(dateLambda).AsDate();
+           _ = config.Property(dateLambda).AsDate();
          });
 
       dateType = typeof(DateTime?);
@@ -61,7 +61,7 @@ namespace IkeMtz.NRSRx.Core.OData
       {
         var propertyExpression = Expression.Property(entityParam, propertyInfo);
         var dateLambda = Expression.Lambda<Func<TEntity, DateTime?>>(propertyExpression, new[] { entityParam });
-        config.Property(dateLambda).AsDate();
+        _ = config.Property(dateLambda).AsDate();
       });
     }
   }

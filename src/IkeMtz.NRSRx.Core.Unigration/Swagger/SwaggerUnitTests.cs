@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var html = await resp.Content.ReadAsStringAsync();
-      string pattern = @"\<title\>Swagger UI\<\/title>";
+      var pattern = @"\<title\>Swagger UI\<\/title>";
       var m = Regex.Match(html, pattern);
       Assert.IsTrue(m.Success);
       return html;
@@ -34,7 +34,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       var result = await resp.Content.ReadAsStringAsync();
 
       // This was required because there's a type mismatch on the OpenApi Doc spec
-      string pattern = @",\s*\""additionalProperties\""\: false";
+      var pattern = @",\s*\""additionalProperties\""\: false";
       result = Regex.Replace(result, pattern, "");
 
 

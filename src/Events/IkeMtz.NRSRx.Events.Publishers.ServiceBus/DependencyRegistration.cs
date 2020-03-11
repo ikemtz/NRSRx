@@ -12,11 +12,11 @@ namespace Microsoft.Extensions.DependencyInjection
     public static void AddServiceBusQueuePublishers<TEntity>(this IServiceCollection services)
     where TEntity : IIdentifiable
     {
-      services.AddSingleton<IPublisher<TEntity, CreatedEvent, Message>>(t =>
-           new ServiceBusQueuePublisher<TEntity, CreatedEvent>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<TEntity, UpdatedEvent, Message>>(t =>
-          new ServiceBusQueuePublisher<TEntity, UpdatedEvent>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<TEntity, DeletedEvent, Message>>(t =>
+      _ = services.AddSingleton<IPublisher<TEntity, CreatedEvent, Message>>(t =>
+           new ServiceBusQueuePublisher<TEntity, CreatedEvent>(t.GetService<IConfiguration>()))
+        .AddSingleton<IPublisher<TEntity, UpdatedEvent, Message>>(t =>
+          new ServiceBusQueuePublisher<TEntity, UpdatedEvent>(t.GetService<IConfiguration>()))
+        .AddSingleton<IPublisher<TEntity, DeletedEvent, Message>>(t =>
           new ServiceBusQueuePublisher<TEntity, DeletedEvent>(t.GetService<IConfiguration>()));
     }
 
@@ -24,11 +24,11 @@ namespace Microsoft.Extensions.DependencyInjection
       where TIdentityType : IComparable
       where TEntity : IIdentifiable<TIdentityType>
     {
-      services.AddSingleton<IPublisher<TEntity, CreatedEvent, Message, TIdentityType>>(t =>
-          new ServiceBusQueuePublisher<TEntity, CreatedEvent, TIdentityType>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<TEntity, UpdatedEvent, Message, TIdentityType>>(t =>
-          new ServiceBusQueuePublisher<TEntity, UpdatedEvent, TIdentityType>(t.GetService<IConfiguration>()));
-      services.AddSingleton<IPublisher<TEntity, DeletedEvent, Message, TIdentityType>>(t =>
+      _ = services.AddSingleton<IPublisher<TEntity, CreatedEvent, Message, TIdentityType>>(t =>
+          new ServiceBusQueuePublisher<TEntity, CreatedEvent, TIdentityType>(t.GetService<IConfiguration>()))
+        .AddSingleton<IPublisher<TEntity, UpdatedEvent, Message, TIdentityType>>(t =>
+          new ServiceBusQueuePublisher<TEntity, UpdatedEvent, TIdentityType>(t.GetService<IConfiguration>()))
+        .AddSingleton<IPublisher<TEntity, DeletedEvent, Message, TIdentityType>>(t =>
           new ServiceBusQueuePublisher<TEntity, DeletedEvent, TIdentityType>(t.GetService<IConfiguration>()));
     }
   }

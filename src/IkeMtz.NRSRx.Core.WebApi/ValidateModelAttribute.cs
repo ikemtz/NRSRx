@@ -6,8 +6,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
 {
   public sealed class ValidateModelAttribute : ActionFilterAttribute
   {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods",
-      Justification = "ActionExecutingContext is provided by the framework and will never be null")]
     public override void OnActionExecuting(ActionExecutingContext context)
     {
       var controller = (ControllerBase)context.Controller;

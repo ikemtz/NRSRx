@@ -28,24 +28,25 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
-      SetupCoreEndpointFunctionality(services)
+      _ = SetupCoreEndpointFunctionality(services)
          .AddApplicationPart(StartupAssembly)
          .AddControllersAsServices();
-      services.AddControllers();
+      _ = services.AddControllers();
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        _ = app.UseDeveloperExceptionPage();
       }
       else
       {
-        app.UseHsts();
+        _ = app.UseHsts();
       }
-      app.UseRouting();
-      app.UseAuthentication()
+      _ = app
+       .UseRouting()
+       .UseAuthentication()
        .UseAuthorization()
        .UseSwagger()
        .UseSwaggerUI(options =>
@@ -58,10 +59,10 @@ namespace IkeMtz.NRSRx.Core.WebApi
          options.RoutePrefix = string.Empty;
          options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
          options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-       });
-      app.UseEndpoints(endpoints =>
+       })
+       .UseEndpoints(endpoints =>
       {
-        endpoints.MapControllers();
+        _ = endpoints.MapControllers();
       });
     }
 
@@ -76,22 +77,24 @@ namespace IkeMtz.NRSRx.Core.WebApi
            })
            .AddNewtonsoftJson(options =>
            {
-             options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-             options.UseCamelCasing(true);
+             options
+             .UseCamelCasing(true)
+             .SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+
              options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
            })
            .AddMessagePackFormatters()
            .AddXmlSerializerFormatters()
            .SetCompatibilityVersion(CompatibilityVersion.Latest);
-      services
-          .AddApiVersioning(options =>
-          {
+      _ = services
+           .AddApiVersioning(options =>
+           {
             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
             options.ReportApiVersions = true;
-            options.ApiVersionReader = new UrlSegmentApiVersionReader();
-          })
-          .AddVersionedApiExplorer(options =>
-          {
+             options.ApiVersionReader = new UrlSegmentApiVersionReader();
+           })
+           .AddVersionedApiExplorer(options =>
+           {
             // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
             // note: the specified format code will format the version as "'v'major[.minor][-status]"
             options.GroupNameFormat = "'v'VVV";
@@ -99,7 +102,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
             // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
             // can also be used to control the format of the API version in route templates
             options.SubstituteApiVersionInUrl = true;
-          });
+           });
       return builder;
     }
 

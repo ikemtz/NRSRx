@@ -33,12 +33,12 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
       TestContext = app.ApplicationServices.GetService<TestContext>();
-      app.UseTestContextRequestLogger(TestContext);
+      _ = app.UseTestContextRequestLogger(TestContext);
       base.Configure(app, env, provider);
     }
     public override void SetupMvcOptions(IServiceCollection services, MvcOptions options)
     {
-      options.Filters.Add<TestContextResponseLoggerAttribute>(int.MaxValue);
+      _ = options.Filters.Add<TestContextResponseLoggerAttribute>(int.MaxValue);
       base.SetupMvcOptions(services, options);
     }
   }

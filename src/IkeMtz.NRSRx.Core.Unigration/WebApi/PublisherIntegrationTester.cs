@@ -23,26 +23,26 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
       UpdatedPublisher = new Mock<IPublisher<Entity, UpdatedEvent, MessageType>>();
       DeletedPublisher = new Mock<IPublisher<Entity, DeletedEvent, MessageType>>();
 
-      CreatePublisher
+      _ = CreatePublisher
           .Setup(t => t.PublishAsync(Capture.In(CreateList), null))
           .Returns(Task.CompletedTask);
-      CreatedPublisher
+      _ = CreatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(CreatedList), null))
           .Returns(Task.CompletedTask);
-      UpdatedPublisher
+      _ = UpdatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(UpdatedList), null))
           .Returns(Task.CompletedTask);
-      DeletedPublisher
+      _ = DeletedPublisher
           .Setup(t => t.PublishAsync(Capture.In(DeletedList), null))
           .Returns(Task.CompletedTask);
     }
 
     public void RegisterDependencies(IServiceCollection services)
     {
-      services.AddSingleton(CreatePublisher.Object);
-      services.AddSingleton(CreatedPublisher.Object);
-      services.AddSingleton(UpdatedPublisher.Object);
-      services.AddSingleton(DeletedPublisher.Object);
+      _ = services.AddSingleton(CreatePublisher.Object)
+      .AddSingleton(CreatedPublisher.Object)
+      .AddSingleton(UpdatedPublisher.Object)
+      .AddSingleton(DeletedPublisher.Object);
     }
   }
 
@@ -62,26 +62,26 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
       UpdatedPublisher = new Mock<IPublisher<Entity, UpdatedEvent, MessageType, IdentityType>>();
       DeletedPublisher = new Mock<IPublisher<Entity, DeletedEvent, MessageType, IdentityType>>();
 
-      CreatePublisher
+      _ = CreatePublisher
           .Setup(t => t.PublishAsync(Capture.In(CreateList), null))
           .Returns(Task.CompletedTask);
-      CreatedPublisher
+      _ = CreatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(CreatedList), null))
           .Returns(Task.CompletedTask);
-      UpdatedPublisher
+      _ = UpdatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(UpdatedList), null))
           .Returns(Task.CompletedTask);
-      DeletedPublisher
+      _ = DeletedPublisher
           .Setup(t => t.PublishAsync(Capture.In(DeletedList), null))
           .Returns(Task.CompletedTask);
     }
 
     public void RegisterDependencies(IServiceCollection services)
     {
-      services.AddSingleton(CreatePublisher.Object);
-      services.AddSingleton(CreatedPublisher.Object);
-      services.AddSingleton(UpdatedPublisher.Object);
-      services.AddSingleton(DeletedPublisher.Object);
+      _ = services.AddSingleton(CreatePublisher.Object)
+       .AddSingleton(CreatedPublisher.Object)
+       .AddSingleton(UpdatedPublisher.Object)
+       .AddSingleton(DeletedPublisher.Object);
     }
   }
 
