@@ -17,4 +17,4 @@ TestResults/
 *.env
 *.user
 *.zip
-/templates/NRSRx Extensions/ProjectTemplates/netcoreapp3.1
+/templates/NRSRx.Extensions/ProjectTemplates/netcoreapp3.1
