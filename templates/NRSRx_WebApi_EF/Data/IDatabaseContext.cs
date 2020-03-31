@@ -6,7 +6,7 @@ namespace NRSRx_WebApi_EF.Data
 {
   public interface IDatabaseContext : IAuditableDbContext
   {
-    DbSet<Value> Values { get; set; }
+    DbSet<Item> Items { get; set; }
   }
 }
 

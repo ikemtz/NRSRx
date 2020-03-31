@@ -12,6 +12,6 @@ namespace NRSRx_WebApi_EF.Data
     {
     }
 
-    public virtual DbSet<Value> Values { get; set; }
+    public virtual DbSet<Item> Items { get; set; }
   }
 }
