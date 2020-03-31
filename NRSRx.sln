@@ -48,12 +48,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Core.Tests.OData", "tests\IkeMtz.NRSRx.Core.Tests.OData\IkeMtz.NRSRx.Core.Tests.OData.csproj", "{9C883104-84D8-44AC-8A1C-564CB32A41A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{34E96D0C-05B6-43F1-BFFD-1BFE3C8C9755}"
+	ProjectSection(SolutionItems) = preProject
+		templates\NRSRx_OData_EF.vstemplate = templates\NRSRx_OData_EF.vstemplate
+		templates\NRSRx_WebApi_EF.vstemplate = templates\NRSRx_WebApi_EF.vstemplate
+		templates\TagAndUpdateProjectTemplates.sh = templates\TagAndUpdateProjectTemplates.sh
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_WebApi_EF", "templates\NRSRx_WebApi_EF\NRSRx_WebApi_EF.csproj", "{D9632B5E-C814-472F-97A2-EA462D87771B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSRx.Extensions", "templates\NRSRx.Extensions\NRSRx.Extensions.csproj", "{FA75BED6-1FC0-4B93-814C-96D34FB67940}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSRx_OData_EF", "templates\NRSRx_OData_EF\NRSRx_OData_EF.csproj", "{1C782EC2-1B33-4061-9311-50987DCE5587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_OData_EF", "templates\NRSRx_OData_EF\NRSRx_OData_EF.csproj", "{1C782EC2-1B33-4061-9311-50987DCE5587}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
