@@ -49,7 +49,11 @@
     <Compile Include="NRSRx_ExtensionsPackage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ProjectTemplates\NRSRx WebApi EF.zip">
+    <Content Include="ProjectTemplates\NRSRx_OData_EF.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\NRSRx_WebApi_EF.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
