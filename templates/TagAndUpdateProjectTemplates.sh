@@ -21,6 +21,7 @@ do
   bestzip $i.modified.zip **  
   cp -T $i.modified.zip $originalLocation/NRSRx.Extensions/ProjectTemplates/$i.zip  
   cd ..
-  rm -rd $i
+  rm -rd $i  
 done
+rm *.zip
 cd "$originalLocation"
