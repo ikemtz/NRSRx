@@ -12,7 +12,7 @@ steps:
   displayName: Restore
   inputs:
     command: restore
-    projects: '**/*.csproj'
+    projects: 'src/**/*.csproj'
 
 - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
   displayName: 'Set Assembly Manifest Data'
@@ -26,7 +26,7 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
-    projects: '**/*.csproj'
+    projects: 'src/**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2

@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -16,3 +16,5 @@ TestResults/
 *.trx
 *.env
 *.user
+*.zip
+/templates/NRSRx.Extensions/ProjectTemplates/netcoreapp3.1
