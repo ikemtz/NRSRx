@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Core.Jwt
     public static TokenValidationParameters TokenValidationParameters { get; private set; }
     private static ConfigurationManager<OpenIdConnectConfiguration> _configurationManager;
     static TokenValidtor() { }
-    public static async Task InitAsyc(string metaDataUrl, string issuer, string audience)
+    public static async Task InitAsync(string metaDataUrl, string issuer, string audience)
     {
       var openIdConfigurationRetriever = new OpenIdConnectConfigurationRetriever();
       _configurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(metaDataUrl, openIdConfigurationRetriever)
