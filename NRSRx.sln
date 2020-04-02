@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSRx.Extensions", "templat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_OData_EF", "templates\NRSRx_OData_EF\NRSRx_OData_EF.csproj", "{1C782EC2-1B33-4061-9311-50987DCE5587}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Core.Jwt", "src\IkeMtz.NRSRx.Core.Jwt\IkeMtz.NRSRx.Core.Jwt.csproj", "{9229A2CC-48F8-44EF-BBCC-B3C718C26898}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +128,10 @@ Global
 		{1C782EC2-1B33-4061-9311-50987DCE5587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C782EC2-1B33-4061-9311-50987DCE5587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C782EC2-1B33-4061-9311-50987DCE5587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9229A2CC-48F8-44EF-BBCC-B3C718C26898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9229A2CC-48F8-44EF-BBCC-B3C718C26898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9229A2CC-48F8-44EF-BBCC-B3C718C26898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9229A2CC-48F8-44EF-BBCC-B3C718C26898}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +153,7 @@ Global
 		{D9632B5E-C814-472F-97A2-EA462D87771B} = {34E96D0C-05B6-43F1-BFFD-1BFE3C8C9755}
 		{FA75BED6-1FC0-4B93-814C-96D34FB67940} = {34E96D0C-05B6-43F1-BFFD-1BFE3C8C9755}
 		{1C782EC2-1B33-4061-9311-50987DCE5587} = {34E96D0C-05B6-43F1-BFFD-1BFE3C8C9755}
+		{9229A2CC-48F8-44EF-BBCC-B3C718C26898} = {9927A0A8-CB30-482A-B095-4DC6CF397390}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4012E7B1-E9FD-4821-A144-B1E5362D9EA7}
