@@ -2,6 +2,11 @@ name: 1.$(Year:yy).$(DayOfYear)$(Rev:.rr)
 pool:
   name: Hosted Windows 2019 with VS2019
 
+variables: 
+  PACKAGE_PROJECTS: 'src/**/*.csproj'
+  TEST_PROJECTS: 'tests/**/*.csproj'
+  TEMPLATE_PROJECTS: 'templates/**/*.csproj'
+
 steps:
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk 3.1.x'
@@ -12,7 +17,7 @@ steps:
   displayName: Restore
   inputs:
     command: restore
-    projects: 'src/**/*.csproj'
+    projects: '$(PACKAGE_PROJECTS)'
 
 - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
   displayName: 'Set Assembly Manifest Data'
@@ -36,8 +41,8 @@ steps:
       # sonar.cs.vstest.reportsPaths=$(Agent.WorkFolder)/_temp/*.trx
       # sonar.branch.name=$(System.PullRequest.SourceBranch)
       # sonar.branch.target=$(System.PullRequest.TargetBranch)
-      # sonar.exclusions=templates/**
-      # sonar.coverage.exclusions=templates/**
+      sonar.exclusions=templates/**
+      sonar.coverage.exclusions=templates/**
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
@@ -49,7 +54,7 @@ steps:
   displayName: Pack
   inputs:
     command: pack
-    packagesToPack: 'src/**/*.csproj'
+    packagesToPack: '$(PACKAGE_PROJECTS)'
     arguments: '--configuration $(BuildConfiguration)'
     nobuild: false
     versioningScheme: byBuildNumber
@@ -59,13 +64,13 @@ steps:
   inputs:
     command: test
     projects: '$(TEST_PROJECTS)'
-    arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --no-build --no-restore --filter TestCategory!=Integration'
+    arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
 
 - task: DotNetCoreCLI@2
   displayName: 'Test - Sonar'
   inputs:
     command: custom
-    projects: '**/*[Tt]ests/*.csproj'
+    projects: '$(TEST_PROJECTS)'
     custom: 'test'
     arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings'
       
@@ -90,7 +95,7 @@ steps:
   displayName: Pack Symbols
   inputs:
     command: 'pack'
-    packagesToPack: 'src/**/*.csproj'
+    packagesToPack: '$(PACKAGE_PROJECTS)'
     configuration: 'Debug'
     nobuild: false
     includesymbols: true
