@@ -23,11 +23,27 @@ steps:
     InformationalVersion: '$(Build.BuildNumber)'
     PackageVersion: '$(Build.BuildNumber)'
 
+- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  displayName: 'Prepare analysis on SonarCloud'
+  inputs:
+    SonarCloud: 'SonarCloud IkeMtz'
+    organization: ikemtz
+    projectKey: NRSRx
+    projectName: NRSRx
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.cs.vstest.reportsPaths=$(Agent.WorkFolder)/_temp/*.trx
+      # sonar.branch.name=$(System.PullRequest.SourceBranch)
+      # sonar.branch.target=$(System.PullRequest.TargetBranch)
+      # sonar.exclusions=templates/**
+      # sonar.coverage.exclusions=templates/**
+
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
     projects: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Pack
@@ -43,7 +59,18 @@ steps:
   inputs:
     command: test
     projects: '**/*[Tt]ests/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings'
+    arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings'
+      
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
+
+- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  displayName: 'Publish Quality Gate Result'
+
+- task: SimondeLang.sonarcloud-buildbreaker.sonar-buildbreaker.sonarcloud-buildbreaker@1
+  displayName: 'Break build on SonarCloud quality gate failure'
+  inputs:
+    SonarCloud: 'SonarCloud IkeMtz'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
