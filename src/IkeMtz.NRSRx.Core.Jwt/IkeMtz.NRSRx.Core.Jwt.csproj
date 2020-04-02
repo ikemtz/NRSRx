@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\Users\isaac.martinez.MCORPRHS\Pictures\ProfilePic.jpg">
+    <None Include="..\..\build\ProfilePic.jpg">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
