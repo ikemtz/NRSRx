@@ -67,10 +67,11 @@ steps:
 - task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
   displayName: 'Publish Quality Gate Result'
 
-- task: SimondeLang.sonarcloud-buildbreaker.sonar-buildbreaker.sonarcloud-buildbreaker@1
+- task: sonarcloud-buildbreaker@2
   displayName: 'Break build on SonarCloud quality gate failure'
   inputs:
     SonarCloud: 'SonarCloud IkeMtz'
+    organization: 'ikemtz'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
