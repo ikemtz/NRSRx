@@ -66,6 +66,7 @@ steps:
   inputs:
     command: custom
     projects: '**/*[Tt]ests/*.csproj'
+    custom: 'test'
     arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings'
       
 - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
