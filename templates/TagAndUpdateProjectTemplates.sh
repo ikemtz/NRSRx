@@ -16,10 +16,11 @@ do
   cd "$i"
   unzip -o ../$i.zip
   cp -T $originalLocation/$i.vstemplate "$exportedTemplateLocation"$i/MyTemplate.vstemplate
+  cp -T $originalLocation/NRSRx.Extensions/ProfilePic.jpg "$exportedTemplateLocation"$i/__TemplateIcon.jpg
   
   # bestzip is a global npm package
   bestzip $i.modified.zip **  
-  cp -T $i.modified.zip $originalLocation/NRSRx.Extensions/ProjectTemplates/$i.zip  
+  cp -T $i.modified.zip $originalLocation/NRSRx.Extensions/ProjectTemplates/$i.zip
   cd ..
   rm -rd $i  
 done
