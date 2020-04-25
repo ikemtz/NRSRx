@@ -60,7 +60,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       });
     }
 
-    public static void SetupTestDbContext<T>(this IServiceCollection services) where T : DbContext
+    public static void SetupTestDbContext<TDbContext>(this IServiceCollection services) where TDbContext : DbContext
     {
       // Build the service provider.
       var serviceProvider = services
@@ -69,7 +69,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
             new TestContextLoggerProvider(provider.GetService<TestContext>()) }))
           .BuildServiceProvider();
       var testContext = serviceProvider.GetService<TestContext>();
-      _ = services.AddDbContext<T>(options =>
+      _ = services.AddDbContext<TDbContext>(options =>
       {
         _ = options.UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}");
         _ = options.UseInternalServiceProvider(serviceProvider);

@@ -25,7 +25,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public IConfiguration TestServerConfiguration { get; set; }
 
-    public void GenerateAuthHeader(HttpClient httpClient, string token)
+    public static void GenerateAuthHeader(HttpClient httpClient, string token)
     {
       httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
       var authHeader = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
@@ -75,7 +75,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return o.access_token;
     }
 
-    public void ExecuteOnContext<T>(IServiceCollection services, Action<T> callback) where T : DbContext
+    public void ExecuteOnContext<TDbContext>(IServiceCollection services, Action<TDbContext> callback) where TDbContext : DbContext
     {
       callback = callback ?? throw new ArgumentNullException(nameof(callback));
       // Build the service provider.
@@ -85,14 +85,16 @@ namespace IkeMtz.NRSRx.Core.Unigration
       // context (ApplicationDbContext).
       using var scope = sp.CreateScope();
       var scopedServices = scope.ServiceProvider;
-      var db = scopedServices.GetRequiredService<T>();
+      var db = scopedServices.GetRequiredService<TDbContext>();
       // Ensure the database is created.
       _ = db.Database.EnsureCreated();
+
+      TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
       callback(db);
       _ = db.SaveChanges();
     }
 
-    public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
+    public static async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
       _ = httpResponseMessage.EnsureSuccessStatusCode();
