@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       TestContext.WriteLine($"** {request.Method} - {request.Path}{request.QueryString}: **");
       if (request.Body != null)
       {
-        using var reader = new StreamReader(context.Request.Body);
+        var reader = new StreamReader(context.Request.Body);
         context.Response.OnCompleted(() =>
         {
           reader.Dispose();
