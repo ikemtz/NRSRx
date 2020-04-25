@@ -48,20 +48,19 @@ namespace IkeMtz.NRSRx.Core.Web
       }
     }
 
-    private OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+    public OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
     {
       var info = new OpenApiInfo()
       {
         Title = apiTitle,
-        Version = description.ApiVersion.ToString(),
+        Version = description?.ApiVersion.ToString(),
         Description = $"<div style='color:gray;font-weight:bold'>Build #: <span style='font-weight:bolder'>{this.buildNumber}</span></div>"
       };
 
-      if (description.IsDeprecated)
+      if ((description?.IsDeprecated).GetValueOrDefault())
       {
         info.Description += " This API version has been deprecated.";
       }
-
       return info;
     }
   }

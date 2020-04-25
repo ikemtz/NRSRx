@@ -48,13 +48,13 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseRouting()
        .UseAuthentication()
        .UseAuthorization()
-       .UseSwagger()
+       .UseSwagger(options => options.RouteTemplate = "{documentName}_swagger.json")
        .UseSwaggerUI(options =>
        {
          // build a swagger endpoint for each discovered API version
          foreach (var description in provider.ApiVersionDescriptions)
          {
-           options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+           options.SwaggerEndpoint($"/{description.GroupName}_swagger.json", description.GroupName.ToUpperInvariant());
          }
          options.RoutePrefix = string.Empty;
          options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
@@ -89,19 +89,19 @@ namespace IkeMtz.NRSRx.Core.WebApi
       _ = services
            .AddApiVersioning(options =>
            {
-            // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
-            options.ReportApiVersions = true;
+             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
+             options.ReportApiVersions = true;
              options.ApiVersionReader = new UrlSegmentApiVersionReader();
            })
            .AddVersionedApiExplorer(options =>
            {
-            // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
-            // note: the specified format code will format the version as "'v'major[.minor][-status]"
-            options.GroupNameFormat = "'v'VVV";
+             // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+             // note: the specified format code will format the version as "'v'major[.minor][-status]"
+             options.GroupNameFormat = "'v'VVV";
 
-            // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
-            // can also be used to control the format of the API version in route templates
-            options.SubstituteApiVersionInUrl = true;
+             // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+             // can also be used to control the format of the API version in route templates
+             options.SubstituteApiVersionInUrl = true;
            });
       return builder;
     }
