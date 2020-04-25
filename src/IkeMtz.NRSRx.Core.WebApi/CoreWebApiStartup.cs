@@ -48,15 +48,16 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseRouting()
        .UseAuthentication()
        .UseAuthorization()
-       .UseSwagger(options => options.RouteTemplate = "{documentName}_swagger.json")
+       .UseSwagger()
        .UseSwaggerUI(options =>
        {
          // build a swagger endpoint for each discovered API version
          foreach (var description in provider.ApiVersionDescriptions)
          {
-           options.SwaggerEndpoint($"/{description.GroupName}_swagger.json", description.GroupName.ToUpperInvariant());
+           options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
          }
          options.RoutePrefix = string.Empty;
+         options.HeadContent += "<base href=\"/\">";
          options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
          options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
        })

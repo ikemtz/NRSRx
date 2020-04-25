@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NRSRx_OData_EF.Data;
 
-namespace NRSRx_OData_EF.OData
+namespace NRSRx_OData_EF
 {
   public class Startup : CoreODataStartup
   {

@@ -3,18 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IkeMtz.NRSRx.Core.Unigration.WebApi.Unit
 {
-  public static class ControllerFactory<Controller> where Controller : ControllerBase
+  public static class ControllerFactory<TController> where TController : ControllerBase
   {
-    public static Controller Create(params object[] args)
+    public static TController Create(params object[] args)
     {
-      Controller controller;
+      TController controller;
       try
       {
-        controller = (Controller)Activator.CreateInstance(typeof(Controller), args);
+        controller = (TController)Activator.CreateInstance(typeof(TController), args);
       }
       catch (MissingMethodException e)
       {
-        var msg = $"Developer exception: No constructor for type: {typeof(Controller).Name} found matching the specified arguments.";
+        var msg = $"Developer exception: No constructor for type: {typeof(TController).Name} found matching the specified arguments.";
         throw new ArgumentException(msg, e);
       }
       var objectValidator = new TestingObjectValidator

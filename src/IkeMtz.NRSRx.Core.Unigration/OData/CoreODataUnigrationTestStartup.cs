@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreODataUnigrationTestStartup<Startup, ModelConfiguration>
-        : CoreODataTestStartup<Startup, ModelConfiguration>
-        where Startup : CoreODataStartup
-        where ModelConfiguration : IModelConfiguration, new()
+  public class CoreODataUnigrationTestStartup<TStartup, TModelConfiguration>
+        : CoreODataTestStartup<TStartup, TModelConfiguration>
+        where TStartup : CoreODataStartup
+        where TModelConfiguration : IModelConfiguration, new()
   {
-    public CoreODataUnigrationTestStartup(Startup startup) : base(startup)
+    public CoreODataUnigrationTestStartup(TStartup startup) : base(startup)
     {
     }
 

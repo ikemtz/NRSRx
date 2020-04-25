@@ -8,7 +8,7 @@ using NRSRx_WebApi_EF.Data;
 using NRSRx_WebApi_EF.Models;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
-namespace NRSRx_WebApi_EF.WebApi.Controllers
+namespace NRSRx_WebApi_EF.Controllers
 {
   [Route("api/v{version:apiVersion}/[controller].{format}"), FormatFilter]
   [ApiVersion(VersionDefinitions.v1_0)]
@@ -26,7 +26,9 @@ namespace NRSRx_WebApi_EF.WebApi.Controllers
     [ProducesResponseType(Status200OK, Type = typeof(Item))]
     public async Task<ActionResult> Get([FromQuery]Guid id)
     {
-      var obj = await _databaseContext.Items.FirstOrDefaultAsync(t => t.Id == id)
+      var obj = await _databaseContext.Items
+        .AsNoTracking()
+        .FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
       return Ok(obj);
     }
@@ -37,10 +39,10 @@ namespace NRSRx_WebApi_EF.WebApi.Controllers
     [ValidateModel]
     public async Task<ActionResult> Post([FromBody] Item value)
     {
-      var obj = _databaseContext.Items.Add(value);
+      var dbContextObject = _databaseContext.Items.Add(value);
       _ = await _databaseContext.SaveChangesAsync()
           .ConfigureAwait(false);
-      return Ok(obj);
+      return Ok(dbContextObject.Entity);
     }
 
     // Put api/Items

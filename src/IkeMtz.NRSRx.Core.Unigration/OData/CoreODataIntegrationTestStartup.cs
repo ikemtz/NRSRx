@@ -5,23 +5,23 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreODataIntegrationTestStartup<Startup, ModelConfiguration>
-        : CoreODataTestStartup<Startup, ModelConfiguration>
-        where Startup : CoreODataStartup
-        where ModelConfiguration : IModelConfiguration, new()
+  public class CoreODataIntegrationTestStartup<TStartup, TModelConfiguration>
+        : CoreODataTestStartup<TStartup, TModelConfiguration>
+        where TStartup : CoreODataStartup
+        where TModelConfiguration : IModelConfiguration, new()
   {
-    public CoreODataIntegrationTestStartup(Startup startup) : base(startup)
+    public CoreODataIntegrationTestStartup(TStartup startup) : base(startup)
     {
     }
 
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
-      _startup.SetupAuthentication(builder);
+      Startup.SetupAuthentication(builder);
     }
 
     public override void SetupDatabase(IServiceCollection services, string connectionString)
     {
-      _startup.SetupDatabase(services, connectionString);
+      Startup.SetupDatabase(services, connectionString);
     }
   }
 }

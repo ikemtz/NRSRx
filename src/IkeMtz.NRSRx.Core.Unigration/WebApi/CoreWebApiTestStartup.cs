@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Builder;
@@ -9,24 +10,24 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public abstract class CoreWebApiTestStartup<Startup> : CoreWebApiStartup
-      where Startup : CoreWebApiStartup
+  public abstract class CoreWebApiTestStartup<TStartup> : CoreWebApiStartup
+      where TStartup : CoreWebApiStartup
   {
-    protected readonly Startup startup;
-    protected CoreWebApiTestStartup(Startup startup) : base(startup.Configuration)
+    public TStartup Startup { get; private set; }
+    protected CoreWebApiTestStartup(TStartup startup) : base(startup?.Configuration)
     {
-      this.startup = startup;
+      this.Startup = startup;
     }
 
-    public override string MicroServiceTitle => startup.MicroServiceTitle;
+    public override string MicroServiceTitle => Startup.MicroServiceTitle;
 
-    public override Assembly StartupAssembly => startup.StartupAssembly;
+    public override Assembly StartupAssembly => Startup.StartupAssembly;
 
     protected TestContext TestContext { get; private set; }
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {
-      startup.SetupMiscDependencies(services);
+      Startup.SetupMiscDependencies(services);
       base.SetupMiscDependencies(services);
     }
 

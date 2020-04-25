@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace NRSRx_WebApi_EF.WebApi
+namespace NRSRx_WebApi_EF
 {
   [ExcludeFromCodeCoverage]
   public static class Program

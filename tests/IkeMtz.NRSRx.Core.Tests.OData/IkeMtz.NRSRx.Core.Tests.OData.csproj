@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ProjectGuid>9C883104-84D8-44AC-8A1C-564CB32A41A9</ProjectGuid>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
-  </ItemGroup>
-</Project>

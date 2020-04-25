@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,33 +11,46 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 {
   public static class SwaggerUnitTests
   {
-    public static async Task<string> TestHtmlPageAsync(TestServer server)
+    /// <summary>
+    /// Validates and returns the Swagger page HTML
+    /// </summary>
+    /// <param name="testServer"></param>
+    /// <returns></returns>
+    public static async Task<string> TestHtmlPageAsync(TestServer testServer)
     {
-      var client = server.CreateClient();
+      testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
+      var client = testServer.CreateClient();
       //Get 
-      var resp = await client.GetAsync($"index.html");
+      var resp = await client.GetAsync($"index.html").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
-      var html = await resp.Content.ReadAsStringAsync();
+      var html = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
       var pattern = @"\<title\>Swagger UI\<\/title>";
       var m = Regex.Match(html, pattern);
       Assert.IsTrue(m.Success);
+      StringAssert.Contains(html, "<base href=\"/\">");
       return html;
     }
 
-    public static async Task<OpenApiDocument> TestJsonDocAsync(TestServer server, int version = 1)
+    /// <summary>
+    /// Validates and returns the OpenApiDocument in JSON format
+    /// </summary>
+    /// <param name="testServer"></param>
+    /// <param name="version"></param>
+    /// <returns></returns>
+    public static async Task<OpenApiDocument> TestJsonDocAsync(TestServer testServer, int version = 1)
     {
-      var client = server.CreateClient();
+      testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
+      var client = testServer.CreateClient();
       //Get 
-      var resp = await client.GetAsync($"v{version}_swagger.json");
+      var resp = await client.GetAsync($"/swagger/v{version}/swagger.json").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
-      var result = await resp.Content.ReadAsStringAsync();
+      var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
 
       // This was required because there's a type mismatch on the OpenApi Doc spec
       var pattern = @",\s*\""additionalProperties\""\: false";
       result = Regex.Replace(result, pattern, "");
-
 
       var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
       Assert.AreEqual($"{version}.0", doc.Info.Version);

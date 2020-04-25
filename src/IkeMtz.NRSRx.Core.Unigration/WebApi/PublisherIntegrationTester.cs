@@ -8,59 +8,26 @@ using Moq;
 
 namespace IkeMtz.NRSRx.Core.Unigration.WebApi
 {
-  public class PublisherIntegrationTester<Entity, MessageType> : PublisherIntegrationTester<Entity>
-       where Entity : IIdentifiable
+  public class PublisherIntegrationTester<TEntity, TMessageType> : PublisherIntegrationTester<TEntity, TMessageType, Guid>
+       where TEntity : IIdentifiable
   {
-    public Mock<IPublisher<Entity, CreateEvent, MessageType>> CreatePublisher { get; }
-    public Mock<IPublisher<Entity, CreatedEvent, MessageType>> CreatedPublisher { get; }
-    public Mock<IPublisher<Entity, UpdatedEvent, MessageType>> UpdatedPublisher { get; }
-    public Mock<IPublisher<Entity, DeletedEvent, MessageType>> DeletedPublisher { get; }
-
-    public PublisherIntegrationTester()
-    {
-      CreatePublisher = new Mock<IPublisher<Entity, CreateEvent, MessageType>>();
-      CreatedPublisher = new Mock<IPublisher<Entity, CreatedEvent, MessageType>>();
-      UpdatedPublisher = new Mock<IPublisher<Entity, UpdatedEvent, MessageType>>();
-      DeletedPublisher = new Mock<IPublisher<Entity, DeletedEvent, MessageType>>();
-
-      _ = CreatePublisher
-          .Setup(t => t.PublishAsync(Capture.In(CreateList), null))
-          .Returns(Task.CompletedTask);
-      _ = CreatedPublisher
-          .Setup(t => t.PublishAsync(Capture.In(CreatedList), null))
-          .Returns(Task.CompletedTask);
-      _ = UpdatedPublisher
-          .Setup(t => t.PublishAsync(Capture.In(UpdatedList), null))
-          .Returns(Task.CompletedTask);
-      _ = DeletedPublisher
-          .Setup(t => t.PublishAsync(Capture.In(DeletedList), null))
-          .Returns(Task.CompletedTask);
-    }
-
-    public void RegisterDependencies(IServiceCollection services)
-    {
-      _ = services.AddSingleton(CreatePublisher.Object)
-      .AddSingleton(CreatedPublisher.Object)
-      .AddSingleton(UpdatedPublisher.Object)
-      .AddSingleton(DeletedPublisher.Object);
-    }
   }
 
-  public class PublisherIntegrationTester<Entity, MessageType, IdentityType> : PublisherIntegrationTester<Entity>
-    where IdentityType : IComparable
-    where Entity : IIdentifiable<IdentityType>
+  public class PublisherIntegrationTester<TEntity, TMessageType, TIdentityType> : PublisherIntegrationTester<TEntity>
+    where TIdentityType : IComparable
+    where TEntity : IIdentifiable<TIdentityType>
   {
-    public Mock<IPublisher<Entity, CreateEvent, MessageType, IdentityType>> CreatePublisher { get; }
-    public Mock<IPublisher<Entity, CreatedEvent, MessageType, IdentityType>> CreatedPublisher { get; }
-    public Mock<IPublisher<Entity, UpdatedEvent, MessageType, IdentityType>> UpdatedPublisher { get; }
-    public Mock<IPublisher<Entity, DeletedEvent, MessageType, IdentityType>> DeletedPublisher { get; }
+    public Mock<IPublisher<TEntity, CreateEvent, TMessageType, TIdentityType>> CreatePublisher { get; }
+    public Mock<IPublisher<TEntity, CreatedEvent, TMessageType, TIdentityType>> CreatedPublisher { get; }
+    public Mock<IPublisher<TEntity, UpdatedEvent, TMessageType, TIdentityType>> UpdatedPublisher { get; }
+    public Mock<IPublisher<TEntity, DeletedEvent, TMessageType, TIdentityType>> DeletedPublisher { get; }
 
     public PublisherIntegrationTester()
     {
-      CreatePublisher = new Mock<IPublisher<Entity, CreateEvent, MessageType, IdentityType>>();
-      CreatedPublisher = new Mock<IPublisher<Entity, CreatedEvent, MessageType, IdentityType>>();
-      UpdatedPublisher = new Mock<IPublisher<Entity, UpdatedEvent, MessageType, IdentityType>>();
-      DeletedPublisher = new Mock<IPublisher<Entity, DeletedEvent, MessageType, IdentityType>>();
+      CreatePublisher = new Mock<IPublisher<TEntity, CreateEvent, TMessageType, TIdentityType>>();
+      CreatedPublisher = new Mock<IPublisher<TEntity, CreatedEvent, TMessageType, TIdentityType>>();
+      UpdatedPublisher = new Mock<IPublisher<TEntity, UpdatedEvent, TMessageType, TIdentityType>>();
+      DeletedPublisher = new Mock<IPublisher<TEntity, DeletedEvent, TMessageType, TIdentityType>>();
 
       _ = CreatePublisher
           .Setup(t => t.PublishAsync(Capture.In(CreateList), null))
@@ -85,12 +52,12 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     }
   }
 
-  public abstract class PublisherIntegrationTester<Entity>
+  public abstract class PublisherIntegrationTester<TEntity>
   {
-    public List<Entity> CreateList { get; } = new List<Entity>();
-    public List<Entity> CreatedList { get; } = new List<Entity>();
-    public List<Entity> UpdatedList { get; } = new List<Entity>();
-    public List<Entity> DeletedList { get; } = new List<Entity>();
+    public List<TEntity> CreateList { get; } = new List<TEntity>();
+    public List<TEntity> CreatedList { get; } = new List<TEntity>();
+    public List<TEntity> UpdatedList { get; } = new List<TEntity>();
+    public List<TEntity> DeletedList { get; } = new List<TEntity>();
   }
 }
 

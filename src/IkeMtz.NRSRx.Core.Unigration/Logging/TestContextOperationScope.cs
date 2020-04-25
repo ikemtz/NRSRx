@@ -11,17 +11,18 @@ namespace IkeMtz.NRSRx.Core.Unigration.Logging
     private readonly TState state;
     public TestContextOperationScope(TestContext testContext, TState state)
     {
+      testContext = testContext ?? throw new ArgumentNullException(nameof(testContext));
       this.testContext = testContext;
       this.state = state;
       this.stopWatch = new Stopwatch();
       this.stopWatch.Start();
-      this.testContext.WriteLine($"Starting Scope: {state.ToString()} @ {DateTime.Now.ToShortDateString()}");
+      this.testContext.WriteLine($"Starting Scope: {state} @ {DateTime.Now.ToShortDateString()}");
     }
 
     public void Dispose()
     {
       this.stopWatch.Stop();
-      this.testContext.WriteLine($"Ending Scope: {state.ToString()} Total Milliseconds: {this.stopWatch.ElapsedMilliseconds}");
+      this.testContext.WriteLine($"Ending Scope: {state} Total Milliseconds: {this.stopWatch.ElapsedMilliseconds}");
     }
   }
 }

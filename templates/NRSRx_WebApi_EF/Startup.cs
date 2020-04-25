@@ -5,11 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NRSRx_WebApi_EF.Data;
 
-namespace NRSRx_WebApi_EF.WebApi
+namespace NRSRx_WebApi_EF
 {
   public class Startup : CoreWebApiStartup
   {
-
     public override string MicroServiceTitle => $"{nameof(NRSRx_WebApi_EF)} WebApi Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
 
