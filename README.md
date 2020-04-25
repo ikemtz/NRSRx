@@ -2,3 +2,6 @@
 
 # NRSRX
 A framework aimed at expediting development of back-end services running .net core.
+
+A Visual Studio extension containing templates for this framework is now available at:
+https://marketplace.visualstudio.com/items?itemName=ikemtz.NRSRxExtensions

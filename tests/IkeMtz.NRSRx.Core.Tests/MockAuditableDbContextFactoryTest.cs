@@ -65,7 +65,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
   }
 
-  public class MyModel : IAuditable, ICalculateable, IAggregratedByParents
+  public class MyModel : IIdentifiable<int>, IAuditable, ICalculateable, IAggregratedByParents
   {
     public int Id { get; set; }
     public int? CalculatedValue { get; set; }

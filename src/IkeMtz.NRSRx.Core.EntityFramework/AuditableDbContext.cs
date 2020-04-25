@@ -18,19 +18,6 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       HttpContextAccessor = httpContextAccessor;
     }
 
-    public override ValueTask<EntityEntry> AddAsync(object entity, CancellationToken cancellationToken = default)
-    {
-      if (entity is IAuditable)
-      {
-        handleIAuditableCreate(entity as IAuditable);
-      }
-      if (entity is ICalculateable)
-      {
-        (entity as ICalculateable).CalculateValues();
-      }
-      return base.AddAsync(entity, cancellationToken);
-    }
-
     public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
     {
       if (entity is IAuditable)

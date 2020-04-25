@@ -1,4 +1,3 @@
-using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;

@@ -52,7 +52,6 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       var pattern = @",\s*\""additionalProperties\""\: false";
       result = Regex.Replace(result, pattern, "");
 
-
       var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
       Assert.AreEqual($"{version}.0", doc.Info.Version);
       return doc;
