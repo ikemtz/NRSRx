@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.OData;
 using Microsoft.AspNet.OData.Builder;
@@ -10,30 +11,30 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public abstract class CoreODataTestStartup<Startup, ModelConfiguration> : CoreODataStartup
-      where Startup : CoreODataStartup
-      where ModelConfiguration : IModelConfiguration, new()
+  public abstract class CoreODataTestStartup<TStartup, TModelConfiguration> : CoreODataStartup
+      where TStartup : CoreODataStartup
+      where TModelConfiguration : IModelConfiguration, new()
   {
     protected TestContext TestContext { get; private set; }
-    protected readonly Startup _startup;
-    protected CoreODataTestStartup(Startup startup) : base(startup.Configuration)
+    public TStartup Startup { get; private set; }
+    protected CoreODataTestStartup(TStartup startup) : base(startup?.Configuration)
     {
-      _startup = startup;
+      Startup = startup;
     }
 
-    public override string MicroServiceTitle => _startup.MicroServiceTitle;
+    public override string MicroServiceTitle => Startup.MicroServiceTitle;
 
-    public override Assembly StartupAssembly => _startup.StartupAssembly;
+    public override Assembly StartupAssembly => Startup.StartupAssembly;
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {
-      _startup.SetupMiscDependencies(services);
+      Startup.SetupMiscDependencies(services);
       base.SetupMiscDependencies(services);
     }
 
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
-      modelBuilder.ModelConfigurations.Add(new ModelConfiguration());
+      modelBuilder.ModelConfigurations.Add(new TModelConfiguration());
       TestContext = app.ApplicationServices.GetService<TestContext>();
       _ = app.UseTestContextRequestLogger(TestContext);
       base.Configure(app, env, modelBuilder, provider);

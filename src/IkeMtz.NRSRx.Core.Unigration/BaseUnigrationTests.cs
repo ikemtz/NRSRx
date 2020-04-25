@@ -25,10 +25,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public IConfiguration TestServerConfiguration { get; set; }
 
-    public void GenerateAuthHeader(HttpClient client, string token)
+    public void GenerateAuthHeader(HttpClient httpClient, string token)
     {
+      httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
       var authHeader = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
-      client.DefaultRequestHeaders.Authorization = authHeader;
+      httpClient.DefaultRequestHeaders.Authorization = authHeader;
     }
 
     public string GenerateTestToken(IEnumerable<Claim> testClaims = null)
@@ -58,7 +59,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public async Task<string> GenerateTokenAsync()
     {
-      var client = new HttpClient();
+      using var client = new HttpClient();
       var payload = new
       {
         client_id = TestServerConfiguration.GetValue<string>("IntegrationTestClientId"),
@@ -66,9 +67,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
         audience = TestServerConfiguration.GetValue<string>("IdentityAudiences").Split(',').First(),
         grant_type = "client_credentials"
       };
-      var resp = await client.PostAsJsonAsync(TestServerConfiguration.GetValue<string>("IntegrationTestTokenUrl"), payload);
+      var resp = await client.PostAsJsonAsync(TestServerConfiguration.GetValue<string>("IntegrationTestTokenUrl"), payload).ConfigureAwait(false);
       _ = resp.EnsureSuccessStatusCode();
-      var respBody = await resp.Content.ReadAsStringAsync();
+      var respBody = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
       TestContext.WriteLine($"Auth0 HttpResponse: {respBody}");
       dynamic o = JsonConvert.DeserializeObject(respBody);
       return o.access_token;
@@ -76,6 +77,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public void ExecuteOnContext<T>(IServiceCollection services, Action<T> callback) where T : DbContext
     {
+      callback = callback ?? throw new ArgumentNullException(nameof(callback));
       // Build the service provider.
       var sp = services.BuildServiceProvider();
 
@@ -90,25 +92,26 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = db.SaveChanges();
     }
 
-    public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage resp)
+    public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
-      _ = resp.EnsureSuccessStatusCode();
-      if (resp.Content != null)
+      httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
+      _ = httpResponseMessage.EnsureSuccessStatusCode();
+      if (httpResponseMessage.Content != null)
       {
-        var content = await resp.Content.ReadAsStringAsync();
+        var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
         var result = JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
         return result;
       }
       return default;
     }
 
-    public IWebHostBuilder TestHostBuilder<SiteStartup, TestStartup>()
-        where TestStartup : class
+    public IWebHostBuilder TestHostBuilder<TSiteStartup, TTestStartup>()
+        where TTestStartup : class
     {
       return new WebHostBuilder()
           .ConfigureAppConfiguration((hostingContext, config) =>
           {
-            var appAssembly = typeof(SiteStartup).Assembly;
+            var appAssembly = typeof(TSiteStartup).Assembly;
             _ = config
              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
              .AddUserSecrets(appAssembly, optional: true);
@@ -117,7 +120,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
            {
              _ = logging.AddTestContext(TestContext);
            })
-           .UseStartup<TestStartup>()
+           .UseStartup<TTestStartup>()
            .ConfigureServices((webHostBuilderContext, serviceCollection) =>
            {
              _ = serviceCollection
@@ -126,7 +129,5 @@ namespace IkeMtz.NRSRx.Core.Unigration
              TestServerConfiguration = webHostBuilderContext.Configuration;
            });
     }
-
-
   }
 }

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreWebApiUnigrationTestStartup<Startup> : CoreWebApiTestStartup<Startup>
-        where Startup : CoreWebApiStartup
+  public class CoreWebApiUnigrationTestStartup<TStartup> : CoreWebApiTestStartup<TStartup>
+        where TStartup : CoreWebApiStartup
   {
-    public CoreWebApiUnigrationTestStartup(Startup startup) : base(startup)
+    public CoreWebApiUnigrationTestStartup(TStartup startup) : base(startup)
     {
     }
 

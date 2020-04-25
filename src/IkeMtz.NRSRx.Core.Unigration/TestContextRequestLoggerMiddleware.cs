@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -19,22 +20,23 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public async Task Invoke(HttpContext context)
     {
+      context = context ?? throw new ArgumentNullException(nameof(context));
       var request = context.Request;
       context.Request.EnableBuffering();
       TestContext.WriteLine($"** {request.Method} - {request.Path}{request.QueryString}: **");
       if (request.Body != null)
       {
-        var reader = new StreamReader(context.Request.Body);
+        using var reader = new StreamReader(context.Request.Body);
         context.Response.OnCompleted(() =>
         {
           reader.Dispose();
           return Task.CompletedTask;
         });
-        var stringBuffer = await reader.ReadToEndAsync();
+        var stringBuffer = await reader.ReadToEndAsync().ConfigureAwait(false);
         _ = context.Request.Body.Seek(0, SeekOrigin.Begin);
         TestContext.WriteLine($"Request Content: {stringBuffer}");
       }
-      await _next.Invoke(context);
+      await _next.Invoke(context).ConfigureAwait(false);
     }
   }
 

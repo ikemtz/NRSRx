@@ -20,6 +20,8 @@ namespace IkeMtz.NRSRx.Core.Authorization
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
+      context = context ?? throw new ArgumentNullException(nameof(context));
+
       if (!HasPermission(context))
       {
         var collection = context.HttpContext.Request.Query.Select(t =>

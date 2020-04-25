@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,23 +7,25 @@ namespace IkeMtz.NRSRx.Core.Unigration
 {
   public static class TestServerExtensions
   {
-    public static Context GetDbContext<Context>(this TestServer testServer) where Context : DbContext
+    public static TContext GetDbContext<TContext>(this TestServer testServer) where TContext : DbContext
     {
+      testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var services = testServer.Host.Services;
-      var dbContext = services.GetRequiredService<Context>();
+      var dbContext = services.GetRequiredService<TContext>();
       return dbContext;
     }
 
-    public static ServiceType GetTestService<ServiceType>(this TestServer testServer) where ServiceType : class
+    public static TServiceType GetTestService<TServiceType>(this TestServer testServer) where TServiceType : class
     {
-      return testServer.Host.Services.GetService<ServiceType>();
+      testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
+      return testServer.Host.Services.GetService<TServiceType>();
     }
 
-    public static ImplementationType GetTestService<ServiceType, ImplementationType>(this TestServer testServer)
-        where ServiceType : class
-        where ImplementationType : class
+    public static TImplementationType GetTestService<TServiceType, TImplementationType>(this TestServer testServer)
+        where TServiceType : class
+        where TImplementationType : class
     {
-      return testServer.GetTestService<ServiceType>() as ImplementationType;
+      return testServer.GetTestService<TServiceType>() as TImplementationType;
     }
   }
 }
