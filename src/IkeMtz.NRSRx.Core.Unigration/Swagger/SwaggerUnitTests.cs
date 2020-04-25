@@ -11,6 +11,11 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 {
   public static class SwaggerUnitTests
   {
+    /// <summary>
+    /// Validates and returns the Swagger page HTML
+    /// </summary>
+    /// <param name="testServer"></param>
+    /// <returns></returns>
     public static async Task<string> TestHtmlPageAsync(TestServer testServer)
     {
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
@@ -23,9 +28,16 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       var pattern = @"\<title\>Swagger UI\<\/title>";
       var m = Regex.Match(html, pattern);
       Assert.IsTrue(m.Success);
+      StringAssert.Contains(html, "<base href=\"/\">");
       return html;
     }
 
+    /// <summary>
+    /// Validates and returns the OpenApiDocument in JSON format
+    /// </summary>
+    /// <param name="testServer"></param>
+    /// <param name="version"></param>
+    /// <returns></returns>
     public static async Task<OpenApiDocument> TestJsonDocAsync(TestServer testServer, int version = 1)
     {
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));

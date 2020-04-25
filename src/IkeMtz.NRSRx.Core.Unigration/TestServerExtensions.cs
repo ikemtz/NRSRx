@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,10 +10,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
   {
     public static TContext GetDbContext<TContext>(this TestServer testServer) where TContext : DbContext
     {
-      testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
-      var services = testServer.Host.Services;
-      var dbContext = services.GetRequiredService<TContext>();
-      return dbContext;
+      return GetTestService<TContext>(testServer);
     }
 
     public static TServiceType GetTestService<TServiceType>(this TestServer testServer) where TServiceType : class

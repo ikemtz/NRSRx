@@ -39,7 +39,7 @@ namespace IkeMtz.Samples.WebApi.WebApi.Controllers
     {
       var dbContextObject = _databaseContext.Items.Add(value);
       _ = await _databaseContext.SaveChangesAsync()
-          .ConfigureAwait(true);
+          .ConfigureAwait(false);
       return Ok(dbContextObject.Entity);
     }
 
