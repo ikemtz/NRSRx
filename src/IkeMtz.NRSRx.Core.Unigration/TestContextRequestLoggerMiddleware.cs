@@ -32,11 +32,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
           reader.Dispose();
           return Task.CompletedTask;
         });
-        var stringBuffer = await reader.ReadToEndAsync().ConfigureAwait(false);
+        var stringBuffer = await reader.ReadToEndAsync().ConfigureAwait(true);
         _ = context.Request.Body.Seek(0, SeekOrigin.Begin);
         TestContext.WriteLine($"Request Content: {stringBuffer}");
       }
-      await _next.Invoke(context).ConfigureAwait(false);
+      await _next.Invoke(context).ConfigureAwait(true);
     }
   }
 

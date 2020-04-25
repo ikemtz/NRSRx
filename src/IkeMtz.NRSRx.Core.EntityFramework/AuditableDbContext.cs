@@ -22,12 +22,12 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (entity is IAuditable)
       {
-        var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
-        var auditable = entity as IAuditable;
-        auditable.CreatedOnUtc = DateTime.UtcNow;
-        auditable.CreatedBy = currentUsername;
+        handleIAuditableCreate(entity as IAuditable);
       }
-
+      if (entity is ICalculateable)
+      {
+        (entity as ICalculateable).CalculateValues();
+      }
       return base.AddAsync(entity, cancellationToken);
     }
 
@@ -35,14 +35,24 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (entity is IAuditable)
       {
-        var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
-        var auditable = entity as IAuditable;
-        auditable.CreatedOnUtc = DateTime.UtcNow;
-        auditable.CreatedBy = currentUsername;
+        handleIAuditableCreate(entity as IAuditable);
+      }
+      if (entity is ICalculateable)
+      {
+        (entity as ICalculateable).CalculateValues();
       }
       return base.AddAsync(entity, cancellationToken);
     }
-
+    private void handleIAuditableCreate(IAuditable auditable)
+    {
+      auditable.CreatedOnUtc = auditable.CreatedOnUtc.Year != 1 ? auditable.CreatedOnUtc : DateTime.UtcNow;
+      auditable.CreatedBy ??= HttpContextAccessor.HttpContext.User.Identity.Name;
+    }
+    private void handleIAuditableUpdate(IAuditable auditable)
+    {
+      auditable.UpdatedOnUtc = DateTime.UtcNow;
+      auditable.UpdatedBy = HttpContextAccessor.HttpContext.User.Identity.Name;
+    }
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
       CalculateValues();
@@ -76,34 +86,24 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     private void AddAuditables()
     {
       var entities = base.ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Added));
-      var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
 
       foreach (var auditable in entities
           .Select(t => t.Entity as IAuditable)
           .Where(t => t != null))
       {
-        auditable.CreatedOnUtc = DateTime.UtcNow;
-        auditable.CreatedBy = currentUsername;
-      }
-      foreach (var disableable in entities
-          .Select(t => t.Entity as IDisableable)
-          .Where(t => t != null))
-      {
-        disableable.IsEnabled = true;
+        handleIAuditableCreate(auditable);
       }
     }
 
     private void UpdateAuditables()
     {
       var entities = base.ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Modified));
-      var currentUsername = HttpContextAccessor.HttpContext.User.Identity.Name;
 
       foreach (var auditable in entities
          .Select(t => t.Entity as IAuditable)
          .Where(t => t != null))
       {
-        auditable.UpdatedOnUtc = DateTime.UtcNow;
-        auditable.UpdatedBy = currentUsername;
+        handleIAuditableUpdate(auditable);
       }
     }
   }

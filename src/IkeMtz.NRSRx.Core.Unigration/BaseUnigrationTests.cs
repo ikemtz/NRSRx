@@ -67,9 +67,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
         audience = TestServerConfiguration.GetValue<string>("IdentityAudiences").Split(',').First(),
         grant_type = "client_credentials"
       };
-      var resp = await client.PostAsJsonAsync(TestServerConfiguration.GetValue<string>("IntegrationTestTokenUrl"), payload).ConfigureAwait(false);
+      var resp = await client.PostAsJsonAsync(TestServerConfiguration.GetValue<string>("IntegrationTestTokenUrl"), payload).ConfigureAwait(true);
       _ = resp.EnsureSuccessStatusCode();
-      var respBody = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+      var respBody = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
       TestContext.WriteLine($"Auth0 HttpResponse: {respBody}");
       dynamic o = JsonConvert.DeserializeObject(respBody);
       return o.access_token;
@@ -100,7 +100,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = httpResponseMessage.EnsureSuccessStatusCode();
       if (httpResponseMessage.Content != null)
       {
-        var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+        var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
         var result = JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
         return result;
       }

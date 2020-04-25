@@ -16,10 +16,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
       //Get 
-      var resp = await client.GetAsync($"index.html").ConfigureAwait(false);
+      var resp = await client.GetAsync($"index.html").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
-      var html = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+      var html = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
       var pattern = @"\<title\>Swagger UI\<\/title>";
       var m = Regex.Match(html, pattern);
       Assert.IsTrue(m.Success);
@@ -31,10 +31,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
       //Get 
-      var resp = await client.GetAsync($"v{version}_swagger.json").ConfigureAwait(false);
+      var resp = await client.GetAsync($"/swagger/v{version}/swagger.json").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
-      var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+      var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
 
       // This was required because there's a type mismatch on the OpenApi Doc spec
       var pattern = @",\s*\""additionalProperties\""\: false";

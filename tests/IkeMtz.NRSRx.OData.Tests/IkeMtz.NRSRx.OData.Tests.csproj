@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Configuration\ModelConfiguration.cs" Link="SampleWeb\Configuration\ModelConfiguration.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Controllers\V1\ItemsController.cs" Link="SampleWeb\Controllers\V1\ItemsController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Data\DatabaseContext.cs" Link="SampleWeb\Data\DatabaseContext.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Data\IDatabaseContext.cs" Link="SampleWeb\Data\IDatabaseContext.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Models\Item.cs" Link="SampleWeb\Models\Item.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Startup.cs" Link="SampleWeb\Startup.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\VersionDefinitions.cs" Link="SampleWeb\VersionDefinitions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SampleWeb\Configuration\" />
+    <Folder Include="SampleWeb\Controllers\V1\" />
+    <Folder Include="SampleWeb\Data\" />
+    <Folder Include="SampleWeb\Models\" />
+  </ItemGroup>
+
+</Project>
