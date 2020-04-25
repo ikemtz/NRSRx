@@ -68,12 +68,12 @@ namespace IkeMtz.NRSRx.Core.OData
               _ = oBuilder.AddService<ODataSerializerProvider, NrsrxODataSerializerProvider>(singleton);
             });
           })
-          .UseSwagger()
+          .UseSwagger(options => options.RouteTemplate = "{documentName}_swagger.json")
           .UseSwaggerUI(options =>
             {
               foreach (var description in provider.ApiVersionDescriptions)
               {
-                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                options.SwaggerEndpoint($"/{description.GroupName}_swagger.json", description.GroupName.ToUpperInvariant());
               }
               options.RoutePrefix = string.Empty;
               options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));

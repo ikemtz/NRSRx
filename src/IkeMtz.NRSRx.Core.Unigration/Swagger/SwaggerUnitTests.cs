@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
     {
       var client = server.CreateClient();
       //Get 
-      var resp = await client.GetAsync($"swagger/v{version}/swagger.json");
+      var resp = await client.GetAsync($"v{version}_swagger.json");
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var result = await resp.Content.ReadAsStringAsync();
