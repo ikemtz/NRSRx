@@ -68,8 +68,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.WebApi", "sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.OData", "samples\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj", "{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSRx_WebApi_EF2", "NRSRx_WebApi_EF2\NRSRx_WebApi_EF2.csproj", "{255590A4-A914-4333-8117-67E519C350DD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,10 +146,6 @@ Global
 		{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{255590A4-A914-4333-8117-67E519C350DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{255590A4-A914-4333-8117-67E519C350DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{255590A4-A914-4333-8117-67E519C350DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{255590A4-A914-4333-8117-67E519C350DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,7 +170,6 @@ Global
 		{B7377202-E30D-4BA0-B52E-0173786806DC} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
 		{05BBED50-7792-4023-88DA-7A596D73F7D1} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
 		{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
-		{255590A4-A914-4333-8117-67E519C350DD} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4012E7B1-E9FD-4821-A144-B1E5362D9EA7}

@@ -18,3 +18,4 @@ TestResults/
 *.user
 *.zip
 /templates/NRSRx.Extensions/ProjectTemplates/netcoreapp3.1
+*.pubxml
