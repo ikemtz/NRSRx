@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\ItemsController.cs" Link="SampleWeb\Controllers\ItemsController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\ItemsController.cs" Link="SampleWeb\Controllers\V1\ItemsController.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Data\DatabaseContext.cs" Link="SampleWeb\Data\DatabaseContext.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Data\IDatabaseContext.cs" Link="SampleWeb\Data\IDatabaseContext.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Models\Item.cs" Link="SampleWeb\Models\Item.cs" />
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SampleWeb\Controllers\" />
+    <Folder Include="SampleWeb\Controllers\V1\" />
     <Folder Include="SampleWeb\Data\" />
     <Folder Include="SampleWeb\Models\" />
   </ItemGroup>
