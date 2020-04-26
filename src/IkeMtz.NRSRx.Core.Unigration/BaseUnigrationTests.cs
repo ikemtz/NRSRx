@@ -96,14 +96,14 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public static async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
-      httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
-      _ = httpResponseMessage.EnsureSuccessStatusCode();
+      httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));   
       if (httpResponseMessage.Content != null)
       {
         var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
         var result = JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
         return result;
       }
+      _ = httpResponseMessage.EnsureSuccessStatusCode();
       return default;
     }
 

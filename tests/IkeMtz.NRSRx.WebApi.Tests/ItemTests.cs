@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.OData.Tests;
@@ -30,7 +31,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
           });
         }));
       var client = srv.CreateClient();
-      GenerateAuthHeader(client, GenerateTestToken());
+      GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("MyTestClaim", Guid.NewGuid().ToString()) }));
       //Get 
       var resp = await client.GetAsync($"api/v1/{nameof(Item)}s.json?id={item.Id}");
       var httpItem = await DeserializeResponseAsync<Item>(resp);
