@@ -3,6 +3,8 @@
 export originalLocation=$(pwd)
 export exportedTemplateLocation="/c/Users/isaac.martinez.MCORPRHS/Documents/Visual Studio 2019/My Exported Templates/"
 
+rm NRSRx.Extensions/ProjectTemplates/*.zip
+
 echo Script Folder: $originalLocation
 echo Template Folder: $exportedTemplateLocation
 
