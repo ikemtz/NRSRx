@@ -1,4 +1,4 @@
-# NRSRx_WebApi_EF
+# $safeprojectname$
 
 This project was created with NRSRx WebApi EF Project Template.  This template is part of the NRSRx Project Templates VS Extension.
 

@@ -1,4 +1,4 @@
-# NRSRx_OData_EF
+# $safeprojectname$
 
 This project was created with NRSRx OData Project Template.  This template is part of the NRSRx Project Templates VS Extension.
 
