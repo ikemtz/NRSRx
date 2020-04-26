@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       var pattern = @"\<title\>Swagger UI\<\/title>";
       var m = Regex.Match(html, pattern);
       Assert.IsTrue(m.Success);
-      StringAssert.Contains(html, "<base href=\"/\">");
+      StringAssert.Contains(html, "<meta name=\"robots\" content=\"none\" />");
       return html;
     }
 
