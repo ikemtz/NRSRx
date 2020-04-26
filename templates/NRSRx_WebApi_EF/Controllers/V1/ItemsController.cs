@@ -8,7 +8,7 @@ using NRSRx_WebApi_EF.Data;
 using NRSRx_WebApi_EF.Models;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
-namespace NRSRx_WebApi_EF.Controllers
+namespace NRSRx_WebApi_EF.Controllers.V1
 {
   [Route("api/v{version:apiVersion}/[controller].{format}"), FormatFilter]
   [ApiVersion(VersionDefinitions.v1_0)]

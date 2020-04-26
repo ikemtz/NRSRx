@@ -14,7 +14,6 @@ namespace NRSRx_WebApi_EF
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
-
     public override void SetupDatabase(IServiceCollection services, string connectionString)
     {
       _ = services
