@@ -9,6 +9,16 @@
     <OutputPath></OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CA1707</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="IkeMtz.NRSRx.Core.EntityFramework" Version="1.20.116.3" />
     <PackageReference Include="IkeMtz.NRSRx.Core.WebApi" Version="1.20.116.3" />

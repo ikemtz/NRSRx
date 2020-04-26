@@ -9,12 +9,10 @@ namespace IkeMtz.Samples.WebApi
 {
   public class Startup : CoreWebApiStartup
   {
-
     public override string MicroServiceTitle => $"{nameof(IkeMtz.Samples.WebApi)} WebApi Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
 
     public Startup(IConfiguration configuration) : base(configuration) { }
-
 
     public override void SetupDatabase(IServiceCollection services, string connectionString)
     {
