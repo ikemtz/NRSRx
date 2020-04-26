@@ -9,7 +9,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public TestAuditableDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options, httpContextAccessor)
     {
     }
-    public DbSet<MyModel> MyModel { get; set; }
+    public DbSet<MyIntModel> MyModel { get; set; }
     public DbSet<CollectionModel> CollectionModel { get; set; }
   }
 
@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public TestDbContext(DbContextOptions options) : base(options)
     {
     }
-    public DbSet<MyModel> MyModel { get; set; }
+    public DbSet<MyIntModel> MyModel { get; set; }
     public DbSet<CollectionModel> CollectionModel { get; set; }
   }
 }

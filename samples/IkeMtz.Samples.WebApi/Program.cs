@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace IkeMtz.Samples.WebApi.WebApi
+namespace IkeMtz.Samples.WebApi
 {
   [ExcludeFromCodeCoverage]
   public static class Program

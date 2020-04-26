@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace IkeMtz.Samples.OData.OData
+namespace IkeMtz.Samples.OData
 {
   public static class Program
   {

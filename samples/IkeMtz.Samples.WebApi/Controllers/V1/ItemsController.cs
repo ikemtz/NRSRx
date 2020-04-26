@@ -4,11 +4,11 @@ using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NRSRx_WebApi_EF.Data;
-using NRSRx_WebApi_EF.Models;
+using IkeMtz.Samples.WebApi.Data;
+using IkeMtz.Samples.WebApi.Models;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
-namespace NRSRx_WebApi_EF.Controllers
+namespace IkeMtz.Samples.WebApi.Controllers.V1
 {
   [Route("api/v{version:apiVersion}/[controller].{format}"), FormatFilter]
   [ApiVersion(VersionDefinitions.v1_0)]

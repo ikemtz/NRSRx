@@ -1,13 +1,13 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
     <Name>NRSRx WebApi EF</Name>
-    <Description>NRSRx based WebApi RESTful service</Description>
+    <Description>NRSRx based WebApi RESTful service with SQL EF</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
     <SortOrder>1000</SortOrder>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>NRSRx_WebApi_EF</DefaultName>
+    <DefaultName>NRSRx.WebApi.EF</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
@@ -24,7 +24,9 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>
       </Folder>
       <Folder Name="Controllers" TargetFolderName="Controllers">
-        <ProjectItem ReplaceParameters="true" TargetFileName="ItemsController.cs">ItemsController.cs</ProjectItem>
+        <Folder Name="V1" TargetFolderName="V1">
+          <ProjectItem ReplaceParameters="true" TargetFileName="ItemsController.cs">ItemsController.cs</ProjectItem>
+        </Folder>
       </Folder>
       <Folder Name="Data" TargetFolderName="Data">
         <ProjectItem ReplaceParameters="true" TargetFileName="DatabaseContext.cs">DatabaseContext.cs</ProjectItem>
@@ -33,12 +35,16 @@
       <Folder Name="Models" TargetFolderName="Models">
         <ProjectItem ReplaceParameters="true" TargetFileName="Item.cs">Item.cs</ProjectItem>
       </Folder>
+      <ProjectItem ReplaceParameters="false" TargetFileName=".editorconfig">.editorconfig</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName=".editorconfig">vstg0001.editorconfig</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName=".editorconfig">vstg0002.editorconfig</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.json">appsettings.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.Development.json">appsettings.Development.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="GlobalSuppressions.cs">GlobalSuppressions.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Program.cs">Program.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="readme.md">readme.md</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Startup.cs">Startup.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="VersionDefinitions.cs">VersionDefinitions.cs</ProjectItem>
     </Project>
-  </TemplateContent>
+  </TemplateContent>  
 </VSTemplate>
