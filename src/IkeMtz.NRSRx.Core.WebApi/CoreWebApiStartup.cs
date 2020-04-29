@@ -56,6 +56,8 @@ namespace IkeMtz.NRSRx.Core.WebApi
          {
            options.SwaggerEndpoint($"./swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
          }
+         options.EnableDeepLinking();
+         options.EnableFilter();
          options.RoutePrefix = string.Empty;
          options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
          options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
