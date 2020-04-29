@@ -75,6 +75,8 @@ namespace IkeMtz.NRSRx.Core.OData
               {
                 options.SwaggerEndpoint($"./swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
               }
+              options.EnableDeepLinking();
+              options.EnableFilter();
               options.RoutePrefix = string.Empty;
               options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
               options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
