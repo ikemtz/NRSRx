@@ -15,8 +15,16 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public override void OnResultExecuted(ResultExecutedContext context)
     {
       context = context ?? throw new ArgumentNullException(nameof(context));
-      var result = JsonConvert.SerializeObject(context.Result, Constants.JsonSerializerSettings);
-      _testContext.WriteLine($"Server Response: {result}");
+      try
+      {
+        var result = JsonConvert.SerializeObject(context.Result, Constants.JsonSerializerSettings);
+        _testContext.WriteLine($"Server Response: {result}");
+      }
+      catch(JsonSerializationException exception)
+      {
+        _testContext.WriteLine($"Exception thrown attempting to serialize server response: {exception.Message}");
+        _testContext.WriteLine($"Server Response: {context.Result}");
+      }
       base.OnResultExecuted(context);
     }
   }

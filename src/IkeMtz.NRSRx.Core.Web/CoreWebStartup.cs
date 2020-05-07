@@ -71,6 +71,7 @@ namespace IkeMtz.NRSRx.Core.Web
         .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
         .AddSwaggerGen(options =>
       {
+        options.UseInlineDefinitionsForEnums();
         // add a custom operation filter which sets default values
         options.OperationFilter<SwaggerDefaultValues>();
         var audiences = GetIdentityAudiences();
