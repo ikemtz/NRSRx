@@ -61,7 +61,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     }
   }
 
-  public class PublisherUnigrationTester<TEntity, TMessageType, TIdentityType> : PublisherIntegrationTester<TEntity>
+  public class PublisherUnigrationTester<TEntity, TMessageType, TIdentityType> : PublisherUnigrationTester<TEntity>
     where TIdentityType : IComparable
     where TEntity : IIdentifiable<TIdentityType>
   {
@@ -112,7 +112,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     }
   }
 
-  public abstract class PublisherIntegrationTester<TEntity>
+  public abstract class PublisherUnigrationTester<TEntity>
   {
     public List<TEntity> CreateList { get; } = new List<TEntity>();
     public List<TEntity> CreatedList { get; } = new List<TEntity>();
