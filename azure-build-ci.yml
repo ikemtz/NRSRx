@@ -108,3 +108,12 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     ArtifactName: 'symbol_drop'
+
+- task: GitTag@5
+  inputs:
+    workingdir: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)'
+    tagUser: 'ikemtz'
+    tagEmail: 'ikemtz@outlook.com'
+    tag: 'nrsrx-$(build.buildNumber)'
+    tagMessage: 'nrsrx-$(build.buildNumber)'
+    useLightweightTags: true
