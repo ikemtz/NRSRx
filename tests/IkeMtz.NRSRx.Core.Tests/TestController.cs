@@ -10,6 +10,17 @@ namespace IkeMtz.NRSRx.Core.Tests
   [ApiController]
   public class TestController : ControllerBase
   {
+    [HttpGet]
+    public IActionResult Get(ApiVersion apiVersion)
+    {
+      var result = new PingResult
+      {
+        Name = $"NRSRx Test Controller",
+        Version = $"v{apiVersion.MajorVersion}.{apiVersion.MinorVersion ?? 0}",
+        Build = this.GetBuildNumber()
+      };
+      return Ok(result);
+    }
     [HttpPost]
     [ValidateModel]
     public IActionResult IsValid(TestModel model)
