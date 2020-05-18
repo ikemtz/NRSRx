@@ -18,9 +18,8 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task MockAuditableContextFactoryTest()
     {
       var modelA = new MyIntModel();
-      var modelB = new MyIntModel();
-      var fac = new DbContextFactory();
-      using var ctx = fac.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
+      var modelB = new MyIntModel(); 
+      using var ctx = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
       _ = ctx.MyModel.Add(modelA);
       _ = ctx.MyModel.Add(modelB);
       _ = await ctx.SaveChangesAsync();
@@ -36,9 +35,8 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task MockAuditableContextAddAsyncTest()
     {
       var modelA = new MyIntModel();
-      var modelB = new MyIntModel();
-      var fac = new DbContextFactory();
-      using var ctx = fac.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
+      var modelB = new MyIntModel(); 
+      using var ctx = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
       var dbContextObjA = await ctx.AddAsync(modelA);
       var dbContextObjB = await ctx.AddAsync<MyIntModel>(modelB);
       Assert.AreEqual(1, dbContextObjA.Entity.Id);
@@ -51,9 +49,8 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task MockDbContextFactoryTest()
     {
       var modelA = new MyIntModel();
-      var modelB = new MyIntModel();
-      var fac = new DbContextFactory();
-      using var ctx = fac.CreateInMemoryDbContext<TestDbContext>(TestContext);
+      var modelB = new MyIntModel(); 
+      using var ctx = DbContextFactory.CreateInMemoryDbContext<TestDbContext>(TestContext);
       _ = ctx.MyModel.Add(modelA);
       _ = ctx.MyModel.Add(modelB);
       _ = await ctx.SaveChangesAsync();

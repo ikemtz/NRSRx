@@ -12,13 +12,13 @@ using Moq;
 namespace IkeMtz.NRSRx.Core.Tests
 {
   [TestClass]
-  public class PublisherIntegrationTesterTests : BaseUnigrationTests
+  public class PublisherUnigrationTesterTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Unit")]
-    public async Task ValidatePublisherIntegrationTypedIdTester()
+    public async Task ValidatePublisherUnigrationTypedIdTester()
     {
-      var tester = new PublisherIntegrationTester<MyIntModel, Message, int>();
+      var tester = new PublisherUnigrationTester<MyIntModel, Message, int>();
       await tester.CreatePublisher.Object.PublishAsync(new MyIntModel { Id = 1 });
       await tester.CreatedPublisher.Object.PublishAsync(new MyIntModel { Id = 2 });
       await tester.UpdatedPublisher.Object.PublishAsync(new MyIntModel { Id = 3 });
@@ -37,9 +37,9 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
-    public async Task ValidatePublisherIntegrationGuidIdTester()
+    public async Task ValidatePublisherUnigrationGuidIdTester()
     {
-      var tester = new PublisherIntegrationTester<MyGuidModel, Message>();
+      var tester = new PublisherUnigrationTester<MyGuidModel, Message>();
       await tester.GuidCreatePublisher.Object.PublishAsync(new MyGuidModel { Id = Guid.NewGuid() });
       await tester.GuidCreatedPublisher.Object.PublishAsync(new MyGuidModel { Id = Guid.NewGuid() });
       await tester.GuidUpdatedPublisher.Object.PublishAsync(new MyGuidModel { Id = Guid.NewGuid() });
@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void ValidateDependencyRegistration()
     {
       var serviceCollection = new ServiceCollection();
-      var tester = new PublisherIntegrationTester<MyGuidModel, Message>();
+      var tester = new PublisherUnigrationTester<MyGuidModel, Message>();
       tester.RegisterDependencies(serviceCollection);
       Assert.AreEqual(8, serviceCollection.Count);
     }

@@ -64,9 +64,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.OData.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.WebApi.Tests", "tests\IkeMtz.NRSRx.WebApi.Tests\IkeMtz.NRSRx.WebApi.Tests.csproj", "{B7377202-E30D-4BA0-B52E-0173786806DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.Samples.WebApi", "samples\IkeMtz.Samples.WebApi\IkeMtz.Samples.WebApi.csproj", "{05BBED50-7792-4023-88DA-7A596D73F7D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.WebApi", "samples\IkeMtz.Samples.WebApi\IkeMtz.Samples.WebApi.csproj", "{05BBED50-7792-4023-88DA-7A596D73F7D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.Samples.OData", "samples\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj", "{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.OData", "samples\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj", "{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

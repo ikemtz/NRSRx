@@ -57,7 +57,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
       return queueClient.SendAsync(msg);
     }
 
-    private string GetQueueName()
+    private static string GetQueueName()
     {
       var eventType = new TEvent();
       return $"{typeof(TEntity).Name}{eventType.EventSuffix}";

@@ -7,9 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class DbContextFactory
+  public static class DbContextFactory
   {
-    public TAuditableDbContext CreateInMemoryAuditableDbContext<TAuditableDbContext>(TestContext testContext)
+    public static TAuditableDbContext CreateInMemoryAuditableDbContext<TAuditableDbContext>(TestContext testContext)
         where TAuditableDbContext : AuditableDbContext
     {
       var fac = new MockHttpContextAccessorFactory();
@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return (TAuditableDbContext)constructor.Invoke(new object[] { options, accessor });
     }
 
-    public TDbContext CreateInMemoryDbContext<TDbContext>(TestContext testContext)
+    public static TDbContext CreateInMemoryDbContext<TDbContext>(TestContext testContext)
         where TDbContext : DbContext
     {
       var options = CreateDbContextOptions<TDbContext>(testContext);
@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return (TDbContext)constructor.Invoke(new object[] { options });
     }
 
-    public DbContextOptions<TDbContext> CreateDbContextOptions<TDbContext>(TestContext testContext)
+    public static DbContextOptions<TDbContext> CreateDbContextOptions<TDbContext>(TestContext testContext)
         where TDbContext : DbContext
     {
       return new DbContextOptionsBuilder<TDbContext>()
@@ -40,7 +40,5 @@ namespace IkeMtz.NRSRx.Core.Unigration
          .UseLoggerFactory(new LoggerFactory(new[] { new TestContextLoggerProvider(testContext) }))
          .Options;
     }
-
-
   }
 }

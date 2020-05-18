@@ -8,8 +8,8 @@ using Moq;
 
 namespace IkeMtz.NRSRx.Core.Unigration.WebApi
 {
-  public class PublisherIntegrationTester<TEntity, TMessageType> :
-    PublisherIntegrationTester<TEntity, TMessageType, Guid>
+  public class PublisherUnigrationTester<TEntity, TMessageType> :
+    PublisherUnigrationTester<TEntity, TMessageType, Guid>
        where TEntity : IIdentifiable
   {
     public Mock<IPublisher<TEntity, CreateEvent, TMessageType>> GuidCreatePublisher { get; }
@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     public Mock<IPublisher<TEntity, UpdatedEvent, TMessageType>> GuidUpdatedPublisher { get; }
     public Mock<IPublisher<TEntity, DeletedEvent, TMessageType>> GuidDeletedPublisher { get; }
 
-    public PublisherIntegrationTester() : base()
+    public PublisherUnigrationTester() : base()
     {
       GuidCreatePublisher = new Mock<IPublisher<TEntity, CreateEvent, TMessageType>>();
       GuidCreatedPublisher = new Mock<IPublisher<TEntity, CreatedEvent, TMessageType>>();
@@ -27,29 +27,41 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
       _ = GuidCreatePublisher
           .Setup(t => t.PublishAsync(Capture.In(CreateList), null))
           .Returns(Task.CompletedTask);
+      _ = GuidCreatePublisher
+          .Setup(t => t.PublishAsync(Capture.In(CreateList), It.IsAny<Action<TMessageType>>()))
+          .Returns(Task.CompletedTask);
       _ = GuidCreatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(CreatedList), null))
+          .Returns(Task.CompletedTask);
+      _ = GuidCreatedPublisher
+          .Setup(t => t.PublishAsync(Capture.In(CreatedList), It.IsAny<Action<TMessageType>>()))
           .Returns(Task.CompletedTask);
       _ = GuidUpdatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(UpdatedList), null))
           .Returns(Task.CompletedTask);
+      _ = GuidUpdatedPublisher
+          .Setup(t => t.PublishAsync(Capture.In(UpdatedList), It.IsAny<Action<TMessageType>>()))
+          .Returns(Task.CompletedTask);
       _ = GuidDeletedPublisher
           .Setup(t => t.PublishAsync(Capture.In(DeletedList), null))
+          .Returns(Task.CompletedTask);
+      _ = GuidDeletedPublisher
+          .Setup(t => t.PublishAsync(Capture.In(DeletedList), It.IsAny<Action<TMessageType>>()))
           .Returns(Task.CompletedTask);
     }
 
     public override void RegisterDependencies(IServiceCollection services)
     {
       base.RegisterDependencies(services);
-      _ = services.AddSingleton(GuidCreatePublisher.Object)
-      .AddSingleton(GuidCreatedPublisher.Object)
-      .AddSingleton(GuidUpdatedPublisher.Object)
-      .AddSingleton(GuidDeletedPublisher.Object);
-
+      _ = services
+        .AddSingleton(GuidCreatePublisher.Object)
+        .AddSingleton(GuidCreatedPublisher.Object)
+        .AddSingleton(GuidUpdatedPublisher.Object)
+        .AddSingleton(GuidDeletedPublisher.Object);
     }
   }
 
-  public class PublisherIntegrationTester<TEntity, TMessageType, TIdentityType> : PublisherIntegrationTester<TEntity>
+  public class PublisherUnigrationTester<TEntity, TMessageType, TIdentityType> : PublisherUnigrationTester<TEntity>
     where TIdentityType : IComparable
     where TEntity : IIdentifiable<TIdentityType>
   {
@@ -58,7 +70,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     public Mock<IPublisher<TEntity, UpdatedEvent, TMessageType, TIdentityType>> UpdatedPublisher { get; }
     public Mock<IPublisher<TEntity, DeletedEvent, TMessageType, TIdentityType>> DeletedPublisher { get; }
 
-    public PublisherIntegrationTester()
+    public PublisherUnigrationTester()
     {
       CreatePublisher = new Mock<IPublisher<TEntity, CreateEvent, TMessageType, TIdentityType>>();
       CreatedPublisher = new Mock<IPublisher<TEntity, CreatedEvent, TMessageType, TIdentityType>>();
@@ -68,14 +80,26 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
       _ = CreatePublisher
           .Setup(t => t.PublishAsync(Capture.In(CreateList), null))
           .Returns(Task.CompletedTask);
+      _ = CreatePublisher
+          .Setup(t => t.PublishAsync(Capture.In(CreateList), It.IsAny<Action<TMessageType>>()))
+          .Returns(Task.CompletedTask);
       _ = CreatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(CreatedList), null))
+          .Returns(Task.CompletedTask);
+      _ = CreatedPublisher
+          .Setup(t => t.PublishAsync(Capture.In(CreatedList), It.IsAny<Action<TMessageType>>()))
           .Returns(Task.CompletedTask);
       _ = UpdatedPublisher
           .Setup(t => t.PublishAsync(Capture.In(UpdatedList), null))
           .Returns(Task.CompletedTask);
+      _ = UpdatedPublisher
+          .Setup(t => t.PublishAsync(Capture.In(UpdatedList), It.IsAny<Action<TMessageType>>()))
+          .Returns(Task.CompletedTask);
       _ = DeletedPublisher
           .Setup(t => t.PublishAsync(Capture.In(DeletedList), null))
+          .Returns(Task.CompletedTask);
+      _ = DeletedPublisher
+          .Setup(t => t.PublishAsync(Capture.In(DeletedList), It.IsAny<Action<TMessageType>>()))
           .Returns(Task.CompletedTask);
     }
 
@@ -88,7 +112,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     }
   }
 
-  public abstract class PublisherIntegrationTester<TEntity>
+  public abstract class PublisherUnigrationTester<TEntity>
   {
     public List<TEntity> CreateList { get; } = new List<TEntity>();
     public List<TEntity> CreatedList { get; } = new List<TEntity>();
