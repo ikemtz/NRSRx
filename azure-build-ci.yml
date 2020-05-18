@@ -8,6 +8,9 @@ variables:
   TEMPLATE_PROJECTS: 'templates/**/*.csproj'
 
 steps:
+  - checkout: self
+    persistCredentials: true
+    
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk 3.1.x'
   inputs:
@@ -117,4 +120,3 @@ steps:
     tag: 'nrsrx-$(build.buildNumber)'
     tagMessage: 'nrsrx-$(build.buildNumber)'
     useLightweightTags: true
-    
