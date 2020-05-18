@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export originalLocation=$(pwd)
-export exportedTemplateLocation="/c/Users/isaac.martinez.MCORPRHS/Documents/Visual Studio 2019/My Exported Templates/"
+export exportedTemplateLocation="/c/Users/Ikemt/Documents/Visual Studio 2019/My Exported Templates/"
 
 rm NRSRx.Extensions/ProjectTemplates/*.zip
 
