@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var controller = new TestController();
       var result = controller.GetBuildNumber();
-      Assert.AreEqual("1.0.0.0", result);
+      Assert.IsTrue(result.StartsWith("1."));
     }
 
     [TestMethod]
