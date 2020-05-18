@@ -8,6 +8,9 @@ variables:
   TEMPLATE_PROJECTS: 'templates/**/*.csproj'
 
 steps:
+- checkout: self
+  persistCredentials: true
+
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk 3.1.x'
   inputs:
@@ -108,3 +111,12 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     ArtifactName: 'symbol_drop'
+
+- task: GitTag@5
+  inputs:
+    workingdir: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)'
+    tagUser: 'ikemtz'
+    tagEmail: 'ikemtz@outlook.com'
+    tag: 'nrsrx-$(build.buildNumber)'
+    tagMessage: 'nrsrx-$(build.buildNumber)'
+    useLightweightTags: true
