@@ -1,5 +1,6 @@
--- SQL Model Class Generator
+-- SQL POCO Class Generator
 -- Creator: Isaac Martinez
+-- POCO => Plain Old C# Object
 -- Notes: All you have to do is set the entity name below and run the script
 -- The model class type output will be available as the executed script message
 
