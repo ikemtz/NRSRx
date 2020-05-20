@@ -70,7 +70,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{91732412-47D1-4412-81FB-8F8C54D28CEF}"
 	ProjectSection(SolutionItems) = preProject
 		tools\sonarqube-create-project-guids.ps1 = tools\sonarqube-create-project-guids.ps1
-		tools\EntityModelClassGenerator.sql = tools\EntityModelClassGenerator.sql
+		tools\sql-poco-class-generator.sql = tools\sql-poco-class-generator.sql
 	EndProjectSection
 EndProject
 Global
