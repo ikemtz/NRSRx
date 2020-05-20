@@ -2,13 +2,14 @@
 -- Creator: Isaac Martinez
 -- POCO => Plain Old C# Object
 -- Notes: All you have to do is set the entity name below and run the script
--- The model class type output will be available as the executed script message
+-- The POCO class type output will be available as the executed script message
+-- Version Date: 05/19/2020
 
 DECLARE @EntityName AS NVARCHAR(50), @TableName AS NVARCHAR(50)
 --@EntityName should typically be singular
-SET @EntityName = 'Building'
+SET @EntityName = 'Example'
 --@@TableName should typically be plural
-SET @TableName = 'Buildings'
+SET @TableName = 'Examples'
 
 --Everything else after this point is part of the script
 DECLARE @property AS NVARCHAR(2000)
@@ -61,6 +62,7 @@ FOR
 		-- The following logic is based on this Microsoft Docs Article
 		-- SQL Server Data Type Mappings
 		-- https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings
+    -- Accessed ON 5/19/2020
 			 WHEN DATA_TYPE = 'uniqueidentifier' AND IS_NULLABLE = 'YES' THEN 'Guid? '
 			 WHEN DATA_TYPE = 'uniqueidentifier' AND IS_NULLABLE = 'NO' THEN 'Guid '  
 			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' THEN 'string '

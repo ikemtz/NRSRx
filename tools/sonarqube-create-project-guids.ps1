@@ -3,7 +3,8 @@
 # Editor: Isaac martinez
 # Notes: A requirement of SonarCloud/SonarQube is that all projects have a unique
 #   ProjectGuid.  This script takes care of that.  This script will recursively
-#   look for projects in subfolders and apply the necessary changes. 
+#   look for projects in subfolders and apply the necessary changes.
+# Version Date: 05/19/2020
 
 $paths = Get-ChildItem -Path $PSScriptRoot -include *proj -Recurse
 Write-Host $paths.count "project(s) found"
