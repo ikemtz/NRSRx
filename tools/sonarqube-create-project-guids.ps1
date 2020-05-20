@@ -1,4 +1,11 @@
-$paths = Get-ChildItem -Path $PSScriptRoot -include *.csproj -Recurse
+# Project Guid Generator
+# Creator: Unknown
+# Editor: Isaac martinez
+# Notes: A requirement of SonarCloud/SonarQube is that all projects have a unique
+#   ProjectGuid.  This script takes care of that.  This script will recursively
+#   look for projects in subfolders and apply the necessary changes. 
+
+$paths = Get-ChildItem -Path $PSScriptRoot -include *proj -Recurse
 Write-Host $paths.count "project(s) found"
 $projectGuids = @()
 foreach ($pathobject in $paths) {

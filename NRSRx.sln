@@ -39,7 +39,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		azure-release-cd.yml = azure-release-cd.yml
 		LICENSE = LICENSE
 		README.md = README.md
-		sonarqube-create-project-guids.ps1 = sonarqube-create-project-guids.ps1
 		test.RunSettings = test.RunSettings
 	EndProjectSection
 EndProject
@@ -67,6 +66,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.WebApi", "samples\IkeMtz.Samples.WebApi\IkeMtz.Samples.WebApi.csproj", "{05BBED50-7792-4023-88DA-7A596D73F7D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.OData", "samples\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj", "{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{91732412-47D1-4412-81FB-8F8C54D28CEF}"
+	ProjectSection(SolutionItems) = preProject
+		tools\sonarqube-create-project-guids.ps1 = tools\sonarqube-create-project-guids.ps1
+		tools\EntityModelClassGenerator.sql = tools\EntityModelClassGenerator.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -170,6 +175,7 @@ Global
 		{B7377202-E30D-4BA0-B52E-0173786806DC} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
 		{05BBED50-7792-4023-88DA-7A596D73F7D1} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
 		{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
+		{91732412-47D1-4412-81FB-8F8C54D28CEF} = {2F384E17-D383-4F51-B072-25E4281AC8B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4012E7B1-E9FD-4821-A144-B1E5362D9EA7}
