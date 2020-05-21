@@ -19,6 +19,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   public class ItemTests : BaseUnigrationTests
   {
     [TestMethod]
+    [TestCategory("Unigration")]
     public async Task GetItemTestAsync()
     {
       var item = Factories.ItemFactory();

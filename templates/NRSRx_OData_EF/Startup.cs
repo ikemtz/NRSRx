@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NRSRx_OData_EF.Data;
+using NRSRx_OData_EF.Models;
 
 namespace NRSRx_OData_EF
 {
   public class Startup : CoreODataStartup
   {
-    public override string MicroServiceTitle => $"{nameof(NRSRx_OData_EF)} OData Microservice";
+    public override string MicroServiceTitle => $"{nameof(Item)} OData Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
 
     public Startup(IConfiguration configuration) : base(configuration)
