@@ -6,11 +6,9 @@ using IkeMtz.NRSRx.Core.Unigration;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using NRSRx_OData_EF;
 using NRSRx_OData_EF.Models;
-using NRSRx_OData_EF.Tests.Integration;
 
-namespace IkeMtz.NRSRx.HealthItems.Tests.Integration.OData
+namespace NRSRx_OData_EF.Tests.Integration
 {
   [TestClass]
   public partial class ItemsTests : BaseUnigrationTests

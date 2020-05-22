@@ -1,7 +1,7 @@
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.OData.Configuration;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Configuration; 
+using Microsoft.Extensions.Configuration;
 
 namespace IkeMtz.Samples.OData.Tests.Integration
 {
