@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Configuration\ModelConfiguration.cs" Link="SampleWeb\Configuration\ModelConfiguration.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Controllers\V1\ItemsController.cs" Link="SampleWeb\Controllers\V1\ItemsController.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Data\DatabaseContext.cs" Link="SampleWeb\Data\DatabaseContext.cs" />
@@ -14,6 +18,14 @@
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Models\Item.cs" Link="SampleWeb\Models\Item.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Startup.cs" Link="SampleWeb\Startup.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\VersionDefinitions.cs" Link="SampleWeb\VersionDefinitions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

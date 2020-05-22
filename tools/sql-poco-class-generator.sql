@@ -17,11 +17,13 @@ DECLARE @property AS NVARCHAR(2000)
 PRINT 'public partial class ' + @EntityName
 PRINT '{'
 
-IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE OBJECT_NAME(referenced_object_id) = @TableName)
+IF EXISTS (SELECT 1
+FROM sys.foreign_keys
+WHERE OBJECT_NAME(referenced_object_id) = @TableName)
 BEGIN
 	PRINT '  public ' + @TableName + ' ()'
 	PRINT '  {'
-DECLARE child_table_cursor CURSOR
+	DECLARE child_table_cursor CURSOR
 FOR
 	SELECT OBJECT_NAME(parent_object_id) +' = new HashSet<' + 
 	CASE
@@ -31,24 +33,25 @@ FOR
 	END
 	+ '>();'
 	AS PROPERTY
-	FROM sys.foreign_keys WHERE OBJECT_NAME(referenced_object_id) = @TableName
-OPEN child_table_cursor
-FETCH NEXT FROM child_table_cursor INTO @property
-WHILE @@FETCH_STATUS = 0
+	FROM sys.foreign_keys
+	WHERE OBJECT_NAME(referenced_object_id) = @TableName
+	OPEN child_table_cursor
+	FETCH NEXT FROM child_table_cursor INTO @property
+	WHILE @@FETCH_STATUS = 0
 BEGIN
-	PRINT '    ' +  @property
-    FETCH NEXT FROM child_table_cursor INTO @property  
-END
-CLOSE child_table_cursor;  
-DEALLOCATE child_table_cursor;
-	PRINT '  }'	
+		PRINT '    ' +  @property
+		FETCH NEXT FROM child_table_cursor INTO @property
+	END
+	CLOSE child_table_cursor;
+	DEALLOCATE child_table_cursor;
+	PRINT '  }'
 	PRINT ''
 END
 
 DECLARE property_cursor CURSOR
 FOR  
 	SELECT
-		CASE
+	CASE
 			WHEN IS_NULLABLE = 'NO' THEN '[Required] '
 			ELSE ''
 		END
@@ -92,16 +95,16 @@ FOR
 		  END
 		+ COLUMN_NAME
 		+ ' { get; set; }' AS PROPERTY
-	FROM INFORMATION_SCHEMA.COLUMNS
-	WHERE TABLE_NAME = @TableName
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = @TableName
 OPEN property_cursor
 FETCH NEXT FROM property_cursor INTO @property
 WHILE @@FETCH_STATUS = 0
 BEGIN
 	PRINT '  ' +  REPLACE(@property, '] ', ']' + char(10) + '  ')
-    FETCH NEXT FROM property_cursor INTO @property  
+	FETCH NEXT FROM property_cursor INTO @property
 END
-CLOSE property_cursor;  
+CLOSE property_cursor;
 DEALLOCATE property_cursor;
 
 
@@ -121,15 +124,16 @@ FOR
 	END
 	+ ' { get; set; } '
 	AS PROPERTY
-FROM sys.foreign_keys WHERE OBJECT_NAME(parent_object_id) = @TableName
+FROM sys.foreign_keys
+WHERE OBJECT_NAME(parent_object_id) = @TableName
 OPEN parent_table_cursor
 FETCH NEXT FROM parent_table_cursor INTO @property
 WHILE @@FETCH_STATUS = 0
 BEGIN
 	PRINT '  ' +  @property
-    FETCH NEXT FROM parent_table_cursor INTO @property  
+	FETCH NEXT FROM parent_table_cursor INTO @property
 END
-CLOSE parent_table_cursor;  
+CLOSE parent_table_cursor;
 DEALLOCATE parent_table_cursor;
 
 
@@ -145,15 +149,16 @@ FOR
 	OBJECT_NAME(parent_object_id) 
 	+ ' { get; } '
 	AS PROPERTY
-FROM sys.foreign_keys WHERE OBJECT_NAME(referenced_object_id) = @TableName
+FROM sys.foreign_keys
+WHERE OBJECT_NAME(referenced_object_id) = @TableName
 OPEN child_table_cursor
 FETCH NEXT FROM child_table_cursor INTO @property
 WHILE @@FETCH_STATUS = 0
 BEGIN
 	PRINT '  ' +  @property
-    FETCH NEXT FROM child_table_cursor INTO @property  
+	FETCH NEXT FROM child_table_cursor INTO @property
 END
-CLOSE child_table_cursor;  
+CLOSE child_table_cursor;
 DEALLOCATE child_table_cursor;
 
 PRINT '}'

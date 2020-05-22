@@ -1,0 +1,10 @@
+CREATE TABLE [dbo].[SubItemBs]
+(
+    [Id] UNIQUEIDENTIFIER NOT NULL,
+    [ValueB] VARCHAR (50) NOT NULL,
+    [ItemId] UNIQUEIDENTIFIER NOT NULL,
+    CONSTRAINT [PK_SubItemBs] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_SubItemBs_Items] FOREIGN KEY ([ItemId]) REFERENCES [dbo].[Items] ([Id])
+);
+
+

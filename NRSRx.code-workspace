@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"mssql.format.keywordCasing": "uppercase",
+		"mssql.format.datatypeCasing": "uppercase"
+	}
+}

@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task GetSwaggerPageTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationTestStartup>());
       var htmlPage = await SwaggerUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
       var jsonDoc = await SwaggerUnitTests.TestJsonDocAsync(srv);

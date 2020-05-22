@@ -76,7 +76,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{91732412
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_OData_EF.Tests", "templates\NRSRx_OData_EF.Tests\NRSRx_OData_EF.Tests.csproj", "{9BD52CD6-956F-4052-9AAF-5B4BA16FAE62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.Samples.OData.Tests", "samples\IkeMtz.Samples.OData.Tests\IkeMtz.Samples.OData.Tests.csproj", "{E7978A34-1629-4CDA-A4DB-8A4E32499253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.OData.Tests", "samples\IkeMtz.Samples.OData.Tests\IkeMtz.Samples.OData.Tests.csproj", "{E7978A34-1629-4CDA-A4DB-8A4E32499253}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IkeMtz.Samples.Db", "samples\IkeMtz.Samples.Db\IkeMtz.Samples.Db.sqlproj", "{3A7455C2-600A-4FF9-AD6B-2775C220BFDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,6 +166,12 @@ Global
 		{E7978A34-1629-4CDA-A4DB-8A4E32499253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7978A34-1629-4CDA-A4DB-8A4E32499253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7978A34-1629-4CDA-A4DB-8A4E32499253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A7455C2-600A-4FF9-AD6B-2775C220BFDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A7455C2-600A-4FF9-AD6B-2775C220BFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A7455C2-600A-4FF9-AD6B-2775C220BFDE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3A7455C2-600A-4FF9-AD6B-2775C220BFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A7455C2-600A-4FF9-AD6B-2775C220BFDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A7455C2-600A-4FF9-AD6B-2775C220BFDE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +199,7 @@ Global
 		{91732412-47D1-4412-81FB-8F8C54D28CEF} = {2F384E17-D383-4F51-B072-25E4281AC8B4}
 		{9BD52CD6-956F-4052-9AAF-5B4BA16FAE62} = {34E96D0C-05B6-43F1-BFFD-1BFE3C8C9755}
 		{E7978A34-1629-4CDA-A4DB-8A4E32499253} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
+		{3A7455C2-600A-4FF9-AD6B-2775C220BFDE} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4012E7B1-E9FD-4821-A144-B1E5362D9EA7}
