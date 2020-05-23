@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>IkeMtz.Samples.WebApi</AssemblyName>
+    <UserSecretsId>bd7d9957-206e-4e55-ac04-c5e3b2c8d730</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

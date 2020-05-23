@@ -11,10 +11,10 @@ namespace NRSRx_OData_EF
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-              _ = webBuilder.UseStartup<Startup>();
-            });
+      Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+          _ = webBuilder.UseStartup<Startup>();
+        });
   }
 }

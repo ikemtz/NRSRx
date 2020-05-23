@@ -9,6 +9,7 @@ namespace IkeMtz.Samples.OData.Configuration
     public void Apply(ODataModelBuilder builder, ApiVersion apiVersion)
     {
       _ = builder.EntitySet<Item>($"{nameof(Item)}s");
+      _ = builder.EntitySet<SubItemA>($"{nameof(SubItemA)}s");
     }
   }
 }
