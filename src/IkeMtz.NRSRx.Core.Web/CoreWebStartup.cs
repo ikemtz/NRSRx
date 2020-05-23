@@ -4,10 +4,12 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -117,5 +119,14 @@ namespace IkeMtz.NRSRx.Core.Web
     }
 
     public virtual void SetupMiscDependencies(IServiceCollection services) { }
+
+    public static IHostBuilder CreateDefaultHostBuilder<TStartup>() where TStartup : CoreWebStartup
+    {
+      return Host.CreateDefaultBuilder()
+       .ConfigureWebHostDefaults(webBuilder =>
+       {
+         _ = webBuilder.UseStartup<TStartup>();
+       });
+    }
   }
 }
