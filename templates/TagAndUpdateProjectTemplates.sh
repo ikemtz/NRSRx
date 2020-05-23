@@ -31,6 +31,5 @@ do
   cd ..
   rm -rd $i  
 done
-rm *.zip
 cd "$originalLocation"
 
