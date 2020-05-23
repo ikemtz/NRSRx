@@ -1,4 +1,10 @@
-﻿param (
+﻿# Code refactor tool
+# This script will do a find and replace on file names and content
+# Creator Isaac Martinez
+# Example Usage: 
+# .\code-refactor-tool.ps1 -findValue 'SOME_OLD_VALUE' -replacementValue 'SOME_NEW_VALUE'
+
+param (
   [string]$findValue, # = "Lookup value",
   [string]$replacementValue  # = "Replacement value"
  )
