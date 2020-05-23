@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -7,9 +8,9 @@ namespace NRSRx_WebApi_EF
   [ExcludeFromCodeCoverage]
   public static class Program
   {
-    public static void Main(string[] args)
+    public static void Main()
     {
-      CreateHostBuilder(args).Build().Run();
+      CreateHostBuilder(Array.Empty<string>()).Build().Run();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)
