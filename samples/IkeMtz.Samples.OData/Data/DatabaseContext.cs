@@ -11,5 +11,8 @@ namespace IkeMtz.Samples.OData.Data
     }
 
     public virtual DbSet<Item> Items { get; set; }
+    public virtual DbSet<SubItemA> SubItemAs { get; set; }
+    public virtual DbSet<SubItemB> SubItemBs { get; set; }
+    public virtual DbSet<SubItemC> SubItemCs { get; set; }
   }
 }

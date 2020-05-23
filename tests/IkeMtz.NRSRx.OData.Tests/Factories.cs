@@ -7,11 +7,28 @@ namespace IkeMtz.NRSRx.OData.Tests
   {
     public static Item ItemFactory()
     {
-      return new Item()
+      var item = new Item()
       {
         Id = Guid.NewGuid(),
         Value = Guid.NewGuid().ToString().Substring(0, 6)
       };
+      item.SubItemAs.Add(new SubItemA
+      {
+        Id = Guid.NewGuid(),
+        ValueA = Guid.NewGuid().ToString().Substring(0, 6)
+      });
+      item.SubItemBs.Add(new SubItemB
+      {
+        Id = Guid.NewGuid(),
+        ValueB = Guid.NewGuid().ToString().Substring(0, 6)
+      });
+      item.SubItemCs.Add(new SubItemC
+      {
+        Id = Guid.NewGuid(),
+        ValueC = Guid.NewGuid().ToString().Substring(0, 6)
+      });
+
+      return item;
     }
   }
 }

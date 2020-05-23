@@ -1,0 +1,30 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>NRSRx OData EF Tests</Name>
+    <Description>Unigration and Integration Tests for NRSRx based OData RESTful service with SQL EF</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>NRSRx.OData.EF.Tests</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.jpg</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="NRSRx_OData_EF.Tests.csproj" File="NRSRx_OData_EF.Tests.csproj" ReplaceParameters="true">
+      <Folder Name="Integration" TargetFolderName="Integration">
+        <ProjectItem ReplaceParameters="true" TargetFileName="IntegrationODataTestStartup.cs">IntegrationODataTestStartup.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ItemsTests.cs">ItemsTests.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Unigration" TargetFolderName="Unigration">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ItemsTests.cs">ItemsTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SwaggerTests.cs">SwaggerTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UnigrationODataTestStartup.cs">UnigrationODataTestStartup.cs</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

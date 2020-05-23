@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using IkeMtz.Samples.OData.Data;
+using IkeMtz.Samples.OData.Models;
 
 namespace IkeMtz.Samples.OData
 {
   public class Startup : CoreODataStartup
   {
-    public override string MicroServiceTitle => $"{nameof(IkeMtz.Samples.OData)} OData Microservice";
+    public override string MicroServiceTitle => $"{nameof(Item)} OData Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
 
     public Startup(IConfiguration configuration) : base(configuration)
