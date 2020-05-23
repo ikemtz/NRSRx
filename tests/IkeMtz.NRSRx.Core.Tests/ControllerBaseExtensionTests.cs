@@ -28,5 +28,16 @@ namespace IkeMtz.NRSRx.Core.Tests
       var pingResult = (result as OkObjectResult).Value as PingResult;
       Assert.AreEqual("NRSRx Test Controller", pingResult.Name);
     }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public void TestGetNullPingResult()
+    {
+      var controller = ControllerFactory<TestController>.Create();
+      var result = controller.Get(null);
+      Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+      var pingResult = (result as OkObjectResult).Value as PingResult;
+      Assert.AreEqual("NRSRx Test Controller", pingResult.Name);
+    }
   }
 }
