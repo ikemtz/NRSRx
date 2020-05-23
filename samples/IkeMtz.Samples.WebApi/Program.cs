@@ -7,14 +7,14 @@ namespace IkeMtz.Samples.WebApi
   [ExcludeFromCodeCoverage]
   public static class Program
   {
-    public static void Main(string[] args)
+    public static void Main()
     {
-      CreateHostBuilder(args).Build().Run();
+      CreateHostBuilder().Build().Run();
     }
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
+    public static IHostBuilder CreateHostBuilder()
     {
-      return Host.CreateDefaultBuilder(args)
+      return Host.CreateDefaultBuilder()
         .ConfigureWebHostDefaults(webBuilder =>
         {
           _ = webBuilder.UseStartup<Startup>();
