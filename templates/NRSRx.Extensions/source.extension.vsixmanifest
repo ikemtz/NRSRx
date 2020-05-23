@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="NRSRx_Extensions.2a7b0ead-ec1d-4a60-b656-a831eea186c4_1.2" Version="2.0.2" Language="en-US" Publisher="IkeMtz" />
+        <Identity Id="NRSRx_Extensions.2a7b0ead-ec1d-4a60-b656-a831eea186c4_1.2" Version="2.0.3" Language="en-US" Publisher="IkeMtz" />
         <DisplayName>NRSRx Project Templates</DisplayName>
         <Description xml:space="preserve">NRSRx based project templates.  NRSRx streamlines building OData and WebApi services.  This is the simplest way of getting started with the NRSRx framework.
 
