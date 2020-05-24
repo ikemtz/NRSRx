@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -9,16 +10,7 @@ namespace IkeMtz.Samples.WebApi
   {
     public static void Main()
     {
-      CreateHostBuilder().Build().Run();
-    }
-
-    public static IHostBuilder CreateHostBuilder()
-    {
-      return Host.CreateDefaultBuilder()
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-          _ = webBuilder.UseStartup<Startup>();
-        });
+      CoreWebStartup.CreateDefaultHostBuilder<Startup>().Build().Run();
     }
   }
 }
