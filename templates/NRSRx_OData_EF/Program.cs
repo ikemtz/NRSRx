@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -10,14 +11,7 @@ namespace NRSRx_OData_EF
   {
     public static void Main()
     {
-      CreateHostBuilder().Build().Run();
+      CoreWebStartup.CreateDefaultHostBuilder<Startup>().Build().Run();
     }
-
-    public static IHostBuilder CreateHostBuilder() =>
-      Host.CreateDefaultBuilder()
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-          _ = webBuilder.UseStartup<Startup>();
-        });
   }
 }
