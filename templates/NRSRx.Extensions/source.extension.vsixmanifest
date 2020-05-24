@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="NRSRx_Extensions.2a7b0ead-ec1d-4a60-b656-a831eea186c4_1.2" Version="2.0.4" Language="en-US" Publisher="IkeMtz" />
+        <Identity Id="NRSRx_Extensions.2a7b0ead-ec1d-4a60-b656-a831eea186c4_1.2" Version="2.0.5" Language="en-US" Publisher="IkeMtz" />
         <DisplayName>NRSRx Project Templates</DisplayName>
         <Description xml:space="preserve">NRSRx based project templates.  NRSRx streamlines building OData and WebApi services.  This is the simplest way of getting started with the NRSRx framework.
 
 The source code for these templates is available at:
 https://github.com/ikemtz/NRSRx/tree/master/templates</Description>
         <MoreInfo>https://github.com/ikemtz/NRSRx</MoreInfo>
+        <License>LICENSE.txt</License>
         <Icon>ProfilePic.jpg</Icon>
         <Tags>NRSRx, OData, OpenAPI</Tags>
     </Metadata>
