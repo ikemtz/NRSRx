@@ -62,53 +62,9 @@ namespace IkeMtz.NRSRx.Core.Web
           });
     }
 
-    private string[] GetIdentityAudiences()
+    protected virtual string[] GetIdentityAudiences()
     {
       return Configuration.GetValue<string>("IdentityAudiences")?.Split(',') ?? Array.Empty<string>();
-    }
-
-    public void SetupSwagger(IServiceCollection services)
-    {
-      _ = services
-        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
-        .AddSwaggerGen(options =>
-      {
-        options.UseInlineDefinitionsForEnums();
-        // add a custom operation filter which sets default values
-        options.OperationFilter<SwaggerDefaultValues>();
-        var audiences = GetIdentityAudiences();
-        var swaggerIdentityProviderUrl = Configuration.GetValue<string>("SwaggerIdentityProviderUrl");
-        if (audiences.Any() && !string.IsNullOrWhiteSpace(swaggerIdentityProviderUrl))
-        {
-          var audience = audiences.FirstOrDefault();
-
-          options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
-          {
-            Type = SecuritySchemeType.OAuth2,
-            In = ParameterLocation.Header,
-            Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-            Scheme = JwtBearerDefaults.AuthenticationScheme,
-            Flows = new OpenApiOAuthFlows
-            {
-              Implicit = new OpenApiOAuthFlow
-              {
-                AuthorizationUrl = new Uri($"{swaggerIdentityProviderUrl}authorize?audience={audience}"),
-                Scopes = SwaggerScopes,
-              },
-            }
-          });
-          options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme}
-                        },
-                       Array.Empty<string>()
-                    }
-                });
-        }
-      });
     }
 
     public virtual void SetupDatabase(IServiceCollection services, string connectionString) { }

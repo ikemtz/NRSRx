@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using IkeMtz.NRSRx.Core.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +10,11 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.WebApi
@@ -107,6 +113,50 @@ namespace IkeMtz.NRSRx.Core.WebApi
              options.SubstituteApiVersionInUrl = true;
            });
       return builder;
+    }
+
+    public void SetupSwagger(IServiceCollection services)
+    {
+      _ = services
+        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
+        .AddSwaggerGen(options =>
+        {
+          options.UseInlineDefinitionsForEnums();
+          // add a custom operation filter which sets default values
+          options.OperationFilter<SwaggerDefaultValues>();
+          var audiences = GetIdentityAudiences();
+          var swaggerIdentityProviderUrl = Configuration.GetValue<string>("SwaggerIdentityProviderUrl");
+          if (audiences.Any() && !string.IsNullOrWhiteSpace(swaggerIdentityProviderUrl))
+          {
+            var audience = audiences.FirstOrDefault();
+
+            options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+            {
+              Type = SecuritySchemeType.OAuth2,
+              In = ParameterLocation.Header,
+              Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+              Scheme = JwtBearerDefaults.AuthenticationScheme,
+              Flows = new OpenApiOAuthFlows
+              {
+                Implicit = new OpenApiOAuthFlow
+                {
+                  AuthorizationUrl = new Uri($"{swaggerIdentityProviderUrl}authorize?audience={audience}"),
+                  Scopes = SwaggerScopes,
+                },
+              }
+            });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme}
+                        },
+                       Array.Empty<string>()
+                    }
+                });
+          }
+        });
     }
 
     public virtual void SetupPublishers(IServiceCollection services) { }
