@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
     {
       SetupLogging(services);
       SetupSwagger(services);
-      SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
+      SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);

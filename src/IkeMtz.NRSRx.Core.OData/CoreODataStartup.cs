@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.OData
     public void ConfigureServices(IServiceCollection services)
     {
       SetupLogging(services);
-      SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
+      SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
       _ = SetupCoreEndpointFunctionality(services)
