@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -18,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.OData
       AddParameter(operation, "$count", "boolean");
     }
 
-    public void AddParameter(OpenApiOperation operation, string name, string type = "string")
+    public static void AddParameter(OpenApiOperation operation, string name, string type = "string")
     {
       if (!operation.Parameters.Any(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
       {

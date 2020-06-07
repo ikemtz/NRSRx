@@ -6,7 +6,6 @@ using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNet.OData.Formatter.Serialization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -16,7 +15,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.OData
@@ -73,19 +71,7 @@ namespace IkeMtz.NRSRx.Core.OData
             });
           })
           .UseSwagger()
-          .UseSwaggerUI(options =>
-            {
-              foreach (var description in provider.ApiVersionDescriptions)
-              {
-                options.SwaggerEndpoint($"./swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-              }
-              options.EnableDeepLinking();
-              options.EnableFilter();
-              options.RoutePrefix = string.Empty;
-              options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
-              options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
-              options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-            });
+          .UseSwaggerUI(options => SetupSwaggerUI(options, provider));
     }
 
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
@@ -126,45 +112,7 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       _ = services
         .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
-        .AddSwaggerGen(options =>
-        {
-          options.OperationFilter<ODataCommonOperationFilter>();
-          options.UseInlineDefinitionsForEnums();
-          // add a custom operation filter which sets default values
-          options.OperationFilter<SwaggerDefaultValues>();
-          var audiences = GetIdentityAudiences();
-          var swaggerIdentityProviderUrl = Configuration.GetValue<string>("SwaggerIdentityProviderUrl");
-          if (audiences.Any() && !string.IsNullOrWhiteSpace(swaggerIdentityProviderUrl))
-          {
-            var audience = audiences.FirstOrDefault();
-
-            options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
-            {
-              Type = SecuritySchemeType.OAuth2,
-              In = ParameterLocation.Header,
-              Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-              Scheme = JwtBearerDefaults.AuthenticationScheme,
-              Flows = new OpenApiOAuthFlows
-              {
-                Implicit = new OpenApiOAuthFlow
-                {
-                  AuthorizationUrl = new Uri($"{swaggerIdentityProviderUrl}authorize?audience={audience}"),
-                  Scopes = SwaggerScopes,
-                },
-              }
-            });
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme}
-                        },
-                       Array.Empty<string>()
-                    }
-                });
-          }
-        });
+        .AddSwaggerGen(SetupSwaggerGen);
     }
   }
 }

@@ -15,7 +15,6 @@ namespace IkeMtz.NRSRx.Core.Web
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
       var apiDescription = context.ApiDescription;
-
       operation.Deprecated = apiDescription.IsDeprecated();
 
       if (operation.Parameters == null)
