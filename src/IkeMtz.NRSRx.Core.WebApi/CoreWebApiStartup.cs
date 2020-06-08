@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.WebApi
@@ -24,7 +26,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
     {
       SetupLogging(services);
       SetupSwagger(services);
-      SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
+      SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
@@ -49,20 +51,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseAuthentication()
        .UseAuthorization()
        .UseSwagger()
-       .UseSwaggerUI(options =>
-       {
-         // build a swagger endpoint for each discovered API version
-         foreach (var description in provider.ApiVersionDescriptions)
-         {
-           options.SwaggerEndpoint($"./swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-         }
-         options.EnableDeepLinking();
-         options.EnableFilter();
-         options.RoutePrefix = string.Empty;
-         options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
-         options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
-         options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-       })
+       .UseSwaggerUI(options => SetupSwaggerUI(options, provider))
        .UseEndpoints(endpoints =>
       {
         _ = endpoints.MapControllers();
@@ -107,6 +96,17 @@ namespace IkeMtz.NRSRx.Core.WebApi
              options.SubstituteApiVersionInUrl = true;
            });
       return builder;
+    }
+
+    public void SetupSwagger(IServiceCollection services)
+    {
+      _ = services
+        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
+        .AddSwaggerGen(options =>
+        {
+          options.UseInlineDefinitionsForEnums();
+          SetupSwaggerGen(options);
+        });
     }
 
     public virtual void SetupPublishers(IServiceCollection services) { }
