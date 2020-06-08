@@ -112,7 +112,11 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       _ = services
         .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
-        .AddSwaggerGen(SetupSwaggerGen);
+        .AddSwaggerGen(swaggerGenOptions =>
+        {
+          swaggerGenOptions.OperationFilter<ODataCommonOperationFilter>();
+          SetupSwaggerGen(swaggerGenOptions);
+        });
     }
   }
 }

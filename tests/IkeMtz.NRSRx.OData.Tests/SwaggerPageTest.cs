@@ -14,10 +14,11 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task GetSwaggerPageTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationTestStartup>());
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
       var htmlPage = await SwaggerUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
       var jsonDoc = await SwaggerUnitTests.TestJsonDocAsync(srv);
+
       Assert.IsNotNull(jsonDoc);
     }
   }
