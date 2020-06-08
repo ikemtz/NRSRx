@@ -12,8 +12,10 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
@@ -27,7 +29,7 @@ namespace IkeMtz.NRSRx.Core.OData
     public void ConfigureServices(IServiceCollection services)
     {
       SetupLogging(services);
-      SetupDatabase(services, Configuration.GetValue<string>("SqlConnectionString"));
+      SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
       _ = SetupCoreEndpointFunctionality(services)
@@ -69,19 +71,7 @@ namespace IkeMtz.NRSRx.Core.OData
             });
           })
           .UseSwagger()
-          .UseSwaggerUI(options =>
-            {
-              foreach (var description in provider.ApiVersionDescriptions)
-              {
-                options.SwaggerEndpoint($"./swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-              }
-              options.EnableDeepLinking();
-              options.EnableFilter();
-              options.RoutePrefix = string.Empty;
-              options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
-              options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
-              options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
-            });
+          .UseSwaggerUI(options => SetupSwaggerUI(options, provider));
     }
 
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
@@ -116,6 +106,17 @@ namespace IkeMtz.NRSRx.Core.OData
             options.SubstituteApiVersionInUrl = true;
           });
       return mvcBuilder;
+    }
+
+    public void SetupSwagger(IServiceCollection services)
+    {
+      _ = services
+        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
+        .AddSwaggerGen(swaggerGenOptions =>
+        {
+          swaggerGenOptions.OperationFilter<ODataCommonOperationFilter>();
+          SetupSwaggerGen(swaggerGenOptions);
+        });
     }
   }
 }

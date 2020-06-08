@@ -15,21 +15,17 @@ namespace IkeMtz.NRSRx.Core.Web
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
       var apiDescription = context.ApiDescription;
-
       operation.Deprecated = apiDescription.IsDeprecated();
-
-      if (operation.Parameters == null)
-      {
-        return;
-      }
-
       // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/412
       // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/413
       foreach (var parameter in operation.Parameters)
       {
-        var description = apiDescription.ParameterDescriptions.First(p => p.Name == parameter.Name);
-
-        if (parameter.Description == null)
+        var description = apiDescription.ParameterDescriptions.FirstOrDefault(p => p.Name == parameter.Name);
+        if (description == null)
+        {
+          continue;
+        }
+        else if (parameter.Description == null)
         {
           parameter.Description = description.ModelMetadata?.Description;
         }
