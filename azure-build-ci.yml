@@ -120,4 +120,4 @@ steps:
     tag: 'nrsrx-$(build.buildNumber)'
     tagMessage: 'nrsrx-$(build.buildNumber)'
     useLightweightTags: true
-    conditions: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+    conditions: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
