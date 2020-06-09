@@ -121,3 +121,12 @@ steps:
     tagMessage: 'nrsrx-$(build.buildNumber)'
     useLightweightTags: true
     conditions: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+pr:
+  branches:
+    include:
+      - master
