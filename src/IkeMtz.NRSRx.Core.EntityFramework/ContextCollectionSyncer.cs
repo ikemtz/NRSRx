@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (sourceCollection == null)
       {
-        throw new ArgumentNullException(nameof(sourceCollection));
+        return;
       }
       else if (destinationCollection == null)
       {
@@ -26,11 +26,11 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
 
       //Add New Records to destination
-      foreach (var dest in sourceCollection.Where(src => !destIds.Contains(src.Id)))
+      sourceCollection.Where(src => !destIds.Contains(src.Id)).ToList().ForEach(item =>
       {
-        destinationCollection.Add(dest);
-        _ = auditableContext.Add(dest);
-      }
+        _ = auditableContext.Add(item);
+        destinationCollection.Add(item);
+      });
 
       //synchronize removed items
       foreach (var destId in destIds.Where(dstId => !sourceIds.Contains(dstId)))
@@ -65,7 +65,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (sourceCollection == null)
       {
-        throw new ArgumentNullException(nameof(sourceCollection));
+        return;
       }
       else if (destinationCollection == null)
       {
@@ -80,14 +80,14 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 
       updateLogic ??= SimpleMapper<TSourceEntity, TDestinationEntity>.Instance.ApplyChanges;
       //Updating Existing records
-      foreach (var srcItem in sourceCollection.Where(src => destIds.Any(t => t == src.Id)))
+      foreach (var srcItem in sourceCollection.Where(src => destIds.Any(t => t == src.Id.Value)))
       {
         var destItem = destinationCollection.First(dst => dst.Id == srcItem.Id);
         updateLogic(srcItem, destItem);
       }
 
       //Create New Records to destination
-      foreach (var srcItem in sourceCollection.Where(src => !destIds.Any(t => t == src.Id)))
+      foreach (var srcItem in sourceCollection.Where(src => !destIds.Any(t => t == src.Id.Value)))
       {
         var destItem = new TDestinationEntity();
         updateLogic(srcItem, destItem);
@@ -95,12 +95,13 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
         {
           destItem.Id = srcItem.Id.Value;
         }
-        destinationCollection.Add(destItem);
         _ = auditableContext.Add(destItem);
+        destinationCollection.Add(destItem);
+
       }
 
       //Delete Records from destination
-      foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t == src.Id)))
+      foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t.Value == src.Id)).ToList())
       {
         _ = destinationCollection.Remove(destItem);
         _ = auditableContext.Remove(destItem);
