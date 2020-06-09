@@ -28,6 +28,23 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
+    public void SourceCollectionNullTest()
+    {
+      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      var srcList = new[] { new CollectionModel(), new CollectionModel() };
+      context.CollectionModel.AddRange(new[] { srcList.First(), srcList.Last(), new CollectionModel() });
+      var destList = context.CollectionModel.ToList();
+      var wasCalled = false;
+      context.SyncCollections(null, destList, (src, dest) =>
+      {
+        wasCalled = true;
+      });
+      Assert.AreEqual(0, destList.Count);
+      Assert.IsFalse(wasCalled);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
     public void AddItemsToCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
