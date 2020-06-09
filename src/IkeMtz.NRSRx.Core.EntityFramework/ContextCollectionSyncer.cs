@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (sourceCollection == null)
       {
-        throw new ArgumentNullException(nameof(sourceCollection));
+        return;
       }
       else if (destinationCollection == null)
       {
