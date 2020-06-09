@@ -127,7 +127,6 @@ trigger:
     include:
       - master
 pr:
-  batch: true
   branches:
     include:
       - master

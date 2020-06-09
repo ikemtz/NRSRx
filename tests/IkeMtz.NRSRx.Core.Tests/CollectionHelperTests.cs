@@ -1,9 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using IkeMtz.NRSRx.Core.EntityFramework;
-using System;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
