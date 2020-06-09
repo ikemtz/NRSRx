@@ -3,6 +3,7 @@ using System.Linq;
 using IkeMtz.NRSRx.Core.Unigration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IkeMtz.NRSRx.Core.EntityFramework;
+using System;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -13,11 +14,31 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void NullRefOnNullDestinationCollectionTest()
+    {
+      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      var srcList = new[] { new CollectionModel(), new CollectionModel() };
+      context.SyncCollections(srcList, null, null);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Conversion_NullRefOnNullDestinationCollectionTest()
+    {
+      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
+      context.SyncCollections<CollectionModelDto, CollectionModel>(srcList, null, null);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
     public void RemoveItemsFromCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      context.CollectionModel.AddRange(new[] { srcList.First(), srcList.Last(), new CollectionModel() });
+      context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
       var destList = context.CollectionModel.ToList();
       context.SyncCollections(srcList, destList, (src, dest) =>
       {
@@ -28,14 +49,48 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
+    public void Conversion_RemoveItemsFromCollection()
+    {
+      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
+      context.CollectionModel.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionModel() });
+      var destList = context.CollectionModel.ToList();
+      srcList.First().Value = "Validate Update";
+      context.SyncCollections(srcList, destList, (src, dest) =>
+      {
+        dest.Value = src.Value;
+      });
+      Assert.AreEqual(2, destList.Count);
+      Assert.AreEqual(destList.First().Value, "Validate Update");
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
     public void SourceCollectionNullTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      context.CollectionModel.AddRange(new[] { srcList.First(), srcList.Last(), new CollectionModel() });
+      context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
       var destList = context.CollectionModel.ToList();
       var wasCalled = false;
       context.SyncCollections(null, destList, (src, dest) =>
+      {
+        wasCalled = true;
+      });
+      Assert.AreEqual(0, destList.Count);
+      Assert.IsFalse(wasCalled);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public void Conversion_SourceCollectionNullTest()
+    {
+      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      var srcList = new[] { new CollectionModel(), new CollectionModel() };
+      context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      var destList = context.CollectionModel.ToList();
+      var wasCalled = false;
+      context.SyncCollections<CollectionModelDto, CollectionModel>(null, destList, (src, dest) =>
       {
         wasCalled = true;
       });
@@ -54,6 +109,20 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         dest.Value = src.Value;
       });
+      Assert.AreEqual(2, destList.Count);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public void Converstion_AddItemsToCollection()
+    {
+      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
+      var destList = new List<CollectionModel> { };
+      context.SyncCollections(srcList, destList, (src, dest) =>
+     {
+       dest.Value = src.Value;
+     });
       Assert.AreEqual(2, destList.Count);
     }
   }
