@@ -26,9 +26,11 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
 
       //Add New Records to destination
-      sourceCollection.Where(src => !destIds.Contains(src.Id)).ToList().ForEach(
-        destinationCollection.Add
-     );
+      sourceCollection.Where(src => !destIds.Contains(src.Id)).ToList().ForEach(item =>
+      {
+        _ = auditableContext.Add(item);
+        destinationCollection.Add(item);
+      });
 
       //synchronize removed items
       foreach (var destId in destIds.Where(dstId => !sourceIds.Contains(dstId)))
@@ -93,11 +95,13 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
         {
           destItem.Id = srcItem.Id.Value;
         }
+        _ = auditableContext.Add(destItem);
         destinationCollection.Add(destItem);
+
       }
 
       //Delete Records from destination
-      foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t.Value == src.Id)))
+      foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t.Value == src.Id)).ToList())
       {
         _ = destinationCollection.Remove(destItem);
         _ = auditableContext.Remove(destItem);

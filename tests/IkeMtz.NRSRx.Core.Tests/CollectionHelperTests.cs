@@ -34,11 +34,35 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void NullRefOnNullContextTest()
+    {
+      TestAuditableDbContext context = null;
+      var srcList = new[] { new CollectionModel(), new CollectionModel() };
+      var destList = new List<CollectionModel>();
+      context.SyncCollections(srcList, destList, null);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Conversion_NullRefOnNullContextTest()
+    {
+      TestAuditableDbContext context = null;
+      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
+      var destList = new List<CollectionModel>();
+      context.SyncCollections(srcList, destList, null);
+    }
+
+
+    [TestMethod]
+    [TestCategory("Unit")]
     public void RemoveItemsFromCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
       context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      _ = context.SaveChanges();
       var destList = context.CollectionModel.ToList();
       context.SyncCollections(srcList, destList, (src, dest) =>
       {
@@ -54,6 +78,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
       context.CollectionModel.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionModel() });
+      _ = context.SaveChanges();
       var destList = context.CollectionModel.ToList();
       srcList.First().Value = "Validate Update";
       context.SyncCollections(srcList, destList, (src, dest) =>
@@ -71,6 +96,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
       context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      _ = context.SaveChanges();
       var destList = context.CollectionModel.ToList();
       var wasCalled = false;
       context.SyncCollections(null, destList, (src, dest) =>
@@ -88,6 +114,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
       context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      _ = context.SaveChanges();
       var destList = context.CollectionModel.ToList();
       var wasCalled = false;
       context.SyncCollections<CollectionModelDto, CollectionModel>(null, destList, (src, dest) =>
