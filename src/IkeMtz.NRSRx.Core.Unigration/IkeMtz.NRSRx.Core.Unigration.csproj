@@ -32,16 +32,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.5" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.5" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
