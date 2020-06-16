@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
+    <ProjectGuid>41B435DB-E189-4A78-B6F4-452E129BB000</ProjectGuid>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="IkeMtz.NRSRx.Core.Unigration" Version="1.20.161.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
@@ -15,10 +13,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\templates\NRSRx_OData_EF\NRSRx_OData_EF.csproj" />
     <ProjectReference Include="..\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj" />
   </ItemGroup>
-
 </Project>
