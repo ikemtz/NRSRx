@@ -41,10 +41,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
       var claims = new List<Claim>(new[]
       {
-                new Claim(ClaimTypes.Name, "Integration Tester"),
-                new Claim(JwtRegisteredClaimNames.Aud, CoreTestServerExtensions.JwtTokenAud) ,
-                new Claim(JwtRegisteredClaimNames.Iss, TestServerConfiguration.GetValue<string>("IdentityProvider") ?? CoreTestServerExtensions.JwtTokenIssuer)
-            });
+          new Claim(JwtRegisteredClaimNames.UniqueName, "Integration Tester"),
+          new Claim(JwtRegisteredClaimNames.Email, "IntegrationTester@email.com"),
+          new Claim(JwtRegisteredClaimNames.Aud, CoreTestServerExtensions.JwtTokenAud) ,
+          new Claim(JwtRegisteredClaimNames.Iss, TestServerConfiguration.GetValue<string>("IdentityProvider") ?? CoreTestServerExtensions.JwtTokenIssuer)
+      });
       if (testClaims != null)
       {
         testClaims.ToList().ForEach(claims.Add);
@@ -96,7 +97,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public static async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
-      httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));   
+      httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
       if (httpResponseMessage.Content != null)
       {
         var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
