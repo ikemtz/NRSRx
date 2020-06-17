@@ -1,20 +1,21 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace IkeMtz.Samples.SignalR.Hubs
 {
+  [Authorize]
   public class NotificationHub : Hub
   {
     public override Task OnConnectedAsync()
     {
       return base.OnConnectedAsync();
     }
-    public async Task SendMessage(string user, string message)
+    public async Task SendMessage(string message)
     {
-
       await Clients
           .Caller
-          .SendAsync("OnMessageRecieved", $"{user} - {message}").ConfigureAwait(false);
+          .SendAsync("OnMessageRecieved", $"{this.Context.User.Identity.Name} - {message}").ConfigureAwait(false);
     }
   }
 }

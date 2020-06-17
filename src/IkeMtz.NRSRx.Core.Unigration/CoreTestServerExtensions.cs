@@ -33,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
                   if (!string.IsNullOrWhiteSpace(bearer))
                   {
                     var token = new JwtSecurityToken(bearer);
-                    var identity = new ClaimsIdentity(token.Claims, "IntegrationTest");
+                    var identity = new ClaimsIdentity(token.Claims, "IntegrationTest", JwtRegisteredClaimNames.Email, "role");
                     x.Principal = new ClaimsPrincipal(new[] { identity });
                     x.Success();
                   }
@@ -80,12 +80,16 @@ namespace IkeMtz.NRSRx.Core.Unigration
       });
     }
 
-    public static HubConnection BuildSignalrConnection(this TestServer srv, string hubEndpoint)
+    public static HubConnection BuildSignalrConnection(this TestServer srv, string hubEndpoint, string accessToken)
     {
       return new HubConnectionBuilder()
-           .WithUrl($"{srv.BaseAddress}{hubEndpoint}",
-           hubConnectionOptions => hubConnectionOptions.HttpMessageHandlerFactory = _ => srv.CreateHandler())
-           .Build();
+        .WithUrl($"{srv.BaseAddress}{hubEndpoint}",
+        hubConnectionOptions =>
+        {
+          hubConnectionOptions.HttpMessageHandlerFactory = _ => srv.CreateHandler();
+          hubConnectionOptions.AccessTokenProvider = () => Task.FromResult(accessToken);
+        })
+        .Build();
     }
   }
 }

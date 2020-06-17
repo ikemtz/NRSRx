@@ -18,18 +18,18 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
 
-      var connection = srv.BuildSignalrConnection("notificationHub");
+      var connection = srv.BuildSignalrConnection("notificationHub", GenerateTestToken());
       var message = "Hello World";
       var returnMessageFired = false;
 
       _ = connection.On<string>("OnMessageRecieved", msg =>
       {
-        Assert.AreEqual($"user - {message}", msg);
+        Assert.AreEqual($"IntegrationTester@email.com - {message}", msg);
         returnMessageFired = true;
       });
 
       await connection.StartAsync().ConfigureAwait(false);
-      await connection.InvokeAsync("SendMessage", "user", message).ConfigureAwait(true);
+      await connection.InvokeAsync("SendMessage", message).ConfigureAwait(true);
       while (!returnMessageFired)
       {
         Thread.Sleep(500);

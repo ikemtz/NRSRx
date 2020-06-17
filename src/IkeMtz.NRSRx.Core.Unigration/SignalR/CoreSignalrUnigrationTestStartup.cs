@@ -1,5 +1,6 @@
 using System.Reflection;
 using IkeMtz.NRSRx.Core.SignalR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,11 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
       TestContext = app.ApplicationServices.GetService<TestContext>();
       _ = app.UseTestContextRequestLogger(TestContext);
       base.Configure(app, env);
+    }
+
+    public override void SetupAuthentication(AuthenticationBuilder builder)
+    {
+      builder.SetupTestAuthentication(Configuration, TestContext);
     }
   }
 }
