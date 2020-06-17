@@ -17,10 +17,6 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
       this.Startup = startup;
     }
 
-    public override string MicroServiceTitle => Startup.MicroServiceTitle;
-
-    public override Assembly StartupAssembly => Startup.StartupAssembly;
-
     protected TestContext TestContext { get; private set; }
 
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)

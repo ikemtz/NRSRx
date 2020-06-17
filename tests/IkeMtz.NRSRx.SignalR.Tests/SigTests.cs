@@ -14,6 +14,16 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     [TestMethod]
     [TestCategory("Unigration")]
     [Timeout(4000)]
+    public void ValidateSignalRStartup()
+    {
+      var startup = new Startup(null);
+      Assert.IsNull(startup.MicroServiceTitle);
+      Assert.IsNull(startup.StartupAssembly);
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    [Timeout(4000)]
     public async Task NotificationHubTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
