@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
@@ -22,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Web
   {
     public abstract string MicroServiceTitle { get; }
     public abstract Assembly StartupAssembly { get; }
-    public virtual string JwtNameClaimMapping { get; } = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+    public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Email;
     public virtual Dictionary<string, string> SwaggerScopes =>
         new Dictionary<string, string>{
                         { "openid", "required" }
