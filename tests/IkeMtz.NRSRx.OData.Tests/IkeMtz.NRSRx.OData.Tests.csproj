@@ -1,15 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
+    <ProjectGuid>E1915E14-26AC-409C-AD74-D3E877E64B80</ProjectGuid>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Configuration\ModelConfiguration.cs" Link="SampleWeb\Configuration\ModelConfiguration.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Controllers\V1\ItemsController.cs" Link="SampleWeb\Controllers\V1\ItemsController.cs" />
@@ -19,7 +16,6 @@
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Startup.cs" Link="SampleWeb\Startup.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\VersionDefinitions.cs" Link="SampleWeb\VersionDefinitions.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -27,24 +23,20 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="SampleWeb\Configuration\" />
     <Folder Include="SampleWeb\Controllers\V1\" />
     <Folder Include="SampleWeb\Data\" />
     <Folder Include="SampleWeb\Models\" />
   </ItemGroup>
-
 </Project>
