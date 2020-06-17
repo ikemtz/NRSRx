@@ -23,7 +23,6 @@ namespace IkeMtz.NRSRx.SignalR.Tests
 
     [TestMethod]
     [TestCategory("Unigration")]
-    [Timeout(4000)]
     public async Task NotificationHubTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
@@ -40,9 +39,16 @@ namespace IkeMtz.NRSRx.SignalR.Tests
 
       await connection.StartAsync().ConfigureAwait(false);
       await connection.InvokeAsync("SendMessage", message).ConfigureAwait(true);
-      while (!returnMessageFired)
+      for (int i = 0; i < 10; i++)
       {
-        Thread.Sleep(500);
+        if (returnMessageFired)
+        {
+          i += 10;
+        }
+        else
+        {
+          Thread.Sleep(1000);
+        }
       }
       Assert.IsTrue(returnMessageFired);
     }

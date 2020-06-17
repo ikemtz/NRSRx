@@ -53,15 +53,6 @@ steps:
     projects: 'src/**/*.csproj'
     arguments: '--configuration Debug --no-restore'
 
-#- task: DotNetCoreCLI@2
-#  displayName: Pack
-#  inputs:
-#    command: pack
-#    packagesToPack: '$(PACKAGE_PROJECTS)'
-#    arguments: '--configuration $(BuildConfiguration)'
-#    nobuild: false
-#    versioningScheme: byBuildNumber
-
 - task: DotNetCoreCLI@2
   displayName: 'Tests'
   inputs:
@@ -88,11 +79,6 @@ steps:
   inputs:
     SonarCloud: 'SonarCloud IkeMtz'
     organization: 'ikemtz'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
 
 - task: DotNetCoreCLI@2
   displayName: Pack Symbols
