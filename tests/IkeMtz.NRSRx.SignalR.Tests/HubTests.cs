@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.SignalR.Tests
 {
   [TestClass]
-  public class SigTests : BaseUnigrationTests
+  public partial class HubTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Unigration")]
