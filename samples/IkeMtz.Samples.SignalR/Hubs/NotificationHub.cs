@@ -7,11 +7,9 @@ namespace IkeMtz.Samples.SignalR.Hubs
   [Authorize]
   public class NotificationHub : Hub
   {
-    public async Task SendMessage(string message)
-    {
-      await Clients
-          .Caller
-          .SendAsync("OnMessageRecieved", $"{this.Context.User.Identity.Name} - {message}").ConfigureAwait(false);
-    }
+    public Task SendMessage(string message) =>
+      Clients
+        .Caller
+        .SendAsync("OnMessageRecieved", $"{this.Context.User.Identity.Name} - {message}");
   }
 }
