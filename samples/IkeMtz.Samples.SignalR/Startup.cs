@@ -1,10 +1,8 @@
-using System;
-using System.Reflection;
 using IkeMtz.NRSRx.Core.SignalR;
+using IkeMtz.Samples.SignalR.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
-using IkeMtz.Samples.SignalR.Hubs;
 
 namespace IkeMtz.Samples.SignalR
 {

@@ -7,10 +7,6 @@ namespace IkeMtz.Samples.SignalR.Hubs
   [Authorize]
   public class NotificationHub : Hub
   {
-    public override Task OnConnectedAsync()
-    {
-      return base.OnConnectedAsync();
-    }
     public async Task SendMessage(string message)
     {
       await Clients
