@@ -12,10 +12,6 @@ namespace IkeMtz.Samples.SignalR
   {
     public Startup(IConfiguration configuration) : base(configuration) { }
 
-    public override string MicroServiceTitle => "IkeMtz Sample SignalR Service";
-
-    public override Assembly StartupAssembly => typeof(Startup).Assembly;
-
     public override void MapHubs(IEndpointRouteBuilder endpoints)
     {
       _ = endpoints.MapHub<NotificationHub>("/notificationHub");

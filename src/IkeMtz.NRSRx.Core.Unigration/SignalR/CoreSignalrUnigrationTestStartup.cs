@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using IkeMtz.NRSRx.Core.SignalR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
