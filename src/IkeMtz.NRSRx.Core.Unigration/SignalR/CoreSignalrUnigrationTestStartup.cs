@@ -1,4 +1,3 @@
-using System.Reflection;
 using IkeMtz.NRSRx.Core.SignalR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
