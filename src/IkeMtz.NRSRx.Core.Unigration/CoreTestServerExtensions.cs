@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
                   if (!string.IsNullOrWhiteSpace(bearer))
                   {
                     var token = new JwtSecurityToken(bearer);
-                    var identity = new ClaimsIdentity(token.Claims, "IntegrationTest");
+                    var identity = new ClaimsIdentity(token.Claims, "IntegrationTest", JwtRegisteredClaimNames.Email, "role");
                     x.Principal = new ClaimsPrincipal(new[] { identity });
                     x.Success();
                   }
@@ -76,6 +78,18 @@ namespace IkeMtz.NRSRx.Core.Unigration
         _ = options.EnableSensitiveDataLogging(true);
         _ = options.EnableDetailedErrors(true);
       });
+    }
+
+    public static HubConnection BuildSignalrConnection(this TestServer srv, string hubEndpoint, string accessToken)
+    {
+      return new HubConnectionBuilder()
+        .WithUrl($"{srv.BaseAddress}{hubEndpoint}",
+        hubConnectionOptions =>
+        {
+          hubConnectionOptions.HttpMessageHandlerFactory = _ => srv.CreateHandler();
+          hubConnectionOptions.AccessTokenProvider = () => Task.FromResult(accessToken);
+        })
+        .Build();
     }
   }
 }
