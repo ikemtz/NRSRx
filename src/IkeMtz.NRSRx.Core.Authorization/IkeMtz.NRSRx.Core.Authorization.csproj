@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ProjectGuid>1598570D-FF97-41D1-94D6-F0A1E777275A</ProjectGuid>
+
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -17,8 +18,17 @@
     <PackageIcon>ProfilePic.jpg</PackageIcon>
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <StartupObject>IkeMtz.NRSRx.Core.Authorization.Program</StartupObject>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="pub\**" />
+    <EmbeddedResource Remove="pub\**" />
+    <None Remove="pub\**" />
+    <None Include="..\..\build\ProfilePic.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -28,11 +38,5 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\build\ProfilePic.jpg">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 </Project>
