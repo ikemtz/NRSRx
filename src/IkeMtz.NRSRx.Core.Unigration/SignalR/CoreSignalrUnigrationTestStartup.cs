@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
     }
 
     public override void SetupAuthentication(AuthenticationBuilder builder)
-    {
+    { 
       builder.SetupTestAuthentication(Configuration, TestContext);
     }
   }

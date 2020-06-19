@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
@@ -9,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.SignalR.Tests
 {
   [TestClass]
-  public class SigTests : BaseUnigrationTests
+  public partial class HubTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Unigration")]
@@ -51,6 +52,17 @@ namespace IkeMtz.NRSRx.SignalR.Tests
         }
       }
       Assert.IsTrue(returnMessageFired);
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    [ExpectedException(typeof(HttpRequestException))]
+    public async Task NotificationHub401Test()
+    {
+      using var srv = new TestServer(TestHostBuilder<Startup, Startup>());
+
+      var connection = srv.BuildSignalrConnection("notificationHub", GenerateTestToken());
+      await connection.StartAsync().ConfigureAwait(false);
     }
   }
 }
