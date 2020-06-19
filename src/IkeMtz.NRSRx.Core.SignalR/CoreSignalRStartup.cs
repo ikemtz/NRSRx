@@ -1,10 +1,17 @@
+using System;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Web;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IkeMtz.NRSRx.Core.SignalR
 {
@@ -32,6 +39,30 @@ namespace IkeMtz.NRSRx.Core.SignalR
         .UseEndpoints(MapHubs);
     }
 
+    public override void SetupAuthentication(AuthenticationBuilder builder)
+    {
+      _ = builder
+          .AddJwtBearer(options =>
+          {
+            options.Authority = Configuration.GetValue<string>("IdentityProvider");
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+              NameClaimType = JwtNameClaimMapping,
+              ValidAudiences = GetIdentityAudiences(),
+            };
+            options.Events = new JwtBearerEvents()
+            {
+              OnMessageReceived = messageReceivedContext =>
+              {
+                if (messageReceivedContext.Request.Query.TryGetValue("access_token", out StringValues accessToken))
+                {
+                  messageReceivedContext.Token = accessToken;
+                }
+                return Task.CompletedTask;
+              }
+            };
+          });
+    }
     public abstract void MapHubs(IEndpointRouteBuilder endpoints);
   }
 }
