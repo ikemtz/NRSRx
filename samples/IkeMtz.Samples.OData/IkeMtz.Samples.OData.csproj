@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>5fb5d75a-1615-4e16-956d-b48f48f4a476</UserSecretsId>
-    <ProjectGuid>D4FCE424-70C3-42E5-9EE4-9D41D8F47338</ProjectGuid>
+    <ProjectGuid>{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CA1707</NoWarn>
