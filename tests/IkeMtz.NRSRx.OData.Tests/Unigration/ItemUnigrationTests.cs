@@ -6,6 +6,7 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.OData;
 using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.OData.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -93,6 +94,18 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Item)}s/nolimit?$top=500&$count=true");
+      var data = await resp.Content.ReadAsStringAsync();
+      TestContext.WriteLine($"Server Reponse: {data}");
+      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    public async Task GetMetaData()
+    {
+      using var srv = new TestServer(new WebHostBuilder().UseStartup<Startup>());
+      var client = srv.CreateClient();
+      var resp = await client.GetAsync($"odata/v1/$metadata");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {data}");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);

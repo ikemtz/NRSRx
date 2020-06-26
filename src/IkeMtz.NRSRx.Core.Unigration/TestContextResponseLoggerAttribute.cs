@@ -20,9 +20,13 @@ namespace IkeMtz.NRSRx.Core.Unigration
         var result = JsonConvert.SerializeObject(context.Result, Constants.JsonSerializerSettings);
         _testContext.WriteLine($"Server Response: {result}");
       }
-      catch(JsonSerializationException exception)
+      catch (OutOfMemoryException exception)
       {
-        _testContext.WriteLine($"Exception thrown attempting to serialize server response: {exception.Message}");
+        _testContext.WriteLine($"OutOfMemoryException thrown attempting to serialize server response: {exception.Message}");
+      }
+      catch (JsonSerializationException exception)
+      {
+        _testContext.WriteLine($"Serialization Exception thrown attempting to serialize server response: {exception.Message}");
         _testContext.WriteLine($"Server Response: {context.Result}");
       }
       base.OnResultExecuted(context);
