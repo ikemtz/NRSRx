@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
@@ -65,6 +66,36 @@ namespace IkeMtz.NRSRx.OData.Tests
       Assert.AreEqual(item.SubItemBs.First().Id, envelope.Value.First().SubItemBs.First().Id);
       Assert.AreEqual(item.SubItemBs.First().Id, envelope.Value.First().SubItemBs.First().Id);
       Assert.IsFalse(envelope.Value.First().SubItemCs.Any());
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    public async Task GetMaxErrorItemsTest()
+    {
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      var client = srv.CreateClient();
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.GetAsync($"odata/v1/{nameof(Item)}s?$top=5000&$count=true");
+      var data = await resp.Content.ReadAsStringAsync();
+      TestContext.WriteLine($"Server Reponse: {data}");
+      Assert.IsTrue(data.Contains("The limit of '100'"));
+      Assert.IsTrue(data.Contains("The value from the incoming request is '5000'"));
+      Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    public async Task GetMaxItemsTest()
+    {
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      var client = srv.CreateClient();
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.GetAsync($"odata/v1/{nameof(Item)}s/nolimit?$top=500&$count=true");
+      var data = await resp.Content.ReadAsStringAsync();
+      TestContext.WriteLine($"Server Reponse: {data}");
+      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
   }
 }

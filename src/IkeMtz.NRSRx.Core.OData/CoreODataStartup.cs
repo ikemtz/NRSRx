@@ -21,6 +21,7 @@ namespace IkeMtz.NRSRx.Core.OData
 {
   public abstract class CoreODataStartup : CoreWebStartup
   {
+    public virtual int? MaxTop { get; set; }
     protected CoreODataStartup(IConfiguration configuration) : base(configuration)
     {
     }
@@ -62,7 +63,7 @@ namespace IkeMtz.NRSRx.Core.OData
             .Select()
             .Expand()
             .OrderBy()
-            .MaxTop(100)
+            .MaxTop(MaxTop ?? 100)
             .Filter()
             .Count()
             .MapVersionedODataRoutes("odata-bypath", "odata/v{version:apiVersion}", models, oBuilder =>
