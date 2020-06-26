@@ -62,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.OData
             .Select()
             .Expand()
             .OrderBy()
-            .MaxTop(100)
+            .MaxTop(500)
             .Filter()
             .Count()
             .MapVersionedODataRoutes("odata-bypath", "odata/v{version:apiVersion}", models, oBuilder =>
