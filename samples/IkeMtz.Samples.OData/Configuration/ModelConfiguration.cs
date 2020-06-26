@@ -1,6 +1,6 @@
+using IkeMtz.Samples.OData.Models;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Mvc;
-using IkeMtz.Samples.OData.Models;
 
 namespace IkeMtz.Samples.OData.Configuration
 {
@@ -10,6 +10,8 @@ namespace IkeMtz.Samples.OData.Configuration
     {
       _ = builder.EntitySet<Item>($"{nameof(Item)}s");
       _ = builder.EntitySet<SubItemA>($"{nameof(SubItemA)}s");
+      _ = builder.EntityType<Item>().Collection.Function("NoLimit")
+        .ReturnsCollectionFromEntitySet<Item>($"{nameof(Item)}s");
     }
   }
 }

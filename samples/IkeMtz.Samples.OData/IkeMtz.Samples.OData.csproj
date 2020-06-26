@@ -13,12 +13,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="IkeMtz.NRSRx.Core.OData" Version="1.20.168.11" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
   </ItemGroup>
 </Project>
