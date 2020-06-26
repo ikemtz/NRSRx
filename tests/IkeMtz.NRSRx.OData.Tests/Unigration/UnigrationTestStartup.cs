@@ -11,7 +11,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public class UnigrationTestStartup
      : CoreODataUnigrationTestStartup<Startup, ModelConfiguration>
   {
-    public UnigrationTestStartup(IConfiguration configuration) : base(new Startup(configuration))
+    public UnigrationTestStartup(IConfiguration configuration) : base(new Startup(configuration) { MaxTop = 500 })
     {
     }
     public override void SetupAuthentication(AuthenticationBuilder builder)

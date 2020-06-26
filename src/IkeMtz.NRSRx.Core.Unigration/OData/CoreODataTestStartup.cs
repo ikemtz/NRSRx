@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.OData;
 using Microsoft.AspNet.OData.Builder;
@@ -20,6 +19,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     protected CoreODataTestStartup(TStartup startup) : base(startup?.Configuration)
     {
       Startup = startup;
+      base.MaxTop = startup.MaxTop;
     }
 
     public override string MicroServiceTitle => Startup.MicroServiceTitle;
