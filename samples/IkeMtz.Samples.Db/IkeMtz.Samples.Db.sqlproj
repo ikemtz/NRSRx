@@ -67,5 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Dockerfile" />
+    <None Include="IkeMtz.Samples.Db.publish.xml" />
   </ItemGroup>
 </Project>

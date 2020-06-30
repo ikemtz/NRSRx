@@ -10,7 +10,9 @@ namespace IkeMtz.NRSRx.OData.Tests
       var item = new Item()
       {
         Id = Guid.NewGuid(),
-        Value = Guid.NewGuid().ToString().Substring(0, 6)
+        Value = Guid.NewGuid().ToString().Substring(0, 6),
+        CreatedBy = "Factory",
+        CreatedOnUtc = DateTime.UtcNow
       };
       item.SubItemAs.Add(new SubItemA
       {
