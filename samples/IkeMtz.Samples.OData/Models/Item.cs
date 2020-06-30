@@ -4,7 +4,7 @@ using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.Samples.OData.Models
 {
-  public class Item : IIdentifiable
+  public class Item : IIdentifiable, IAuditable
   {
     public Item()
     {
@@ -17,6 +17,10 @@ namespace IkeMtz.Samples.OData.Models
     public virtual ICollection<SubItemA> SubItemAs { get; }
     public virtual ICollection<SubItemB> SubItemBs { get; }
     public virtual ICollection<SubItemC> SubItemCs { get; }
+    public string CreatedBy { get; set; }
+    public string UpdatedBy { get; set; }
+    public DateTimeOffset CreatedOnUtc { get; set; }
+    public DateTimeOffset? UpdatedOnUtc { get; set; }
   }
 
   public class SubItemA : IIdentifiable

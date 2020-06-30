@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IkeMtz.NRSRx.Core.EntityFramework" Version="1.20.168.11" />
-    <PackageReference Include="IkeMtz.NRSRx.Core.WebApi" Version="1.20.168.11" />
+    <PackageReference Include="IkeMtz.NRSRx.Core.EntityFramework" Version="1.20.178.5" />
+    <PackageReference Include="IkeMtz.NRSRx.Core.WebApi" Version="1.20.178.5" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

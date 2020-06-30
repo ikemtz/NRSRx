@@ -1,0 +1,4 @@
+*.dbmdl
+*.jfm
+*.sqlproj*
+/obj
