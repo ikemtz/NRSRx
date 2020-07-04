@@ -55,9 +55,9 @@ jobs:
       PackageVersion: '$(Build.BuildNumber)'
  
   - task: DotNetCoreCLI@2
-    displayName: 'dotnet publish'
+    displayName: 'dotnet build'
     inputs:
-      command: 'publish'
+      command: 'build'
       projects: '$(TEST_PROJECTS)'
       arguments: '--configuration Debug --output $(build.artifactstagingdirectory)'
   
