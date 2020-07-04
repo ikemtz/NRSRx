@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.OData.Tests
 {
   [TestClass]
-  public class SwaggerPageTest : BaseUnigrationTests
+  public class SwaggerPageTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Unigration")]
