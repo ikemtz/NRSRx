@@ -31,7 +31,7 @@ jobs:
     inputs:
       ArtifactName: 'dacpac_drop'
 
-- job: Packaging Tests
+- job: PackagingTests
   displayName: Build and Packaging Test Code
   pool:
     vmImage: 'windows-latest'
