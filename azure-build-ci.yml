@@ -30,29 +30,11 @@ jobs:
     displayName: 'Publish Artifact: dacpac_drop'
     inputs:
       ArtifactName: 'dacpac_drop'
-
-- job: PackagingTests
-  displayName: Build and Packaging Test Code
-  pool:
-    vmImage: 'windows-latest'
-
-  steps:
-  - checkout: self
-    persistCredentials: true
   
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk 3.1.x'
     inputs:
       version: 3.1.x
-  
-  - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
-    displayName: 'Set Assembly Manifest Data'
-    inputs:  
-      InsertAttributes: true
-      VersionNumber: '$(Build.BuildNumber)'
-      FileVersionNumber: '$(Build.BuildNumber)'
-      InformationalVersion: '$(Build.BuildNumber)'
-      PackageVersion: '$(Build.BuildNumber)'
  
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
@@ -60,11 +42,6 @@ jobs:
       command: 'build'
       projects: '$(TEST_PROJECTS)'
       arguments: '--configuration Debug --output $(build.artifactstagingdirectory)'
-  
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact'
-    inputs:
-      ArtifactName: 'test_code_drop'
   
 - job: APIs
   displayName: Build and test API code
