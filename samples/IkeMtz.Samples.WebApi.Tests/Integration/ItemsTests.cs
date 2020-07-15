@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.OData.Tests;
+using IkeMtz.NRSRx.Tests;
 using IkeMtz.Samples.WebApi.Data;
 using IkeMtz.Samples.WebApi.Models;
 using Microsoft.AspNetCore.TestHost;

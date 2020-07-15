@@ -1,7 +1,7 @@
 using System;
 using IkeMtz.Samples.WebApi.Models;
 
-namespace IkeMtz.NRSRx.OData.Tests
+namespace IkeMtz.NRSRx.Tests
 {
   public static partial class Factories
   {
