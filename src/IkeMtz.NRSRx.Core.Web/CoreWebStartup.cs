@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Web
   {
     public abstract string MicroServiceTitle { get; }
     public abstract Assembly StartupAssembly { get; }
-    public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Email;
+    public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
     public virtual Dictionary<string, string> SwaggerScopes =>
         new Dictionary<string, string>{
                         { "openid", "required" }
