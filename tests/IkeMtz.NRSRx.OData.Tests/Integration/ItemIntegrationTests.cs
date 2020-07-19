@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s.json?$filter=id eq {item.Id}");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$filter=id eq {item.Id}");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Item>>(resp);
@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s.json?$count=true&$expand={nameof(SubItemA)}s,{nameof(SubItemB)}s&$filter=id eq {item.Id}");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$count=true&$expand={nameof(SubItemA)}s,{nameof(SubItemB)}s&$filter=id eq {item.Id}");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Item>>(resp);
