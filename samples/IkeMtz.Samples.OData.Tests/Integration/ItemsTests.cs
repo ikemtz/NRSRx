@@ -21,7 +21,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$count=true");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s.json?$count=true");
       TestContext.WriteLine($"Server Reponse: {resp}");
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Item>>(resp);
       Assert.AreEqual(envelope.Count, envelope.Value.Count());

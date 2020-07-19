@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -12,6 +13,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       _testContext = testContext;
     }
+
+    [ExcludeFromCodeCoverage]
     public override void OnResultExecuted(ResultExecutedContext context)
     {
       context = context ?? throw new ArgumentNullException(nameof(context));
