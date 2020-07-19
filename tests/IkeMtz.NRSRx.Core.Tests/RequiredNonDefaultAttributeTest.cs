@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>());
       var client = srv.CreateClient();
-      var resp = await client.PostAsJsonAsync("api/v1/Test", new TestModel());
+      var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel());
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
       StringAssert.Contains(s, "non-default");
@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>());
       var client = srv.CreateClient();
-      var resp = await client.PostAsJsonAsync("api/v1/Test", new TestModel { TestGuid = Guid.Empty });
+      var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.Empty });
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
       StringAssert.Contains(s, "non-default");
@@ -62,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>());
       var client = srv.CreateClient();
-      var resp = await client.PostAsJsonAsync("api/v1/Test", new TestModel { TestGuid = Guid.NewGuid(), strings = new[] { "Hello World" } });
+      var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.NewGuid(), strings = new[] { "Hello World" } });
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine(s);
@@ -75,7 +75,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>());
       var client = srv.CreateClient();
-      var resp = await client.PostAsJsonAsync("api/v1/Test", new TestModel { TestGuid = Guid.NewGuid(), strings = Array.Empty<string>() });
+      var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.NewGuid(), strings = Array.Empty<string>() });
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
       StringAssert.Contains(s, "The strings field requires a non-empty value.");
