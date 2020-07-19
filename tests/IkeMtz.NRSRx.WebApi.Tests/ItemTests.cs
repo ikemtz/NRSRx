@@ -66,6 +66,21 @@ namespace IkeMtz.NRSRx.WebApi.Tests
 
     [TestMethod]
     [TestCategory("Unigration")]
+    [ExpectedException(typeof(JsonReaderException))]
+    public async Task SaveItemJsonReaderExceptionsTest()
+    {
+      var item = Factories.ItemFactory();
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      var client = srv.CreateClient();
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Item)}s.xml", item);
+      _ = resp.EnsureSuccessStatusCode();
+      var httpItem = await DeserializeResponseAsync<Item>(resp);
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
     public async Task UpdateItemTest()
     {
       var originalItem = Factories.ItemFactory();
