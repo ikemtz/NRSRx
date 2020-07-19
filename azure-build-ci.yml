@@ -40,7 +40,7 @@ jobs:
     displayName: 'dotnet build'
     inputs:
       command: 'build'
-      projects: '$(TEST_PROJECTS)'
+      projects: 'src/**/*.csproj'
       arguments: '--configuration Debug --output $(build.artifactstagingdirectory)'
   
 - job: APIs
