@@ -21,7 +21,9 @@ namespace IkeMtz.NRSRx.Core.OData
 #pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
   {
     private const string DATE_SUFFIX = "Date";
+#pragma warning disable CA1000 // Do not declare static members on generic types
     public static EntitySetConfiguration<TEntity> EntitySetBuilder(ODataModelBuilder builder, string setName = null)
+#pragma warning restore CA1000 // Do not declare static members on generic types
     {
       if (builder == null)
       {

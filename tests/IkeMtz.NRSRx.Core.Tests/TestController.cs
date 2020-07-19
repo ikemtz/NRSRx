@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
-  [Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/v{version:apiVersion}/[controller].{format}"), FormatFilter]
   [ApiVersion(TestApiVersionDefinitions.V1_0)]
   [ApiController]
   public class TestController : ControllerBase
