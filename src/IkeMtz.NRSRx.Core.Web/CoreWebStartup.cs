@@ -135,7 +135,6 @@ namespace IkeMtz.NRSRx.Core.Web
       resp.EnsureSuccessStatusCode();
       var content = resp.Content.ReadAsStringAsync().Result;
       return OpenIdConfiguration = JsonConvert.DeserializeObject<OpenIdConfiguration>(content);
-
     }
   }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using IkeMtz.NRSRx.Core.OData;
 using IkeMtz.NRSRx.Core.Web;

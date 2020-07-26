@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.Web
     private readonly string apiTitle;
     private readonly string buildNumber;
     private readonly IHttpClientFactory httpClientFactory;
-    private AppSettings appSettings;
+    private readonly AppSettings appSettings;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
