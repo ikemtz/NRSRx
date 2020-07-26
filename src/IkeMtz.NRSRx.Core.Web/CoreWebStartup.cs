@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,8 +13,9 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -40,6 +42,13 @@ namespace IkeMtz.NRSRx.Core.Web
           .AddApplicationInsightsTelemetry(Configuration.GetValue<string>("InstrumentationKey"));
     }
 
+    public virtual void SetupAppSettings(IServiceCollection services)
+    {
+      services
+        .Configure<AppSettings>(Configuration)
+        .AddScoped(sp => sp.GetRequiredService<IOptionsSnapshot<AppSettings>>().Value);
+    }
+
     public virtual AuthenticationBuilder SetupJwtAuthSchema(IServiceCollection services)
     {
       return services
@@ -64,9 +73,9 @@ namespace IkeMtz.NRSRx.Core.Web
           });
     }
 
-    protected virtual string[] GetIdentityAudiences()
+    public virtual string[] GetIdentityAudiences(AppSettings appSettings = null)
     {
-      return Configuration.GetValue<string>("IdentityAudiences")?.Split(',') ?? Array.Empty<string>();
+      return (appSettings?.IdentityAudiences ?? Configuration.GetValue<string>("IdentityAudiences"))?.Split(',') ?? Array.Empty<string>();
     }
 
     public virtual void SetupDatabase(IServiceCollection services, string connectionString) { }
@@ -98,7 +107,10 @@ namespace IkeMtz.NRSRx.Core.Web
       options.RoutePrefix = string.Empty;
       options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
       options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
+      options.OAuthClientSecret(Configuration.GetValue<string>("SwaggerClientSecret"));
       options.OAuthAppName(Configuration.GetValue<string>("SwaggerAppName"));
+      options.OAuthScopeSeparator(" ");
+      options.OAuthUsePkce();
     }
 
     public virtual void SetupSwaggerGen(SwaggerGenOptions options)
@@ -106,38 +118,24 @@ namespace IkeMtz.NRSRx.Core.Web
       options.UseInlineDefinitionsForEnums();
       // add a custom operation filter which sets default values
       options.OperationFilter<SwaggerDefaultValues>();
-      var audiences = GetIdentityAudiences();
-      var swaggerIdentityProviderUrl = Configuration.GetValue<string>("SwaggerIdentityProviderUrl");
-      if (audiences.Any() && !string.IsNullOrWhiteSpace(swaggerIdentityProviderUrl))
-      {
-        var audience = audiences.FirstOrDefault();
+      options.OperationFilter<SwaggerAuthorizeOperationFilter>();
+    }
 
-        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
-        {
-          Type = SecuritySchemeType.OAuth2,
-          In = ParameterLocation.Header,
-          Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-          Scheme = JwtBearerDefaults.AuthenticationScheme,
-          Flows = new OpenApiOAuthFlows
-          {
-            Implicit = new OpenApiOAuthFlow
-            {
-              AuthorizationUrl = new Uri($"{swaggerIdentityProviderUrl}authorize?audience={audience}"),
-              Scopes = SwaggerScopes,
-            },
-          }
-        });
-        options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme}
-                        },
-                       Array.Empty<string>()
-                    }
-                });
+    private static OpenIdConfiguration OpenIdConfiguration;
+    [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
+    [SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings", Justification = "<Pending>")]
+    public virtual OpenIdConfiguration GetOpenIdConfiguration(IHttpClientFactory clientFactory, AppSettings appSettings)
+    {
+      if (OpenIdConfiguration != null)
+      {
+        return OpenIdConfiguration;
       }
+      var resp = clientFactory.CreateClient()
+          .GetAsync($"{appSettings?.IdentityProvider}.well-known/openid-configuration").Result;
+      resp.EnsureSuccessStatusCode();
+      var content = resp.Content.ReadAsStringAsync().Result;
+      return OpenIdConfiguration = JsonConvert.DeserializeObject<OpenIdConfiguration>(content);
+
     }
   }
 }

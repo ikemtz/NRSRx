@@ -24,6 +24,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      SetupAppSettings(services);
       SetupLogging(services);
       SetupSwagger(services);
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
@@ -101,7 +102,8 @@ namespace IkeMtz.NRSRx.Core.WebApi
     public void SetupSwagger(IServiceCollection services)
     {
       _ = services
-        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
+        .AddHttpClient()
+        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this ))
         .AddSwaggerGen(options =>
         {
           options.UseInlineDefinitionsForEnums();

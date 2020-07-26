@@ -29,6 +29,7 @@ namespace IkeMtz.NRSRx.Core.OData
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      SetupAppSettings(services);
       SetupLogging(services);
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupAuthentication(SetupJwtAuthSchema(services));
@@ -112,7 +113,8 @@ namespace IkeMtz.NRSRx.Core.OData
     public void SetupSwagger(IServiceCollection services)
     {
       _ = services
-        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>(), this))
+        .AddHttpClient()
+        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
         .AddSwaggerGen(swaggerGenOptions =>
         {
           swaggerGenOptions.OperationFilter<ODataCommonOperationFilter>();

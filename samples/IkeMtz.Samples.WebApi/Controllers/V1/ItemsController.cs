@@ -7,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using IkeMtz.Samples.WebApi.Data;
 using IkeMtz.Samples.WebApi.Models;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IkeMtz.Samples.WebApi.Controllers.V1
 {
   [Route("api/v{version:apiVersion}/[controller].{format}"), FormatFilter]
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
+  [Authorize]
   public class ItemsController : ControllerBase
   {
     private readonly IDatabaseContext _databaseContext;

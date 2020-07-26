@@ -1,4 +1,7 @@
+using System;
+using System.Net.Http;
 using System.Reflection;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +43,14 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       _ = options.Filters.Add<TestContextResponseLoggerAttribute>(int.MaxValue);
       base.SetupMvcOptions(services, options);
+    }
+    public override OpenIdConfiguration GetOpenIdConfiguration(IHttpClientFactory clientFactory, AppSettings appSettings)
+    {
+      return new OpenIdConfiguration
+      {
+        AuthorizeEndpoint = "https://demo.identityserver.io/connect/authorize",
+        TokenEndpoint = $"https://demo.identityserver.io/connect/token",
+      };
     }
   }
 }
