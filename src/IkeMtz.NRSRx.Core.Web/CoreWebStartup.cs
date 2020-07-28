@@ -25,6 +25,7 @@ namespace IkeMtz.NRSRx.Core.Web
   {
     public abstract string MicroServiceTitle { get; }
     public abstract Assembly StartupAssembly { get; }
+    public virtual string SwaggerUiRoutePrefix {get;} = string.Empty;
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
     public virtual Dictionary<string, string> SwaggerScopes =>
         new Dictionary<string, string>{
@@ -98,13 +99,14 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
     {
+      var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger" : ".";
       foreach (var description in provider.ApiVersionDescriptions)
       {
-        options.SwaggerEndpoint($"./swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+        options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
       }
       options.EnableDeepLinking();
       options.EnableFilter();
-      options.RoutePrefix = string.Empty;
+      options.RoutePrefix = SwaggerUiRoutePrefix;
       options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
       options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
       options.OAuthClientSecret(Configuration.GetValue<string>("SwaggerClientSecret"));

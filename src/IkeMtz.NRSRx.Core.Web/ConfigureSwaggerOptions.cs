@@ -56,8 +56,6 @@ namespace IkeMtz.NRSRx.Core.Web
     [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
     public void Configure(SwaggerGenOptions options)
     {
-      var discoveryDocument = startup.GetOpenIdConfiguration(this.httpClientFactory, appSettings);
-
       // add a swagger document for each discovered API version
       // note: you might choose to skip or document deprecated API versions differently
       foreach (var description in provider.ApiVersionDescriptions)
@@ -67,6 +65,7 @@ namespace IkeMtz.NRSRx.Core.Web
       var audiences = this.startup.GetIdentityAudiences(this.appSettings);
       if (audiences.Any() && !string.IsNullOrWhiteSpace(this.appSettings.IdentityProvider))
       {
+        var discoveryDocument = startup.GetOpenIdConfiguration(this.httpClientFactory, appSettings);
         options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
         {
           Type = SecuritySchemeType.OAuth2,
@@ -77,7 +76,7 @@ namespace IkeMtz.NRSRx.Core.Web
             AuthorizationCode = new OpenApiOAuthFlow
             {
               AuthorizationUrl = discoveryDocument.GetAuthorizationEndpointUri(appSettings),
-              TokenUrl =  discoveryDocument.GetTokenEndpointUri(),
+              TokenUrl = discoveryDocument.GetTokenEndpointUri(),
               Scopes = this.startup.SwaggerScopes,
             }
           }
