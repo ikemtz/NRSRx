@@ -99,9 +99,10 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
     {
+      var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger" : ".";
       foreach (var description in provider.ApiVersionDescriptions)
       {
-        options.SwaggerEndpoint($"./swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+        options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
       }
       options.EnableDeepLinking();
       options.EnableFilter();
