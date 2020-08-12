@@ -57,7 +57,7 @@ IF EXISTS (SELECT 1
 FROM sys.foreign_keys
 WHERE OBJECT_NAME(referenced_object_id) = @TableName)
 BEGIN
-	PRINT '  public ' + @TableName + ' ()'
+	PRINT '  public ' + @EntityName + '()'
 	PRINT '  {'
 	DECLARE child_table_cursor CURSOR
 FOR
