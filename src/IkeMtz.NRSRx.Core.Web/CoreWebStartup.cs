@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +26,7 @@ namespace IkeMtz.NRSRx.Core.Web
   {
     public abstract string MicroServiceTitle { get; }
     public abstract Assembly StartupAssembly { get; }
-    public virtual string SwaggerUiRoutePrefix {get;} = string.Empty;
+    public virtual string SwaggerUiRoutePrefix { get; } = string.Empty;
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
     public virtual Dictionary<string, string> SwaggerScopes =>
         new Dictionary<string, string>{
@@ -46,6 +47,7 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual void SetupAppSettings(IServiceCollection services)
     {
       services
+        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
         .Configure<AppSettings>(Configuration)
         .AddScoped(sp => sp.GetRequiredService<IOptionsSnapshot<AppSettings>>().Value);
     }
