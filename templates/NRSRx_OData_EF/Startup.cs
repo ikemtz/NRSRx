@@ -18,10 +18,10 @@ namespace NRSRx_OData_EF
     {
     }
     [ExcludeFromCodeCoverage]
-    public override void SetupDatabase(IServiceCollection services, string connectionString)
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services
-       .AddDbContextPool<DatabaseContext>(x => x.UseSqlServer(connectionString))
+       .AddDbContextPool<DatabaseContext>(x => x.UseSqlServer(dbConnectionString))
        .AddEntityFrameworkSqlServer();
     }
 
