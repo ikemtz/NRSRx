@@ -14,10 +14,10 @@ namespace NRSRx_WebApi_EF
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
-    public override void SetupDatabase(IServiceCollection services, string connectionString)
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services
-      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(connectionString))
+      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(dbConnectionString))
       .AddEntityFrameworkSqlServer();
     }
 
