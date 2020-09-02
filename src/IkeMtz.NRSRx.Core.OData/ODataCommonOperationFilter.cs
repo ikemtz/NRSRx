@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -17,9 +18,9 @@ namespace IkeMtz.NRSRx.Core.OData
       AddParameter(operation, "$count", "boolean", "Indicates whether or not to include a total entry count.");
     }
 
-    public static void AddParameter(OpenApiOperation operation, string name, string type, string description)
+    public static void AddParameter([NotNull] OpenApiOperation operation, string name, string type, string description)
     {
-      if (!(operation?.Parameters.Any(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase))).GetValueOrDefault())
+      if (operation != null && !operation.Parameters.Any(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
       {
         var parameter = new OpenApiParameter()
         {
