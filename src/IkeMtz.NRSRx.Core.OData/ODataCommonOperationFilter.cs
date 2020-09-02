@@ -17,9 +17,9 @@ namespace IkeMtz.NRSRx.Core.OData
       AddParameter(operation, "$count", "boolean", "Indicates whether or not to include a total entry count.");
     }
 
-    public static void AddParameter(OpenApiOperation operation, string name, string type = "string", string description)
+    public static void AddParameter(OpenApiOperation operation, string name, string type, string description)
     {
-      if (!operation.Parameters.Any(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+      if (!(operation?.Parameters.Any(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase))).GetValueOrDefault())
       {
         var parameter = new OpenApiParameter()
         {
