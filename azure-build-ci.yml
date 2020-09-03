@@ -129,7 +129,8 @@ jobs:
       monitorOnBuild: true
       failOnIssues: true
       projectName: 'NRSRx'
-      organization: 'ikemtz'
+      organization: 'ikemtz'      
+      additionalArguments: '--file=$(Build.SourcesDirectory)NRSRx.sln'
   
   - task: DotNetCoreCLI@2
     displayName: Pack Symbols
