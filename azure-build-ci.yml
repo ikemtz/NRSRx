@@ -127,7 +127,7 @@ jobs:
       testType: 'app'
       severityThreshold: 'medium'
       monitorOnBuild: true
-      failOnIssues: true
+      failOnIssues: false
       projectName: 'NRSRx'
       organization: 'ikemtz'      
       additionalArguments: '--file=$(Build.SourcesDirectory)\NRSRx.sln'
