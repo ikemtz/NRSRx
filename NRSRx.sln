@@ -52,9 +52,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_WebApi_EF", "templates\NRSRx_WebApi_EF\NRSRx_WebApi_EF.csproj", "{D9632B5E-C814-472F-97A2-EA462D87771B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSRx.Extensions", "templates\NRSRx.Extensions\NRSRx.Extensions.csproj", "{FA75BED6-1FC0-4B93-814C-96D34FB67940}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_OData_EF", "templates\NRSRx_OData_EF\NRSRx_OData_EF.csproj", "{1C782EC2-1B33-4061-9311-50987DCE5587}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_OData_EF.Tests", "templates\NRSRx_OData_EF.Tests\NRSRx_OData_EF.Tests.csproj", "{9BD52CD6-956F-4052-9AAF-5B4BA16FAE62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSRx.Extensions", "templates\NRSRx.Extensions\NRSRx.Extensions.csproj", "{FA75BED6-1FC0-4B93-814C-96D34FB67940}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Core.Jwt", "src\IkeMtz.NRSRx.Core.Jwt\IkeMtz.NRSRx.Core.Jwt.csproj", "{F392FAD6-6BF7-4B69-BC10-B0A489B9E7F1}"
 EndProject
@@ -73,8 +75,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{91732412
 		tools\sonarqube-create-project-guids.ps1 = tools\sonarqube-create-project-guids.ps1
 		tools\sql-poco-class-generator.sql = tools\sql-poco-class-generator.sql
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NRSRx_OData_EF.Tests", "templates\NRSRx_OData_EF.Tests\NRSRx_OData_EF.Tests.csproj", "{9BD52CD6-956F-4052-9AAF-5B4BA16FAE62}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.OData.Tests", "samples\IkeMtz.Samples.OData.Tests\IkeMtz.Samples.OData.Tests.csproj", "{41B435DB-E189-4A78-B6F4-452E129BB000}"
 EndProject
