@@ -120,6 +120,17 @@ jobs:
     inputs:
       SonarCloud: 'SonarCloud IkeMtz'
       organization: 'ikemtz'
+
+  - task: SnykSecurityScan@0
+    inputs:
+      serviceConnectionEndpoint: 'synk'
+      testType: 'app'
+      severityThreshold: 'medium'
+      monitorOnBuild: false
+      failOnIssues: false
+      projectName: 'NRSRx'
+      organization: 'ikemtz'      
+      additionalArguments: '--file=$(Build.SourcesDirectory)\NRSRx.sln'
   
   - task: DotNetCoreCLI@2
     displayName: Pack Symbols
