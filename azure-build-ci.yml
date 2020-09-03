@@ -126,7 +126,7 @@ jobs:
       serviceConnectionEndpoint: 'synk'
       testType: 'app'
       severityThreshold: 'medium'
-      monitorOnBuild: true
+      monitorOnBuild: false
       failOnIssues: false
       projectName: 'NRSRx'
       organization: 'ikemtz'      
