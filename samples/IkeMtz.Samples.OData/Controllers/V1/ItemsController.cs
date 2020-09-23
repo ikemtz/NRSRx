@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.OData.Models;
@@ -46,6 +48,12 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     {
       return _databaseContext.Items
         .AsNoTracking();
+    }
+#pragma warning disable CA1801 // Review unused parameters
+    public ActionResult Delete([FromODataUri] Guid key)
+#pragma warning restore CA1801 // Review unused parameters
+    {
+      return StatusCode((int)HttpStatusCode.OK);
     }
   }
 }

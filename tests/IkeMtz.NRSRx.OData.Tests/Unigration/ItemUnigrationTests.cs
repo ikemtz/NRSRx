@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -96,6 +97,18 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetAsync($"odata/v1/{nameof(Item)}s/nolimit?$top=500&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {data}");
+      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    public async Task DeleteItemsTest()
+    {
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      var client = srv.CreateClient();
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.DeleteAsync($"odata/v1/{nameof(Item)}s/{Guid.NewGuid()}");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
 
