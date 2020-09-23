@@ -4,7 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.Core.Models
-{
+{ 
   public class ODataEnvelope<TEntity> : ODataEnvelope<TEntity, Guid>
        where TEntity : class, IIdentifiable, new()
   {
