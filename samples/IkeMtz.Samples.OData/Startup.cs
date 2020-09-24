@@ -13,6 +13,7 @@ namespace IkeMtz.Samples.OData
   {
     public override string MicroServiceTitle => $"{nameof(Item)} OData Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
+    public override bool IncludeXmlCommentsInSwaggerDocs => true;
 
     public Startup(IConfiguration configuration) : base(configuration)
     {
