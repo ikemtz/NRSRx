@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
@@ -28,6 +29,8 @@ namespace IkeMtz.NRSRx.Core.Web
     public abstract Assembly StartupAssembly { get; }
     public virtual string SwaggerUiRoutePrefix { get; } = string.Empty;
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
+
+    public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
     public virtual Dictionary<string, string> SwaggerScopes =>
         new Dictionary<string, string>{
                         { "openid", "required" }
@@ -123,6 +126,14 @@ namespace IkeMtz.NRSRx.Core.Web
       // add a custom operation filter which sets default values
       options.OperationFilter<SwaggerDefaultValues>();
       options.OperationFilter<SwaggerAuthorizeOperationFilter>();
+
+      if (IncludeXmlCommentsInSwaggerDocs)
+      {
+        // Set the comments path for the Swagger JSON and UI.
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        options.IncludeXmlComments(xmlPath);
+      }
     }
 
     private static OpenIdConfiguration OpenIdConfiguration;
