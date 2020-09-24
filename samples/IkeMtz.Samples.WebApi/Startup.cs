@@ -1,9 +1,9 @@
 using System.Reflection;
 using IkeMtz.NRSRx.Core.WebApi;
+using IkeMtz.Samples.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using IkeMtz.Samples.WebApi.Data;
 
 namespace IkeMtz.Samples.WebApi
 {
@@ -14,10 +14,10 @@ namespace IkeMtz.Samples.WebApi
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
-    public override void SetupDatabase(IServiceCollection services, string connectionString)
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services
-      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(connectionString))
+      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(dbConnectionString))
       .AddEntityFrameworkSqlServer();
     }
 

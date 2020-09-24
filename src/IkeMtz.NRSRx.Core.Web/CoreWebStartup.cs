@@ -84,7 +84,7 @@ namespace IkeMtz.NRSRx.Core.Web
       return (appSettings?.IdentityAudiences ?? Configuration.GetValue<string>("IdentityAudiences"))?.Split(',') ?? Array.Empty<string>();
     }
 
-    public virtual void SetupDatabase(IServiceCollection services, string connectionString) { }
+    public virtual void SetupDatabase(IServiceCollection services, string dbConnectionString) { }
 
 
     public virtual void SetupMvcOptions(IServiceCollection services, MvcOptions options)
