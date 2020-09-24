@@ -4,12 +4,6 @@
         <name>IkeMtz.NRSRx.Core.Unigration</name>
     </assembly>
     <members>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerExtensions.AddTestContext(Microsoft.Extensions.Logging.ILoggingBuilder,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
-            <summary>
-            Adds a console logger named 'Console' to the factory.
-            </summary>
-            <param name="builder">The <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/> to use.</param>
-        </member>
         <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer)">
             <summary>
             Validates and returns the Swagger page HTML

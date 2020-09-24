@@ -130,9 +130,7 @@ namespace IkeMtz.NRSRx.Core.Web
       if (IncludeXmlCommentsInSwaggerDocs)
       {
         // Set the comments path for the Swagger JSON and UI.
-        var xmlFile = $"{StartupAssembly.GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-        options.IncludeXmlComments(xmlPath);
+        options.IncludeXmlComments(StartupAssembly.CodeBase.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
       }
     }
 
