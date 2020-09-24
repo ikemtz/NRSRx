@@ -9,6 +9,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
   public class UnigrationODataTestStartup
       : CoreODataUnigrationTestStartup<Startup, ModelConfiguration>
   {
+    public override bool IncludeXmlCommentsInSwaggerDocs => true;
     public UnigrationODataTestStartup(IConfiguration configuration) : base(new Startup(configuration))
     {
     }

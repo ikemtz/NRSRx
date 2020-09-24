@@ -7,8 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace IkeMtz.NRSRx.WebApi.Tests
 {
   public class UnigrationTestStartup : CoreWebApiUnigrationTestStartup<Startup>
-  {
-    public override bool IncludeXmlCommentsInSwaggerDocs => true;
+  { 
     public UnigrationTestStartup(IConfiguration configuration) : base(new Startup(configuration))
     {
     }
