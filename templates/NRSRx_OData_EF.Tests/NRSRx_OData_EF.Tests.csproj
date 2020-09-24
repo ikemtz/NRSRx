@@ -6,6 +6,11 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\templates\NRSRx_OData_EF.Tests\NRSRx_OData_EF.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="IkeMtz.NRSRx.Core.Unigration" Version="1.20.247.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />

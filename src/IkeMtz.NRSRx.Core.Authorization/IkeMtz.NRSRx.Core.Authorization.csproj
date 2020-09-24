@@ -20,6 +20,10 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <OutputType>Library</OutputType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.Authorization\IkeMtz.NRSRx.Core.Authorization.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="pub\**" />
     <EmbeddedResource Remove="pub\**" />

@@ -4,6 +4,10 @@
     <IsPackable>false</IsPackable>
     <ProjectGuid>41B435DB-E189-4A78-B6F4-452E129BB000</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\samples\IkeMtz.Samples.OData.Tests\IkeMtz.Samples.OData.Tests.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\templates\NRSRx_OData_EF\Models\Item.cs" Link="Item.cs" />
   </ItemGroup>

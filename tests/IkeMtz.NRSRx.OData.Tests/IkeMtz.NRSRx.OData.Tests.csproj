@@ -4,6 +4,10 @@
     <IsPackable>false</IsPackable>
     <ProjectGuid>E1915E14-26AC-409C-AD74-D3E877E64B80</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Repos\NRSRx\tests\IkeMtz.NRSRx.OData.Tests\IkeMtz.NRSRx.OData.Tests.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>

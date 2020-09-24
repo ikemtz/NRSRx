@@ -11,6 +11,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public class UnigrationTestStartup
      : CoreODataUnigrationTestStartup<Startup, ModelConfiguration>
   {
+    public override bool IncludeXmlCommentsInSwaggerDocs => true;
     public UnigrationTestStartup(IConfiguration configuration) : base(new Startup(configuration) { MaxTop = 500 })
     {
     }
