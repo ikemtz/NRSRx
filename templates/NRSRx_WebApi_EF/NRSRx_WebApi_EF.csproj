@@ -10,7 +10,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CA1707</NoWarn>
+    <NoWarn>1701;1702;CA1707;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\templates\NRSRx_WebApi_EF\NRSRx_WebApi_EF.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
