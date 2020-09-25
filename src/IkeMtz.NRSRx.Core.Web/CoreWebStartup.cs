@@ -119,7 +119,7 @@ namespace IkeMtz.NRSRx.Core.Web
       options.OAuthUsePkce();
     }
 
-    public virtual void SetupSwaggerGen(SwaggerGenOptions options)
+    public virtual void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
     {
       options.UseInlineDefinitionsForEnums();
       // add a custom operation filter which sets default values
@@ -129,7 +129,7 @@ namespace IkeMtz.NRSRx.Core.Web
       if (IncludeXmlCommentsInSwaggerDocs)
       {
         // Set the comments path for the Swagger JSON and UI.
-        options.IncludeXmlComments(StartupAssembly.CodeBase.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
+        options.IncludeXmlComments(xmlPath ?? StartupAssembly.CodeBase.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
       }
     }
 
