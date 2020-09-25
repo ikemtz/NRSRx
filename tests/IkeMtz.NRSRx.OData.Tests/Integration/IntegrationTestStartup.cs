@@ -9,6 +9,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public  class IntegrationTestStartup
      : CoreODataIntegrationTestStartup<Startup, ModelConfiguration>
   {
+    public override bool IncludeXmlCommentsInSwaggerDocs => true;
     public IntegrationTestStartup(IConfiguration configuration) : base(new Startup(configuration))
     {
     }

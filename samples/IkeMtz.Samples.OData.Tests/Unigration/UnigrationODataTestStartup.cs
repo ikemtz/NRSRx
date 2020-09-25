@@ -13,7 +13,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     {
     }
 
-    public override void SetupDatabase(IServiceCollection services, string connectionString)
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       services.SetupTestDbContext<DatabaseContext>();
     }

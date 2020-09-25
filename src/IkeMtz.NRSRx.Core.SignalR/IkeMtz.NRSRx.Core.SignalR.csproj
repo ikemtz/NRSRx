@@ -18,6 +18,10 @@
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.SignalR\IkeMtz.NRSRx.Core.SignalR.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
       <PackagePath>

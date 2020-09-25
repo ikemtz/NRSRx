@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.WebApi;
+using IkeMtz.Samples.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using IkeMtz.Samples.WebApi.Data;
 
 namespace IkeMtz.Samples.WebApi
 {
@@ -11,13 +12,15 @@ namespace IkeMtz.Samples.WebApi
   {
     public override string MicroServiceTitle => $"{nameof(IkeMtz.Samples.WebApi)} WebApi Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
+    public override bool IncludeXmlCommentsInSwaggerDocs => true;
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
-    public override void SetupDatabase(IServiceCollection services, string connectionString)
+    [ExcludeFromCodeCoverage]
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services
-      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(connectionString))
+      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(dbConnectionString))
       .AddEntityFrameworkSqlServer();
     }
 

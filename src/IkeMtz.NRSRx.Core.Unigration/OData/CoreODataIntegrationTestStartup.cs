@@ -19,9 +19,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
       Startup.SetupAuthentication(builder);
     }
 
-    public override void SetupDatabase(IServiceCollection services, string connectionString)
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
-      Startup.SetupDatabase(services, connectionString);
+      Startup.SetupDatabase(services, dbConnectionString);
     }
   }
 }

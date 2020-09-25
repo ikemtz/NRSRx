@@ -26,10 +26,6 @@ namespace IkeMtz.NRSRx.Core.Web
     private readonly IHttpClientFactory httpClientFactory;
     private readonly AppSettings appSettings;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
-    /// </summary>
-    /// <param name="provider">The <see cref="IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
     public ConfigureSwaggerOptions(
       IServiceProvider serviceProvider,
       IConfiguration configuration,
