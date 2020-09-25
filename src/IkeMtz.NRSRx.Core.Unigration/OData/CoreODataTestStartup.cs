@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
@@ -25,6 +26,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public override string MicroServiceTitle => Startup.MicroServiceTitle;
 
     public override Assembly StartupAssembly => Startup.StartupAssembly;
+    public override bool IncludeXmlCommentsInSwaggerDocs => Startup.IncludeXmlCommentsInSwaggerDocs;
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {
@@ -43,6 +45,16 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       _ = options.Filters.Add<TestContextResponseLoggerAttribute>(int.MaxValue);
       base.SetupMvcOptions(services, options);
+    }
+
+    public override void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
+    {
+      var path = StartupAssembly.CodeBase
+        .Replace(".dll", ".xml", System.StringComparison.InvariantCultureIgnoreCase)
+        //This is here to work around an issue on Azure Devops build agents not finding the .xml file.
+        .Replace(@"\$(BuildConfiguration)\", @"\Debug\", System.StringComparison.InvariantCultureIgnoreCase)
+        ;
+      base.SetupSwaggerGen(options, path);
     }
   }
 }

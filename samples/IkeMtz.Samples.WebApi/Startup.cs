@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.Samples.WebApi.Data;
@@ -15,6 +16,7 @@ namespace IkeMtz.Samples.WebApi
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
+    [ExcludeFromCodeCoverage]
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services

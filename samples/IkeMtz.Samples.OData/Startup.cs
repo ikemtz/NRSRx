@@ -18,6 +18,7 @@ namespace IkeMtz.Samples.OData
     public Startup(IConfiguration configuration) : base(configuration)
     {
     }
+
     [ExcludeFromCodeCoverage]
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
