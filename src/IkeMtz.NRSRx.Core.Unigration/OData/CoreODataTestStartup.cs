@@ -49,12 +49,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public override void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
     {
-      var path = StartupAssembly.CodeBase
-        .Replace(".dll", ".xml", System.StringComparison.InvariantCultureIgnoreCase)
-        //This is here to work around an issue on Azure Devops build agents not finding the .xml file.
-        .Replace(@"\$(BuildConfiguration)\", @"\Debug\", System.StringComparison.InvariantCultureIgnoreCase)
-        ;
-      base.SetupSwaggerGen(options, path);
+      base.SetupSwaggerGen(options, StartupAssembly.GetXmlCommentsFile());
     }
   }
 }
