@@ -18,11 +18,9 @@ namespace IkeMtz.NRSRx.OData.Tests
     {
       builder.SetupTestAuthentication(Configuration, TestContext);
     }
-    public override void SetupDatabase(IServiceCollection services, string connectionString)
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       services.SetupTestDbContext<DatabaseContext>();
     }
-
-
   }
 }

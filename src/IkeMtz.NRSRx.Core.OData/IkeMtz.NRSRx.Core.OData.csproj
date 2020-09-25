@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ProjectGuid>E41D1A2D-73BF-4710-A7CD-66510E8CD22E</ProjectGuid>
@@ -19,7 +19,8 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CA1000</NoWarn>
+    <NoWarn>1701;1702;CA1000;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.5.0" />

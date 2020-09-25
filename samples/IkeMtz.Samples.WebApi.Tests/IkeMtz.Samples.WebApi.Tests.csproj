@@ -6,6 +6,11 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\samples\IkeMtz.Samples.WebApi.Tests\IkeMtz.Samples.WebApi.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\..\tests\IkeMtz.NRSRx.WebApi.Tests\Factories.cs" Link="Factories.cs" />
   </ItemGroup>

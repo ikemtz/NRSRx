@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ProjectGuid>9E7F699D-1467-4674-ABBD-227CA82EB205</ProjectGuid>
@@ -19,7 +19,8 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CA1822;S2436</NoWarn>
+    <NoWarn>1701;1702;CA1822;S2436;CS1591</NoWarn>
+    <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Logging\NewFolder\**" />

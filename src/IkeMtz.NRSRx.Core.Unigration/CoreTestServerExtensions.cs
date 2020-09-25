@@ -1,6 +1,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
@@ -90,6 +91,15 @@ namespace IkeMtz.NRSRx.Core.Unigration
           hubConnectionOptions.AccessTokenProvider = () => Task.FromResult(accessToken);
         })
         .Build();
+    }
+
+    public static string GetXmlCommentsFile(this Assembly startupAssembly)
+    {
+      return startupAssembly?.CodeBase
+        .Replace(".dll", ".xml", System.StringComparison.InvariantCultureIgnoreCase)
+        //This is here to work around an issue on Azure Devops build agents not finding the .xml file.
+        .Replace("$(BuildConfiguration)", "Debug", System.StringComparison.InvariantCultureIgnoreCase)
+        ;
     }
   }
 }

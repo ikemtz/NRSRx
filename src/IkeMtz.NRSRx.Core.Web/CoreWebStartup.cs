@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
@@ -84,7 +83,7 @@ namespace IkeMtz.NRSRx.Core.Web
       return (appSettings?.IdentityAudiences ?? Configuration.GetValue<string>("IdentityAudiences"))?.Split(',') ?? Array.Empty<string>();
     }
 
-    public virtual void SetupDatabase(IServiceCollection services, string connectionString) { }
+    public virtual void SetupDatabase(IServiceCollection services, string dbConnectionString) { }
 
 
     public virtual void SetupMvcOptions(IServiceCollection services, MvcOptions options)
@@ -120,7 +119,7 @@ namespace IkeMtz.NRSRx.Core.Web
       options.OAuthUsePkce();
     }
 
-    public virtual void SetupSwaggerGen(SwaggerGenOptions options)
+    public virtual void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
     {
       options.UseInlineDefinitionsForEnums();
       // add a custom operation filter which sets default values
@@ -130,9 +129,7 @@ namespace IkeMtz.NRSRx.Core.Web
       if (IncludeXmlCommentsInSwaggerDocs)
       {
         // Set the comments path for the Swagger JSON and UI.
-        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-        options.IncludeXmlComments(xmlPath);
+        options.IncludeXmlComments(xmlPath ?? StartupAssembly.CodeBase.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
       }
     }
 
