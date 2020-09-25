@@ -6,6 +6,8 @@ variables:
   PACKAGE_PROJECTS: 'src/**/*.csproj'
   TEST_PROJECTS: '**/*.Tests.csproj'
   TEMPLATE_PROJECTS: 'templates/**/*.csproj'
+  BuildConfiguration: 'Debug'
+  BUILDCONFIGURATION: 'Debug'
 
 jobs:
 - job: Database
