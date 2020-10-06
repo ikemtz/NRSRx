@@ -17,6 +17,7 @@
     <PackageIcon>ProfilePic.jpg</PackageIcon>
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>
