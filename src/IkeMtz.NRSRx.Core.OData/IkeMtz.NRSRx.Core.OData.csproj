@@ -23,9 +23,9 @@
     <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.5.2" />
     <PackageReference Include="Microsoft.AspNetCore.OData.Versioning.ApiExplorer" Version="4.1.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
