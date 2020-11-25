@@ -49,8 +49,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
 
       // This was required because there's a type mismatch on the OpenApi Doc spec
-      var pattern = @",\s*\""additionalProperties\""\: false";
-      result = Regex.Replace(result, pattern, "");
+      var additionPropertiesPattern = @",\s*\""additionalProperties\""\: false";
+      result = Regex.Replace(result, additionPropertiesPattern, "");
+      var enumPattern = @"""enum"":[\s\[\d,\]]*";
+      result = Regex.Replace(result, enumPattern, "");
 
       var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
       Assert.AreEqual($"{version}.0", doc.Info.Version);
