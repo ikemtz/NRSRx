@@ -23,8 +23,7 @@ namespace IkeMtz.Samples.OData
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services
-       .AddDbContextPool<DatabaseContext>(x => x.UseSqlServer(dbConnectionString))
-       .AddEntityFrameworkSqlServer();
+       .AddDbContextPool<DatabaseContext>(x => x.UseSqlServer(dbConnectionString));
     }
 
     public override void SetupMiscDependencies(IServiceCollection services)

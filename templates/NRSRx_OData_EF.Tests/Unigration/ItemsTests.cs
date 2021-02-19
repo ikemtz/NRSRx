@@ -21,7 +21,7 @@ namespace NRSRx_OData_EF.Tests.Unigration
       var objA = new Item()
       {
         Id = Guid.NewGuid(),
-        Value = $"Test- {Guid.NewGuid().ToString().Substring(29)}",
+        Value = $"Test- {Guid.NewGuid().ToString()[29..]}",
       };
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>

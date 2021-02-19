@@ -11,7 +11,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using WebApiContrib.Core.Formatter.MessagePack;
 
 namespace IkeMtz.NRSRx.Core.WebApi
 {
@@ -76,7 +75,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
 
              options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
            })
-           .AddMessagePackFormatters()
            .AddXmlSerializerFormatters()
            .SetCompatibilityVersion(CompatibilityVersion.Latest);
       _ = services

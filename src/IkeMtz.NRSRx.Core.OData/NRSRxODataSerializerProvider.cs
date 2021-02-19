@@ -12,9 +12,7 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       _entityTypeSerializer = new NrsrxODataSerializer(this);
     }
-
-    [SuppressMessage("Design", "CA1062:Validate arguments of public methods",
-      Justification = "The IEdmTypeReference is provided by the framework.")]
+     
     public override ODataEdmTypeSerializer GetEdmTypeSerializer(IEdmTypeReference edmType)
     {
       if (edmType.Definition.TypeKind == EdmTypeKind.Entity || edmType.Definition.TypeKind == EdmTypeKind.Complex)
