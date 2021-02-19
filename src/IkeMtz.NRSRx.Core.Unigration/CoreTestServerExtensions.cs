@@ -95,7 +95,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public static string GetXmlCommentsFile(this Assembly startupAssembly)
     {
-      return startupAssembly?.CodeBase
+      return startupAssembly?.Location
         .Replace(".dll", ".xml", System.StringComparison.InvariantCultureIgnoreCase)
         //This is here to work around an issue on Azure Devops build agents not finding the .xml file.
         .Replace("$(BuildConfiguration)", "Debug", System.StringComparison.InvariantCultureIgnoreCase)

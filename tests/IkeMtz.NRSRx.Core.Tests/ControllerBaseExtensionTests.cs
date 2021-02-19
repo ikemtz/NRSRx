@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var controller = new TestController();
       var result = controller.GetBuildNumber();
-      Assert.IsTrue(result.StartsWith("1."));
+      Assert.IsTrue(!string.IsNullOrWhiteSpace(result));
     }
 
     [TestMethod]

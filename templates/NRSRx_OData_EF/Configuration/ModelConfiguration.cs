@@ -6,7 +6,7 @@ namespace NRSRx_OData_EF.Configuration
 {
   public class ModelConfiguration : IModelConfiguration
   {
-    public void Apply(ODataModelBuilder builder, ApiVersion apiVersion)
+    public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
     {
       _ = builder.EntitySet<Item>($"{nameof(Item)}s");
     }

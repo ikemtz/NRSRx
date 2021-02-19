@@ -48,12 +48,8 @@ namespace IkeMtz.Samples.OData.Controllers.V1
       return _databaseContext.Items
         .AsNoTracking();
     }
-#pragma warning disable CA1801 // Review unused parameters
-#pragma warning disable IDE0060 // Remove unused parameter
     public ActionResult Delete([FromODataUri] Guid key)
-#pragma warning restore IDE0060 // Remove unused parameter
-#pragma warning restore CA1801 // Review unused parameters
-    {
+    {      
       return StatusCode((int)HttpStatusCode.OK);
     }
   }

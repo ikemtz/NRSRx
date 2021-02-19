@@ -7,4 +7,3 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>", Scope = "member", Target = "~F:IkeMtz.Samples.OData.VersionDefinitions.v1_0")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~F:IkeMtz.Samples.OData.VersionDefinitions.v1_0")]
-[assembly: SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>", Scope = "member", Target = "~M:IkeMtz.Samples.OData.Configuration.ModelConfiguration.Apply(Microsoft.AspNet.OData.Builder.ODataModelBuilder,Microsoft.AspNetCore.Mvc.ApiVersion)")]
