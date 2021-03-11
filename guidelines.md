@@ -5,7 +5,7 @@ IkeMtz's DB, EF and Microservices Best Practices
   - [Table and column names should be in Pascal case](#table-and-column-names-should-be-in-pascal-case)
   - [Table should have a primary key (🔑PK) named Id](#table-should-have-a-primary-key-pk-named-id)
   - [The chosen primary key data type should depend on a variety of factors](#the-chosen-primary-key-data-type-should-depend-on-a-variety-of-factors)
-  - [Foreign key column names should follow the {ParentKeyTableName}+'Id' naming convention](#foreign-key-column-names-should-follow-the-parentkeytablenameid-naming-convention)
+  - [Foreign key column names should follow the {ParentKeyTableName[Singular]}+'Id' naming convention](#foreign-key-column-names-should-follow-the-parentkeytablenamesingularid-naming-convention)
   - [Column names should not repeat table names](#column-names-should-not-repeat-table-names)
   - [Child column names should not repeat table names](#child-column-names-should-not-repeat-table-names)
   - [Apply a standard list of abbreviations on column names](#apply-a-standard-list-of-abbreviations-on-column-names)
@@ -18,6 +18,13 @@ IkeMtz's DB, EF and Microservices Best Practices
   - [Entity models should have an Id property that reflects a unique value](#entity-models-should-have-an-id-property-that-reflects-a-unique-value)
   - [Entity models should properly define navigation properties](#entity-models-should-properly-define-navigation-properties)
   - [Entity models representing volatile data should support audit fields](#entity-models-representing-volatile-data-should-support-audit-fields)
+  - [Concurrency checks for volatile data](#concurrency-checks-for-volatile-data)
+  - [Enum names should be plural](#enum-names-should-be-plural)
+  - [Use explicit enum values](#use-explicit-enum-values)
+  - [Enums should also be stored in the database](#enums-should-also-be-stored-in-the-database)
+  - [Enum properties should follow the {ParentKeyTableName[Singular]}+'Id' naming convention](#enum-properties-should-follow-the-parentkeytablenamesingularid-naming-convention)
+  - [Boolean properties should start with a verb](#boolean-properties-should-start-with-a-verb)
+  - [Consider Using DateTime values rather than boolean values](#consider-using-datetime-values-rather-than-boolean-values)
 - [Microservice Best Practices](#microservice-best-practices)
   - [Microservices should wrap a single business domain and all of it's logic](#microservices-should-wrap-a-single-business-domain-and-all-of-its-logic)
   - [Microservice naming](#microservice-naming)
@@ -27,6 +34,7 @@ IkeMtz's DB, EF and Microservices Best Practices
   - [Microservices should validate each piece of input data](#microservices-should-validate-each-piece-of-input-data)
   - [Each Microservice endpoint should require authentication](#each-microservice-endpoint-should-require-authentication)
   - [Service and API Versionining](#service-and-api-versionining)
+  - [Limiting Data manipulation](#limiting-data-manipulation)
 
 # Database Best Practices
 ## Table names should be plural
@@ -119,7 +127,7 @@ CREATE TABLE Persons {
    }
 ```
 
-## Foreign key column names should follow the {ParentKeyTableName}+'Id' naming convention
+## Foreign key column names should follow the {ParentKeyTableName[Singular]}+'Id' naming convention
 
 **Don't**:
 
@@ -304,11 +312,11 @@ FROM Orders
 
 # Entity Framework Best Practices
 ## Entity names should be singular and DbSets should be plural
-it's important to <b>NOT</b> adhere to normal language rules.  As an English example, you should name the DbSet Persons instead of People.
+It's important to <b>NOT</b> adhere to normal language rules.  As an English example, you should name the DbSet Persons instead of People.
 
 **Don't**:
 
-```C#
+```csharp
 public class ApplicationEntities : DbContext
 {
     public DbSet<Person> People { get; set; }
@@ -317,7 +325,7 @@ public class ApplicationEntities : DbContext
 
 **Do**:
 
-```C#
+```csharp
 public class ApplicationEntities : DbContext
 {
     public DbSet<Person> Persons { get; set; }
@@ -328,7 +336,7 @@ This allows the creation of an IIdentifiable.  This is also a requirement for OD
 
 **Don't**:
 
-```C#
+```csharp
 public class Person
 {
     public Guid PersonId { get; set; }
@@ -337,7 +345,7 @@ public class Person
 
 **Do**:
 
-```C#
+```csharp
 public class Person : IIdentifiable
 {
     public Guid Id { get; set; }
@@ -349,7 +357,7 @@ This rule plays a significant role in the functionality provided by OData servic
 
 **Don't**:
 
-```C#
+```csharp
 public class Order : IIdentifiable
 {
     public Guid Id { get; set; }    
@@ -367,7 +375,7 @@ public class OrderLineItem : IIdentifiable
 ```
 
 **Do**:
-```C#
+```csharp
 public class Order : IIdentifiable
 {
     public Guid Id { get; set; }
@@ -388,7 +396,7 @@ Depending on the environment and security requirements, auditable fields may be 
 Much of this functionality is streamlined by the IAuditable interface in the NRSRx framework.
 
 **Do**:
-```C#
+```csharp
 public class Person : IIdentifiable, IIAuditable
 {
     public Guid Id { get; set; }
@@ -400,6 +408,165 @@ public class Person : IIdentifiable, IIAuditable
 } 
 ```
 
+## Concurrency checks for volatile data
+
+If your system requires absolute assurances that data updates have occurred properly then you should consider adding concurrency checks.  
+
+Be aware that concurrency check mechanisms differ between database technologies and will essentially break the portability of your EF code.  In SQL Server you can add a column with a ```timestamp``` datatype.  In Postgres you can add a property to your model call **xmin** of type ```uint```.
+
+**SQL Server Do**:
+```sql
+CREATE TABLE Person {
+  [Id] UNIQUEIDENTIFIER NOT NULL,
+  ...
+  [RowVersion] TIMESTAMP NOT NULL }
+```
+```csharp
+public class Person : IIdentifiable, IIAuditable
+{
+    public Guid Id { get; set; } 
+    ...
+    [Timestamp]
+    public binary RowVersion { get; set; }
+} 
+```
+
+**Postgres Do**:
+```csharp
+public class Person : IIdentifiable, IIAuditable
+{
+    public Guid Id { get; set; } 
+    ...
+    [ConcurrencyCheck]
+    public uint xmin { get; set; } //This is mapped to a system column
+} 
+```
+## Enum names should be plural
+**Dont**:
+```csharp
+public enum DepartmentName
+{
+  ...
+}
+```
+
+**Do**:
+```csharp
+public enum DepartmentNames
+{
+  ...
+}     
+```
+## Use explicit enum values
+
+When specifying enums that are associated to your EF models, you should explicity define its values.  A reordering of enums within your code will change your implied values from under you, and this will lead to data corruption.
+
+NOTE: If you're going to be using an enum as a flag, then the values need to in powers of two, 1, 2, 4, 8, 16, etc.
+**Dont**:
+```csharp
+public enum DepartmentNames
+{
+    English,
+    Math,
+    Economic,
+}     
+```
+
+**Do**:
+```csharp
+public enum DepartmentNames
+{
+    English = 1,
+    Math = 2,
+    Economics = 3
+}     
+```
+
+## Enums should also be stored in the database
+
+When using enums in your models, it's easy to assume that the database will only support your application.  With time, you may find yourself in a situation where you need to support a business intelligence platform that will only have access to your database.
+
+If your enums are not stored in the database, it's going to be difficult for anyone to decipher the state of your data.  To maintain the integrity and readability of the data, create a table that reflects the enum and add a foreign key.
+
+**Do**:
+```sql
+CREATE TABLE DepartmentNames {
+  [Id] INT NOT NULL,
+  [Name] VARCHAR NOT NULL,
+  CONSTRAINT [PK_DepartmentNames] PRIMARY KEY CLUSTERED ([Id] ASC)
+}
+
+INSERT INTO DepartmentNames (Id, Name)
+VALUES
+  (1, 'English'),
+  (2, 'Math'),
+  (3, 'Economics');
+```
+
+## Enum properties should follow the {ParentKeyTableName[Singular]}+'Id' naming convention
+
+Enums property names should follow the [{ParentKeyTableName[Singular]}+'Id'](#foreign-key-column-names-should-follow-the-parentkeytablenamesingularid-naming-convention) convention mentioned above.
+
+**Dont**:
+```csharp
+public class Person : IIdentifiable, IIAuditable
+{
+    public Guid Id { get; set; }
+    public DepartmentNames DepartmentName { get; set; }
+} 
+```
+**Do**:
+```csharp
+public class Person : IIdentifiable, IIAuditable
+{
+    public Guid Id { get; set; }
+    public DepartmentNames DepartmentNameId { get; set; }
+} 
+```
+
+## Boolean properties should start with a verb
+
+Boolean properties should start with verbs such as Is, Has, Contains, etc.  This will quickly communicate that this is a boolean property.
+
+**Dont**:
+```csharp
+public class StudentCourse  
+{
+    public Guid Id { get; set; }
+    public bool Completed { get; set; }
+} 
+```
+**Do**:
+```csharp
+public class StudentCourse
+{
+    public Guid Id { get; set; }
+    public bool IsCompleted { get; set; }
+} 
+```
+
+## Consider Using DateTime values rather than boolean values
+
+Boolean properties are great for indicating some binary state and this may very well suffice for your business requirements today.  However, what if tomorrow your presented with the business demanding to know when that particular binary state changed?  If you use nullable DateTime values rather than boolean, you'll be able to do just that.
+
+If the field is null, then you can map it to false.  If the field has a valid value, you can map it true.  If you need to know when the value became true, you can leave the value in its native format.
+
+**Dont**:
+```csharp
+public class StudentCourse  
+{
+    public Guid Id { get; set; }
+    public bool Completed { get; set; }
+} 
+```
+**Do**:
+```csharp
+public class StudentCourse
+{
+    public Guid Id { get; set; }
+    public DateTime? CompletedUtc { get; set; }
+} 
+```
 # Microservice Best Practices
 ## Microservices should wrap a single business domain and all of it's logic
 Microservices should focus on a single domain.  Encompassing all of the business logic for said domain.
@@ -417,7 +584,7 @@ Ensuring that these components are available to developers will be crucial to fa
 It's also important that the Swagger application be configured to support the same authentication mechanisms as the API.
 
 ## Microservices should be built around the technology best suited to meet business needs.
-If you need to share data, then OData is an excellent choice.  If you need to persist domain objects and state, then WebApi would be the appropriate direction.
+If you need to serve data, then OData is an excellent choice.  If you need to persist domain objects and state, then WebApi would be the appropriate direction.
 
 ## Eventing and inter-microservice dependencies
 At all costs, avoid having one microservice be dependent on another.  Each microservice should maintain a copy of any cross-domain data necessary in order to complete its work.  Updates to this cross-domain data should be communicated via an event bus.
@@ -434,3 +601,10 @@ In addition, varying levels of authorization should be implemented to match thos
 Each microservice should be able to handle breaking changes to it's model and endpoints via API versioning.  The different versions and the discrepancies between the models should be communicated to developers via the OpenAPI spec documentation at a minimum.
 
 The service should also give some indicator of which build number is currently running.  Microservice developers should be able to easily track down the source code for the running instance.
+
+## Limiting Data manipulation
+Ideally each service should have it's own repository.  There are many times when this is not possible.  In these instances, it's vital that each table have only modified by a single service.
+
+Not following this rule will inevitably result in a condition where data is in a problematic state and you're not sure which service is causing the condition.
+
+Troubleshooting these types of bugs is an absolute nightmare.  To avoid this, have all data manipulation to an individual table flow through an individual service.
