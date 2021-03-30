@@ -37,9 +37,9 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         throw new ArgumentNullException(nameof(startup));
       }
-      this.provider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
-      this.apiTitle = startup.MicroServiceTitle;
-      this.buildNumber = startup.StartupAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ??
+      provider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
+      apiTitle = startup.MicroServiceTitle;
+      buildNumber = startup.StartupAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ??
       startup.StartupAssembly.GetCustomAttribute<AssemblyVersionAttribute>()?.Version ??
       startup.StartupAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ??
       "unknown";
@@ -48,9 +48,6 @@ namespace IkeMtz.NRSRx.Core.Web
       this.appSettings = configuration.Get<AppSettings>();
     }
 
-
-    /// <inheritdoc />
-    [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
     public void Configure(SwaggerGenOptions options)
     {
       // add a swagger document for each discovered API version
@@ -64,7 +61,7 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         var discoveryDocument = startup.GetOpenIdConfiguration(this.httpClientFactory, appSettings);
         var swaggerScopeDictionary = new Dictionary<string, string>();
-        _ = this.startup.SwaggerScopes.Select(x =>
+        _ = startup.SwaggerScopes.Select(x =>
             swaggerScopeDictionary.TryAdd(x.ScopeName, x.ScopeDescription));
         options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
         {
