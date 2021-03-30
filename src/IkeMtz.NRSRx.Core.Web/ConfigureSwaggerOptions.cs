@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
@@ -62,6 +63,9 @@ namespace IkeMtz.NRSRx.Core.Web
       if (audiences.Any() && !string.IsNullOrWhiteSpace(this.appSettings.IdentityProvider))
       {
         var discoveryDocument = startup.GetOpenIdConfiguration(this.httpClientFactory, appSettings);
+        var swaggerScopeDictionary = new Dictionary<string, string>();
+        _ = this.startup.SwaggerScopes.Select(x =>
+            swaggerScopeDictionary.TryAdd(x.ScopeName, x.ScopeDescription));
         options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
         {
           Type = SecuritySchemeType.OAuth2,
@@ -73,7 +77,7 @@ namespace IkeMtz.NRSRx.Core.Web
             {
               AuthorizationUrl = discoveryDocument.GetAuthorizationEndpointUri(appSettings),
               TokenUrl = discoveryDocument.GetTokenEndpointUri(),
-              Scopes = this.startup.SwaggerScopes,
+              Scopes = swaggerScopeDictionary,
             }
           }
         });
