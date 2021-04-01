@@ -2,7 +2,6 @@ namespace IkeMtz.NRSRx.Core.Web
 {
   public class OAuthScopeInfo
   {
-    public OAuthScopeInfo() { }
     public OAuthScopeInfo(string name, string description)
     {
       Name = name;
