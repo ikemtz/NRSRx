@@ -62,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.Web
         var discoveryDocument = startup.GetOpenIdConfiguration(this.httpClientFactory, appSettings);
         var swaggerScopeDictionary = new Dictionary<string, string>();
         _ = startup.SwaggerScopes.Select(x =>
-            swaggerScopeDictionary.TryAdd(x.ScopeName, x.ScopeDescription));
+            swaggerScopeDictionary.TryAdd(x.Name, x.Description));
         options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
         {
           Type = SecuritySchemeType.OAuth2,
