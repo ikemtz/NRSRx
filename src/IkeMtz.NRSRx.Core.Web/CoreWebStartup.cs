@@ -30,10 +30,9 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
 
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
-    public virtual IEnumerable<(string ScopeName, string ScopeDescription)> SwaggerScopes =>
-      new (string ScopeName, string ScopeDescription)[]
+    public virtual IEnumerable<OAuthScopeInfo> SwaggerScopes => new[]
       {
-        ("openid", "required" ),
+       new OAuthScopeInfo ("openid", "required" ),
       };
     public IConfiguration Configuration { get; }
     protected CoreWebStartup(IConfiguration configuration)
