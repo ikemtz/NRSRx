@@ -1,28 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+
     <IsPackable>false</IsPackable>
-    <ProjectGuid>41B435DB-E189-4A78-B6F4-452E129BB000</ProjectGuid>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
-    <DocumentationFile>C:\Repos\NRSRx\samples\IkeMtz.Samples.OData.Tests\IkeMtz.Samples.OData.Tests.xml</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\..\templates\NRSRx_OData_EF\Models\Item.cs" Link="Item.cs" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
     <PackageReference Include="coverlet.collector" Version="3.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
+
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Events\IkeMtz.NRSRx.Events.Publishers.Redis\IkeMtz.NRSRx.Events.Publishers.Redis.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
-    <ProjectReference Include="..\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj" />
   </ItemGroup>
+
 </Project>
