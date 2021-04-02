@@ -30,10 +30,10 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
 
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
-    public virtual Dictionary<string, string> SwaggerScopes =>
-        new Dictionary<string, string>{
-                        { "openid", "required" }
-                };
+    public virtual IEnumerable<OAuthScopeInfo> SwaggerScopes => new[]
+      {
+       new OAuthScopeInfo ("openid", "required" ),
+      };
     public IConfiguration Configuration { get; }
     protected CoreWebStartup(IConfiguration configuration)
     {
@@ -67,6 +67,7 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual void SetupAuthentication(AuthenticationBuilder builder)
     {
       _ = builder
+
           .AddJwtBearer(options =>
           {
             options.Authority = Configuration.GetValue<string>("IdentityProvider");
@@ -129,13 +130,13 @@ namespace IkeMtz.NRSRx.Core.Web
       if (IncludeXmlCommentsInSwaggerDocs)
       {
         // Set the comments path for the Swagger JSON and UI.
-        options.IncludeXmlComments(xmlPath ?? StartupAssembly.CodeBase.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
+        options.IncludeXmlComments(xmlPath ?? StartupAssembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
       }
     }
 
     private static OpenIdConfiguration OpenIdConfiguration;
-    [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
-    [SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings", Justification = "<Pending>")]
+
+    [SuppressMessage("Critical Code Smell", "S2696:Instance members should not write to \"static\" fields", Justification = "<Pending>")]
     public virtual OpenIdConfiguration GetOpenIdConfiguration(IHttpClientFactory clientFactory, AppSettings appSettings)
     {
       if (OpenIdConfiguration != null)

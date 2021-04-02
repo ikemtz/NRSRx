@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.OData;
 using Microsoft.AspNet.OData.Builder;
@@ -36,7 +37,10 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
-      modelBuilder.ModelConfigurations.Add(new TModelConfiguration());
+      if (!modelBuilder.ModelConfigurations.Any(a => a.GetType() == typeof(TModelConfiguration)))
+      {
+        modelBuilder.ModelConfigurations.Add(new TModelConfiguration());
+      }
       TestContext = app.ApplicationServices.GetService<TestContext>();
       _ = app.UseTestContextRequestLogger(TestContext);
       base.Configure(app, env, modelBuilder, provider);

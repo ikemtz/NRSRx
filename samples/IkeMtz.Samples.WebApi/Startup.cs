@@ -20,8 +20,10 @@ namespace IkeMtz.Samples.WebApi
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services
-      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(dbConnectionString))
-      .AddEntityFrameworkSqlServer();
+      .AddDbContext<DatabaseContext>(x => x
+        .UseSqlServer(dbConnectionString)
+        .EnableDetailedErrors()
+        );
     }
 
     public override void SetupMiscDependencies(IServiceCollection services)

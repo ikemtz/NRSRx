@@ -17,8 +17,7 @@ namespace NRSRx_WebApi_EF
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       _ = services
-      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(dbConnectionString))
-      .AddEntityFrameworkSqlServer();
+      .AddDbContext<DatabaseContext>(x => x.UseSqlServer(dbConnectionString));
     }
 
     public override void SetupMiscDependencies(IServiceCollection services)

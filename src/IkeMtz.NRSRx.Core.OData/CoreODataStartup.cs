@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNet.OData.Builder;
@@ -39,8 +38,6 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupSwagger(services);
     }
 
-    [SuppressMessage("Design", "CA1062:Validate arguments of public methods",
-      Justification = "VersionedODataModelBuilder is provided by the OData API version library.")]
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
       if (env.IsDevelopment())
@@ -55,11 +52,12 @@ namespace IkeMtz.NRSRx.Core.OData
       _ = app.UseAuthentication()
           .UseAuthorization();
       _ = app
-          .UseMvc(routeBuilder =>
-          {
+          .UseRouting()
+          .UseEndpoints(endpoints =>
+          { 
             var models = modelBuilder.GetEdmModels().ToList();
             var singleton = Microsoft.OData.ServiceLifetime.Singleton;
-            _ = routeBuilder
+            _ = endpoints
             .SetTimeZoneInfo(TimeZoneInfo.Utc)
             .Select()
             .Expand()
@@ -67,10 +65,10 @@ namespace IkeMtz.NRSRx.Core.OData
             .MaxTop(MaxTop ?? 100)
             .Filter()
             .Count()
-            .MapVersionedODataRoutes("odata-bypath", "odata/v{version:apiVersion}", models, oBuilder =>
-            {
-              _ = oBuilder.AddService<ODataSerializerProvider, NrsrxODataSerializerProvider>(singleton);
-            });
+           .MapVersionedODataRoute("odata-bypath", "odata/v{version:apiVersion}", models, oBuilder =>
+           {
+             _ = oBuilder.AddService<ODataSerializerProvider, NrsrxODataSerializerProvider>(singleton);
+           });
           })
           .UseSwagger()
           .UseSwaggerUI(options => SetupSwaggerUI(options, provider));

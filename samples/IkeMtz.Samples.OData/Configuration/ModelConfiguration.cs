@@ -6,7 +6,7 @@ namespace IkeMtz.Samples.OData.Configuration
 {
   public class ModelConfiguration : IModelConfiguration
   {
-    public void Apply(ODataModelBuilder builder, ApiVersion apiVersion)
+    public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
     {
       _ = builder.EntitySet<Item>($"{nameof(Item)}s");
       _ = builder.EntitySet<SubItemA>($"{nameof(SubItemA)}s");

@@ -1,4 +1,4 @@
-name: 1.$(Year:yy).$(DayOfYear)$(Rev:.rr)
+name: 5.0.$(DayOfYear)$(Rev:.rr)
 pool:
   name: Hosted Windows 2019 with VS2019
 
@@ -33,9 +33,9 @@ jobs:
       ArtifactName: 'dacpac_drop'
   
   - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk 3.1.x'
+    displayName: 'Use .NET Core sdk 5.0.x'
     inputs:
-      version: 3.1.x
+      version: 5.0.x
  
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
@@ -54,17 +54,16 @@ jobs:
     persistCredentials: true
   
   - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk 3.1.x'
+    displayName: 'Use .NET Core sdk 5.0.x'
     inputs:
-      version: 3.1.x
+      version: 5.0.x
   
   - task: DotNetCoreCLI@2
     displayName: Restore
     inputs:
       command: restore
       projects: '$(PACKAGE_PROJECTS)'
-  
-  - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
+  - task: Assembly-Info-NetCore@2
     displayName: 'Set Assembly Manifest Data'
     inputs:  
       InsertAttributes: true
@@ -73,7 +72,7 @@ jobs:
       InformationalVersion: '$(Build.BuildNumber)'
       PackageVersion: '$(Build.BuildNumber)'
   
-  - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis on SonarCloud'
     inputs:
       SonarCloud: 'SonarCloud IkeMtz'
@@ -110,10 +109,10 @@ jobs:
       custom: 'test'
       arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --no-build --no-restore --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
         
-  - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  - task: SonarCloudAnalyze@1
     displayName: 'Run Code Analysis'
   
-  - task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  - task: SonarCloudPublish@1
     displayName: 'Publish Quality Gate Result'
   
   - task: sonarcloud-buildbreaker@2
@@ -152,6 +151,7 @@ jobs:
       ArtifactName: 'symbol_drop'
   
   - task: GitTag@5
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
       workingdir: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)'
       tagUser: 'ikemtz'
@@ -159,7 +159,6 @@ jobs:
       tag: 'nrsrx-$(build.buildNumber)'
       tagMessage: 'nrsrx-$(build.buildNumber)'
       useLightweightTags: true
-      conditions: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 trigger:
   batch: true
   branches:
