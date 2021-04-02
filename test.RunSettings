@@ -23,6 +23,8 @@
 
                 <!-- Microsoft.CodeAnalysis.CSharp.Analyzers -->
                 <PublicKeyToken>^31bf3856ad364e35</PublicKeyToken>
+                <!--stackexchange.redis-->
+                <PublicKeyToken>c219ff1ca8c2ce46</PublicKeyToken>
               </Exclude>
             </PublicKeyTokens>
             <!-- Match attributes on any code element: -->
