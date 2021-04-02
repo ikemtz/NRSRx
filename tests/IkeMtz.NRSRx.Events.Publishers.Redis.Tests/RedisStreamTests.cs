@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     public async Task ValidateRedisPublishAsync()
     {
       var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
-      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent, Guid>(connectionMultiplexer);
+      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(connectionMultiplexer);
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       await publisher.PublishAsync(new SampleMessage());
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
       moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
-      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent, Guid>(moqConnection.Object);
+      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(moqConnection.Object);
       var msg = new SampleMessage();
       await publisher.PublishAsync(msg);
       moqDatabase
