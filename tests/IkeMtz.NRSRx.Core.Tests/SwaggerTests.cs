@@ -1,8 +1,12 @@
+using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;
+using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -26,6 +30,20 @@ namespace IkeMtz.NRSRx.Core.Tests
       using var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>());
       var html = await SwaggerUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(html);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public void TestGetSwaggerScopes()
+    {
+      var result = ConfigureSwaggerOptions.GetSwaggerScopeDictionary(new[] {
+        new OAuthScope("A", "X"),
+        new OAuthScope("A", "B"),
+        new OAuthScope("B", "B"),
+        new OAuthScope("B", "Z"),
+        new OAuthScope("C", "Y"),
+      });
+      Assert.AreEqual(3, result.Count);
     }
   }
 }

@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
     public virtual IEnumerable<OAuthScope> SwaggerScopes => new[]
       {
-       new OAuthScope ("openid", "required" ),
+        OAuthScope.OpenId
       };
     public IConfiguration Configuration { get; }
     protected CoreWebStartup(IConfiguration configuration)

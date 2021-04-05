@@ -9,5 +9,7 @@ namespace IkeMtz.NRSRx.Core.Web
     }
     public string Name { get; set; }
     public string Description { get; set; }
+
+    public static OAuthScope OpenId => new("openid", "required");
   }
 }
