@@ -60,9 +60,7 @@ namespace IkeMtz.NRSRx.Core.Web
       if (audiences.Any() && !string.IsNullOrWhiteSpace(this.appSettings.IdentityProvider))
       {
         var discoveryDocument = startup.GetOpenIdConfiguration(this.httpClientFactory, appSettings);
-        var swaggerScopeDictionary = new Dictionary<string, string>();
-        _ = startup.SwaggerScopes.Select(x =>
-            swaggerScopeDictionary.TryAdd(x.Name, x.Description));
+
         options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
         {
           Type = SecuritySchemeType.OAuth2,
@@ -74,11 +72,19 @@ namespace IkeMtz.NRSRx.Core.Web
             {
               AuthorizationUrl = discoveryDocument.GetAuthorizationEndpointUri(appSettings),
               TokenUrl = discoveryDocument.GetTokenEndpointUri(),
-              Scopes = swaggerScopeDictionary,
+              Scopes = GetSwaggerScopeDictionary(startup.SwaggerScopes),
             }
           }
         });
       }
+    }
+
+    public static Dictionary<string, string> GetSwaggerScopeDictionary(IEnumerable<OAuthScope> swaggerScopes)
+    {
+      var swaggerScopeDictionary = new Dictionary<string, string>();
+      swaggerScopes.ToList().ForEach(x =>
+          swaggerScopeDictionary.TryAdd(x.Name, x.Description));
+      return swaggerScopeDictionary;
     }
 
     public OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)

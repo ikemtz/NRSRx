@@ -97,7 +97,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       return builder;
     }
 
-    public void SetupSwagger(IServiceCollection services)
+    public virtual void SetupSwagger(IServiceCollection services)
     {
       _ = services
         .AddHttpClient()
