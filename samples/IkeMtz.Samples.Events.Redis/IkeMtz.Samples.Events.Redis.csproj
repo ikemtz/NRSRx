@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>IkeMtz.Samples.Events.Redis</AssemblyName>
+    <UserSecretsId>ff327954-e2d8-43dd-8594-a0305d93a6b1</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

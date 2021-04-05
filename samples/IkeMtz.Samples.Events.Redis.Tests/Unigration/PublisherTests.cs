@@ -11,6 +11,7 @@ namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
   public class PublisherTests : BaseUnigrationTests
   {
     [TestMethod]
+    [TestCategory("Unit")]
     public void TestCreatePublisher()
     {
       var mockConnection = MockRedisStreamPublisherFactory<Item, CreatedEvent>.CreateConnection();
@@ -18,6 +19,7 @@ namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
       Assert.AreEqual(mockConnection.Object.GetDatabase(), publisher.Database);
     }
     [TestMethod]
+    [TestCategory("Unit")]
     public void TestUpdatePublisher()
     {
       var mockConnection = MockRedisStreamPublisherFactory<Item, UpdatedEvent>.CreateConnection();
@@ -25,6 +27,7 @@ namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
       Assert.AreEqual(mockConnection.Object.GetDatabase(), publisher.Database);
     }
     [TestMethod]
+    [TestCategory("Unit")]
     public void TestDeletedPublisher()
     {
       var mockConnection = MockRedisStreamPublisherFactory<Item, DeletedEvent>.CreateConnection();

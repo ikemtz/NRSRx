@@ -4,73 +4,54 @@ using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.NRSRx.Tests;
 using IkeMtz.Samples.Events.Redis;
+using IkeMtz.Samples.Events.Redis.Controllers.V1;
 using IkeMtz.Samples.Events.Tests.Integration;
 using IkeMtz.Samples.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace IkeMtz.Samples.Events.Tests.Unigration
+namespace IkeMtz.Samples.Events.Tests.Unit
 {
   [TestClass]
   public partial class ItemsTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory("Unit")]
     public async Task CreateItemsTest()
     {
       var mockPublisher = MockRedisStreamPublisherFactory<Item, CreatedEvent>.Create();
       var item = Factories.ItemFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
-      {
-        x.AddSingleton(mockPublisher.Object);
-      }));
-
-      var client = srv.CreateClient();
-      GenerateAuthHeader(client, GenerateTestToken());
-
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Item)}s.json", item);
-      _ = resp.EnsureSuccessStatusCode();
+      var result = await new ItemsController().Post(item, mockPublisher.Object)
+        as OkObjectResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Item>(t => t.Id == item.Id)), Times.Once);
+      Assert.AreEqual(200, result.StatusCode);
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory("Unit")]
     public async Task UpdateItemsTest()
     {
       var mockPublisher = MockRedisStreamPublisherFactory<Item, UpdatedEvent>.Create();
       var item = Factories.ItemFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
-      {
-        x.AddSingleton(mockPublisher.Object);
-      }));
-
-      var client = srv.CreateClient();
-      GenerateAuthHeader(client, GenerateTestToken());
-
-      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Item)}s.json?id={item.Id}", item);
-      _ = resp.EnsureSuccessStatusCode();
+      var result = await new ItemsController().Put(item.Id, item, mockPublisher.Object)
+        as OkObjectResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Item>(t => t.Id == item.Id)), Times.Once);
+      Assert.AreEqual(200, result.StatusCode);
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory("Unit")]
     public async Task DeleteItemsTest()
     {
       var mockPublisher = MockRedisStreamPublisherFactory<Item, DeletedEvent>.Create();
       var item = Factories.ItemFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
-      {
-        x.AddSingleton(mockPublisher.Object);
-      }));
-
-      var client = srv.CreateClient();
-      GenerateAuthHeader(client, GenerateTestToken());
-
-      var resp = await client.DeleteAsync($"api/v1/{nameof(Item)}s.json?id={item.Id}");
-      _ = resp.EnsureSuccessStatusCode();
+      var result = await new ItemsController().Delete(item.Id, mockPublisher.Object)
+        as OkObjectResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Item>(t => t.Id == item.Id)), Times.Once);
+      Assert.AreEqual(200, result.StatusCode);
     }
   }
 }
