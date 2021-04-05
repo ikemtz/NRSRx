@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>IkeMtz.Samples.WebApi.Tests</name>
+        <name>IkeMtz.Samples.Events.Redis.Tests</name>
     </assembly>
     <members>
     </members>

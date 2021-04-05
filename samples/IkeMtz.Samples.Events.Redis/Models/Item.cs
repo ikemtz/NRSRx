@@ -1,9 +1,9 @@
-using System;
 using IkeMtz.NRSRx.Core.Models;
+using System;
 
 namespace IkeMtz.Samples.Models
 {
-  public class Item : IIdentifiable, IAuditable
+  public partial class Item : IIdentifiable, IAuditable
   {
     public Guid Id { get; set; }
     public string Value { get; set; }

@@ -5,7 +5,7 @@ using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IkeMtz.Samples.WebApi.Data;
-using IkeMtz.Samples.WebApi.Models;
+using IkeMtz.Samples.Models;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using Microsoft.AspNetCore.Authorization;
 
