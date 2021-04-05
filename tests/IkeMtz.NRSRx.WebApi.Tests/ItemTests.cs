@@ -7,7 +7,7 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Tests;
 using IkeMtz.Samples.WebApi;
 using IkeMtz.Samples.WebApi.Data;
-using IkeMtz.Samples.WebApi.Models;
+using IkeMtz.Samples.Models;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -76,7 +76,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Item)}s.xml", item);
       _ = resp.EnsureSuccessStatusCode();
-      var httpItem = await DeserializeResponseAsync<Item>(resp);
+      _ = await DeserializeResponseAsync<Item>(resp);
     }
 
     [TestMethod]

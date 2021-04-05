@@ -1,5 +1,5 @@
 using System;
-using IkeMtz.Samples.WebApi.Models;
+using IkeMtz.Samples.Models;
 
 namespace IkeMtz.NRSRx.Tests
 {
