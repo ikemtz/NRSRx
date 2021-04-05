@@ -7,6 +7,7 @@ using IkeMtz.Samples.Events.Redis.Publishers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IkeMtz.Samples.Events.Redis
 {
@@ -17,6 +18,7 @@ namespace IkeMtz.Samples.Events.Redis
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
+    [ExcludeFromCodeCoverage]
     public override void SetupPublishers(IServiceCollection services)
     {
       var redisConnectionString = Configuration.GetValue<string>("REDIS_CONNECTION_STRING");
