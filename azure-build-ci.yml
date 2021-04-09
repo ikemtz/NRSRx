@@ -2,7 +2,8 @@ name: 5.0.$(DayOfYear)$(Rev:.rr)
 pool:
   name: Hosted Windows 2019 with VS2019
 
-variables: 
+variables:
+  ALL_PROJECTS: '**/*.csproj'
   PACKAGE_PROJECTS: 'src/**/*.csproj'
   TEST_PROJECTS: '**/*.Tests.csproj'
   TEMPLATE_PROJECTS: 'templates/**/*.csproj'
@@ -45,12 +46,15 @@ jobs:
     displayName: 'Use .NET Core sdk 5.0.x'
     inputs:
       version: 5.0.x
-  
+
   - task: DotNetCoreCLI@2
-    displayName: Restore
     inputs:
-      command: restore
-      projects: '$(PACKAGE_PROJECTS)'
+      command: 'restore'
+      projects: '$(ALL_PROJECTS)'
+      feedsToUse: 'select'
+      noCache: true
+      verbosityRestore: 'Minimal'
+
   - task: Assembly-Info-NetCore@2
     displayName: 'Set Assembly Manifest Data'
     inputs:  
@@ -79,8 +83,8 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
     inputs:
-      projects: 'src/**/*.csproj'
-      arguments: '--configuration Debug --no-restore'
+      projects: '$(ALL_PROJECTS)'
+      arguments: '--configuration $(BuildConfiguration) --no-restore'
   
   - task: DotNetCoreCLI@2
     displayName: 'Tests'
@@ -117,7 +121,7 @@ jobs:
       monitorOnBuild: false
       failOnIssues: true
       projectName: 'NRSRx'
-      organization: 'ikemtz'      
+      organization: 'ikemtz'
       additionalArguments: '--file=$(Build.SourcesDirectory)\NRSRx.sln'
   
   - task: DotNetCoreCLI@2
