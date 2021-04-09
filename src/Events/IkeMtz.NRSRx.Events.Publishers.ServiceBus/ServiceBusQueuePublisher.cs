@@ -1,11 +1,9 @@
 using System;
-using System.Text;
 using System.Threading.Tasks;
-using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
+using IkeMtz.NRSRx.Events.Abstraction;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 {
@@ -50,9 +48,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 
     public Task PublishAsync(TEntity payload, Action<Message> messageCustomizationLogic = null)
     {
-      var json = JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings);
-      var buffer = Encoding.UTF8.GetBytes(json);
-      var msg = new Message(buffer);
+      var msg = new Message(MessageCoder.JsonEncode(payload));
       messageCustomizationLogic?.Invoke(msg);
       return queueClient.SendAsync(msg);
     }

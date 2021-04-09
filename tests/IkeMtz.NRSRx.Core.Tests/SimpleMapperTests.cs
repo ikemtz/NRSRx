@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.Core.Tests
         SampleGuid = Guid.NewGuid(),
         SampleInt = 69,
         SampleString = "Happy Days",
-        SampleObject = "Sample Object"
+        SampleObject = "Sample Object",
       };
       source.SampleStrings.Add("This better work!");
       var dest = SimpleMapper<ValidationTestObjectA>.Instance.Convert(source);
@@ -50,6 +50,9 @@ namespace IkeMtz.NRSRx.Core.Tests
         SampleNullableInt = 69 + 2,
         SampleNullableDecimal = 99.345m,
         SampleNullableGuid = Guid.NewGuid(),
+        SampleNullNumber1 = 1,
+        SampleNullNumber2 = 5.6m,
+        SampleNullNumber5 = 67,
       };
       source.SampleStrings.Add("This better work!");
       var dest = SimpleMapper<ValidationTestObjectA, ValidationTestObjectB>.Instance.Convert(source);
@@ -64,6 +67,8 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.AreEqual(source.SampleNullableInt, dest.SampleNullableInt);
       Assert.AreEqual(source.SampleNullableDecimal, dest.SampleNullableDecimal);
       Assert.AreEqual(source.SampleNullableGuid, dest.SampleNullableGuid);
+
+      _ = SimpleMapper<ValidationTestObjectB, ValidationTestObjectA>.Instance.Convert(dest);
     }
   }
 
@@ -79,6 +84,12 @@ namespace IkeMtz.NRSRx.Core.Tests
     public Guid SampleGuid { get; set; }
     public Object SampleObject { get; set; }
     public decimal SampleDecimal { get; set; }
+    public int? SampleNullNumber1 { get; set; }
+    public decimal? SampleNullNumber2 { get; set; }
+    public int SampleNullNumber3 { get; set; }
+    public decimal SampleNullNumber4 { get; set; }
+    public long? SampleNullNumber5 { get; set; }
+
     public int SampleInt { get; set; }
     public int? SampleNullableInt { get; set; }
     public decimal? SampleNullableDecimal { get; set; }
@@ -100,6 +111,11 @@ namespace IkeMtz.NRSRx.Core.Tests
     public decimal SampleDecimal { get; set; }
     public int SampleInt { get; set; }
     public int? SampleNullableInt { get; set; }
+    public float? SampleNullNumber1 { get; set; }
+    public float? SampleNullNumber2 { get; set; }
+    public float SampleNullNumber3 { get; set; }
+    public float SampleNullNumber4 { get; set; }
+    public float SampleNullNumber5 { get; set; }
     public decimal? SampleNullableDecimal { get; set; }
     public Guid? SampleNullableGuid { get; set; }
   }

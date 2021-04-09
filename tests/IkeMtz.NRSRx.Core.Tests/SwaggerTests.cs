@@ -1,12 +1,9 @@
-using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {

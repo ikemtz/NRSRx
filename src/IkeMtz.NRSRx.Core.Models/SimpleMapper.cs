@@ -69,7 +69,39 @@ namespace IkeMtz.NRSRx.Core.Models
             .Where(prop => sourceProperties.Keys.Contains(prop.Name, StringComparer.CurrentCulture))
             .Where(prop => prop.CanWrite)
             .Select(prop => new Action<TSourceEntity, TDestinationEntity>((src, dest) =>
-              prop.SetValue(dest, sourceProperties[prop.Name].GetValue(src))
+            {
+              var sourceValue = sourceProperties[prop.Name].GetValue(src);
+              switch (prop.PropertyType.ToString())
+              {
+                case "System.Nullable`1[System.Single]":
+                  prop.SetValue(dest, sourceValue == null || !float.TryParse(sourceValue.ToString(), out var floatOutput) ? new float?() : floatOutput);
+                  break;
+                case "System.Single":
+                  prop.SetValue(dest, sourceValue == null || !float.TryParse(sourceValue.ToString(), out floatOutput) ? 0 : floatOutput);
+                  break;
+                case "System.Nullable`1[System.Int32]":
+                  prop.SetValue(dest, sourceValue == null || !int.TryParse(sourceValue.ToString(), out var intOutput) ? new int?() : intOutput);
+                  break;
+                case "System.Int32":
+                  prop.SetValue(dest, sourceValue == null || !int.TryParse(sourceValue.ToString(), out intOutput) ? 0 : intOutput);
+                  break;
+                case "System.Nullable`1[System.Decimal]":
+                  prop.SetValue(dest, sourceValue == null || !decimal.TryParse(sourceValue.ToString(), out var decOutput) ? new decimal?() : decOutput);
+                  break;
+                case "System.Decimal":
+                  prop.SetValue(dest, sourceValue == null || !decimal.TryParse(sourceValue.ToString(), out decOutput) ? 0 : decOutput);
+                  break;
+                case "System.Nullable`1[System.Int64]":
+                  prop.SetValue(dest, sourceValue == null || !long.TryParse(sourceValue.ToString(), out var longOutput) ? new long?() : longOutput);
+                  break;
+                case "System.Int64":
+                  prop.SetValue(dest, sourceValue == null || !long.TryParse(sourceValue.ToString(), out longOutput) ? 0 : longOutput);
+                  break;
+                default:
+                  prop.SetValue(dest, sourceValue);
+                  break;
+              }
+            }
             ));
     }
 
