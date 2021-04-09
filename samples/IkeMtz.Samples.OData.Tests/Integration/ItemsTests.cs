@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.Samples.OData.Models;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using NRSRx_OData_EF.Models;
 
 namespace IkeMtz.Samples.OData.Tests.Integration
 {
