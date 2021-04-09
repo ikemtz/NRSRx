@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ProjectGuid>4A1CC1B3-06A5-412E-B10F-2B1E6C048F71</ProjectGuid>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,7 +20,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
+    <NoWarn>1701;1702;CS1591;S2436</NoWarn>
     <DocumentationFile>C:\Repos\NRSRx\src\Events\IkeMtz.NRSRx.Events.Publishers.ServiceBus\IkeMtz.NRSRx.Events.Publishers.ServiceBus.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

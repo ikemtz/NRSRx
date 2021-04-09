@@ -2,7 +2,8 @@ name: 5.0.$(DayOfYear)$(Rev:.rr)
 pool:
   name: Hosted Windows 2019 with VS2019
 
-variables: 
+variables:
+  ALL_PROJECTS: '**/*.csproj'
   PACKAGE_PROJECTS: 'src/**/*.csproj'
   TEST_PROJECTS: '**/*.Tests.csproj'
   TEMPLATE_PROJECTS: 'templates/**/*.csproj'
@@ -32,18 +33,6 @@ jobs:
     inputs:
       ArtifactName: 'dacpac_drop'
   
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk 5.0.x'
-    inputs:
-      version: 5.0.x
- 
-  - task: DotNetCoreCLI@2
-    displayName: 'dotnet build'
-    inputs:
-      command: 'build'
-      projects: 'src/**/*.csproj'
-      arguments: '--configuration Debug --output $(build.artifactstagingdirectory)'
-  
 - job: APIs
   displayName: Build and test API code
   pool:
@@ -57,12 +46,15 @@ jobs:
     displayName: 'Use .NET Core sdk 5.0.x'
     inputs:
       version: 5.0.x
-  
+
   - task: DotNetCoreCLI@2
-    displayName: Restore
     inputs:
-      command: restore
-      projects: '$(PACKAGE_PROJECTS)'
+      command: 'restore'
+      projects: '$(ALL_PROJECTS)'
+      feedsToUse: 'select'
+      noCache: true
+      verbosityRestore: 'Minimal'
+
   - task: Assembly-Info-NetCore@2
     displayName: 'Set Assembly Manifest Data'
     inputs:  
@@ -91,8 +83,8 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
     inputs:
-      projects: 'src/**/*.csproj'
-      arguments: '--configuration Debug --no-restore'
+      projects: '$(ALL_PROJECTS)'
+      arguments: '--configuration $(BuildConfiguration) --no-restore'
   
   - task: DotNetCoreCLI@2
     displayName: 'Tests'
@@ -107,7 +99,7 @@ jobs:
       command: custom
       projects: '$(TEST_PROJECTS)'
       custom: 'test'
-      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --no-build --no-restore --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
+      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
         
   - task: SonarCloudAnalyze@1
     displayName: 'Run Code Analysis'
@@ -129,7 +121,7 @@ jobs:
       monitorOnBuild: false
       failOnIssues: true
       projectName: 'NRSRx'
-      organization: 'ikemtz'      
+      organization: 'ikemtz'
       additionalArguments: '--file=$(Build.SourcesDirectory)\NRSRx.sln'
   
   - task: DotNetCoreCLI@2

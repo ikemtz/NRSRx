@@ -18,9 +18,10 @@
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <LangVersion>8.0</LangVersion>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
+    <NoWarn>1701;1702;CS1591;S2436</NoWarn>
     <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
