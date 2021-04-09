@@ -32,18 +32,6 @@ jobs:
     inputs:
       ArtifactName: 'dacpac_drop'
   
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk 5.0.x'
-    inputs:
-      version: 5.0.x
- 
-  - task: DotNetCoreCLI@2
-    displayName: 'dotnet build'
-    inputs:
-      command: 'build'
-      projects: 'src/**/*.csproj'
-      arguments: '--configuration Debug --output $(build.artifactstagingdirectory)'
-  
 - job: APIs
   displayName: Build and test API code
   pool:
