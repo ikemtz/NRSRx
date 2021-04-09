@@ -69,40 +69,43 @@ namespace IkeMtz.NRSRx.Core.Models
             .Where(prop => sourceProperties.Keys.Contains(prop.Name, StringComparer.CurrentCulture))
             .Where(prop => prop.CanWrite)
             .Select(prop => new Action<TSourceEntity, TDestinationEntity>((src, dest) =>
-            {
-              var sourceValue = sourceProperties[prop.Name].GetValue(src);
-              switch (prop.PropertyType.ToString())
-              {
-                case "System.Nullable`1[System.Single]":
-                  prop.SetValue(dest, sourceValue == null || !float.TryParse(sourceValue.ToString(), out var floatOutput) ? new float?() : floatOutput);
-                  break;
-                case "System.Single":
-                  prop.SetValue(dest, sourceValue == null || !float.TryParse(sourceValue.ToString(), out floatOutput) ? 0 : floatOutput);
-                  break;
-                case "System.Nullable`1[System.Int32]":
-                  prop.SetValue(dest, sourceValue == null || !int.TryParse(sourceValue.ToString(), out var intOutput) ? new int?() : intOutput);
-                  break;
-                case "System.Int32":
-                  prop.SetValue(dest, sourceValue == null || !int.TryParse(sourceValue.ToString(), out intOutput) ? 0 : intOutput);
-                  break;
-                case "System.Nullable`1[System.Decimal]":
-                  prop.SetValue(dest, sourceValue == null || !decimal.TryParse(sourceValue.ToString(), out var decOutput) ? new decimal?() : decOutput);
-                  break;
-                case "System.Decimal":
-                  prop.SetValue(dest, sourceValue == null || !decimal.TryParse(sourceValue.ToString(), out decOutput) ? 0 : decOutput);
-                  break;
-                case "System.Nullable`1[System.Int64]":
-                  prop.SetValue(dest, sourceValue == null || !long.TryParse(sourceValue.ToString(), out var longOutput) ? new long?() : longOutput);
-                  break;
-                case "System.Int64":
-                  prop.SetValue(dest, sourceValue == null || !long.TryParse(sourceValue.ToString(), out longOutput) ? 0 : longOutput);
-                  break;
-                default:
-                  prop.SetValue(dest, sourceValue);
-                  break;
-              }
-            }
+               SetPropertyValue(prop, sourceProperties, src, dest)
             ));
+    }
+
+    public static void SetPropertyValue(PropertyInfo prop, Dictionary<string, PropertyInfo> sourceProperties, TSourceEntity src, TDestinationEntity dest)
+    {
+      var sourceValue = sourceProperties[prop.Name].GetValue(src);
+      switch (prop.PropertyType.ToString())
+      {
+        case "System.Nullable`1[System.Single]":
+          prop.SetValue(dest, !float.TryParse(sourceValue?.ToString(), out var floatOutput) ? new float?() : floatOutput);
+          break;
+        case "System.Single":
+          prop.SetValue(dest, !float.TryParse(sourceValue?.ToString(), out floatOutput) ? 0 : floatOutput);
+          break;
+        case "System.Nullable`1[System.Int32]":
+          prop.SetValue(dest, !int.TryParse(sourceValue?.ToString(), out var intOutput) ? new int?() : intOutput);
+          break;
+        case "System.Int32":
+          prop.SetValue(dest, !int.TryParse(sourceValue?.ToString(), out intOutput) ? 0 : intOutput);
+          break;
+        case "System.Nullable`1[System.Decimal]":
+          prop.SetValue(dest, !decimal.TryParse(sourceValue?.ToString(), out var decOutput) ? new decimal?() : decOutput);
+          break;
+        case "System.Decimal":
+          prop.SetValue(dest, !decimal.TryParse(sourceValue?.ToString(), out decOutput) ? 0 : decOutput);
+          break;
+        case "System.Nullable`1[System.Int64]":
+          prop.SetValue(dest, !long.TryParse(sourceValue?.ToString(), out var longOutput) ? new long?() : longOutput);
+          break;
+        case "System.Int64":
+          prop.SetValue(dest, !long.TryParse(sourceValue?.ToString(), out longOutput) ? 0 : longOutput);
+          break;
+        default:
+          prop.SetValue(dest, sourceValue);
+          break;
+      }
     }
 
     public void ApplyChanges(TSourceEntity sourceEntity, TDestinationEntity destinationEntity)
