@@ -87,7 +87,7 @@ jobs:
     inputs:
       command: test
       projects: '$(TEST_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --no-build --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
+      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
   
   - task: DotNetCoreCLI@2
     displayName: 'Test - Sonar'
