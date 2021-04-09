@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Events.Abstraction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StackExchange.Redis;
@@ -49,6 +50,9 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     {
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
+      moqDatabase
+        .Setup(x => x.StreamReadGroupAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), 1, false, CommandFlags.None))
+        .Returns(Task.FromResult(Array.Empty<StreamEntry>()));
       moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
 
@@ -69,5 +73,29 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       await subscriber.Subscribe();
     }
 
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task ValidateMessageAcknowledgement()
+    {
+      var moqConnection = new Mock<IConnectionMultiplexer>();
+      var moqDatabase = new Mock<IDatabase>();
+      moqConnection
+        .Setup(t => t.GetDatabase(-1, null))
+        .Returns(moqDatabase.Object);
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
+      _ = await subscriber.AcknowledgeMessageAsync("xyz");
+      moqDatabase
+       .Verify(t => t.StreamAcknowledgeAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, "xyz", CommandFlags.None), Times.Once);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public void ValidateMessageCoderJsonDecode()
+    {
+      var json = "eyJpZCI6IjA5MDhlOGM0LWJhOGEtNDQyNy1hNjJmLTkxOTEyZWU3NmUyNiIsIm5hbWUiOiI1MWM5ZTRkYy00ZDc1LTQxNGQtOWFmOS00NDJjNGViNTM2YzIifQ==";
+      var buffer = Convert.FromBase64String(json);
+      var message = MessageCoder.JsonDecode<SampleMessage>(buffer);
+      Assert.AreEqual("51c9e4dc-4d75-414d-9af9-442c4eb536c2", message.Name);
+    }
   }
 }

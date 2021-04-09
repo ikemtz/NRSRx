@@ -89,7 +89,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public int SampleNullNumber3 { get; set; }
     public decimal SampleNullNumber4 { get; set; }
     public long? SampleNullNumber5 { get; set; }
-
+    public long SampleNullNumber6 { get; set; }
     public int SampleInt { get; set; }
     public int? SampleNullableInt { get; set; }
     public decimal? SampleNullableDecimal { get; set; }
@@ -116,6 +116,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public float SampleNullNumber3 { get; set; }
     public float SampleNullNumber4 { get; set; }
     public float SampleNullNumber5 { get; set; }
+    public float? SampleNullNumber6 { get; set; }
     public decimal? SampleNullableDecimal { get; set; }
     public Guid? SampleNullableGuid { get; set; }
   }

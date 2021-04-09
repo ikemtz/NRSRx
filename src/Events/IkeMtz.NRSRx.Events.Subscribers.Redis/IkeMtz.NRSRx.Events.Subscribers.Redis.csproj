@@ -25,6 +25,10 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;S2436</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\IkeMtz.NRSRx.Events.Publishers.Redis\RedisStreamCore.cs" Link="RedisStreamCore.cs" />
   </ItemGroup>
