@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ProjectGuid>4A1CC1B3-06A5-412E-B10F-2B1E6C048F71</ProjectGuid>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
