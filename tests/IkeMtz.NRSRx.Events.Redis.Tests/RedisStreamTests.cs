@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events.Abstraction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -66,26 +67,30 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     [ExpectedException(typeof(InvalidProgramException))]
     public async Task ValidateSubscriptionState()
     {
-      var moqConnection = new Mock<IConnectionMultiplexer>();
-      var moqDatabase = new Mock<IDatabase>();
-      moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
-      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
-      await subscriber.Subscribe();
+      var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateSubscriber();
+      await Subscriber.Object.Subscribe();
     }
 
     [TestMethod]
     [TestCategory("Unit")]
     public async Task ValidateMessageAcknowledgement()
     {
-      var moqConnection = new Mock<IConnectionMultiplexer>();
-      var moqDatabase = new Mock<IDatabase>();
-      moqConnection
-        .Setup(t => t.GetDatabase(-1, null))
-        .Returns(moqDatabase.Object);
-      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
+      var (Connection, Database) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateConnection();
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(Connection.Object);
       _ = await subscriber.AcknowledgeMessageAsync("xyz");
-      moqDatabase
+      Database
        .Verify(t => t.StreamAcknowledgeAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, "xyz", CommandFlags.None), Times.Once);
+    }
+
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task ValidateMockMessageRecieved()
+    {
+      var message = new SampleMessage();
+      var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateSubscriber(new[] { message });
+      var messages = await Subscriber.Object.GetMessagesAsync(1);
+      Assert.AreEqual(message.Name, messages.First().Entity.Name);
     }
 
     [TestMethod]

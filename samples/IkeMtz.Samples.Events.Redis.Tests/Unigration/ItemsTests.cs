@@ -20,7 +20,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task CreateItemsTest()
     {
-      var mockPublisher = MockRedisStreamPublisherFactory<Item, CreatedEvent>.Create();
+      var mockPublisher = MockRedisStreamFactory<Item, CreatedEvent>.CreatePublisher();
       var item = Factories.ItemFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {
@@ -39,7 +39,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task UpdateItemsTest()
     {
-      var mockPublisher = MockRedisStreamPublisherFactory<Item, UpdatedEvent>.Create();
+      var mockPublisher = MockRedisStreamFactory<Item, UpdatedEvent>.CreatePublisher();
       var item = Factories.ItemFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {
@@ -58,7 +58,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task DeleteItemsTest()
     {
-      var mockPublisher = MockRedisStreamPublisherFactory<Item, DeletedEvent>.Create();
+      var mockPublisher = MockRedisStreamFactory<Item, DeletedEvent>.CreatePublisher();
       var item = Factories.ItemFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {

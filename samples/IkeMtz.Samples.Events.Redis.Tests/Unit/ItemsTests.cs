@@ -3,13 +3,9 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.NRSRx.Tests;
-using IkeMtz.Samples.Events.Redis;
 using IkeMtz.Samples.Events.Redis.Controllers.V1;
-using IkeMtz.Samples.Events.Tests.Integration;
 using IkeMtz.Samples.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -22,7 +18,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
     [TestCategory("Unit")]
     public async Task CreateItemsTest()
     {
-      var mockPublisher = MockRedisStreamPublisherFactory<Item, CreatedEvent>.Create();
+      var mockPublisher = MockRedisStreamFactory<Item, CreatedEvent>.CreatePublisher();
       var item = Factories.ItemFactory();
       var result = await new ItemsController().Post(item, mockPublisher.Object)
         as OkObjectResult;
@@ -34,7 +30,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
     [TestCategory("Unit")]
     public async Task UpdateItemsTest()
     {
-      var mockPublisher = MockRedisStreamPublisherFactory<Item, UpdatedEvent>.Create();
+      var mockPublisher = MockRedisStreamFactory<Item, UpdatedEvent>.CreatePublisher();
       var item = Factories.ItemFactory();
       var result = await new ItemsController().Put(item.Id, item, mockPublisher.Object)
         as OkObjectResult;
@@ -46,7 +42,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
     [TestCategory("Unit")]
     public async Task DeleteItemsTest()
     {
-      var mockPublisher = MockRedisStreamPublisherFactory<Item, DeletedEvent>.Create();
+      var mockPublisher = MockRedisStreamFactory<Item, DeletedEvent>.CreatePublisher();
       var item = Factories.ItemFactory();
       var result = await new ItemsController().Delete(item.Id, mockPublisher.Object)
         as OkObjectResult;
