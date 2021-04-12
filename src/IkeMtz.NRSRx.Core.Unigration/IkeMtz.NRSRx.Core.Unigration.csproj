@@ -52,6 +52,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Events\IkeMtz.NRSRx.Events.Abstraction\IkeMtz.NRSRx.Events.Abstraction.csproj" />
     <ProjectReference Include="..\Events\IkeMtz.NRSRx.Events.Publishers.Redis\IkeMtz.NRSRx.Events.Publishers.Redis.csproj" />
+    <ProjectReference Include="..\Events\IkeMtz.NRSRx.Events.Subscribers.Redis\IkeMtz.NRSRx.Events.Subscribers.Redis.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.SignalR\IkeMtz.NRSRx.Core.SignalR.csproj" />
