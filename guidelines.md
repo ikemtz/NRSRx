@@ -2,6 +2,8 @@ IkeMtz's DB, EF and Microservices Best Practices
 
 - [Database Best Practices](#database-best-practices)
   - [Table names should be plural](#table-names-should-be-plural)
+    - [Example #1](#example-1)
+    - [Example #2](#example-2)
   - [Table and column names should be in Pascal case](#table-and-column-names-should-be-in-pascal-case)
   - [Table should have a primary key (🔑PK) named Id](#table-should-have-a-primary-key-pk-named-id)
   - [The chosen primary key data type should depend on a variety of factors](#the-chosen-primary-key-data-type-should-depend-on-a-variety-of-factors)
@@ -39,10 +41,13 @@ IkeMtz's DB, EF and Microservices Best Practices
 # Database Best Practices
 ## Table names should be plural
 
-When applying this rule, it's important to <b>NOT</b> adhere to normal language rules.  As an English example, you should use Persons instead of People.
+When applying this rule, it's important to <b>NOT</b> adhere to normal language rules.  
+
+As an English example, you should use Persons instead of People.  One exception to English rules are entity names that end with 'y', such as activity and entry.  These tables should end in 'ies', such as activities and entries, respectively.
+
+### Example #1
 
 **Don't**:
-
 ```SQL
 CREATE TABLE Person { ... }
 ```
@@ -52,6 +57,17 @@ CREATE TABLE Person { ... }
 ```SQL
 CREATE TABLE Persons { ... }
 ```
+### Example #2
+```SQL
+CREATE TABLE ItemEntry { ... }
+```
+
+**Do**:
+
+```SQL
+CREATE TABLE ItemEntries { ... }
+```
+
 
 ## Table and column names should be in Pascal case
 **Don't**:
