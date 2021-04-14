@@ -1,4 +1,4 @@
-﻿# Code refactor tool
+# Code refactor tool
 # This script will do a find and replace on file names and content
 # Creator Isaac Martinez
 # Example Usage: 
@@ -21,6 +21,29 @@ Foreach-Object {
 }
 
 Get-ChildItem -Path $PSScriptRoot -Filter *.cs -Recurse | 
+Foreach-Object {
+  $fileContents = [System.IO.File]::ReadAllText($_.FullName)
+    if ( $fileContents.Contains($findValue) )
+    {
+     Write-Host "Updating File Content On:" $_.Name
+     $fileContents = $fileContents.Replace($findValue, $replacementValue);
+     [System.IO.File]::WriteAllText($_.FullName, $fileContents)
+    }
+}
+
+Get-ChildItem -Path $PSScriptRoot -Filter *.md -Recurse | 
+Foreach-Object {
+  $fileContents = [System.IO.File]::ReadAllText($_.FullName)
+    if ( $fileContents.Contains($findValue) )
+    {
+     Write-Host "Updating File Content On:" $_.Name
+     $fileContents = $fileContents.Replace($findValue, $replacementValue);
+     [System.IO.File]::WriteAllText($_.FullName, $fileContents)
+    }
+}
+
+# This one will cover both launchSettings.json and appsettings.json
+Get-ChildItem -Path $PSScriptRoot -Filter *ettings.json -Recurse | 
 Foreach-Object {
   $fileContents = [System.IO.File]::ReadAllText($_.FullName)
     if ( $fileContents.Contains($findValue) )

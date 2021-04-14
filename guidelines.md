@@ -225,6 +225,8 @@ When applying this rule, it's absolutely important to avoid ambiguity.  People s
 | First Name         | FName        |
 | Last Name          | LName        |
 | Zip Code           | Zip          |
+| Minimum            | Min          |
+| Maximum            | Max          |
 
 **Don't**:
 
