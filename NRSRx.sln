@@ -37,6 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		azure-build-ci.yml = azure-build-ci.yml
 		azure-release-cd.yml = azure-release-cd.yml
+		guidelines.md = guidelines.md
 		LICENSE = LICENSE
 		README.md = README.md
 		test.RunSettings = test.RunSettings
@@ -56,6 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.OData", "sam
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{91732412-47D1-4412-81FB-8F8C54D28CEF}"
 	ProjectSection(SolutionItems) = preProject
+		tools\code-refactor-tool.ps1 = tools\code-refactor-tool.ps1
 		tools\sonarqube-create-project-guids.ps1 = tools\sonarqube-create-project-guids.ps1
 		tools\sql-poco-class-generator.sql = tools\sql-poco-class-generator.sql
 	EndProjectSection
