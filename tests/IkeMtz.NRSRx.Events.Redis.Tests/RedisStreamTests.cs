@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events.Abstraction;
+using IkeMtz.NRSRx.Events.Subscribers.Redis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StackExchange.Redis;

@@ -7,7 +7,7 @@ using IkeMtz.NRSRx.Events.Abstraction;
 using IkeMtz.NRSRx.Events.Abstraction.Redis;
 using StackExchange.Redis;
 
-namespace IkeMtz.NRSRx.Events.Publishers.Redis
+namespace IkeMtz.NRSRx.Events.Subscribers.Redis
 {
   public class RedisStreamSubscriber<TEntity, TEvent> :
     RedisStreamSubscriber<TEntity, TEvent, Guid>
@@ -69,6 +69,5 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
         await Task.Delay(pollFrequency);
       }
     }
-
   }
 }

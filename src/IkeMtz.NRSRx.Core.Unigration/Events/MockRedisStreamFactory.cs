@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.NRSRx.Events.Publishers.Redis;
+using IkeMtz.NRSRx.Events.Subscribers.Redis;
 using Moq;
 using StackExchange.Redis;
 
@@ -39,6 +40,5 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
       }
       return (mockSubscriber, database);
     }
-
   }
 }
