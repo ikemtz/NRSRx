@@ -21,7 +21,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     protected CoreODataTestStartup(TStartup startup) : base(startup?.Configuration)
     {
       Startup = startup;
-      base.MaxTop = startup.MaxTop;
+      base.MaxTop = startup?.MaxTop;
     }
 
     public override string MicroServiceTitle => Startup.MicroServiceTitle;

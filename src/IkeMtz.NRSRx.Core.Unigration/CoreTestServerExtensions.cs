@@ -75,6 +75,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = services.AddDbContext<TDbContext>(options =>
       {
         _ = options.UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}");
+        _ = options.LogTo(testContext.WriteLine);
         _ = options.UseInternalServiceProvider(serviceProvider);
         _ = options.EnableSensitiveDataLogging(true);
         _ = options.EnableDetailedErrors(true);

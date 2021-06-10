@@ -48,9 +48,10 @@ namespace IkeMtz.Samples.OData.Controllers.V1
       return _databaseContext.Items
         .AsNoTracking();
     }
+
     public ActionResult Delete([FromODataUri] Guid key)
-    {      
-      return StatusCode((int)HttpStatusCode.OK);
+    {
+      return key != default ? Ok() : NotFound();
     }
   }
 }

@@ -90,7 +90,8 @@ namespace IkeMtz.NRSRx.Core.OData
                inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
              }
              SetupMvcOptions(services, options);
-           });
+           })
+           .AddNewtonsoftJson();
       _ = services.AddApiVersioning(options => options.ReportApiVersions = true)
           .AddOData()
           .EnableApiVersioning();
