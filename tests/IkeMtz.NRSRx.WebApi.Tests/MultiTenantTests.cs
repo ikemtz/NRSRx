@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
-      Assert.AreEqual("\"The current user doesn't have access to any tenants.\"", result);
+      Assert.AreEqual("The current user doesn't have access to any tenants.", result);
     }
 
     [TestMethod]
@@ -75,7 +75,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
-      Assert.AreEqual("\"The current user doesn't have access to the a-b-cx tenant.\"", result);
+      Assert.AreEqual("The current user doesn't have access to the a-b-cx tenant.", result);
     }
 
     [TestMethod]
@@ -90,7 +90,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
-      Assert.AreEqual("\"Query string param tid is required for this endpoint.\"", result);
+      Assert.AreEqual("Query string param tid is required for this endpoint.", result);
     }
   }
 }
