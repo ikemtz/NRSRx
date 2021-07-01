@@ -3,7 +3,7 @@ using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.Samples.Models
 {
-  public class Item : IIdentifiable, IAuditable
+  public class Item : IIdentifiable, IAuditable, ITentantable
   {
     public Guid Id { get; set; }
     public string Value { get; set; }
