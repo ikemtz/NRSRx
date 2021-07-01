@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
-  public abstract class CoreTenantFilterAttribute : Attribute, IActionFilter
+  public abstract class CoreTenantFilterAttribute : Attribute, IAuthorizationFilter
   {
     private const string TID = "tid";
     private readonly Func<IEnumerable<Claim>, IEnumerable<string>> _tenantIdentificationLogic;
@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Web
       _tenantIdentificationLogic = TenantIdentificationLogic;
     }
 
-    public virtual void OnActionExecuted(ActionExecutedContext context)
+    public void OnAuthorization(AuthorizationFilterContext context)
     {
       var httpContext = context.HttpContext;
       if (!httpContext.Request.Query.ContainsKey(TID))
@@ -35,11 +35,6 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         context.Result = new UnauthorizedObjectResult($"The current user doesn't have access to the {currentTenant} tenant.");
       }
-    }
-
-    public virtual void OnActionExecuting(ActionExecutingContext context)
-    {
-      // Method intentionally left empty.
     }
   }
 }
