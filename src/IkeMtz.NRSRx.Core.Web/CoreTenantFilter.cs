@@ -9,11 +9,9 @@ namespace IkeMtz.NRSRx.Core.Web
 {
   public abstract class CoreTenantFilterAttribute : Attribute, IAuthorizationFilter
   {
-    private const string TID = "tid";
-    private readonly Func<IEnumerable<Claim>, IEnumerable<string>> _tenantIdentificationLogic;
-    protected CoreTenantFilterAttribute(Func<IEnumerable<Claim>, IEnumerable<string>> TenantIdentificationLogic)
-    {
-      _tenantIdentificationLogic = TenantIdentificationLogic;
+    private const string TID = "tid"; 
+    protected CoreTenantFilterAttribute()
+    { 
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)
@@ -25,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Web
         return;
       }
 
-      var tenants = _tenantIdentificationLogic(httpContext.User.Claims);
+      var tenants = GetUserTenants(httpContext.User.Claims);
       var currentTenant = httpContext.Request.Query[TID];
       if (!tenants.Any())
       {
@@ -36,5 +34,7 @@ namespace IkeMtz.NRSRx.Core.Web
         context.Result = new UnauthorizedObjectResult($"The current user doesn't have access to the {currentTenant} tenant.");
       }
     }
+
+    public abstract IEnumerable<string> GetUserTenants(IEnumerable<Claim> claims);
   }
 }
