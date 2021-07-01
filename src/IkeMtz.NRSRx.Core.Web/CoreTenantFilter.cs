@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Web
         return;
       }
 
-      var tenants = GetUserTenants(httpContext.User.Claims);
+      var tenants = GetUserTenants(httpContext);
       var currentTenant = httpContext.Request.Query[TID];
       if (!tenants.Any())
       {
@@ -35,6 +35,6 @@ namespace IkeMtz.NRSRx.Core.Web
       }
     }
 
-    public abstract IEnumerable<string> GetUserTenants(IEnumerable<Claim> claims);
+    public abstract IEnumerable<string> GetUserTenants(HttpContext httpContext);
   }
 }
