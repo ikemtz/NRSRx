@@ -32,7 +32,6 @@
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SampleWeb\Controllers\V1\" />
     <Folder Include="SampleWeb\Data\" />
     <Folder Include="SampleWeb\Models\" />
   </ItemGroup>
