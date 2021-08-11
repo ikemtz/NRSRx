@@ -1,7 +1,5 @@
-using System.Reflection;
 using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -26,16 +24,5 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       return Ok(model);
     }
-  }
-
-  public class Startup : CoreWebApiStartup
-  {
-    public Startup(IConfiguration configuration) : base(configuration)
-    {
-    }
-
-    public override string MicroServiceTitle => "";
-
-    public override Assembly StartupAssembly => this.GetType().Assembly;
   }
 }

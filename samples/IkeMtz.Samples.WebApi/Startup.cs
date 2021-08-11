@@ -25,6 +25,10 @@ namespace IkeMtz.Samples.WebApi
         .EnableDetailedErrors()
         );
     }
+    public override void SetupLogging(IServiceCollection services)
+    {
+      throw new System.NotImplementedException();
+    }
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {

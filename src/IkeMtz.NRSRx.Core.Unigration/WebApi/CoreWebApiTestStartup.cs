@@ -34,6 +34,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
       base.SetupMiscDependencies(services);
     }
 
+    public override void SetupLogging(IServiceCollection services) { }
+
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
       TestContext = app.ApplicationServices.GetService<TestContext>();

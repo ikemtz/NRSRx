@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task TestJsonDocAsync()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>());
+      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
       Assert.IsNotNull(doc);
     }
@@ -24,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task TestHtmlPageAsync()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnitTestStartup>());
+      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var html = await SwaggerUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(html);
     }

@@ -40,12 +40,7 @@ namespace IkeMtz.NRSRx.Core.Web
       Configuration = configuration;
     }
 
-    public virtual void SetupLogging(IServiceCollection services)
-    {
-      _ = services
-          .AddApplicationInsightsTelemetry(Configuration.GetValue<string>("InstrumentationKey"));
-    }
-
+    public abstract void SetupLogging(IServiceCollection services);
     public virtual void SetupAppSettings(IServiceCollection services)
     {
       services
@@ -148,6 +143,14 @@ namespace IkeMtz.NRSRx.Core.Web
       resp.EnsureSuccessStatusCode();
       var content = resp.Content.ReadAsStringAsync().Result;
       return OpenIdConfiguration = JsonConvert.DeserializeObject<OpenIdConfiguration>(content);
+    }
+
+    public string GetBuildNumber()
+    {
+      return StartupAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ??
+        StartupAssembly.GetCustomAttribute<AssemblyVersionAttribute>()?.Version ??
+        StartupAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ??
+        "unknown";
     }
   }
 }

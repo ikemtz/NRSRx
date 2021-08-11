@@ -20,11 +20,12 @@
                 
                 <!-- Microsoft.AspNetCore.OData.Versioning.ApiExplorer -->
                 <PublicKeyToken>^adb9793829ddae60</PublicKeyToken>
-
                 <!-- Microsoft.CodeAnalysis.CSharp.Analyzers -->
                 <PublicKeyToken>^31bf3856ad364e35</PublicKeyToken>
-                <!--stackexchange.redis-->
+                <!-- stackexchange.redis -->
                 <PublicKeyToken>c219ff1ca8c2ce46</PublicKeyToken>
+                <!-- Pipelines.Sockets.Unofficial -->
+                <PublicKeyToken>42ea0a778e13fbe2</PublicKeyToken>
               </Exclude>
             </PublicKeyTokens>
             <!-- Match attributes on any code element: -->
