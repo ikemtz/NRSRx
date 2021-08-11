@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.OData;
 using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.OData.Models;
@@ -17,6 +18,11 @@ namespace IkeMtz.Samples.OData
 
     public Startup(IConfiguration configuration) : base(configuration)
     {
+    }
+
+    public override void SetupLogging(IServiceCollection services)
+    {
+      this.SetupApplicationInsights(services);
     }
 
     [ExcludeFromCodeCoverage]

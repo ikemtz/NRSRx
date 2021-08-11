@@ -39,10 +39,7 @@ namespace IkeMtz.NRSRx.Core.Web
       }
       provider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
       apiTitle = startup.MicroServiceTitle;
-      buildNumber = startup.StartupAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ??
-      startup.StartupAssembly.GetCustomAttribute<AssemblyVersionAttribute>()?.Version ??
-      startup.StartupAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ??
-      "unknown";
+      buildNumber = startup.GetBuildNumber();
 
       this.httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
       this.appSettings = configuration.Get<AppSettings>();

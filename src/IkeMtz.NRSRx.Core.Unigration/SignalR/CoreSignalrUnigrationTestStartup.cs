@@ -18,6 +18,8 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
 
     protected TestContext TestContext { get; private set; }
 
+    public override void SetupLogging(IServiceCollection services) { }
+
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       TestContext = app.ApplicationServices.GetService<TestContext>();
@@ -26,7 +28,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
     }
 
     public override void SetupAuthentication(AuthenticationBuilder builder)
-    { 
+    {
       builder.SetupTestAuthentication(Configuration, TestContext);
     }
   }

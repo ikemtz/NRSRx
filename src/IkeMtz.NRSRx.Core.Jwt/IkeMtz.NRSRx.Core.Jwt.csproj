@@ -17,13 +17,14 @@
     <PackageIcon>ProfilePic.jpg</PackageIcon>
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Authors>IkeMtz</Authors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>
     <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.Jwt\IkeMtz.NRSRx.Core.Jwt.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.11.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.12.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

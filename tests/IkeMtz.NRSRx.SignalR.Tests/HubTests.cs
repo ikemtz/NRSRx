@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     {
       var startup = new Startup(null);
       Assert.IsNull(startup.MicroServiceTitle);
-      Assert.IsNull(startup.StartupAssembly);
+      Assert.IsNotNull(startup.StartupAssembly);
     }
 
     [TestMethod]

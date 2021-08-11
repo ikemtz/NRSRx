@@ -1,13 +1,13 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.NRSRx.Events;
-using IkeMtz.NRSRx.Events.Publishers.Redis;
-using IkeMtz.Samples.Models;
 using IkeMtz.Samples.Events.Redis.Publishers;
+using IkeMtz.Samples.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
-using System.Diagnostics.CodeAnalysis;
 
 namespace IkeMtz.Samples.Events.Redis
 {
@@ -18,6 +18,9 @@ namespace IkeMtz.Samples.Events.Redis
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
+    public override void SetupLogging(IServiceCollection services) {
+      this.SetupApplicationInsights(services);
+    }
     [ExcludeFromCodeCoverage]
     public override void SetupPublishers(IServiceCollection services)
     {

@@ -35,6 +35,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
       base.SetupMiscDependencies(services);
     }
 
+    public override void SetupLogging(IServiceCollection services) { }
+
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
     {
       if (!modelBuilder.ModelConfigurations.Any(a => a.GetType() == typeof(TModelConfiguration)))
