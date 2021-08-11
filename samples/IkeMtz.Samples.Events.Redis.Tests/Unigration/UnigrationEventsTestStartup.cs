@@ -18,6 +18,10 @@ namespace IkeMtz.Samples.Events.Tests.Integration
     {
       builder.SetupTestAuthentication(Configuration, TestContext);
     }
+    public override void SetupLogging(IServiceCollection services)
+    {
+      Startup.SetupLogging(services);
+    }
 
     public override void SetupPublishers(IServiceCollection services)
     {

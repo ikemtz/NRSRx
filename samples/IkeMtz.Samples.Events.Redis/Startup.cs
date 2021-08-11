@@ -17,10 +17,11 @@ namespace IkeMtz.Samples.Events.Redis
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
 
     public Startup(IConfiguration configuration) : base(configuration) { }
-
+     
     public override void SetupLogging(IServiceCollection services) {
-      this.SetupApplicationInsights(services);
+      this.SetupConsoleLogging();
     }
+
     [ExcludeFromCodeCoverage]
     public override void SetupPublishers(IServiceCollection services)
     {

@@ -4,6 +4,11 @@
         <name>IkeMtz.NRSRx.Logging.Splunk</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.StartupExtensions">
+            <summary>
+            Extension methods to setup logging on NRSRx framework
+            </summary>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupSplunk(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
             <summary>
             Sets up the asp.net core application to log to a Splunk instance using a Splunk Http Event Collector.

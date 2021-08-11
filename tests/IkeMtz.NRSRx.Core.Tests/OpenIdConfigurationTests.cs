@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Tests
         IdentityProvider = "https://demo.identityserver.io/",
         IdentityAudiences = "x,y,z"
       };
-      var startup = new Startup(null);
+      var startup = new StartUp_AppInsights(null);
       var result = startup.GetOpenIdConfiguration(new TestHttpClientFactory(), appSettings);
       Assert.AreEqual($"{appSettings.IdentityProvider}connect/authorize", result.AuthorizeEndpoint);
       Assert.AreEqual(new Uri($"{ appSettings.IdentityProvider}connect/authorize?audience=x"), result.GetAuthorizationEndpointUri(appSettings));

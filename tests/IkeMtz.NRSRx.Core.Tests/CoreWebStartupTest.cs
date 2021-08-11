@@ -11,9 +11,21 @@ namespace IkeMtz.NRSRx.Core.Tests
   {
     [TestMethod]
     [TestCategory("Unit")]
-    public async Task CreateDefaultHostBuilderTest()
+    public async Task CreateDefaultHostBuilderWithAppInsightsTest()
     {
-      var builder = CoreWebStartup.CreateDefaultHostBuilder<Startup>();
+      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_AppInsights>();
+      var host = builder.Build();
+      Assert.IsNotNull(host);
+      await host.StartAsync();
+      await host.StopAsync();
+      await host.WaitForShutdownAsync();
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task CreateDefaultHostBuilderWithSplunkTest()
+    {
+      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Splunk>();
       var host = builder.Build();
       Assert.IsNotNull(host);
       await host.StartAsync();
