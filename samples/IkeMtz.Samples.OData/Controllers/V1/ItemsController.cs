@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.OData.Models;
