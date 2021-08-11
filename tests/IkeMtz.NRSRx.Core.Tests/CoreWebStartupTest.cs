@@ -2,7 +2,10 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -17,6 +20,9 @@ namespace IkeMtz.NRSRx.Core.Tests
       var host = builder.Build();
       Assert.IsNotNull(host);
       await host.StartAsync();
+      var loggerFac = host.Services.GetService<ILoggerFactory>();
+      var logger = loggerFac.CreateLogger("Unit Test");
+      logger.LogError("Validating Error logging");
       await host.StopAsync();
       await host.WaitForShutdownAsync();
     }
@@ -29,6 +35,9 @@ namespace IkeMtz.NRSRx.Core.Tests
       var host = builder.Build();
       Assert.IsNotNull(host);
       await host.StartAsync();
+      var loggerFac = host.Services.GetService<ILoggerFactory>();
+      var logger = loggerFac.CreateLogger("Unit Test");
+      logger.LogError("Validating Error logging");
       await host.StopAsync();
       await host.WaitForShutdownAsync();
     }
