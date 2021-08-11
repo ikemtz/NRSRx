@@ -1,8 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicense>https://raw.githubusercontent.com/ikemtz/NRSRx/master/LICENSE</PackageLicense>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>IkeMtz</Company>
     <Authors>IkeMtz</Authors>
@@ -10,12 +13,13 @@
     <PackageIcon>ProfilePic.jpg</PackageIcon>
     <RepositoryUrl>https://github.com/ikemtz/NRSRx</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ProjectGuid>7256C305-4FE0-4098-8D8C-8A45B64FD887</ProjectGuid>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591</NoWarn>
     <DocumentationFile>C:\Repos\NRSRx\src\Logging\IkeMtz.NRSRx.Logging.Splunk\IkeMtz.NRSRx.Logging.Splunk.xml</DocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -25,7 +29,6 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Splunk" Version="3.6.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.Web\IkeMtz.NRSRx.Core.Web.csproj" />
   </ItemGroup>
@@ -36,5 +39,4 @@
       </PackagePath>
     </None>
   </ItemGroup>
-
 </Project>
