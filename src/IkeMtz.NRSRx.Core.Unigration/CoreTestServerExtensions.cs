@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using IkeMtz.NRSRx.Core.Unigration;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
@@ -74,11 +75,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
       var testContext = serviceProvider.GetService<TestContext>();
       _ = services.AddDbContext<TDbContext>(options =>
       {
-        _ = options.UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}");
+        options.ConfigureTestDbContextOptions(testContext);
         _ = options.LogTo(testContext.WriteLine);
         _ = options.UseInternalServiceProvider(serviceProvider);
-        _ = options.EnableSensitiveDataLogging(true);
-        _ = options.EnableDetailedErrors(true);
       });
     }
 
