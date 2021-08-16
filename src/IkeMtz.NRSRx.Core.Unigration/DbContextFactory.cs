@@ -2,6 +2,7 @@ using System;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -37,6 +38,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
          .UseInMemoryDatabase(Guid.NewGuid().ToString())
          .EnableSensitiveDataLogging()
          .EnableDetailedErrors()
+         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
          .UseLoggerFactory(new LoggerFactory(new[] { new TestContextLoggerProvider(testContext) }))
          .Options;
     }
