@@ -77,7 +77,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
       {
         options.ConfigureTestDbContextOptions(testContext);
         _ = options.LogTo(testContext.WriteLine);
-        _ = options.UseInternalServiceProvider(serviceProvider);
       });
     }
 
