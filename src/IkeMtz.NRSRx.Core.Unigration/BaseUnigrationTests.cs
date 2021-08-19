@@ -34,6 +34,17 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public string GenerateTestToken(IEnumerable<Claim> testClaims = null)
     {
+      return GenerateTestToken(x =>
+     {
+       if (testClaims != null)
+       {
+         testClaims.ToList().ForEach(x.Add);
+       }
+     });
+    }
+
+    public string GenerateTestToken(Action<ICollection<Claim>> testClaimsEditor)
+    {
       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("I Love Integration Testing!!!!"));
       var credentials = new SigningCredentials
                     (key, SecurityAlgorithms.HmacSha256Signature);
@@ -46,10 +57,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
           new Claim(JwtRegisteredClaimNames.Aud, CoreTestServerExtensions.JwtTokenAud) ,
           new Claim(JwtRegisteredClaimNames.Iss, TestServerConfiguration.GetValue<string>("IdentityProvider") ?? CoreTestServerExtensions.JwtTokenIssuer)
       });
-      if (testClaims != null)
-      {
-        testClaims.ToList().ForEach(claims.Add);
-      }
+      testClaimsEditor(claims);
       var payload = new JwtPayload(claims);
       var token = new JwtSecurityToken(header, payload);
       var handler = new JwtSecurityTokenHandler();
@@ -57,7 +65,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
       var tokenString = handler.WriteToken(token);
       return tokenString;
     }
-
     public async Task<string> GenerateTokenAsync()
     {
       using var client = new HttpClient();
