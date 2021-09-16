@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration.Events;
@@ -33,6 +34,31 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
+    [TestCategory("Integration")]
+    public async Task ValidateRedisPendingAsync()
+    {
+      var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
+      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(connectionMultiplexer);
+      var subscriberA = new RedisStreamSubscriber<SampleMessage, CreateEvent>(connectionMultiplexer, StreamPosition.NewMessages);
+      var subscriberB = new RedisStreamSubscriber<SampleMessage, CreateEvent>(connectionMultiplexer, StreamPosition.NewMessages);
+      var sampleMessage = new SampleMessage();
+      var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
+      await publisher.PublishAsync(sampleMessage);
+      var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
+      Assert.AreEqual(original.Length + 1, result.Length);
+      var subscribedMessages = await subscriberA.GetMessagesAsync();
+      Assert.AreEqual(1, subscribedMessages.Count());
+      subscribedMessages = await subscriberB.GetPendingMessagesAsync();
+      Assert.AreNotEqual(0, subscribedMessages.Count());
+      var count = 0L;
+      foreach (var (Id, Entity) in subscribedMessages)
+      {
+        count += await subscriberB.AcknowledgeMessageAsync(Id);
+      }
+      Assert.AreNotEqual(0, count);
+    }
+
+    [TestMethod]
     [TestCategory("Unit")]
     public async Task ValidateRedisMoqPublishAsync()
     {
@@ -62,6 +88,14 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       moqDatabase
         .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName, null, 1, false, CommandFlags.None), Times.Once);
     }
+    class RedisStreamSubscriberMock : RedisStreamSubscriber<SampleMessage, CreateEvent>
+    {
+      public RedisStreamSubscriberMock(IConnectionMultiplexer connection, string streamPosition = "$") : base(connection, streamPosition)
+      {
+      }
+      public override Task<IEnumerable<(string ConsumerName, int PendingMessageCount)>> GetConsumersWithPendingMessagesAsync() =>
+        Task.FromResult<IEnumerable<(string ConsumerName, int PendingMessageCount)>>(new[] { (ConsumerName: "Unit Test", PendingMessageCount: 100) });
+    }
 
     [TestMethod]
     [TestCategory("Unit")]
@@ -69,17 +103,32 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     {
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
+
       moqDatabase
         .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), 1, It.IsAny<RedisValue>(), null, null, CommandFlags.None))
         .Returns(Task.FromResult(new[] { new StreamPendingMessageInfo() }));
       moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
-      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
+      var subscriber = new RedisStreamSubscriberMock(moqConnection.Object);
 
       await subscriber.GetPendingMessagesAsync();
       moqDatabase
-        .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, subscriber.ConsumerName, null, null, CommandFlags.None), Times.Once);
+         .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, "Unit Test", null, null, CommandFlags.None), Times.Once);
       moqDatabase
         .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName, 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Once);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task ValidateGetConsumersWithPendingMessagesTest()
+    {
+      var moqConnection = new Mock<IConnectionMultiplexer>();
+      var moqDatabase = new Mock<IDatabase>();
+      moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
+      var result = await subscriber.GetConsumersWithPendingMessagesAsync();
+      Assert.IsNull(result);
+      moqDatabase
+        .Verify(t => t.StreamPendingAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, CommandFlags.None), Times.Once);
     }
 
     [TestMethod]

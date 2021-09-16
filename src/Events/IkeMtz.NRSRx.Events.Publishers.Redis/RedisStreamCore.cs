@@ -14,10 +14,12 @@ namespace IkeMtz.NRSRx.Events.Abstraction.Redis
     public RedisKey StreamKey { get; }
     public RedisStreamCore(IConnectionMultiplexer connection)
     {
+      var type = typeof(TEntity);
+      var typeName = type.IsGenericType ? $"{type.Name}-{type.GenericTypeArguments[0].Name}" : type.Name;
       Connection = connection;
       Database = connection.GetDatabase();
       var eventType = new TEvent();
-      StreamKey = $"{typeof(TEntity).Name}{eventType.EventSuffix}";
+      StreamKey = $"{typeName}-{eventType.EventSuffix}";
     }
   }
 }
