@@ -70,6 +70,10 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
             messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value))))));
           }
         }
+        else
+        {
+          break;
+        }
       }
       return messageList;
     }
