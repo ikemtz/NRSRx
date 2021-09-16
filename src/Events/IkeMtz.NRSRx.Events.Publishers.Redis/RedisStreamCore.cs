@@ -9,6 +9,8 @@ namespace IkeMtz.NRSRx.Events.Abstraction.Redis
     where TEntity : IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
   {
+    public Type EntityType { get; }
+    public EventType Event { get; }
     public IConnectionMultiplexer Connection { get; }
     public IDatabase Database { get; }
     public RedisKey StreamKey { get; }
@@ -20,6 +22,8 @@ namespace IkeMtz.NRSRx.Events.Abstraction.Redis
       Database = connection.GetDatabase();
       var eventType = new TEvent();
       StreamKey = $"{typeName}-{eventType.EventSuffix}";
+      Event = Activator.CreateInstance<TEvent>();
+      EntityType = typeof(TEntity);
     }
   }
 }
