@@ -54,16 +54,26 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       return data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value)))));
     }
 
-    public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int messageCount = 1)
+    public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int messageCount = 1, int messageRetryCount = 3)
     {
-      var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount, ConsumerName);
-      var messageIds = pendingMessages.Select(t => t.MessageId).ToArray();
-      if (messageIds.Any())
+      var pendingMessageInfo = await GetConsumersWithPendingMessagesAsync();
+      var messageList = new List<(RedisValue Id, TEntity Entity)>();
+      foreach (var consumer in pendingMessageInfo.Where(t => t.PendingMessageCount > 0))
       {
-        var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName, 10000, messageIds);
-        return data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value)))));
+        var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount, consumer.ConsumerName);
+        var messageIds = pendingMessages.Where(t => t.DeliveryCount <= messageRetryCount).Select(t => t.MessageId).ToArray();
+        if (messageIds.Any())
+        {
+          var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName, 10000, messageIds);
+          messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value))))));
+        }
       }
-      return Array.Empty<(RedisValue Id, TEntity Entity)>();
+      return messageList;
+    }
+    public virtual async Task<IEnumerable<(string ConsumerName, int PendingMessageCount)>> GetConsumersWithPendingMessagesAsync()
+    {
+      var result = await Database.StreamPendingAsync(StreamKey, ConsumerGroupName, CommandFlags.None);
+      return result.Consumers?.Select(t => (ConsumerName: t.Name.ToString(), t.PendingMessageCount));
     }
 
     public virtual Task<long> AcknowledgeMessageAsync(RedisValue redisValue)
