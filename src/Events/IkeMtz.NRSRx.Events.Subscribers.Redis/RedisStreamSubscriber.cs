@@ -60,12 +60,19 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       var messageList = new List<(RedisValue Id, TEntity Entity)>();
       foreach (var consumer in pendingMessageInfo.Where(t => t.PendingMessageCount > 0))
       {
-        var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount, consumer.ConsumerName);
-        var messageIds = pendingMessages.Where(t => t.DeliveryCount <= messageRetryCount).Select(t => t.MessageId).ToArray();
-        if (messageIds.Any())
+        if (messageList.Count < messageCount)
         {
-          var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName, 10000, messageIds);
-          messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value))))));
+          var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount, consumer.ConsumerName);
+          var messageIds = pendingMessages.Where(t => t.DeliveryCount <= messageRetryCount).Select(t => t.MessageId).ToArray();
+          if (messageIds.Any())
+          {
+            var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName, 10000, messageIds);
+            messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value))))));
+          }
+        }
+        else
+        {
+          break;
         }
       }
       return messageList;
