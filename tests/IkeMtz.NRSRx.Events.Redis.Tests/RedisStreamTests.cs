@@ -48,7 +48,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
     [TestMethod]
     [TestCategory("Unit")]
-    public async Task ValidateRedisMoqSubscribeAsync()
+    public async Task ValidateRedisMoqSubscriberGetMessagesAsync()
     {
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
@@ -60,7 +60,26 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
       await subscriber.GetMessagesAsync();
       moqDatabase
-        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.InstanceId.ToString("N"), null, 1, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName, null, 1, false, CommandFlags.None), Times.Once);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task ValidateRedisMoqSubscriberGetPendingMessagesAsync()
+    {
+      var moqConnection = new Mock<IConnectionMultiplexer>();
+      var moqDatabase = new Mock<IDatabase>();
+      moqDatabase
+        .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), 1, It.IsAny<RedisValue>(), null, null, CommandFlags.None))
+        .Returns(Task.FromResult(new[] { new StreamPendingMessageInfo() }));
+      moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
+
+      await subscriber.GetPendingMessagesAsync();
+      moqDatabase
+        .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, subscriber.ConsumerName, null, null, CommandFlags.None), Times.Once);
+      moqDatabase
+        .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName, 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Once);
     }
 
     [TestMethod]
