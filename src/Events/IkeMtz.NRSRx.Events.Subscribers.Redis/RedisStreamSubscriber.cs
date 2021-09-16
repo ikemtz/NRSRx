@@ -29,12 +29,14 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public delegate void MessageRecievedEventHandler(TEntity entity);
 
     public Guid InstanceId { get; }
+    public RedisValue ConsumerName { get; }
     public string ConsumerGroupName { get; }
     public bool Subscribed { get; private set; }
     public event MessageRecievedEventHandler OnMessageReceived;
     public RedisStreamSubscriber(IConnectionMultiplexer connection, string streamPosition = "$") : base(connection)
     {
       InstanceId = Guid.NewGuid();
+      ConsumerName = InstanceId.ToString("N");
       ConsumerGroupName = $"cg{StreamKey}";
       try
       {
@@ -45,15 +47,30 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
         //We want to ignore this error
       }
     }
+
     public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetMessagesAsync(int messageCount = 1)
     {
-      var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, InstanceId.ToString("N"), count: messageCount);
+      var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName, count: messageCount);
       return data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value)))));
     }
+
+    public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int messageCount = 1)
+    {
+      var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount, ConsumerName);
+      var messageIds = pendingMessages.Select(t => t.MessageId).ToArray();
+      if (messageIds.Any())
+      {
+        var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName, 10000, messageIds);
+        return data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value)))));
+      }
+      return Array.Empty<(RedisValue Id, TEntity Entity)>();
+    }
+
     public virtual Task<long> AcknowledgeMessageAsync(RedisValue redisValue)
     {
       return Database.StreamAcknowledgeAsync(StreamKey, ConsumerGroupName, redisValue);
     }
+
     public async Task Subscribe(int pollFrequency = 60000)
     {
       if (OnMessageReceived == null)
