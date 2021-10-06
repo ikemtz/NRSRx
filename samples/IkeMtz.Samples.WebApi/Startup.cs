@@ -1,5 +1,7 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.Samples.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +29,7 @@ namespace IkeMtz.Samples.WebApi
     }
     public override void SetupLogging(IServiceCollection services)
     {
-      throw new System.NotImplementedException();
+      this.SetupApplicationInsights(services);
     }
 
     public override void SetupMiscDependencies(IServiceCollection services)
