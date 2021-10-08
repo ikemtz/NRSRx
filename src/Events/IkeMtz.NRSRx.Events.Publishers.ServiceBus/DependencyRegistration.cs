@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Messaging.ServiceBus;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+  [ExcludeFromCodeCoverage]
   public static class ServiceBusQueueDependencyRegistration
   {
     public static void AddServiceBusQueuePublishers<TEntity>(this IServiceCollection services)

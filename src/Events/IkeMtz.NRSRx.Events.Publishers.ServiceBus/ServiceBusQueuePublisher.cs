@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using IkeMtz.NRSRx.Core.Models;
@@ -22,6 +23,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
     }
   }
 
+  [ExcludeFromCodeCoverage]
   public class ServiceBusQueuePublisher<TEntity, TEvent, TIdentityType> :
       IPublisher<TEntity, TEvent, ServiceBusMessage, TIdentityType>
     where TIdentityType : IComparable
