@@ -17,19 +17,19 @@ namespace IkeMtz.NRSRx.Core
     /// SPLUNK_TOKEN => Security token 
     /// </summary>
     /// <param name="startup"></param>
-    public static void SetupSplunk(this CoreWebStartup startup)
+    public static void SetupElastisearch(this CoreWebStartup startup)
     {
-      var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
-      var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");
+      var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST");
       Log.Logger = new LoggerConfiguration()
         .Enrich.FromLogContext()
         .WriteTo.Console()
-        .WriteTo.EventCollector(splunkHost, splunkToken)
+        .WriteTo.Elasticsearch(host)
         .CreateLogger();
     }
     /// <summary>
     /// Sets up Console Logging only, leverages SeriLog sinks
     /// </summary>
+    /// <param name="startup"></param>
     public static void SetupConsoleLogging()
     {
       Log.Logger = new LoggerConfiguration()

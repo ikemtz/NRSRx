@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>IkeMtz.NRSRx.Logging.Splunk</name>
+        <name>IkeMtz.NRSRx.Logging.Elastisearch</name>
     </assembly>
     <members>
         <member name="T:IkeMtz.NRSRx.Core.StartupExtensions">
@@ -9,7 +9,7 @@
             Extension methods to setup logging on NRSRx framework
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupSplunk(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
+        <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupElastisearch(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
             <summary>
             Sets up the asp.net core application to log to a Splunk instance using a Splunk Http Event Collector.
             Refernce: https://docs.splunk.com/Documentation/SplunkCloud/8.2.2106/Data/UsetheHTTPEventCollector
@@ -23,6 +23,7 @@
             <summary>
             Sets up Console Logging only, leverages SeriLog sinks
             </summary>
+            <param name="startup"></param>
         </member>
     </members>
 </doc>

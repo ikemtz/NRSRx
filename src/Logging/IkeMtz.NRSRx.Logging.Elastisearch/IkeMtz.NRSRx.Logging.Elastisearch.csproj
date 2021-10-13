@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -14,29 +15,32 @@
     <RepositoryUrl>https://github.com/ikemtz/NRSRx</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <ProjectGuid>7256C305-4FE0-4098-8D8C-8A45B64FD887</ProjectGuid>
+    <ProjectGuid>054028DB-8244-454C-B16B-8DCC0B14CCB5</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>
-    <DocumentationFile>C:\Repos\NRSRx\src\Logging\IkeMtz.NRSRx.Logging.Splunk\IkeMtz.NRSRx.Logging.Splunk.xml</DocumentationFile>
+    <DocumentationFile>C:\Repos\NRSRx\src\Logging\IkeMtz.NRSRx.Logging.Elastisearch\IkeMtz.NRSRx.Logging.Elastisearch.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605;IDE0060</WarningsAsErrors>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
+      <PackagePath>
+      </PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
-    <PackageReference Include="Serilog.Sinks.Splunk" Version="3.6.0" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.Web\IkeMtz.NRSRx.Core.Web.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\build\ProfilePic.jpg">
-      <Pack>True</Pack>
-      <PackagePath>
-      </PackagePath>
-    </None>
-  </ItemGroup>
+
 </Project>
