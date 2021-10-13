@@ -11,15 +11,14 @@
         </member>
         <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupElastisearch(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
             <summary>
-            Sets up the asp.net core application to log to a Splunk instance using a Splunk Http Event Collector.
-            Refernce: https://docs.splunk.com/Documentation/SplunkCloud/8.2.2106/Data/UsetheHTTPEventCollector
+            Sets up the asp.net core application to log to a Elastisearch instance.
+            Refernce: https://github.com/serilog/serilog-sinks-elasticsearch/wiki/basic-setup
             Note: The following configuration variables are required:
-            SPLUNK_HOST => The url of the splunk collector endpoint (ie: http(s)://{Splunk Host}/services/collector)
-            SPLUNK_TOKEN => Security token 
+            ELASTISEARCH_HOST => The url of the Elastisearch endpoint (ie: http(s)://{Elastisearch Host}/9200)
             </summary>
             <param name="startup"></param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupConsoleLogging">
+        <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
             <summary>
             Sets up Console Logging only, leverages SeriLog sinks
             </summary>

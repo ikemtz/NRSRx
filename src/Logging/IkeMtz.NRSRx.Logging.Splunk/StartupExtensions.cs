@@ -1,4 +1,4 @@
-using IkeMtz.NRSRx.Core.Web; 
+using IkeMtz.NRSRx.Core.Web;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -17,25 +17,30 @@ namespace IkeMtz.NRSRx.Core
     /// SPLUNK_TOKEN => Security token 
     /// </summary>
     /// <param name="startup"></param>
-    public static void SetupSplunk(this CoreWebStartup startup)
+    public static ILogger SetupSplunk(this CoreWebStartup startup)
     {
       var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");
-      Log.Logger = new LoggerConfiguration()
-        .Enrich.FromLogContext()
-        .WriteTo.Console()
-        .WriteTo.EventCollector(splunkHost, splunkToken)
-        .CreateLogger();
+      return Log.Logger = new LoggerConfiguration()
+          .Enrich.FromLogContext()
+          .WriteTo.Console()
+          .WriteTo.EventCollector(splunkHost, splunkToken)
+          .CreateLogger();
     }
     /// <summary>
     /// Sets up Console Logging only, leverages SeriLog sinks
     /// </summary>
-    public static void SetupConsoleLogging()
+    public static ILogger SetupConsoleLogging(this CoreWebStartup startup)
     {
-      Log.Logger = new LoggerConfiguration()
-        .Enrich.FromLogContext()
-        .WriteTo.Console()
-        .CreateLogger();
+      if (startup is null)
+      {
+        throw new System.ArgumentNullException(nameof(startup));
+      }
+
+      return Log.Logger = new LoggerConfiguration()
+         .Enrich.FromLogContext()
+         .WriteTo.Console()
+         .CreateLogger();
     }
   }
 }

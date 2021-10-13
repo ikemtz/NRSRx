@@ -19,7 +19,7 @@
             </summary>
             <param name="startup"></param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupConsoleLogging">
+        <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
             <summary>
             Sets up Console Logging only, leverages SeriLog sinks
             </summary>

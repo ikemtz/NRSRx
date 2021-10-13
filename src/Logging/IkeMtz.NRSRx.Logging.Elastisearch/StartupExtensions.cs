@@ -1,4 +1,4 @@
-using IkeMtz.NRSRx.Core.Web; 
+using IkeMtz.NRSRx.Core.Web;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -10,32 +10,36 @@ namespace IkeMtz.NRSRx.Core
   public static class StartupExtensions
   {
     /// <summary>
-    /// Sets up the asp.net core application to log to a Splunk instance using a Splunk Http Event Collector.
-    /// Refernce: https://docs.splunk.com/Documentation/SplunkCloud/8.2.2106/Data/UsetheHTTPEventCollector
+    /// Sets up the asp.net core application to log to a Elastisearch instance.
+    /// Refernce: https://github.com/serilog/serilog-sinks-elasticsearch/wiki/basic-setup
     /// Note: The following configuration variables are required:
-    /// SPLUNK_HOST => The url of the splunk collector endpoint (ie: http(s)://{Splunk Host}/services/collector)
-    /// SPLUNK_TOKEN => Security token 
+    /// ELASTISEARCH_HOST => The url of the Elastisearch endpoint (ie: http(s)://{Elastisearch Host}/9200)
     /// </summary>
     /// <param name="startup"></param>
-    public static void SetupElastisearch(this CoreWebStartup startup)
+    public static ILogger SetupElastisearch(this CoreWebStartup startup)
     {
-      var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST");
-      Log.Logger = new LoggerConfiguration()
-        .Enrich.FromLogContext()
-        .WriteTo.Console()
-        .WriteTo.Elasticsearch(host)
-        .CreateLogger();
+      var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST", "http://localhost:9200");
+      return Log.Logger = new LoggerConfiguration()
+          .Enrich.FromLogContext()
+          .WriteTo.Console()
+          .WriteTo.Elasticsearch(host)
+          .CreateLogger();
     }
     /// <summary>
     /// Sets up Console Logging only, leverages SeriLog sinks
     /// </summary>
     /// <param name="startup"></param>
-    public static void SetupConsoleLogging()
+    public static ILogger SetupConsoleLogging(this CoreWebStartup startup)
     {
-      Log.Logger = new LoggerConfiguration()
-        .Enrich.FromLogContext()
-        .WriteTo.Console()
-        .CreateLogger();
+      if (startup is null)
+      {
+        throw new System.ArgumentNullException(nameof(startup));
+      }
+
+      return Log.Logger = new LoggerConfiguration()
+          .Enrich.FromLogContext()
+          .WriteTo.Console()
+          .CreateLogger();
     }
   }
 }
