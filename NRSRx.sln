@@ -90,7 +90,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Applic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Splunk", "src\Logging\IkeMtz.NRSRx.Logging.Splunk\IkeMtz.NRSRx.Logging.Splunk.csproj", "{7256C305-4FE0-4098-8D8C-8A45B64FD887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Logging.Elastisearch", "src\Logging\IkeMtz.NRSRx.Logging.Elastisearch\IkeMtz.NRSRx.Logging.Elastisearch.csproj", "{B4A752C2-B074-4F60-A8EE-DDE25BEDFBC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Elastisearch", "src\Logging\IkeMtz.NRSRx.Logging.Elastisearch\IkeMtz.NRSRx.Logging.Elastisearch.csproj", "{054028DB-8244-454C-B16B-8DCC0B14CCB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -212,10 +212,10 @@ Global
 		{7256C305-4FE0-4098-8D8C-8A45B64FD887}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7256C305-4FE0-4098-8D8C-8A45B64FD887}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7256C305-4FE0-4098-8D8C-8A45B64FD887}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4A752C2-B074-4F60-A8EE-DDE25BEDFBC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4A752C2-B074-4F60-A8EE-DDE25BEDFBC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4A752C2-B074-4F60-A8EE-DDE25BEDFBC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4A752C2-B074-4F60-A8EE-DDE25BEDFBC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{054028DB-8244-454C-B16B-8DCC0B14CCB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054028DB-8244-454C-B16B-8DCC0B14CCB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054028DB-8244-454C-B16B-8DCC0B14CCB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054028DB-8244-454C-B16B-8DCC0B14CCB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -252,7 +252,7 @@ Global
 		{E6526202-4C03-4B5D-A382-25EF86AC1A55} = {9927A0A8-CB30-482A-B095-4DC6CF397390}
 		{ED97213F-4588-4D8B-8ABF-5184F9C7E4DF} = {E6526202-4C03-4B5D-A382-25EF86AC1A55}
 		{7256C305-4FE0-4098-8D8C-8A45B64FD887} = {E6526202-4C03-4B5D-A382-25EF86AC1A55}
-		{B4A752C2-B074-4F60-A8EE-DDE25BEDFBC9} = {E6526202-4C03-4B5D-A382-25EF86AC1A55}
+		{054028DB-8244-454C-B16B-8DCC0B14CCB5} = {E6526202-4C03-4B5D-A382-25EF86AC1A55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4012E7B1-E9FD-4821-A144-B1E5362D9EA7}

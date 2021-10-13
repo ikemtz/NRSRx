@@ -1,15 +1,16 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events.Abstraction;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 
 namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 {
   public class ServiceBusQueuePublisher<TEntity, TEvent> :
       ServiceBusQueuePublisher<TEntity, TEvent, Guid>,
-      IPublisher<TEntity, TEvent, Message>
+      IPublisher<TEntity, TEvent, ServiceBusMessage>
    where TEntity : IIdentifiable<Guid>
    where TEvent : EventType, new()
   {
@@ -22,13 +23,14 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
     }
   }
 
+  [ExcludeFromCodeCoverage]
   public class ServiceBusQueuePublisher<TEntity, TEvent, TIdentityType> :
-      IPublisher<TEntity, TEvent, Message, TIdentityType>
+      IPublisher<TEntity, TEvent, ServiceBusMessage, TIdentityType>
     where TIdentityType : IComparable
     where TEntity : IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
   {
-    private readonly QueueClient queueClient;
+    private readonly ServiceBusSender queueClient;
     public ServiceBusQueuePublisher(IConfiguration configuration)
     {
       var connectionStringName = $"{GetQueueName().Replace("-", "")}QueConnStr";
@@ -37,20 +39,21 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
       {
         throw new ConnectionStringMissingException(connectionStringName);
       }
-      queueClient = new QueueClient(connectionString, GetQueueName(), ReceiveMode.PeekLock);
-
+      var busClient = new ServiceBusClient(connectionString);
+      queueClient = busClient.CreateSender(GetQueueName());
     }
 
     public ServiceBusQueuePublisher(string queueConnectionString)
     {
-      queueClient = new QueueClient(queueConnectionString, GetQueueName(), ReceiveMode.PeekLock);
+      var busClient = new ServiceBusClient(queueConnectionString);
+      queueClient = busClient.CreateSender(GetQueueName());
     }
 
-    public Task PublishAsync(TEntity payload, Action<Message> messageCustomizationLogic = null)
+    public Task PublishAsync(TEntity payload, Action<ServiceBusMessage> messageCustomizationLogic = null)
     {
-      var msg = new Message(MessageCoder.JsonEncode(payload));
+      var msg = new ServiceBusMessage(MessageCoder.JsonEncode(payload));
       messageCustomizationLogic?.Invoke(msg);
-      return queueClient.SendAsync(msg);
+      return queueClient.SendMessageAsync(msg);
     }
 
     private static string GetQueueName()
