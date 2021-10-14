@@ -41,7 +41,7 @@ namespace IkeMtz.NRSRx.Core.Web
       Configuration = configuration;
     }
 
-    public abstract void SetupLogging(IServiceCollection services);
+    public virtual void SetupLogging(IServiceCollection services) { }
     public virtual void ConfigureLogging(IApplicationBuilder app)
     {
 

@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public async Task CreateDefaultHostBuilderWithSplunkTest()
     {
-      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Splunk>();
+      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Splunk>().UseLogging();
       var host = builder.Build();
       Assert.IsNotNull(host);
       await host.StartAsync();
