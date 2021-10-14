@@ -2,8 +2,10 @@ using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.OData;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Serilog;
 
 namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
 {
@@ -27,6 +29,14 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
       moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
       var startup = new Startup(moqConfiguration.Object);
       var result = startup.SetupElastisearch();
+      Assert.IsNotNull(result);
+    }
+    [TestMethod]
+    [TestCategory("Unit")]
+    public void UseLoggingTest()
+    {
+      var moq = new Mock<IHostBuilder>();
+      var result = SeriLogExtensions.UseLogging(moq.Object);
       Assert.IsNotNull(result);
     }
   }

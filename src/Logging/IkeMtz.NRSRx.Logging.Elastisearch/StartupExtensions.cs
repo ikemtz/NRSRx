@@ -1,10 +1,9 @@
 using System;
-using IkeMtz.NRSRx.Core.Web;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 
-namespace IkeMtz.NRSRx.Core
+namespace IkeMtz.NRSRx.Core.Web
 {
   /// <summary>
   /// Extension methods to setup logging on NRSRx framework
@@ -24,7 +23,7 @@ namespace IkeMtz.NRSRx.Core
 
       var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST", "http://localhost:9200");
       return Log.Logger = new LoggerConfiguration() { }
-        .MinimumLevel.Debug()
+        .MinimumLevel.Information()
         .Enrich.FromLogContext()
         .Enrich.WithMachineName()
         .WriteTo.Console()

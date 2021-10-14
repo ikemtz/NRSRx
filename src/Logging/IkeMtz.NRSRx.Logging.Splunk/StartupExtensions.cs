@@ -1,8 +1,7 @@
-using IkeMtz.NRSRx.Core.Web;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
-namespace IkeMtz.NRSRx.Core
+namespace IkeMtz.NRSRx.Core.Web
 {
   /// <summary>
   /// Extension methods to setup logging on NRSRx framework

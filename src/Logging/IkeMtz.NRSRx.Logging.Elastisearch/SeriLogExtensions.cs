@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -16,16 +17,23 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="startup"></param>
     public static ILogger SetupConsoleLogging(this CoreWebStartup startup)
     {
-      if (startup is null)
-      {
-        throw new System.ArgumentNullException(nameof(startup));
-      }
-
       return Log.Logger = new LoggerConfiguration()
           .MinimumLevel.Debug()
           .Enrich.FromLogContext()
           .WriteTo.Console()
           .CreateLogger();
+    }
+
+    public static IApplicationBuilder UseSerilog(this IApplicationBuilder app)
+    {
+      return app.UseSerilogRequestLogging(options =>
+      {
+        options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+        {
+          diagnosticContext.Set("UserName", httpContext.User?.Identity?.Name);
+          diagnosticContext.Set("RemoteIpAddress", httpContext.Connection?.RemoteIpAddress?.ToString());
+        };
+      });
     }
   }
 }
