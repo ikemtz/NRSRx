@@ -1,5 +1,6 @@
+using IkeMtz.NRSRx.Core.Web;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
@@ -8,10 +9,10 @@ namespace IkeMtz.NRSRx.Core.Tests
     public StartUp_Splunk(IConfiguration configuration) : base(configuration)
     {
     }
-
-    public override void SetupLogging(IServiceCollection services)
+    public override void ConfigureLogging(IApplicationBuilder app)
     {
-      this.SetupSplunk();
+      base.ConfigureLogging(app);
+      app.UseSerilog();
     }
   }
 }
