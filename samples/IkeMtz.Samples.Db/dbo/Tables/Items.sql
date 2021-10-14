@@ -2,7 +2,7 @@ CREATE TABLE [dbo].[Items]
 (
   [Id] UNIQUEIDENTIFIER NOT NULL,
   [Value] NVARCHAR (50) NOT NULL,
-  
+  [TenantId] NVARCHAR (5) NOT NULL,
   [CreatedBy] NVARCHAR (250) NOT NULL,
   [UpdatedBy] NVARCHAR (250) NULL,
   [CreatedOnUtc] DATETIMEOFFSET (7) NOT NULL,
