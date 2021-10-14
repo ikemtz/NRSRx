@@ -1,6 +1,8 @@
+using System;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
 
 namespace IkeMtz.NRSRx.Core
 {
@@ -18,28 +20,22 @@ namespace IkeMtz.NRSRx.Core
     /// <param name="startup"></param>
     public static ILogger SetupElastisearch(this CoreWebStartup startup)
     {
-      var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST", "http://localhost:9200");
-      return Log.Logger = new LoggerConfiguration()
-          .Enrich.FromLogContext()
-          .WriteTo.Console()
-          .WriteTo.Elasticsearch(host)
-          .CreateLogger();
-    }
-    /// <summary>
-    /// Sets up Console Logging only, leverages SeriLog sinks
-    /// </summary>
-    /// <param name="startup"></param>
-    public static ILogger SetupConsoleLogging(this CoreWebStartup startup)
-    {
-      if (startup is null)
-      {
-        throw new System.ArgumentNullException(nameof(startup));
-      }
+      var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-      return Log.Logger = new LoggerConfiguration()
-          .Enrich.FromLogContext()
-          .WriteTo.Console()
-          .CreateLogger();
+      var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST", "http://localhost:9200");
+      return Log.Logger = new LoggerConfiguration() { }
+        .MinimumLevel.Debug()
+        .Enrich.FromLogContext()
+        .Enrich.WithMachineName()
+        .WriteTo.Console()
+        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(host))
+        {
+          IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+          AutoRegisterTemplate = true,
+          AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+        })
+        .Enrich.WithProperty("Environment", environment)
+        .CreateLogger();
     }
   }
 }

@@ -48,13 +48,13 @@ namespace IkeMtz.NRSRx.Core.OData
       {
         _ = app.UseHsts();
       }
-
+      ConfigureLogging(app);
       _ = app.UseAuthentication()
           .UseAuthorization();
       _ = app
           .UseRouting()
           .UseEndpoints(endpoints =>
-          { 
+          {
             var models = modelBuilder.GetEdmModels().ToList();
             var singleton = Microsoft.OData.ServiceLifetime.Singleton;
             _ = endpoints

@@ -22,25 +22,12 @@ namespace IkeMtz.NRSRx.Core
       var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");
       return Log.Logger = new LoggerConfiguration()
+          .MinimumLevel.Debug()
           .Enrich.FromLogContext()
+          .Enrich.WithMachineName()
           .WriteTo.Console()
           .WriteTo.EventCollector(splunkHost, splunkToken)
           .CreateLogger();
-    }
-    /// <summary>
-    /// Sets up Console Logging only, leverages SeriLog sinks
-    /// </summary>
-    public static ILogger SetupConsoleLogging(this CoreWebStartup startup)
-    {
-      if (startup is null)
-      {
-        throw new System.ArgumentNullException(nameof(startup));
-      }
-
-      return Log.Logger = new LoggerConfiguration()
-         .Enrich.FromLogContext()
-         .WriteTo.Console()
-         .CreateLogger();
     }
   }
 }

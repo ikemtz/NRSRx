@@ -1,4 +1,5 @@
 using IkeMtz.NRSRx.Core;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.OData;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

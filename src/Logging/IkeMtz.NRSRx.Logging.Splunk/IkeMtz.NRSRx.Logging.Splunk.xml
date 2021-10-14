@@ -4,6 +4,12 @@
         <name>IkeMtz.NRSRx.Logging.Splunk</name>
     </assembly>
     <members>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
+            <summary>
+            Sets up Console Logging only, leverages SeriLog sinks
+            </summary>
+            <param name="startup"></param>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.StartupExtensions">
             <summary>
             Extension methods to setup logging on NRSRx framework
@@ -18,11 +24,6 @@
             SPLUNK_TOKEN => Security token 
             </summary>
             <param name="startup"></param>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.StartupExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
-            <summary>
-            Sets up Console Logging only, leverages SeriLog sinks
-            </summary>
         </member>
     </members>
 </doc>

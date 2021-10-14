@@ -42,6 +42,10 @@ namespace IkeMtz.NRSRx.Core.Web
     }
 
     public abstract void SetupLogging(IServiceCollection services);
+    public virtual void ConfigureLogging(IApplicationBuilder app)
+    {
+
+    }
     public virtual void SetupAppSettings(IServiceCollection services)
     {
       services

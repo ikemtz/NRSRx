@@ -46,6 +46,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       {
         _ = app.UseHsts();
       }
+      ConfigureLogging(app);
       _ = app
        .UseRouting()
        .UseAuthentication()

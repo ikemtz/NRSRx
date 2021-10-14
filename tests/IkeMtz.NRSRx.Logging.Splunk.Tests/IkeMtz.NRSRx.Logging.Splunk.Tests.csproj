@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\samples\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj" />
+    <ProjectReference Include="..\..\samples\IkeMtz.Samples.WebApi\IkeMtz.Samples.WebApi.csproj" />
     <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Splunk\IkeMtz.NRSRx.Logging.Splunk.csproj" />
   </ItemGroup>
 
