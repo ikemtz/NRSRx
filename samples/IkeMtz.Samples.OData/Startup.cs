@@ -4,6 +4,7 @@ using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.OData;
 using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.OData.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,10 +21,8 @@ namespace IkeMtz.Samples.OData
     {
     }
 
-    public override void SetupLogging(IServiceCollection services)
-    {
-      this.SetupApplicationInsights(services);
-    }
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) => this.SetupApplicationInsights(services);
+
 
     [ExcludeFromCodeCoverage]
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)

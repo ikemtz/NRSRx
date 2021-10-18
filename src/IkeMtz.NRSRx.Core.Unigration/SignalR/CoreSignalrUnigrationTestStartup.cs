@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
 
     protected TestContext TestContext { get; private set; }
 
-    public override void SetupLogging(IServiceCollection services) { }
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }
 
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {

@@ -2,6 +2,7 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.WebApi;
 using IkeMtz.Samples.Events.Redis;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,10 +19,9 @@ namespace IkeMtz.Samples.Events.Tests.Integration
     {
       builder.SetupTestAuthentication(Configuration, TestContext);
     }
-    public override void SetupLogging(IServiceCollection services)
-    {
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
       Startup.SetupLogging(services);
-    }
+
 
     public override void SetupPublishers(IServiceCollection services)
     {

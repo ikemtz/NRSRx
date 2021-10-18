@@ -4,6 +4,7 @@ using System.Reflection;
 using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.Samples.WebApi.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,10 +28,8 @@ namespace IkeMtz.Samples.WebApi
         .EnableDetailedErrors()
         );
     }
-    public override void SetupLogging(IServiceCollection services)
-    {
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
       this.SetupApplicationInsights(services);
-    }
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {

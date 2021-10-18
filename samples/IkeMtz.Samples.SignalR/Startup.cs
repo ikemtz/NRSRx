@@ -14,10 +14,9 @@ namespace IkeMtz.Samples.SignalR
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public Startup(IConfiguration configuration) : base(configuration) { }
 
-    public override void SetupLogging(IServiceCollection services)
-    {
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
       this.SetupApplicationInsights(services);
-    }
+
 
     public override void MapHubs(IEndpointRouteBuilder endpoints)
     {

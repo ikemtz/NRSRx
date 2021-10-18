@@ -1,6 +1,7 @@
 using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.OData;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,7 +19,7 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
     {
       var moqConfiguration = new Mock<IConfiguration>();
       var startup = new Startup(moqConfiguration.Object);
-      var result = startup.SetupConsoleLogging();
+      var result = startup.SetupConsoleLogging(null);
       Assert.IsNotNull(result);
     }
     [TestMethod]
@@ -28,7 +29,7 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
       var moqConfiguration = new Mock<IConfiguration>();
       moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
       var startup = new Startup(moqConfiguration.Object);
-      var result = startup.SetupElastisearch();
+      var result = startup.SetupElastisearch(null);
       Assert.IsNotNull(result);
     }
     [TestMethod]

@@ -6,6 +6,7 @@ using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.Samples.Events.Redis.Publishers;
 using IkeMtz.Samples.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -18,10 +19,8 @@ namespace IkeMtz.Samples.Events.Redis
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
 
     public Startup(IConfiguration configuration) : base(configuration) { }
-     
-    public override void SetupLogging(IServiceCollection services) {
-      this.SetupConsoleLogging();
-    }
+
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) => this.SetupConsoleLogging(app);
 
     [ExcludeFromCodeCoverage]
     public override void SetupPublishers(IServiceCollection services)
