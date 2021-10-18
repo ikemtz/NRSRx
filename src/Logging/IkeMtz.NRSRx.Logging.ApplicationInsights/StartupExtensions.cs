@@ -1,10 +1,8 @@
-using IkeMtz.NRSRx.Core.Web;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IkeMtz.NRSRx.Core
+namespace IkeMtz.NRSRx.Core.Web
 {
   /// <summary>
   /// Extension methods to setup logging on NRSRx framework

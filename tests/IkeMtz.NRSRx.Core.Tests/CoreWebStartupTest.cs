@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Web;
+using IkeMtz.NRSRx.Logging.ApplicationInsights;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,22 +16,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public async Task CreateDefaultHostBuilderWithAppInsightsTest()
     {
-      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_AppInsights>();
-      var host = builder.Build();
-      Assert.IsNotNull(host);
-      await host.StartAsync();
-      var loggerFac = host.Services.GetService<ILoggerFactory>();
-      var logger = loggerFac.CreateLogger("Unit Test");
-      logger.LogError("Validating Error logging");
-      await host.StopAsync();
-      await host.WaitForShutdownAsync();
-    }
-
-    [TestMethod]
-    [TestCategory("Unit")]
-    public async Task CreateDefaultHostBuilderWithSplunkTest()
-    {
-      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Splunk>().UseLogging();
+      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_AppInsights>().UseLogging();
       var host = builder.Build();
       Assert.IsNotNull(host);
       await host.StartAsync();

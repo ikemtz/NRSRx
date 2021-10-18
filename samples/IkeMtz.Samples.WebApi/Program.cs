@@ -9,7 +9,7 @@ namespace IkeMtz.Samples.WebApi
   {
     public static void Main()
     {
-      CoreWebStartup.CreateDefaultHostBuilder<Startup>().Build().Run();
+      CoreWebStartup.CreateDefaultHostBuilder<Startup>().UseLogging().Build().Run();
     }
   }
 }

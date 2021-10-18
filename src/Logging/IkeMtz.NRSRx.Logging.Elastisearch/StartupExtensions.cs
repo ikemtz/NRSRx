@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Web
       var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST", "http://localhost:9200");
       var username = startup.Configuration.GetValue<string>("ELASTISEARCH_USERNAME");
       var password = startup.Configuration.GetValue<string>("ELASTISEARCH_PASSWORD");
-      var apiKey = startup.Configuration.GetValue<string>("ELASTISEARCH_API_KEY");
+      var apiKey = startup.Configuration.GetValue<string>("ELASTISEARCH_APIKEY");
       var elastiOptions = new ElasticsearchSinkOptions(new Uri(host))
       {
         IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.Core.Web
         .Enrich.FromLogContext()
         .Enrich.WithMachineName()
         .WriteTo.Console()
-        .WriteTo.Elasticsearch()
+        .WriteTo.Elasticsearch(elastiOptions)
         .Enrich.WithProperty("Environment", environment)
         .CreateLogger();
     }

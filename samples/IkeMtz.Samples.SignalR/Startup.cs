@@ -1,6 +1,6 @@
 using System.Reflection;
-using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.SignalR;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.SignalR.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;

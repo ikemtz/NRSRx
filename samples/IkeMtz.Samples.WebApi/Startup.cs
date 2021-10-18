@@ -1,7 +1,6 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using IkeMtz.NRSRx.Core;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +28,7 @@ namespace IkeMtz.Samples.WebApi
         );
     }
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
-      this.SetupApplicationInsights(services);
+      this.SetupElastisearch(app);
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {
