@@ -1,11 +1,12 @@
-using IkeMtz.NRSRx.Core;
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.OData;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Serilog;
 
 namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
 {
@@ -18,7 +19,7 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
     {
       var moqConfiguration = new Mock<IConfiguration>();
       var startup = new Startup(moqConfiguration.Object);
-      var result = startup.SetupConsoleLogging();
+      var result = startup.SetupConsoleLogging(null);
       Assert.IsNotNull(result);
     }
     [TestMethod]
@@ -28,7 +29,7 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
       var moqConfiguration = new Mock<IConfiguration>();
       moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
       var startup = new Startup(moqConfiguration.Object);
-      var result = startup.SetupElastisearch();
+      var result = startup.SetupElastisearch(null);
       Assert.IsNotNull(result);
     }
     [TestMethod]
@@ -38,6 +39,22 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
       var moq = new Mock<IHostBuilder>();
       var result = SeriLogExtensions.UseLogging(moq.Object);
       Assert.IsNotNull(result);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task CreateDefaultHostBuilderWithElasticTest()
+    {
+      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Elastic>().UseLogging();
+      var host = builder.Build();
+      Assert.IsNotNull(host);
+      await host.StartAsync();
+
+      var loggerFac = host.Services.GetService<ILoggerFactory>();
+      var logger = loggerFac.CreateLogger("Unit Test");
+      logger.LogError("Validating Error logging");
+      await host.StopAsync();
+      await host.WaitForShutdownAsync();
     }
   }
 }

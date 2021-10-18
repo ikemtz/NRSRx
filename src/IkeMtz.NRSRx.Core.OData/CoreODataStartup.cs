@@ -48,7 +48,7 @@ namespace IkeMtz.NRSRx.Core.OData
       {
         _ = app.UseHsts();
       }
-      ConfigureLogging(app);
+      SetupLogging(null, app);
       _ = app.UseAuthentication()
           .UseAuthorization();
       _ = app

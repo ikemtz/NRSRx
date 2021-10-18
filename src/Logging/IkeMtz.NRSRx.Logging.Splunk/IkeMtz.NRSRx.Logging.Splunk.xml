@@ -9,7 +9,7 @@
             Extension methods to setup logging on NRSRx framework
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupSplunk(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupSplunk(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             Sets up the asp.net core application to log to a Splunk instance using a Splunk Http Event Collector.
             Refernce: https://docs.splunk.com/Documentation/SplunkCloud/8.2.2106/Data/UsetheHTTPEventCollector
@@ -18,12 +18,14 @@
             SPLUNK_TOKEN => Security token 
             </summary>
             <param name="startup"></param>
+            <param name="app"></param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             Sets up Console Logging only, leverages SeriLog sinks
             </summary>
             <param name="startup"></param>
+            <param name="app"></param>
         </member>
     </members>
 </doc>

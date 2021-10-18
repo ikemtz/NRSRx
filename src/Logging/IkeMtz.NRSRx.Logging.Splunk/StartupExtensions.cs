@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -16,11 +17,17 @@ namespace IkeMtz.NRSRx.Core.Web
     /// SPLUNK_TOKEN => Security token 
     /// </summary>
     /// <param name="startup"></param>
-    public static ILogger SetupSplunk(this CoreWebStartup startup)
+    /// <param name="app"></param>
+    public static ILogger SetupSplunk(this CoreWebStartup startup, IApplicationBuilder app)
     {
+      if (SeriLogExtensions.Logger != null)
+      {
+        return SeriLogExtensions.Logger;
+      }
+      app?.UseSerilog();
       var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");
-      return Log.Logger = new LoggerConfiguration()
+      return SeriLogExtensions.Logger = Log.Logger = new LoggerConfiguration()
           .MinimumLevel.Debug()
           .Enrich.FromLogContext()
           .Enrich.WithMachineName()

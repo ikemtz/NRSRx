@@ -11,13 +11,20 @@ namespace IkeMtz.NRSRx.Core.Web
       return hostBuilder.UseSerilog();
     }
 
+    internal static ILogger Logger { get; set; }
     /// <summary>
     /// Sets up Console Logging only, leverages SeriLog sinks
     /// </summary>
     /// <param name="startup"></param>
-    public static ILogger SetupConsoleLogging(this CoreWebStartup startup)
+    /// <param name="app"></param>
+    public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder app)
     {
-      return Log.Logger = new LoggerConfiguration()
+      if (Logger != null)
+      {
+        return Logger;
+      }
+      app?.UseSerilog();
+      return Logger = Log.Logger = new LoggerConfiguration()
           .MinimumLevel.Debug()
           .Enrich.FromLogContext()
           .WriteTo.Console()
@@ -26,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public static IApplicationBuilder UseSerilog(this IApplicationBuilder app)
     {
-      return app.UseSerilogRequestLogging(options =>
+      return app?.UseSerilogRequestLogging(options =>
       {
         options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
         {

@@ -46,7 +46,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       {
         _ = app.UseHsts();
       }
-      ConfigureLogging(app);
+      SetupLogging(null, app);
       _ = app
        .UseRouting()
        .UseAuthentication()
@@ -102,7 +102,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
     {
       _ = services
         .AddHttpClient()
-        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this ))
+        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
         .AddSwaggerGen(options =>
         {
           options.UseInlineDefinitionsForEnums();
