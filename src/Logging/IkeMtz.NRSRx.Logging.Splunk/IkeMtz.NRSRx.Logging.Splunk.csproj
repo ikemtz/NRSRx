@@ -22,7 +22,7 @@
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\IkeMtz.NRSRx.Logging.Elastisearch\SeriLogExtensions.cs" Link="SeriLogExtensions.cs" />
+    <Compile Include="..\IkeMtz.NRSRx.Logging.Elasticsearch\SeriLogExtensions.cs" Link="SeriLogExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IkeMtz.NRSRx.Logging.Elasticsearch</name>
+    </assembly>
+    <members>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Sets up Console Logging only, leverages SeriLog sinks
+            </summary>
+            <param name="startup"></param>
+            <param name="app"></param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.StartupExtensions">
+            <summary>
+            Extension methods to setup logging on NRSRx framework
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupElasticsearch(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Sets up the asp.net core application to log to a Elasticsearch instance.
+            Refernce: https://github.com/serilog/serilog-sinks-elasticsearch/wiki/basic-setup
+            Note: The following configuration variables are required:
+            ELASTICSEARCH_HOST => The url of the Elasticsearch endpoint (ie: http(s)://{Elasticsearch Host}/9200)
+            </summary>
+            <param name="startup"></param>
+            <param name="app"></param>
+        </member>
+    </members>
+</doc>

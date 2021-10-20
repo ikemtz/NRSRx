@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
+namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
 {
   public class StartUp_Elastic : CoreWebApiStartup
   {

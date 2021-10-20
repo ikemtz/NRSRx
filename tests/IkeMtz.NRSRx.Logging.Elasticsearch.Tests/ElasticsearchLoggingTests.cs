@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
+namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
 {
   [TestClass]
-  public class ElastisearchLoggingTests
+  public class ElasticsearchLoggingTests
   {
     [TestMethod]
     [TestCategory("Unit")]

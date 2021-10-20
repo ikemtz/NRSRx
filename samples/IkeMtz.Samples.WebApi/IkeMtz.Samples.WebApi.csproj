@@ -25,6 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
-    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Elastisearch\IkeMtz.NRSRx.Logging.Elastisearch.csproj" />
+    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Elasticsearch\IkeMtz.NRSRx.Logging.Elasticsearch.csproj" />
   </ItemGroup>
 </Project>

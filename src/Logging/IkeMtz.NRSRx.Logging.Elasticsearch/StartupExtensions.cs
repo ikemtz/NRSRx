@@ -13,10 +13,18 @@ namespace IkeMtz.NRSRx.Core.Web
   public static class StartupExtensions
   {
     /// <summary>
-    /// Sets up the asp.net core application to log to a Elastisearch instance.
+    /// Sets up the asp.net core application to log to a Elasticsearch instance.
     /// Refernce: https://github.com/serilog/serilog-sinks-elasticsearch/wiki/basic-setup
     /// Note: The following configuration variables are required:
-    /// ELASTISEARCH_HOST => The url of the Elastisearch endpoint (ie: http(s)://{Elastisearch Host}/9200)
+    /// ELASTICSEARCH_HOST => The url of the Elasticsearch endpoint (ie: http(s)://{Elasticsearch Host}/9200)
+    /// Note: The following configuration values should be set for Elasticsearch basic authentication
+    /// ELASTICSEARCH_USERNAME
+    /// ELASTICSEARCH_PASSWORD
+    /// Note: The following configuration values should be set for Elasticsearch api key authentication
+    /// ELASTICSEARCH_USERNAME => This should be the "id" of your token
+    /// ELASTICSEARCH_APIKEY => This should be the "api_key" of your token
+    /// Note: IF your Elasticsearch instance is using an invalid SSL cert
+    /// ELASTICSEARCH_DISABLE_SSL_VALIDATION => set this value to "true"
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
@@ -29,10 +37,10 @@ namespace IkeMtz.NRSRx.Core.Web
       app?.UseSerilog();
       var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-      var host = startup.Configuration.GetValue<string>("ELASTISEARCH_HOST", "http://localhost:9200");
-      var username = startup.Configuration.GetValue<string>("ELASTISEARCH_USERNAME");
-      var password = startup.Configuration.GetValue<string>("ELASTISEARCH_PASSWORD");
-      var apiKey = startup.Configuration.GetValue<string>("ELASTISEARCH_APIKEY");
+      var host = startup.Configuration.GetValue<string>("ELASTICSEARCH_HOST", "http://localhost:9200");
+      var username = startup.Configuration.GetValue<string>("ELASTICSEARCH_USERNAME");
+      var password = startup.Configuration.GetValue<string>("ELASTICSEARCH_PASSWORD");
+      var apiKey = startup.Configuration.GetValue<string>("ELASTICSEARCH_APIKEY");
       var elastiOptions = new ElasticsearchSinkOptions(new Uri(host))
       {
         IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
@@ -42,7 +50,7 @@ namespace IkeMtz.NRSRx.Core.Web
       var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>
       {
         var config = authFunc();
-        if (startup.Configuration.GetValue<bool>("ELASTISEARCH_DISABLE_SSL_VALIDATION"))
+        if (startup.Configuration.GetValue<bool>("ELASTICSEARCH_DISABLE_SSL_VALIDATION"))
         {
           config.ServerCertificateValidationCallback((obj, cert, chain, policyErrors) => true);
         }
