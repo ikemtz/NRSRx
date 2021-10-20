@@ -41,7 +41,7 @@
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
     <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.ApplicationInsights\IkeMtz.NRSRx.Logging.ApplicationInsights.csproj" />
-    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Elastisearch\IkeMtz.NRSRx.Logging.Elastisearch.csproj" />
+    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Elasticsearch\IkeMtz.NRSRx.Logging.Elasticsearch.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SampleWeb\Configuration\" />

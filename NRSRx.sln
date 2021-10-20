@@ -90,11 +90,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Applic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Splunk", "src\Logging\IkeMtz.NRSRx.Logging.Splunk\IkeMtz.NRSRx.Logging.Splunk.csproj", "{7256C305-4FE0-4098-8D8C-8A45B64FD887}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Elastisearch", "src\Logging\IkeMtz.NRSRx.Logging.Elastisearch\IkeMtz.NRSRx.Logging.Elastisearch.csproj", "{054028DB-8244-454C-B16B-8DCC0B14CCB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Elasticsearch", "src\Logging\IkeMtz.NRSRx.Logging.Elasticsearch\IkeMtz.NRSRx.Logging.Elasticsearch.csproj", "{054028DB-8244-454C-B16B-8DCC0B14CCB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Logging.Splunk.Tests", "tests\IkeMtz.NRSRx.Logging.Splunk.Tests\IkeMtz.NRSRx.Logging.Splunk.Tests.csproj", "{F8B6A8C9-5299-45AC-94B0-31E8A498C743}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Splunk.Tests", "tests\IkeMtz.NRSRx.Logging.Splunk.Tests\IkeMtz.NRSRx.Logging.Splunk.Tests.csproj", "{F8B6A8C9-5299-45AC-94B0-31E8A498C743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Logging.Elastisearch.Tests", "tests\IkeMtz.NRSRx.Logging.Elastisearch.Tests\IkeMtz.NRSRx.Logging.Elastisearch.Tests.csproj", "{78936EB0-9269-4FD2-B85F-3A9E5DA292F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Elasticsearch.Tests", "tests\IkeMtz.NRSRx.Logging.Elasticsearch.Tests\IkeMtz.NRSRx.Logging.Elasticsearch.Tests.csproj", "{78936EB0-9269-4FD2-B85F-3A9E5DA292F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

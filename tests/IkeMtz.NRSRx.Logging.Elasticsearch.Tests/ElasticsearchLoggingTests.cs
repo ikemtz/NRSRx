@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
+namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
 {
   [TestClass]
-  public class ElastisearchLoggingTests
+  public class ElasticsearchLoggingTests
   {
     [TestMethod]
     [TestCategory("Unit")]
@@ -29,7 +29,7 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
       var moqConfiguration = new Mock<IConfiguration>();
       moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
       var startup = new Startup(moqConfiguration.Object);
-      var result = startup.SetupElastisearch(null);
+      var result = startup.SetupElasticsearch(null);
       Assert.IsNotNull(result);
     }
     [TestMethod]

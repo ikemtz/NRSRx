@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
+namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
 {
   public class StartUp_Elastic : CoreWebApiStartup
   {
@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
     {
     }
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
-      this.SetupElastisearch(app);
+      this.SetupElasticsearch(app);
 
 
     public override string MicroServiceTitle => "";
