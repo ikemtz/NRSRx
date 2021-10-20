@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Logging.Elastisearch.Tests
     {
     }
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
-      this.SetupElastisearch(app);
+      this.SetupElasticsearch(app);
 
 
     public override string MicroServiceTitle => "";

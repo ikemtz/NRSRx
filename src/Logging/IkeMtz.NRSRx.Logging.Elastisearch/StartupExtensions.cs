@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    public static ILogger SetupElastisearch(this CoreWebStartup startup, IApplicationBuilder app)
+    public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder app)
     {
       if (SeriLogExtensions.Logger != null)
       {
