@@ -30,11 +30,11 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="app"></param>
     public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder app)
     {
+      app?.UseSerilog();
       if (SeriLogExtensions.Logger != null)
       {
         return SeriLogExtensions.Logger;
       }
-      app?.UseSerilog();
       var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
       var host = startup.Configuration.GetValue<string>("ELASTICSEARCH_HOST", "http://localhost:9200");
