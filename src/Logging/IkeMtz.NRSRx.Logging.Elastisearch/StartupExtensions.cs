@@ -1,4 +1,5 @@
 using System;
+using Elasticsearch.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -34,17 +35,26 @@ namespace IkeMtz.NRSRx.Core.Web
       var apiKey = startup.Configuration.GetValue<string>("ELASTISEARCH_APIKEY");
       var elastiOptions = new ElasticsearchSinkOptions(new Uri(host))
       {
-        IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+        IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
         AutoRegisterTemplate = true,
         AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
       };
+      var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>
+      {
+        var config = authFunc();
+        if (startup.Configuration.GetValue<bool>("ELASTISEARCH_DISABLE_SSL_VALIDATION"))
+        {
+          config.ServerCertificateValidationCallback((obj, cert, chain, policyErrors) => true);
+        }
+        return config;
+      });
       if (!string.IsNullOrWhiteSpace(password))
       {
-        elastiOptions.ModifyConnectionSettings = x => x.BasicAuthentication(username, password);
+        elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.BasicAuthentication(username, password));
       }
       else if (!string.IsNullOrWhiteSpace(apiKey))
       {
-        elastiOptions.ModifyConnectionSettings = x => x.ApiKeyAuthentication(username, apiKey);
+        elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
       }
       return SeriLogExtensions.Logger = Log.Logger = new LoggerConfiguration() { }
         .MinimumLevel.Information()
