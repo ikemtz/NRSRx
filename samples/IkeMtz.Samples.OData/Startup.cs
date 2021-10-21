@@ -21,7 +21,8 @@ namespace IkeMtz.Samples.OData
     {
     }
 
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) => this.SetupElasticsearch(app);
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
+      this.SetupApplicationInsights(services);
 
 
     [ExcludeFromCodeCoverage]

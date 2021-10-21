@@ -20,6 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
-    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Elasticsearch\IkeMtz.NRSRx.Logging.Elasticsearch.csproj" />
+    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.ApplicationInsights\IkeMtz.NRSRx.Logging.ApplicationInsights.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 
-namespace IkeMtz.NRSRx.Logging.ApplicationInsights
+namespace IkeMtz.NRSRx.Core.Web
 {
   public static class HostBuilderExtensions
   {

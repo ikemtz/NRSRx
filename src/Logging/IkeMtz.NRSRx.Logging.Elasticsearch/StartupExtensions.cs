@@ -31,47 +31,47 @@ namespace IkeMtz.NRSRx.Core.Web
     public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder app)
     {
       app?.UseSerilog();
-      if (SeriLogExtensions.Logger != null)
-      {
-        return SeriLogExtensions.Logger;
-      }
-      var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-      var host = startup.Configuration.GetValue<string>("ELASTICSEARCH_HOST", "http://localhost:9200");
-      var username = startup.Configuration.GetValue<string>("ELASTICSEARCH_USERNAME");
-      var password = startup.Configuration.GetValue<string>("ELASTICSEARCH_PASSWORD");
-      var apiKey = startup.Configuration.GetValue<string>("ELASTICSEARCH_APIKEY");
-      var elastiOptions = new ElasticsearchSinkOptions(new Uri(host))
+      return SeriLogExtensions.GetLogger(() =>
       {
-        IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
-        AutoRegisterTemplate = true,
-        AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
-      };
-      var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>
-      {
-        var config = authFunc();
-        if (startup.Configuration.GetValue<bool>("ELASTICSEARCH_DISABLE_SSL_VALIDATION"))
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+        var host = startup.Configuration.GetValue<string>("ELASTICSEARCH_HOST", "http://localhost:9200");
+        var username = startup.Configuration.GetValue<string>("ELASTICSEARCH_USERNAME");
+        var password = startup.Configuration.GetValue<string>("ELASTICSEARCH_PASSWORD");
+        var apiKey = startup.Configuration.GetValue<string>("ELASTICSEARCH_APIKEY");
+        var elastiOptions = new ElasticsearchSinkOptions(new Uri(host))
         {
-          config.ServerCertificateValidationCallback((obj, cert, chain, policyErrors) => true);
+          IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
+          AutoRegisterTemplate = true,
+          AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+        };
+        var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>
+        {
+          var config = authFunc();
+          if (startup.Configuration.GetValue<bool>("ELASTICSEARCH_DISABLE_SSL_VALIDATION"))
+          {
+            config.ServerCertificateValidationCallback((obj, cert, chain, policyErrors) => true);
+          }
+          return config;
+        });
+        if (!string.IsNullOrWhiteSpace(password))
+        {
+          elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.BasicAuthentication(username, password));
         }
-        return config;
+        else if (!string.IsNullOrWhiteSpace(apiKey))
+        {
+          elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
+        }
+        return new LoggerConfiguration() { }
+          .MinimumLevel.Information()
+          .Enrich.FromLogContext()
+          .Enrich.WithMachineName()
+          .WriteTo.Console()
+          .WriteTo.Elasticsearch(elastiOptions)
+          .Enrich.WithProperty("Environment", environment)
+          .CreateLogger();
       });
-      if (!string.IsNullOrWhiteSpace(password))
-      {
-        elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.BasicAuthentication(username, password));
-      }
-      else if (!string.IsNullOrWhiteSpace(apiKey))
-      {
-        elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
-      }
-      return SeriLogExtensions.Logger = Log.Logger = new LoggerConfiguration() { }
-        .MinimumLevel.Information()
-        .Enrich.FromLogContext()
-        .Enrich.WithMachineName()
-        .WriteTo.Console()
-        .WriteTo.Elasticsearch(elastiOptions)
-        .Enrich.WithProperty("Environment", environment)
-        .CreateLogger();
     }
   }
 }
