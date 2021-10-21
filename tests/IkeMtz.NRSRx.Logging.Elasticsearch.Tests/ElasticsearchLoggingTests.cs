@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Web;
-using IkeMtz.Samples.OData;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +17,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     public void ConsoleLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
-      var startup = new Startup(moqConfiguration.Object);
+      var startup = new StartUp_Elastic(moqConfiguration.Object);
       var result = startup.SetupConsoleLogging(null);
       Assert.IsNotNull(result);
     }
@@ -28,7 +27,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     {
       var moqConfiguration = new Mock<IConfiguration>();
       moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
-      var startup = new Startup(moqConfiguration.Object);
+      var startup = new StartUp_Elastic(moqConfiguration.Object);
       var result = startup.SetupElasticsearch(null);
       Assert.IsNotNull(result);
     }

@@ -20,20 +20,17 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="app"></param>
     public static ILogger SetupSplunk(this CoreWebStartup startup, IApplicationBuilder app)
     {
-      if (SeriLogExtensions.Logger != null)
-      {
-        return SeriLogExtensions.Logger;
-      }
       app?.UseSerilog();
+
       var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");
-      return SeriLogExtensions.Logger = Log.Logger = new LoggerConfiguration()
+      return SeriLogExtensions.GetLogger(() => new LoggerConfiguration()
           .MinimumLevel.Debug()
           .Enrich.FromLogContext()
           .Enrich.WithMachineName()
           .WriteTo.Console()
           .WriteTo.EventCollector(splunkHost, splunkToken)
-          .CreateLogger();
+          .CreateLogger());
     }
   }
 }

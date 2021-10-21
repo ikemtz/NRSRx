@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -19,16 +20,21 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="app"></param>
     public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder app)
     {
+      app?.UseSerilog();
+      return GetLogger(() => new LoggerConfiguration()
+           .MinimumLevel.Debug()
+           .Enrich.FromLogContext()
+           .WriteTo.Console()
+           .CreateLogger());
+    }
+
+    internal static ILogger GetLogger(Func<ILogger> loggerFactory)
+    {
       if (Logger != null)
       {
         return Logger;
       }
-      app?.UseSerilog();
-      return Logger = Log.Logger = new LoggerConfiguration()
-          .MinimumLevel.Debug()
-          .Enrich.FromLogContext()
-          .WriteTo.Console()
-          .CreateLogger();
+      return Logger = Log.Logger = loggerFactory();
     }
 
     public static IApplicationBuilder UseSerilog(this IApplicationBuilder app)
