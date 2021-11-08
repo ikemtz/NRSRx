@@ -11,6 +11,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       {
         Id = Guid.NewGuid(),
         Value = Guid.NewGuid().ToString().Substring(0, 6),
+        TenantId = "NRSRX",
         CreatedBy = "Factory",
         CreatedOnUtc = DateTime.UtcNow
       };
