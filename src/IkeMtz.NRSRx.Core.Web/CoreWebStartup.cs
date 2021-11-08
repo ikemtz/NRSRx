@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
@@ -40,7 +41,8 @@ namespace IkeMtz.NRSRx.Core.Web
       Configuration = configuration;
     }
 
-    public abstract void SetupLogging(IServiceCollection services);
+    public virtual void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }
+
     public virtual void SetupAppSettings(IServiceCollection services)
     {
       services
@@ -100,9 +102,10 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
     {
       var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger" : ".";
-      foreach (var description in provider.ApiVersionDescriptions)
+      foreach (var groupName in provider.ApiVersionDescriptions
+        .Select(s => s.GroupName))
       {
-        options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+        options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}/{groupName}/swagger.json", groupName.ToUpperInvariant());
       }
       options.EnableDeepLinking();
       options.EnableFilter();

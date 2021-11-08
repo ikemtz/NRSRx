@@ -15,22 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public async Task CreateDefaultHostBuilderWithAppInsightsTest()
     {
-      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_AppInsights>();
-      var host = builder.Build();
-      Assert.IsNotNull(host);
-      await host.StartAsync();
-      var loggerFac = host.Services.GetService<ILoggerFactory>();
-      var logger = loggerFac.CreateLogger("Unit Test");
-      logger.LogError("Validating Error logging");
-      await host.StopAsync();
-      await host.WaitForShutdownAsync();
-    }
-
-    [TestMethod]
-    [TestCategory("Unit")]
-    public async Task CreateDefaultHostBuilderWithSplunkTest()
-    {
-      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Splunk>();
+      var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_AppInsights>().UseLogging();
       var host = builder.Build();
       Assert.IsNotNull(host);
       await host.StartAsync();

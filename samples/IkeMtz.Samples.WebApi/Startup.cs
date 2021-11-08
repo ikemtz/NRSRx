@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.Samples.WebApi.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,10 +27,8 @@ namespace IkeMtz.Samples.WebApi
         .EnableDetailedErrors()
         );
     }
-    public override void SetupLogging(IServiceCollection services)
-    {
-      throw new System.NotImplementedException();
-    }
+    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
+      this.SetupElasticsearch(app);
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {

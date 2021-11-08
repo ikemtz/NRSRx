@@ -1,9 +1,8 @@
-using IkeMtz.NRSRx.Core.Web;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IkeMtz.NRSRx.Core
+namespace IkeMtz.NRSRx.Core.Web
 {
   /// <summary>
   /// Extension methods to setup logging on NRSRx framework
@@ -17,10 +16,11 @@ namespace IkeMtz.NRSRx.Core
     /// <param name="services"></param>
     public static void SetupApplicationInsights(this CoreWebStartup startup, IServiceCollection services)
     {
-      _ = services
+      _ = services?
           .AddApplicationInsightsTelemetry(
             new ApplicationInsightsServiceOptions()
             {
+
               InstrumentationKey = startup.Configuration.GetValue<string>("InstrumentationKey"),
               ApplicationVersion = startup.GetBuildNumber(),
               EnableDiagnosticsTelemetryModule = true,
@@ -34,7 +34,7 @@ namespace IkeMtz.NRSRx.Core
     /// <param name="services"></param>
     public static void SetupDevelopmentApplicationInsights(this CoreWebStartup startup, IServiceCollection services)
     {
-      _ = services
+      _ = services?
           .AddApplicationInsightsTelemetry(
             new ApplicationInsightsServiceOptions()
             {

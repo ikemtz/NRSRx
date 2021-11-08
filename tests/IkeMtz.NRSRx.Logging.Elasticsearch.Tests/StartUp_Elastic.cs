@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IkeMtz.NRSRx.Core.Tests
+namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
 {
-  public class StartUp_AppInsights : CoreWebApiStartup
+  public class StartUp_Elastic : CoreWebApiStartup
   {
-    public StartUp_AppInsights(IConfiguration configuration) : base(configuration)
+    public StartUp_Elastic(IConfiguration configuration) : base(configuration)
     {
     }
-
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
-      this.SetupDevelopmentApplicationInsights(services);
+      this.SetupElasticsearch(app);
 
 
     public override string MicroServiceTitle => "";
