@@ -1,7 +1,5 @@
-using System.Linq;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.OData;
-using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +10,13 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public abstract class CoreODataTestStartup<TStartup, TModelConfiguration> : CoreODataStartup
+  public abstract class CoreODataTestStartup<TStartup> : CoreODataStartup
       where TStartup : CoreODataStartup
-      where TModelConfiguration : IModelConfiguration, new()
   {
     protected TestContext TestContext { get; private set; }
     public TStartup Startup { get; private set; }
+
+    public override BaseODataModelProvider ODataModelProvider => Startup.ODataModelProvider;
     protected CoreODataTestStartup(TStartup startup) : base(startup?.Configuration)
     {
       Startup = startup;
@@ -37,15 +36,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }
 
-    public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
+    public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      if (!modelBuilder.ModelConfigurations.Any(a => a.GetType() == typeof(TModelConfiguration)))
-      {
-        modelBuilder.ModelConfigurations.Add(new TModelConfiguration());
-      }
       TestContext = app.ApplicationServices.GetService<TestContext>();
       _ = app.UseTestContextRequestLogger(TestContext);
-      base.Configure(app, env, modelBuilder, provider);
+      base.Configure(app, env);
     }
     public override void SetupMvcOptions(IServiceCollection services, MvcOptions options)
     {

@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       ConsumerGroupName = $"cg{StreamKey}";
       try
       {
-        Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition);
+        _ = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition);
       }
       catch (RedisServerException x) when (x.Message.Contains("already exists"))
       {

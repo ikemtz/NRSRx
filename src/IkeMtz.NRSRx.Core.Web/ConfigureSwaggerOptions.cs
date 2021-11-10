@@ -37,7 +37,7 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         throw new ArgumentNullException(nameof(startup));
       }
-      provider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
+      provider = serviceProvider.GetService<IApiVersionDescriptionProvider>();
       apiTitle = startup.MicroServiceTitle;
       buildNumber = startup.GetBuildNumber();
 
@@ -49,9 +49,12 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       // add a swagger document for each discovered API version
       // note: you might choose to skip or document deprecated API versions differently
-      foreach (var description in provider.ApiVersionDescriptions)
+      if (provider != null)
       {
-        options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+        foreach (var description in provider?.ApiVersionDescriptions)
+        {
+          options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+        }
       }
       var audiences = this.startup.GetIdentityAudiences(this.appSettings);
       if (audiences.Any() && !string.IsNullOrWhiteSpace(this.appSettings.IdentityProvider))

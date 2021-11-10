@@ -76,8 +76,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
 
              options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
            })
-           .AddXmlSerializerFormatters()
-           .SetCompatibilityVersion(CompatibilityVersion.Latest);
+           .AddXmlSerializerFormatters();
       _ = services
            .AddApiVersioning(options =>
            {
