@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var item = new Item()
       {
         Id = Guid.NewGuid(),
-        Value = Guid.NewGuid().ToString().Substring(0, 6),
+        Value = Guid.NewGuid().ToString()[..6],
         TenantId = "NRSRX",
         CreatedBy = "Factory",
         CreatedOnUtc = DateTime.UtcNow
@@ -18,17 +18,17 @@ namespace IkeMtz.NRSRx.OData.Tests
       item.SubItemAs.Add(new SubItemA
       {
         Id = Guid.NewGuid(),
-        ValueA = Guid.NewGuid().ToString().Substring(0, 6)
+        ValueA = Guid.NewGuid().ToString()[..6]
       });
       item.SubItemBs.Add(new SubItemB
       {
         Id = Guid.NewGuid(),
-        ValueB = Guid.NewGuid().ToString().Substring(0, 6)
+        ValueB = Guid.NewGuid().ToString()[..6]
       });
       item.SubItemCs.Add(new SubItemC
       {
         Id = Guid.NewGuid(),
-        ValueC = Guid.NewGuid().ToString().Substring(0, 6)
+        ValueC = Guid.NewGuid().ToString()[..6]
       });
 
       return item;

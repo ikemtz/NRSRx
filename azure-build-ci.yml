@@ -91,7 +91,7 @@ jobs:
     inputs:
       command: test
       projects: '$(TEST_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
+      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory=Unigration'
   
   - task: DotNetCoreCLI@2
     displayName: 'Test - Sonar'
@@ -99,7 +99,7 @@ jobs:
       command: custom
       projects: '$(TEST_PROJECTS)'
       custom: 'test'
-      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
+      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory=Unigration'
         
   - task: SonarCloudAnalyze@1
     displayName: 'Run Code Analysis'

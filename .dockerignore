@@ -4,7 +4,6 @@
 .gitignore
 .vs
 .vscode
-**/*.cs
 **/*.ps1
 **/*.sql
 **/*.pdb
@@ -16,11 +15,9 @@
 **/*.yml
 **/*.dbmdl
 **/*.scmp
-*.sln
 *.md
 **/*.json
 **/*.sqlproj
-**/*.csproj
 **/*.DB_StaticCodeAnalysisSucceededFile
 **/*.Results.xml
 **/*.dll
@@ -29,14 +26,4 @@
 **/obj
 **/dbo
 **/.toolstarget
-**/*.Tests
-**/*.Api
-**/*.Abstraction
-**/*.Models
 **/Release
-
-NRSRx.UI
-nurser-ui
-**/*.Abstraction
-**/*.Api
-**/*.Tests

@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(connectionMultiplexer, StreamPosition.NewMessages);
       var sampleMessage = new SampleMessage();
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
-      await publisher.PublishAsync(sampleMessage);
+      _ = await publisher.PublishAsync(sampleMessage);
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       Assert.AreEqual(original.Length + 1, result.Length);
       var subscribedMessages = await subscriber.GetMessagesAsync();
@@ -43,7 +43,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var subscriberB = new RedisStreamSubscriber<SampleMessage, CreateEvent>(connectionMultiplexer, StreamPosition.NewMessages);
       var sampleMessage = new SampleMessage();
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
-      await publisher.PublishAsync(sampleMessage);
+      _ = await publisher.PublishAsync(sampleMessage);
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       Assert.AreEqual(original.Length + 1, result.Length);
       var subscribedMessages = await subscriberA.GetMessagesAsync();
@@ -64,10 +64,10 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     {
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
-      moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
+      _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(moqConnection.Object);
       var msg = new SampleMessage();
-      await publisher.PublishAsync(msg);
+      _ = await publisher.PublishAsync(msg);
       moqDatabase
         .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.StartsWith(msg.Id.ToString())), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
     }
@@ -78,13 +78,13 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     {
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
-      moqDatabase
+      _ = moqDatabase
         .Setup(x => x.StreamReadGroupAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), 1, false, CommandFlags.None))
         .Returns(Task.FromResult(Array.Empty<StreamEntry>()));
-      moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
+      _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
 
-      await subscriber.GetMessagesAsync();
+      _ = await subscriber.GetMessagesAsync();
       moqDatabase
         .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName, null, 1, false, CommandFlags.None), Times.Once);
     }
@@ -104,13 +104,13 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
 
-      moqDatabase
+      _ = moqDatabase
         .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), 1, It.IsAny<RedisValue>(), null, null, CommandFlags.None))
         .Returns(Task.FromResult(new[] { new StreamPendingMessageInfo() }));
-      moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
+      _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var subscriber = new RedisStreamSubscriberMock(moqConnection.Object);
 
-      await subscriber.GetPendingMessagesAsync();
+      _ = await subscriber.GetPendingMessagesAsync();
       moqDatabase
          .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, "Unit Test", null, null, CommandFlags.None), Times.Once);
       moqDatabase
@@ -123,7 +123,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     {
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
-      moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
+      _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
       var result = await subscriber.GetConsumersWithPendingMessagesAsync();
       Assert.IsNull(result);

@@ -5,7 +5,7 @@
     <ProjectGuid>B6199B00-5C43-4A78-90AA-5F9BE04B25C0</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Repos\NRSRx\tests\IkeMtz.NRSRx.SignalR.Tests\IkeMtz.NRSRx.SignalR.Tests.xml</DocumentationFile>
+    <DocumentationFile>./IkeMtz.NRSRx.SignalR.Tests.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>

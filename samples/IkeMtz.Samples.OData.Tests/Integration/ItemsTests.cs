@@ -17,6 +17,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
   {
     [TestMethod]
     [TestCategory("Integration")]
+    [TestCategory("SqlIntegration")]
     public async Task GetItemsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>());
@@ -35,7 +36,8 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory("Integration")]
+    [TestCategory("SqlIntegration")]
     public async Task GetGroupByItemsTest()
     {
       var item = Factories.ItemFactory();
@@ -51,7 +53,32 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$apply=groupby(({nameof(item.Value)}),aggregate(id with countdistinct as total))");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$apply=groupby(({nameof(item.Value)},{nameof(item.TenantId)}))");
+      TestContext.WriteLine($"Server Reponse: {resp}");
+      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      StringAssert.Contains(resp, item.Value);
+    }
+
+
+
+    [TestMethod]
+    [TestCategory("Integration")]
+    public async Task GetGroupByItemsTestWithAggregations()
+    {
+      var item = Factories.ItemFactory();
+      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
+          .ConfigureTestServices(x =>
+          {
+            ExecuteOnContext<DatabaseContext>(x, db =>
+            {
+              _ = db.Items.Add(item);
+            });
+          })
+       );
+      var client = srv.CreateClient();
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       StringAssert.Contains(resp, item.Id.ToString());
