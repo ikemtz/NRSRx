@@ -6,8 +6,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>
-    <DocumentationFile>C:\Repos\NRSRx\samples\IkeMtz.Samples.OData.Tests\IkeMtz.Samples.OData.Tests.xml</DocumentationFile>
+    <DocumentationFile>./IkeMtz.Samples.OData.Tests.xml</DocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\tests\IkeMtz.NRSRx.OData.Tests\Factories.cs" Link="Factories.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />

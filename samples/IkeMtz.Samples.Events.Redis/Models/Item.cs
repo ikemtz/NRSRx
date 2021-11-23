@@ -11,5 +11,6 @@ namespace IkeMtz.Samples.Models
     public string UpdatedBy { get; set; }
     public DateTimeOffset CreatedOnUtc { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
+    public string TenantId { get; set; }
   }
 }

@@ -1,3 +1,4 @@
+using System;
 using IkeMtz.NRSRx.Core.OData;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Authentication;
@@ -21,7 +22,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
-      Startup.SetupDatabase(services, dbConnectionString);
+      Startup.SetupDatabase(services, !string.IsNullOrWhiteSpace(dbConnectionString) ?
+        dbConnectionString : Environment.GetEnvironmentVariable("DbConnectionString"));
     }
   }
 }

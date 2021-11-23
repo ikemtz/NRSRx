@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.Samples.OData.Models
@@ -14,6 +15,8 @@ namespace IkeMtz.Samples.OData.Models
     }
     public Guid Id { get; set; }
     public string Value { get; set; }
+    [MaxLength(5)]
+    public string TenantId { get; set; }
     public virtual ICollection<SubItemA> SubItemAs { get; }
     public virtual ICollection<SubItemB> SubItemBs { get; }
     public virtual ICollection<SubItemC> SubItemCs { get; }

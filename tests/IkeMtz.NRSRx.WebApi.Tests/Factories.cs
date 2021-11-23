@@ -10,7 +10,8 @@ namespace IkeMtz.NRSRx.Tests
       return new Item()
       {
         Id = Guid.NewGuid(),
-        Value = Guid.NewGuid().ToString().Substring(0, 6)
+        Value = Guid.NewGuid().ToString()[..6],
+        TenantId = "NRSRX",
       };
     }
   }

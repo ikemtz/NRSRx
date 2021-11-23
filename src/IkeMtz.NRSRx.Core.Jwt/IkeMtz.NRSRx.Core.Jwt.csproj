@@ -21,7 +21,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>
-    <DocumentationFile>C:\Repos\NRSRx\src\IkeMtz.NRSRx.Core.Jwt\IkeMtz.NRSRx.Core.Jwt.xml</DocumentationFile>
+    <DocumentationFile>./IkeMtz.NRSRx.Core.Jwt.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.13.1" />

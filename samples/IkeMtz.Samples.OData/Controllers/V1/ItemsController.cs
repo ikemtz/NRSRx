@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.Samples.OData.Data;
@@ -31,7 +30,7 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = All)]
-    public IEnumerable<Item> Get()
+    public IQueryable<Item> Get()
     {
       return _databaseContext.Items
         .AsNoTracking();
@@ -50,7 +49,7 @@ namespace IkeMtz.Samples.OData.Controllers.V1
 
     public ActionResult Delete([FromODataUri] Guid key)
     {
-      return key != default ? Ok() : NotFound();
+      return key != Guid.Empty ? Ok() : NotFound();
     }
   }
 }

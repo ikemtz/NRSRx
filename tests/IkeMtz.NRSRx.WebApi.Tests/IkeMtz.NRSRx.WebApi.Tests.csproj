@@ -6,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>
-    <DocumentationFile>C:\Repos\NRSRx\tests\IkeMtz.NRSRx.WebApi.Tests\IkeMtz.NRSRx.WebApi.Tests.xml</DocumentationFile>
+    <DocumentationFile>./IkeMtz.NRSRx.WebApi.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\ItemsController.cs" Link="SampleWeb\Controllers\V1\ItemsController.cs" />
