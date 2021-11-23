@@ -152,6 +152,11 @@ jobs:
   steps:
   - checkout: self
     persistCredentials: true
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      buildType: 'current'
+      artifactName: 'dacpac_drop'
+      targetPath: 'samples/IkeMtz.Samples.Db/bin/Debug/'
 
   - task: Bash@3
     inputs:
