@@ -32,7 +32,7 @@ jobs:
     displayName: 'Publish Artifact: dacpac_drop'
     inputs:
       ArtifactName: 'dacpac_drop'
-
+  
 - job: APIs
   displayName: Build and test API code
   pool:
@@ -41,7 +41,7 @@ jobs:
   steps:
   - checkout: self
     persistCredentials: true
-
+  
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk 5.0.x'
     inputs:
@@ -140,6 +140,27 @@ jobs:
       tag: 'nrsrx-$(build.buildNumber)'
       tagMessage: 'nrsrx-$(build.buildNumber)'
       useLightweightTags: true
+
+- job: integration_tests
+  displayName: Integration Tests
+  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+  - checkout: self
+    persistCredentials: true
+
+  - task: Bash@3
+    inputs:
+      filePath: 'samples/IkeMtz.Samples.OData.Tests/publish.sh'
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Azure Container Registry'
+      command: 'build'
+      Dockerfile: '**/integration-tests-ci.Dockerfile'
+
 trigger:
   batch: true
   branches:
