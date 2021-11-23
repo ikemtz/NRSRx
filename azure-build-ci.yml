@@ -144,17 +144,19 @@ jobs:
 - job: integration_tests
   displayName: Integration Tests
   condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn:
+  - Database
   pool:
-    name: Hosted Windows 2019 with VS2019
+    vmImage: ubuntu-latest
 
   steps:
   - checkout: self
     persistCredentials: true
-
-  - task: VSBuild@1
-    displayName: 'Build soultion NRSRx.DB.sln'
+  - task: DownloadPipelineArtifact@2
     inputs:
-      solution: NRSRx.DB.sln
+      buildType: 'current'
+      artifactName: 'dacpac_drop'
+      targetPath: 'samples/IkeMtz.Samples.Db/bin/Debug/'
 
   - task: Bash@3
     inputs:
