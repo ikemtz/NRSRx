@@ -49,7 +49,7 @@ namespace IkeMtz.Samples.OData.Controllers.V1
 
     public ActionResult Delete([FromODataUri] Guid key)
     {
-      return key != default ? Ok() : NotFound();
+      return key != Guid.Empty ? Ok() : NotFound();
     }
   }
 }
