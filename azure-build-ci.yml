@@ -144,8 +144,10 @@ jobs:
 - job: integration_tests
   displayName: Integration Tests
   condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn:
+  - Database
   pool:
-    name: Hosted Windows 2019 with VS2019
+    vmImage: ubuntu-latest
 
   steps:
   - checkout: self
