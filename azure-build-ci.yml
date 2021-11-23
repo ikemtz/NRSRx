@@ -145,11 +145,16 @@ jobs:
   displayName: Integration Tests
   condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
   pool:
-    vmImage: ubuntu-latest
+    name: Hosted Windows 2019 with VS2019
 
   steps:
   - checkout: self
     persistCredentials: true
+
+  - task: VSBuild@1
+    displayName: 'Build soultion NRSRx.DB.sln'
+    inputs:
+      solution: NRSRx.DB.sln
 
   - task: Bash@3
     inputs:
