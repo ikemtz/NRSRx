@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
@@ -9,6 +10,7 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Events.Subscribers.Redis
 {
+  [ExcludeFromCodeCoverage]
   public class RedisStreamSubscriber<TEntity, TEvent> :
     RedisStreamSubscriber<TEntity, TEvent, Guid>
     where TEntity : IIdentifiable<Guid>
