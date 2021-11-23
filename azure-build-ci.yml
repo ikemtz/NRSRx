@@ -154,6 +154,7 @@ jobs:
   - task: Bash@3
     inputs:
       filePath: 'samples/IkeMtz.Samples.OData.Tests/publish.sh'
+      workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
 
   - task: Docker@2
     inputs:
