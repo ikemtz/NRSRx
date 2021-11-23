@@ -153,11 +153,6 @@ jobs:
   - checkout: self
     persistCredentials: true
 
-  - task: VSBuild@1
-    displayName: 'Build soultion NRSRx.DB.sln'
-    inputs:
-      solution: NRSRx.DB.sln
-
   - task: Bash@3
     inputs:
       filePath: 'samples/IkeMtz.Samples.OData.Tests/publish.sh'
