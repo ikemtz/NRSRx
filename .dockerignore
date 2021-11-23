@@ -6,7 +6,6 @@
 .vscode
 **/*.ps1
 **/*.sql
-**/*.pdb
 **/*.user
 **/*.jfm
 **/*.txt
@@ -16,14 +15,11 @@
 **/*.dbmdl
 **/*.scmp
 *.md
-**/*.json
 **/*.sqlproj
 **/*.DB_StaticCodeAnalysisSucceededFile
-**/*.Results.xml
-**/*.dll
-*/bin
+**/*.Results.xml 
+**/TestResults/**
 
 **/obj
 **/dbo
-**/.toolstarget
-**/Release
+**/.toolstarget 
