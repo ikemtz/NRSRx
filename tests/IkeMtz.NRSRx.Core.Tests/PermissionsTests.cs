@@ -101,7 +101,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.IsNull(ctx.Result);
     }
 
-    private ActionExecutingContext ActionExecutingContextFactory(IEnumerable<Claim> userClaims)
+    public static ActionExecutingContext ActionExecutingContextFactory(IEnumerable<Claim> userClaims)
     {
       var identity = new ClaimsIdentity(userClaims);
       var httpCtx = new DefaultHttpContext

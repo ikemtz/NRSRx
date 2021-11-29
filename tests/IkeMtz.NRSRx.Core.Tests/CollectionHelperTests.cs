@@ -69,7 +69,7 @@ namespace IkeMtz.NRSRx.Core.Tests
         dest.Value = src.Value;
       });
       Assert.AreEqual(2, destList.Count);
-      Assert.AreEqual(destList.First().Value, "Validate Update");
+      Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
     [TestMethod]
@@ -87,7 +87,7 @@ namespace IkeMtz.NRSRx.Core.Tests
         dest.Value = src.Value;
       });
       Assert.AreEqual(2, destList.Count);
-      Assert.AreEqual(destList.First().Value, "Validate Update");
+      Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
     [TestMethod]
@@ -102,7 +102,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       srcList.First().Value = "Validate Update";
       context.SyncCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
-      Assert.AreEqual(destList.First().Value, "Validate Update");
+      Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
     [TestMethod]
@@ -117,7 +117,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       srcList.First().Value = "Validate Update";
       context.SyncCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
-      Assert.AreEqual(destList.First().Value, "Validate Update");
+      Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
     [TestMethod]
