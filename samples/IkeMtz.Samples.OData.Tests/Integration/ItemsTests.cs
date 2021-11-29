@@ -39,7 +39,6 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("SqlIntegration")]
-    [Ignore]
     public async Task GetGroupByItemsTest()
     {
       var item = Factories.ItemFactory();
@@ -97,7 +96,6 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("SqlIntegration")]
-    [Ignore]
     public async Task GetGroupByItemsTestWithAggregations()
     {
       var item = Factories.ItemFactory();
@@ -116,8 +114,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.Contains(resp, item.Id.ToString());
-      StringAssert.Contains(resp, item.Value);
+      StringAssert.StartsWith(resp, "[{\"total\":"); 
     }
   }
 }

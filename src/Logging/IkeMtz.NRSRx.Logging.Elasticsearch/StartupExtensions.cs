@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="app"></param>
     public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder app)
     {
-      app?.UseSerilog();
+      _ = (app?.UseSerilog());
 
       return SeriLogExtensions.GetLogger(() =>
       {
@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.Core.Web
           var config = authFunc();
           if (startup.Configuration.GetValue<bool>("ELASTICSEARCH_DISABLE_SSL_VALIDATION"))
           {
-            config.ServerCertificateValidationCallback((obj, cert, chain, policyErrors) => true);
+            _ = config.ServerCertificateValidationCallback((obj, cert, chain, policyErrors) => true);
           }
           return config;
         });

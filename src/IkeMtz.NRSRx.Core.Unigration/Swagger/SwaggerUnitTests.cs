@@ -25,7 +25,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var html = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
-      var pattern = @"\<title\>Swagger UI\<\/title>";
+      var pattern = @"\<title\>[A-z ]* - Swagger UI\<\/title>";
       var m = Regex.Match(html, pattern);
       Assert.IsTrue(m.Success);
       StringAssert.Contains(html, "<meta name=\"robots\" content=\"none\" />");

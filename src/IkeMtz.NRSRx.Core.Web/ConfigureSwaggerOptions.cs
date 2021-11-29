@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using IkeMtz.NRSRx.Core.OData;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ namespace IkeMtz.NRSRx.Core.Web
   public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
   {
     private readonly IApiVersionDescriptionProvider provider;
+    private readonly IODataVersionProvider odataVersionProvider;
     private readonly CoreWebStartup startup;
     private readonly string apiTitle;
     private readonly string buildNumber;
@@ -37,7 +39,8 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         throw new ArgumentNullException(nameof(startup));
       }
-      provider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
+      provider = serviceProvider.GetService<IApiVersionDescriptionProvider>();
+      odataVersionProvider = serviceProvider.GetService<IODataVersionProvider>();
       apiTitle = startup.MicroServiceTitle;
       buildNumber = startup.GetBuildNumber();
 
@@ -49,9 +52,19 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       // add a swagger document for each discovered API version
       // note: you might choose to skip or document deprecated API versions differently
-      foreach (var description in provider.ApiVersionDescriptions)
+      if (provider != null)
       {
-        options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+        foreach (var versionDescription in provider.ApiVersionDescriptions)
+        {
+          options.SwaggerDoc(versionDescription.GroupName, CreateInfoForApiVersion(versionDescription));
+        }
+      }
+      if (odataVersionProvider != null)
+      {
+        foreach (var versionDescription in odataVersionProvider.GetODataVersions())
+        {
+          options.SwaggerDoc(versionDescription.GroupName, CreateInfoForApiVersion(versionDescription));
+        }
       }
       var audiences = this.startup.GetIdentityAudiences(this.appSettings);
       if (audiences.Any() && !string.IsNullOrWhiteSpace(this.appSettings.IdentityProvider))

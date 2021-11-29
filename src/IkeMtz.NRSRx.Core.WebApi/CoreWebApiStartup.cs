@@ -1,7 +1,7 @@
+using System.Linq;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace IkeMtz.NRSRx.Core.WebApi
 {
@@ -59,6 +60,17 @@ namespace IkeMtz.NRSRx.Core.WebApi
       });
     }
 
+    public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
+    {
+      var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger/" : "./";
+      foreach (var groupName in provider.ApiVersionDescriptions
+        .Select(s => s.GroupName))
+      {
+        options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}{groupName}/swagger.json", groupName.ToUpperInvariant());
+      }
+      SetupSwaggerCommonUi(options);
+    }
+
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
     {
       var builder = services
@@ -76,8 +88,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
 
              options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
            })
-           .AddXmlSerializerFormatters()
-           .SetCompatibilityVersion(CompatibilityVersion.Latest);
+           .AddXmlSerializerFormatters();
       _ = services
            .AddApiVersioning(options =>
            {

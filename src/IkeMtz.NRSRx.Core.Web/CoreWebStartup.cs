@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
@@ -11,7 +9,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.Web
   {
     public abstract string MicroServiceTitle { get; }
     public abstract Assembly StartupAssembly { get; }
-    public virtual string SwaggerUiRoutePrefix { get; } = string.Empty;
+    public virtual string SwaggerUiRoutePrefix { get; } = string.Empty; 
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
 
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
@@ -99,16 +96,11 @@ namespace IkeMtz.NRSRx.Core.Web
        });
     }
 
-    public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
+    public virtual void SetupSwaggerCommonUi(SwaggerUIOptions options)
     {
-      var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger" : ".";
-      foreach (var groupName in provider.ApiVersionDescriptions
-        .Select(s => s.GroupName))
-      {
-        options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}/{groupName}/swagger.json", groupName.ToUpperInvariant());
-      }
       options.EnableDeepLinking();
       options.EnableFilter();
+      options.DocumentTitle = $"{this.MicroServiceTitle} - Swagger UI";
       options.RoutePrefix = SwaggerUiRoutePrefix;
       options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
       options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));
@@ -117,7 +109,6 @@ namespace IkeMtz.NRSRx.Core.Web
       options.OAuthScopeSeparator(" ");
       options.OAuthUsePkce();
     }
-
     public virtual void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
     {
       options.UseInlineDefinitionsForEnums();
@@ -134,7 +125,6 @@ namespace IkeMtz.NRSRx.Core.Web
 
     private static OpenIdConfiguration OpenIdConfiguration;
 
-    [SuppressMessage("Critical Code Smell", "S2696:Instance members should not write to \"static\" fields", Justification = "<Pending>")]
     public virtual OpenIdConfiguration GetOpenIdConfiguration(IHttpClientFactory clientFactory, AppSettings appSettings)
     {
       if (OpenIdConfiguration != null)

@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="app"></param>
     public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder app)
     {
-      app?.UseSerilog();
+      _ = (app?.UseSerilog());
       return GetLogger(() => new LoggerConfiguration()
            .MinimumLevel.Debug()
            .Enrich.FromLogContext()

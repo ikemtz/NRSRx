@@ -1,5 +1,4 @@
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.Samples.OData.Configuration;
 using IkeMtz.Samples.OData.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace IkeMtz.Samples.OData.Tests.Unigration
 {
   public class UnigrationODataTestStartup
-      : CoreODataUnigrationTestStartup<Startup, ModelConfiguration>
+      : CoreODataUnigrationTestStartup<Startup>
   {
     public UnigrationODataTestStartup(IConfiguration configuration) : base(new Startup(configuration))
     {

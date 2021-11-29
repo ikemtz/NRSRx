@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>IkeMtz.Samples.Events.Redis</AssemblyName>
     <UserSecretsId>ff327954-e2d8-43dd-8594-a0305d93a6b1</UserSecretsId>
     <ProjectGuid>0047AB8C-B49D-42C0-B9C6-5DC850AC2F45</ProjectGuid>
@@ -13,7 +13,7 @@
     <NoWarn>1701;1702;CA1707</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Events\IkeMtz.NRSRx.Events.Publishers.Redis\IkeMtz.NRSRx.Events.Publishers.Redis.csproj" />

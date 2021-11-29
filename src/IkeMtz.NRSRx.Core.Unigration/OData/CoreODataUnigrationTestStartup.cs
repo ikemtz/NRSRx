@@ -1,15 +1,13 @@
 using System.Net.Http;
 using IkeMtz.NRSRx.Core.OData;
 using IkeMtz.NRSRx.Core.Web;
-using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Authentication;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreODataUnigrationTestStartup<TStartup, TModelConfiguration>
-        : CoreODataTestStartup<TStartup, TModelConfiguration>
+  public class CoreODataUnigrationTestStartup<TStartup>
+        : CoreODataTestStartup<TStartup>
         where TStartup : CoreODataStartup
-        where TModelConfiguration : IModelConfiguration, new()
   {
     public CoreODataUnigrationTestStartup(TStartup startup) : base(startup)
     {

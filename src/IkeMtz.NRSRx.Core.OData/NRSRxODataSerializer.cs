@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Immutable;
-using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Formatter.Serialization;
+using Microsoft.AspNetCore.OData.Formatter;
+using Microsoft.AspNetCore.OData.Formatter.Serialization;
 using Microsoft.OData;
 using Microsoft.OData.Edm;
 

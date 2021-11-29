@@ -28,8 +28,8 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>());
       var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Item)));
-      Assert.IsTrue(doc.Components.Schemas.Any(a => a.Key.Contains(nameof(ODataEnvelope<Item>))));
-      Assert.AreEqual($"{nameof(Item)} OData Microservice", doc.Info.Title);
+      Assert.IsTrue(doc.Components.Schemas.Any(a => a.Key.Contains("ItemGuidODataEnvelope")));
+      Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
     }
   }
 }

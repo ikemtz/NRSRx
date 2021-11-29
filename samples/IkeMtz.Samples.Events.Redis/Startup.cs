@@ -27,9 +27,9 @@ namespace IkeMtz.Samples.Events.Redis
     {
       var redisConnectionString = Configuration.GetValue<string>("REDIS_CONNECTION_STRING");
       var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
-      services.AddSingleton<ISimplePublisher<Item, CreatedEvent, RedisValue>>((x) => new ItemCreatedPublisher(connectionMultiplexer));
-      services.AddSingleton<ISimplePublisher<Item, UpdatedEvent, RedisValue>>((x) => new ItemUpdatedPublisher(connectionMultiplexer));
-      services.AddSingleton<ISimplePublisher<Item, DeletedEvent, RedisValue>>((x) => new ItemDeletedPublisher(connectionMultiplexer));
+      _ = services.AddSingleton<ISimplePublisher<Item, CreatedEvent, RedisValue>>((x) => new ItemCreatedPublisher(connectionMultiplexer));
+      _ = services.AddSingleton<ISimplePublisher<Item, UpdatedEvent, RedisValue>>((x) => new ItemUpdatedPublisher(connectionMultiplexer));
+      _ = services.AddSingleton<ISimplePublisher<Item, DeletedEvent, RedisValue>>((x) => new ItemDeletedPublisher(connectionMultiplexer));
     }
   }
 }
