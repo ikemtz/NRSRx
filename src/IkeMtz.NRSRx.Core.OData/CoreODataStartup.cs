@@ -3,13 +3,14 @@ using System.Linq;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Formatter.Serialization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
@@ -48,19 +49,33 @@ namespace IkeMtz.NRSRx.Core.OData
         _ = app.UseHsts();
       }
       SetupLogging(null, app);
+      _ = app.UseRouting();
       _ = app.UseAuthentication()
           .UseAuthorization();
       _ = app
           .UseSwagger()
-          .UseSwaggerUI();
-          //.UseSwaggerUI(options => SetupSwaggerUI(options, provider));
+          .UseSwaggerUI(SetupSwaggerUI);
+
+      _ = app.UseEndpoints(endpoints => endpoints.MapControllers());
+    }
+
+    public virtual void SetupSwaggerUI(SwaggerUIOptions options)
+    {
+      var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger/" : "./";
+      foreach (var versionDescriptions in ODataModelProvider.GetODataVersions())
+      {
+        options.SwaggerEndpoint(
+          $"{swaggerJsonRoutePrefix}{versionDescriptions.GroupName}/swagger.json",
+          versionDescriptions.GroupName.ToUpperInvariant());
+      }
+      SetupSwaggerCommonUi(options);
     }
 
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
     {
       var mvcBuilder = services
            .AddMvc();
-     _ = services.AddApiVersioning(options => options.ReportApiVersions = true);
+      _ = services.AddApiVersioning(options => options.ReportApiVersions = true);
       _ = services.AddControllers()
           .AddOData(options =>
           {
@@ -68,13 +83,11 @@ namespace IkeMtz.NRSRx.Core.OData
             options.RouteOptions.EnableControllerNameCaseInsensitive = true;
             ODataModelProvider.GetModels().ToList().ForEach(x =>
             {
-              _ = options.AddRouteComponents($"odata/{x.Key}", x.Value)
-                .Select()
-                .Filter()
-                .Expand()
-                .SetMaxTop(100)
-                .Count()
-                .OrderBy();
+              options.AddRouteComponents($"odata/{x.Key.GroupName}",
+                  x.Value,
+                  builder => builder.AddSingleton<IODataSerializerProvider, NrsrxODataSerializerProvider>())
+               .EnableQueryFeatures(500)
+               .EnableAttributeRouting = true;
             });
           });
       return mvcBuilder;
@@ -84,10 +97,12 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       _ = services
         .AddHttpClient()
+        .AddSingleton<IODataVersionProvider>((x) => this.ODataModelProvider)
         .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
         .AddSwaggerGen(swaggerGenOptions =>
         {
           swaggerGenOptions.OperationFilter<ODataCommonOperationFilter>();
+          swaggerGenOptions.DocumentFilter<ODataCommonDocumentFilter>();
           SetupSwaggerGen(swaggerGenOptions);
         });
     }

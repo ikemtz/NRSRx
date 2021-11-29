@@ -55,7 +55,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var updatedItem = JsonConvert.DeserializeObject<Item>(JsonConvert.SerializeObject(originalItem));
-      updatedItem.Value = Guid.NewGuid().ToString().Substring(0, 6);
+      updatedItem.Value = Guid.NewGuid().ToString()[..6];
 
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Item)}s.json?id={updatedItem.Id}", updatedItem);
       _ = resp.EnsureSuccessStatusCode();

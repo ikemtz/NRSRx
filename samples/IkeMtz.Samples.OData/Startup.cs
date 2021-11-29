@@ -4,7 +4,6 @@ using IkeMtz.NRSRx.Core.OData;
 using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.OData.Configuration;
 using IkeMtz.Samples.OData.Data;
-using IkeMtz.Samples.OData.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,7 @@ namespace IkeMtz.Samples.OData
 {
   public class Startup : CoreODataStartup
   {
-    public override string MicroServiceTitle => $"{nameof(Item)} OData Microservice";
+    public override string MicroServiceTitle => $"{nameof(Samples)} OData Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => true;
 

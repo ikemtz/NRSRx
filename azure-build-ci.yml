@@ -63,7 +63,7 @@ jobs:
       FileVersionNumber: '$(Build.BuildNumber)'
       InformationalVersion: '$(Build.BuildNumber)'
       PackageVersion: '$(Build.BuildNumber)'
-  
+
   - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis on SonarCloud'
     inputs:
@@ -79,40 +79,40 @@ jobs:
         # sonar.branch.target=$(System.PullRequest.TargetBranch)
         sonar.exclusions=templates/**
         sonar.coverage.exclusions=templates/**
-  
+
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
     inputs:
       projects: '$(ALL_PROJECTS)'
       arguments: '--configuration $(BuildConfiguration) --no-restore'
-  
+
   - task: DotNetCoreCLI@2
     displayName: 'Tests'
     inputs:
       command: test
       projects: '$(TEST_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
-  
+      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory=Unigration'
+
   - task: DotNetCoreCLI@2
     displayName: 'Test - Sonar'
     inputs:
       command: custom
       projects: '$(TEST_PROJECTS)'
       custom: 'test'
-      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!=Integration'
-        
+      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory=Unigration'
+
   - task: SonarCloudAnalyze@1
     displayName: 'Run Code Analysis'
-  
+
   - task: SonarCloudPublish@1
     displayName: 'Publish Quality Gate Result'
-  
+
   - task: sonarcloud-buildbreaker@2
     displayName: 'Break build on SonarCloud quality gate failure'
     inputs:
       SonarCloud: 'SonarCloud IkeMtz'
       organization: 'ikemtz'
-  
+
   - task: DotNetCoreCLI@2
     displayName: Pack Symbols
     inputs:
@@ -125,12 +125,12 @@ jobs:
       versioningScheme: byBuildNumber
       buildProperties: 'version-suffix=symbols'
       verbosityPack: 'Minimal'
-  
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact'
     inputs:
       ArtifactName: 'symbol_drop'
-  
+
   - task: GitTag@5
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
@@ -140,6 +140,35 @@ jobs:
       tag: 'nrsrx-$(build.buildNumber)'
       tagMessage: 'nrsrx-$(build.buildNumber)'
       useLightweightTags: true
+
+- job: integration_tests
+  displayName: Integration Tests
+  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn:
+  - Database
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+  - checkout: self
+    persistCredentials: true
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      buildType: 'current'
+      artifactName: 'dacpac_drop'
+      targetPath: 'samples/IkeMtz.Samples.Db/bin/Debug/'
+
+  - task: Bash@3
+    inputs:
+      filePath: 'samples/IkeMtz.Samples.OData.Tests/publish.sh'
+      workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Azure Container Registry'
+      command: 'build'
+      Dockerfile: '**/integration-tests-ci.Dockerfile'
+
 trigger:
   batch: true
   branches:

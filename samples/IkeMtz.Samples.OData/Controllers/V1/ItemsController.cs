@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.OData.Models;
@@ -13,7 +14,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  [ApiVersion(VersionDefinitions.v1_0)]
+  [ApiVersion("1.0")]
   [Authorize]
   [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 6000)]
   public class ItemsController : ODataController
@@ -25,18 +26,29 @@ namespace IkeMtz.Samples.OData.Controllers.V1
       _databaseContext = databaseContext;
     }
 
-    [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
-    public IEnumerable<Item> Get()
+    [HttpGet]
+    public ActionResult<IQueryable<Item>> Get()
     {
-      return _databaseContext.Items
-        .AsNoTracking();
+      return Ok(_databaseContext.Items
+        .AsNoTracking());
     }
 
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
+    [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
+    [HttpGet("nolimit")]
+    public ActionResult<IQueryable<Item>> NoLimit()
+    {
+      return Ok(_databaseContext.Items
+        .AsNoTracking());
+    }
+
+    [HttpDelete]
     public ActionResult Delete([FromODataUri] Guid key)
     {
-      return key != default ? Ok() : NotFound();
+      return key != Guid.Empty ? Ok() : NotFound();
     }
   }
 }

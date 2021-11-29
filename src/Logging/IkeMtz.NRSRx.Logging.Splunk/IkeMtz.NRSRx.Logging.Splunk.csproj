@@ -18,20 +18,20 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591;IDE0060</NoWarn>
-    <DocumentationFile>C:\Repos\NRSRx\src\Logging\IkeMtz.NRSRx.Logging.Splunk\IkeMtz.NRSRx.Logging.Splunk.xml</DocumentationFile>
+    <DocumentationFile>./IkeMtz.NRSRx.Logging.Splunk.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\IkeMtz.NRSRx.Logging.Elasticsearch\SeriLogExtensions.cs" Link="SeriLogExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
     <PackageReference Include="Serilog.Sinks.Splunk" Version="3.7.0" />
   </ItemGroup>
   <ItemGroup>

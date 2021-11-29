@@ -7,6 +7,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
   public class CoreWebApiIntegrationTestStartup<TStartup> : CoreWebApiTestStartup<TStartup>
         where TStartup : CoreWebApiStartup
   {
+    
     public CoreWebApiIntegrationTestStartup(TStartup startup) : base(startup)
     {
     }

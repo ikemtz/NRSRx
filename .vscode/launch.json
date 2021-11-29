@@ -1,0 +1,39 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (console)",
+      "type": "coreclr",
+      "request": "attach",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/<target-framework>/<project-name.dll>",
+      "args": ["test"],
+      "cwd": "samples/IkeMtz.Samples.OData.Tests",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+    },
+    {
+      "name": ".NET Core Test with debugger",
+      "type": "coreclr",
+      "isBackground": true,
+      "command": "dotnet",
+      "args": ["test"],
+      "options": {
+        "cwd": "${workspaceFolder}/MyProject.Tests",
+        "env": { "VSTEST_HOST_DEBUG": "1" }
+      },
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+
+  ]
+}

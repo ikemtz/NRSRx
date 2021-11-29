@@ -14,5 +14,9 @@ ENV SA_PASSWORD=SqlDockerRocks123! \
     ACCEPT_EULA=Y 
 EXPOSE 1433 
  
-COPY --from=sql-temp /var/opt/mssql/data/*.ldf /var/opt/mssql/data/ 
-COPY --from=sql-temp /var/opt/mssql/data/*.mdf /var/opt/mssql/data/ 
+COPY --from=sql-temp /var/opt/mssql/data/SamplesDb*.ldf /var/opt/mssql/data/ 
+COPY --from=sql-temp /var/opt/mssql/data/SamplesDb*.mdf /var/opt/mssql/data/ 
+
+USER root
+RUN chown -R mssql /var/opt/mssql/data
+USER mssql

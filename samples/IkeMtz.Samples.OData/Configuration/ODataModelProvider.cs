@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using IkeMtz.NRSRx.Core.OData;
 using IkeMtz.Samples.OData.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-
 
 namespace IkeMtz.Samples.OData.Configuration
 {
@@ -16,16 +17,19 @@ namespace IkeMtz.Samples.OData.Configuration
       _ = builder.EntitySet<SubItemA>($"{nameof(SubItemA)}s");
       _ = builder.EntityType<Item>()
         .Collection
-        .Function("NoLimit")
+        .Function("nolimit")
         .ReturnsCollectionFromEntitySet<Item>($"{nameof(Item)}s");
       return builder.GetEdmModel();
     }
 
-    public override IDictionary<string, IEdmModel> GetModels()
+    public override IDictionary<ApiVersionDescription, IEdmModel> GetModels()
     {
-      return new Dictionary<string, IEdmModel>
+      return new Dictionary<ApiVersionDescription, IEdmModel>
       {
-        { "v1", GetV1EdmModel() }
+        {
+          new ApiVersionDescription(new ApiVersion(1, 0), "v1", false),
+          GetV1EdmModel()
+        }
       };
     }
   }

@@ -1,21 +1,31 @@
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OData.Edm;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
-  public abstract class BaseODataModelProvider
+  public abstract class BaseODataModelProvider : IODataVersionProvider
   {
-    private static IDictionary<string, IEdmModel> _cached;
-    internal IDictionary<string, IEdmModel> GetEdmModel()
+    private static IDictionary<ApiVersionDescription, IEdmModel> _cached;
+    public IDictionary<ApiVersionDescription, IEdmModel> EdmModels
     {
-      if (_cached == null)
+      get
       {
-        _cached = GetModels();
+        if (_cached == null)
+        {
+          _cached = GetModels();
+        }
+        return _cached;
       }
-      return _cached;
     }
 
-    public abstract IDictionary<string, IEdmModel> GetModels();
+    public abstract IDictionary<ApiVersionDescription, IEdmModel> GetModels();
+
+    public IEnumerable<ApiVersionDescription> GetODataVersions()
+    {
+      return EdmModels.Select(t => t.Key);
+    }
   }
 }
 
