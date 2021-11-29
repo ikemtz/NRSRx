@@ -157,6 +157,11 @@ jobs:
       buildType: 'current'
       artifactName: 'dacpac_drop'
       targetPath: 'samples/IkeMtz.Samples.Db/bin/Debug/'
+  
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core sdk 6.0.x'
+    inputs:
+      version: 6.0.x
 
   - task: Bash@3
     inputs:
