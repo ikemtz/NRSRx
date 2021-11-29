@@ -1,4 +1,4 @@
-name: 5.0.$(DayOfYear)$(Rev:.rr)
+name: 5.6.$(DayOfYear)$(Rev:.rr)
 pool:
   name: Hosted Windows 2019 with VS2019
 
