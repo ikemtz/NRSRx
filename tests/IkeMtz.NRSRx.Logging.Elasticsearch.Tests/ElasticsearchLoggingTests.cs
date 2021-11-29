@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     public void ElasticLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
-      moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
+      _ = moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
       var startup = new StartUp_Elastic(moqConfiguration.Object);
       var result = startup.SetupElasticsearch(null);
       Assert.IsNotNull(result);
