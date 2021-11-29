@@ -4,7 +4,7 @@ ENV SA_PASSWORD=SqlDockerRocks123! \
 ENV ASPNETCORE_ENVIRONMENT=development
 ENV DbConnectionString="Server=.;Database=SamplesDb;User ID=sa;Password=SqlDockerRocks123!;"
 COPY samples/IkeMtz.Samples.Db/bin/Debug/*.dacpac /dacpac/
-COPY samples/IkeMtz.Samples.OData.Tests/bin/Debug/net5.0/linux-x64/publish/ /integrationTests
+COPY samples/IkeMtz.Samples.OData.Tests/bin/Debug/net6.0/linux-x64/publish/ /integrationTests
 USER root
 
 RUN /opt/mssql/bin/sqlservr & sleep 30 \ 
