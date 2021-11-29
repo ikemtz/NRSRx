@@ -118,6 +118,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public IWebHostBuilder TestHostBuilder<TSiteStartup, TTestStartup>()
         where TTestStartup : class
     {
+      Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", "Development");
+      Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
       return new WebHostBuilder()
           .ConfigureAppConfiguration((hostingContext, config) =>
           {

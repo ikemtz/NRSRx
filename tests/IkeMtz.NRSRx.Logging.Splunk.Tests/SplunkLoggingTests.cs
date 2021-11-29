@@ -1,5 +1,8 @@
+using System.Net;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Web;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +13,7 @@ using Moq;
 namespace IkeMtz.NRSRx.Logging.Splunk.Tests
 {
   [TestClass]
-  public class SplunkLoggingTests
+  public class SplunkLoggingTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Unit")]
@@ -26,7 +29,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     public void SplunkLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
-      moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
+      _ = moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
       var startup = new StartUp_Splunk(moqConfiguration.Object);
       var result = startup.SetupSplunk(null);
       Assert.IsNotNull(result);
@@ -45,6 +48,18 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
       logger.LogError("Validating Error logging");
       await host.StopAsync();
       await host.WaitForShutdownAsync();
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task GetSwaggerUI()
+    {
+      using var srv = new TestServer(TestHostBuilder<StartUp_Splunk, StartUp_Splunk>()
+        .UseLogging()
+     );
+      var client = srv.CreateClient();
+      var resp = await client.GetAsync("index.html");
+      Assert.AreEqual(HttpStatusCode.OK, resp.EnsureSuccessStatusCode().StatusCode);
     }
   }
 }

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Web\IkeMtz.NRSRx.Core.Web.csproj" />
     <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Elasticsearch\IkeMtz.NRSRx.Logging.Elasticsearch.csproj" />

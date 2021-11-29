@@ -1,5 +1,8 @@
+using System.Net;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Web;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +13,7 @@ using Moq;
 namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
 {
   [TestClass]
-  public class ElasticsearchLoggingTests
+  public class ElasticsearchLoggingTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Unit")]
@@ -26,7 +29,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     public void ElasticLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
-      moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
+      _ = moqConfiguration.Setup(c => c.GetSection(It.IsAny<string>())).Returns(new Mock<IConfigurationSection>().Object);
       var startup = new StartUp_Elastic(moqConfiguration.Object);
       var result = startup.SetupElasticsearch(null);
       Assert.IsNotNull(result);
@@ -54,6 +57,18 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
       logger.LogError("Validating Error logging");
       await host.StopAsync();
       await host.WaitForShutdownAsync();
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task GetSwaggerUI()
+    {
+      using var srv = new TestServer(TestHostBuilder<StartUp_Elastic, StartUp_Elastic>()
+        .UseLogging()
+     );
+      var client = srv.CreateClient();
+      var resp = await client.GetAsync("index.html");
+      Assert.AreEqual(HttpStatusCode.OK, resp.EnsureSuccessStatusCode().StatusCode);
     }
   }
 }

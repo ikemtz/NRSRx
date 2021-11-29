@@ -47,6 +47,11 @@ jobs:
     inputs:
       version: 6.0.x
 
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'export DOTNET_ENVIRONMENT=Development && export ASPNETCORE_ENVIRONMENT=Development'
+
   - task: DotNetCoreCLI@2
     inputs:
       command: 'restore'
@@ -91,7 +96,7 @@ jobs:
     inputs:
       command: test
       projects: '$(TEST_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory=Unigration'
+      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test - Sonar'
@@ -99,7 +104,7 @@ jobs:
       command: custom
       projects: '$(TEST_PROJECTS)'
       custom: 'test'
-      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory=Unigration'
+      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
   - task: SonarCloudAnalyze@1
     displayName: 'Run Code Analysis'

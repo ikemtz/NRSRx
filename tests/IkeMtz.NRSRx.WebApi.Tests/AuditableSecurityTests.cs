@@ -1,6 +1,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
@@ -19,7 +20,6 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   {
     [TestMethod]
     [TestCategory("Unigration")]
-    [ExpectedException(typeof(AuditableInvalidUserException))]
     public async Task SaveItemCausesAuditInvalidUserExTest()
     {
       var item = Factories.ItemFactory();
@@ -28,12 +28,12 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       GenerateAuthHeader(client, GenerateTestToken(x =>
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 
-      _ = await client.PostAsJsonAsync($"api/v1/{nameof(Item)}s.json", item);
+      var result = await client.PostAsJsonAsync($"api/v1/{nameof(Item)}s.json", item);
+      Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
     }
 
     [TestMethod]
     [TestCategory("Unigration")]
-    [ExpectedException(typeof(AuditableInvalidUserException))]
     public async Task UpdateItemCausesAuditInvalidUserExTest()
     {
       var originalItem = Factories.ItemFactory();
@@ -52,7 +52,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var updatedItem = JsonConvert.DeserializeObject<Item>(JsonConvert.SerializeObject(originalItem));
       updatedItem.Value = Guid.NewGuid().ToString().Substring(0, 6);
 
-      _ = await client.PutAsJsonAsync($"api/v1/{nameof(Item)}s.json?id={updatedItem.Id}", updatedItem);
+      var result = await client.PutAsJsonAsync($"api/v1/{nameof(Item)}s.json?id={updatedItem.Id}", updatedItem);
+      Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
     }
 
   }

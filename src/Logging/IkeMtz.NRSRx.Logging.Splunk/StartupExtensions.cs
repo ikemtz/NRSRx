@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="app"></param>
     public static ILogger SetupSplunk(this CoreWebStartup startup, IApplicationBuilder app)
     {
-      app?.UseSerilog();
+      _ = app?.UseSerilog();
 
       var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");

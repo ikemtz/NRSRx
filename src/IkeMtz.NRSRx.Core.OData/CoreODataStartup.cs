@@ -36,7 +36,7 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupSwagger(services);
     }
 
-    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)//, IApiVersionDescriptionProvider provider
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
       {
@@ -62,11 +62,11 @@ namespace IkeMtz.NRSRx.Core.OData
     public virtual void SetupSwaggerUI(SwaggerUIOptions options)
     {
       var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger/" : "./";
-      foreach (var versionDescriptions in ODataModelProvider.GetODataVersions())
+      foreach (var groupName in ODataModelProvider.GetODataVersions().Select(t => t.GroupName))
       {
         options.SwaggerEndpoint(
-          $"{swaggerJsonRoutePrefix}{versionDescriptions.GroupName}/swagger.json",
-          versionDescriptions.GroupName.ToUpperInvariant());
+          $"{swaggerJsonRoutePrefix}{groupName}/swagger.json",
+          groupName.ToUpperInvariant());
       }
       SetupSwaggerCommonUi(options);
     }

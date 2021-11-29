@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -10,6 +11,10 @@ namespace IkeMtz.NRSRx.Core.Web
     public static IHostBuilder UseLogging(this IHostBuilder hostBuilder)
     {
       return hostBuilder.UseSerilog();
+    }
+    public static IWebHostBuilder UseLogging(this IWebHostBuilder webHostBuilder)
+    {
+      return webHostBuilder.UseSerilog();
     }
 
     internal static ILogger Logger { get; set; }
