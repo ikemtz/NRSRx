@@ -47,6 +47,11 @@ jobs:
     inputs:
       version: 6.0.x
 
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'export DOTNET_ENVIRONMENT=Development'
+
   - task: DotNetCoreCLI@2
     inputs:
       command: 'restore'
