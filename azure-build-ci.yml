@@ -50,7 +50,7 @@ jobs:
   - task: Bash@3
     inputs:
       targetType: 'inline'
-      script: 'export DOTNET_ENVIRONMENT=Development'
+      script: 'export DOTNET_ENVIRONMENT=Development && export ASPNETCORE_ENVIRONMENT=Development'
 
   - task: DotNetCoreCLI@2
     inputs:

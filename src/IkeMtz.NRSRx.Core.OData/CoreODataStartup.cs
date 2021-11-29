@@ -36,7 +36,7 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupSwagger(services);
     }
 
-    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)//, IApiVersionDescriptionProvider provider
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
       {

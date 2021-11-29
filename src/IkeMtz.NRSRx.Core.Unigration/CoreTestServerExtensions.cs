@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using IkeMtz.NRSRx.Core.Unigration;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
