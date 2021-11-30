@@ -7,7 +7,6 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.OData;
 using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.OData.Models;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
