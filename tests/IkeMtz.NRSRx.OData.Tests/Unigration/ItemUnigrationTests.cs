@@ -111,7 +111,6 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     [TestMethod]
     [TestCategory("Unigration")]
-    [Ignore] //NOSONAR
     public async Task GetMaxItemsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());

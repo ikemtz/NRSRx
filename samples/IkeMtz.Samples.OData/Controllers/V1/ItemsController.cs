@@ -29,16 +29,16 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet]
-    public ActionResult<IQueryable<Item>> Get()
+    public IQueryable<Item> Get()
     {
-      return Ok(_databaseContext.Items
-        .AsNoTracking());
+      return _databaseContext.Items
+        .AsNoTracking();
     }
 
     [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
-    [HttpGet("nolimit")]
+    [HttpGet("odata/v1/items/nolimit")]
     public ActionResult<IQueryable<Item>> NoLimit()
     {
       return Ok(_databaseContext.Items
