@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.OData
 {
   public abstract class CoreODataStartup : CoreWebStartup
   {
-    public virtual int? MaxTop { get; } = 500;
+    public virtual int? MaxTop { get; set; } = 100;
 
     public abstract BaseODataModelProvider ODataModelProvider { get; }
     protected CoreODataStartup(IConfiguration configuration) : base(configuration)
