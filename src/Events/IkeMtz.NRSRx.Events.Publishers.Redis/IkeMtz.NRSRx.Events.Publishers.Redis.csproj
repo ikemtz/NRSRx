@@ -23,9 +23,10 @@
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <ProjectGuid>A965C301-F4FD-4374-B20B-D5BDF0281CBC</ProjectGuid>
+    <AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;S2436</NoWarn>
+    <NoWarn>1701;1702;S2436;MSB3277</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">

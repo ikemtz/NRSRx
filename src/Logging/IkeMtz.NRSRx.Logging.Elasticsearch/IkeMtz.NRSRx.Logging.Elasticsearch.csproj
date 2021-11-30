@@ -18,7 +18,7 @@
     <ProjectGuid>054028DB-8244-454C-B16B-8DCC0B14CCB5</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591;IDE0060</NoWarn>
+    <NoWarn>1701;1702;CS1591;IDE0060;S4792</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Logging.Elasticsearch.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>

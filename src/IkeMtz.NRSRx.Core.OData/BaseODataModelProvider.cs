@@ -24,12 +24,13 @@ namespace IkeMtz.NRSRx.Core.OData
 
     public abstract IDictionary<ApiVersionDescription, IEdmModel> GetModels();
 
-    public static IEdmModel ODataConventionModelFactory(Action<ODataConventionModelBuilder> action)
+    public static IEdmModel ODataEntityModelFactory(Action<ODataConventionModelBuilder> action)
     {
       var builder = new ODataConventionModelBuilder();
       action(builder);
-      _ = builder.EnableLowerCamelCase();
-      return builder.GetEdmModel();
+      return builder
+        .EnableLowerCamelCase()
+        .GetEdmModel();
     }
     public IEnumerable<ApiVersionDescription> GetODataVersions()
     {

@@ -10,7 +10,7 @@ namespace IkeMtz.Samples.OData.Configuration
   public class ODataModelProvider : BaseODataModelProvider
   {
     public static IEdmModel GetV1EdmModel() =>
-      ODataConventionModelFactory(builder =>
+      ODataEntityModelFactory(builder =>
       {
         _ = builder.EntitySet<Item>($"{nameof(Item)}s");
         _ = builder.EntitySet<SubItemA>($"{nameof(SubItemA)}s");
