@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.OData
 {
   public abstract class CoreODataStartup : CoreWebStartup
   {
-    public virtual int? MaxTop { get; set; }
+    public virtual int? MaxTop { get; } = 500;
 
     public abstract BaseODataModelProvider ODataModelProvider { get; }
     protected CoreODataStartup(IConfiguration configuration) : base(configuration)
@@ -86,7 +86,7 @@ namespace IkeMtz.NRSRx.Core.OData
               options.AddRouteComponents($"odata/{x.Key.GroupName}",
                   x.Value,
                   builder => builder.AddSingleton<IODataSerializerProvider, NrsrxODataSerializerProvider>())
-               .EnableQueryFeatures(500)
+               .EnableQueryFeatures(MaxTop)
                .EnableAttributeRouting = true;
             });
           });
