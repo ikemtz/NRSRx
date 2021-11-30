@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
@@ -32,6 +33,12 @@ namespace IkeMtz.NRSRx.Core.OData
         .EnableLowerCamelCase()
         .GetEdmModel();
     }
+    public static ApiVersionDescription ApiVersionFactory(int MajorVersion, int MinorVersion, bool IsDeprecated = false) =>
+      new(
+        new ApiVersion(MajorVersion, MinorVersion),
+          $"v{MajorVersion}.{MinorVersion}".Replace(".0", ""),
+          IsDeprecated);
+
     public IEnumerable<ApiVersionDescription> GetODataVersions()
     {
       return EdmModels.Select(t => t.Key);
