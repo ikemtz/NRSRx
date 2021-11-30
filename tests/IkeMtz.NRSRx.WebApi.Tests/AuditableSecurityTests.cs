@@ -50,7 +50,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 
       var updatedItem = JsonConvert.DeserializeObject<Item>(JsonConvert.SerializeObject(originalItem));
-      updatedItem.Value = Guid.NewGuid().ToString().Substring(0, 6);
+      updatedItem.Value = Guid.NewGuid().ToString()[..6];
 
       var result = await client.PutAsJsonAsync($"api/v1/{nameof(Item)}s.json?id={updatedItem.Id}", updatedItem);
       Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);

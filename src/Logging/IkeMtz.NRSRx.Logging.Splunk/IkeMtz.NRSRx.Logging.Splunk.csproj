@@ -17,7 +17,7 @@
     <ProjectGuid>7256C305-4FE0-4098-8D8C-8A45B64FD887</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591;IDE0060</NoWarn>
+    <NoWarn>1701;1702;CS1591;IDE0060;S4792</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Logging.Splunk.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>

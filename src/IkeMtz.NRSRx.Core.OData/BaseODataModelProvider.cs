@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
@@ -22,6 +24,14 @@ namespace IkeMtz.NRSRx.Core.OData
 
     public abstract IDictionary<ApiVersionDescription, IEdmModel> GetModels();
 
+    public static IEdmModel ODataEntityModelFactory(Action<ODataConventionModelBuilder> action)
+    {
+      var builder = new ODataConventionModelBuilder();
+      action(builder);
+      return builder
+        .EnableLowerCamelCase()
+        .GetEdmModel();
+    }
     public IEnumerable<ApiVersionDescription> GetODataVersions()
     {
       return EdmModels.Select(t => t.Key);
