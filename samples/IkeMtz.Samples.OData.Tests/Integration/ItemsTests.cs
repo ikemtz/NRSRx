@@ -114,7 +114,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.StartsWith(resp, "[{\"total\":"); 
+      StringAssert.Contains(resp, "total"); 
     }
   }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.Samples.OData.Data;
@@ -39,10 +38,10 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet("odata/v1/items/nolimit")]
-    public ActionResult<IQueryable<Item>> NoLimit()
+    public IQueryable<Item> NoLimit()
     {
-      return Ok(_databaseContext.Items
-        .AsNoTracking());
+      return _databaseContext.Items
+        .AsNoTracking();
     }
 
     [HttpDelete]
