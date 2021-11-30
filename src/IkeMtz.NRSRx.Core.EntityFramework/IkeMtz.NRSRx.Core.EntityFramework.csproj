@@ -20,7 +20,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
+    <NoWarn>1701;1702;CS1591;S3925;S1939</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Core.EntityFramework.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
