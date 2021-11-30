@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using IkeMtz.NRSRx.Core.OData;
 using IkeMtz.Samples.OData.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OData.Edm;
 
@@ -20,15 +19,10 @@ namespace IkeMtz.Samples.OData.Configuration
           .ReturnsCollectionFromEntitySet<Item>($"{nameof(Item)}s");
       });
 
-    public override IDictionary<ApiVersionDescription, IEdmModel> GetModels()
-    {
-      return new Dictionary<ApiVersionDescription, IEdmModel>
-      {
+    public override IDictionary<ApiVersionDescription, IEdmModel> GetModels() =>
+        new Dictionary<ApiVersionDescription, IEdmModel>
         {
-          new ApiVersionDescription(new ApiVersion(1, 0), "v1", false),
-          GetV1EdmModel()
-        }
-      };
-    }
+          [ApiVersionFactory(1, 0)] = GetV1EdmModel(),
+        };
   }
 }
