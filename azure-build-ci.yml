@@ -179,6 +179,33 @@ jobs:
       command: 'build'
       Dockerfile: '**/integration-tests-ci.Dockerfile'
 
+- job: sample_sites_docker_builds
+  displayName: NRSRx Sample Sites Docker Builds
+#  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'IkeMtz Docker Hub'
+      repository: 'ikemtz/nrsrx-sample-odata-sql'
+      command: 'buildAndPush'
+      Dockerfile: '**/samples.odata.Dockerfile'
+      tags: |
+        $(Build.BuildId)
+        latest
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'IkeMtz Docker Hub'
+      repository: 'ikemtz/nrsrx-sample-webapi-sql'
+      command: 'buildAndPush'
+      Dockerfile: '**/samples.webapi.Dockerfile'
+      tags: |
+        $(Build.BuildId)
+        latest
+
 trigger:
   batch: true
   branches:
