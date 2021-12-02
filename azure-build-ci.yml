@@ -182,10 +182,12 @@ jobs:
 - job: sample_sites_docker_builds
   displayName: NRSRx Sample Sites Docker Builds
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn:
+  - APIs
   pool:
     vmImage: ubuntu-latest
-  steps:
 
+  steps:
   - task: Docker@2
     inputs:
       containerRegistry: 'IkeMtz Docker Hub'
