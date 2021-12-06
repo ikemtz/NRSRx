@@ -15,21 +15,24 @@ NRSRx is an opinionated extensible framework that will expedite the development 
 
 NRSRx is highly configurable and extensible, but these are the cross-cutting concerns that are addressed:
 
-*	Externalized configuration 
+*  Externalized configuration 
     -	appsettings.json
     -	User Secrets (useful in development environments)
     - Environment Variables (useful in containerized and cloud platforms)
-*	Authentication
+*  Authentication
     -	JWT based authentication (commonly used in [OAuth2](https://oauth.net/2/) and [OIDC](https://openid.net/connect/) authentication workflows)
 * Authorization
     -	Role-based authorization via asp.net request authorization filter
-*	Swagger
+*  Swagger
     -	Setup as an OIDC client to facilitate authorization
-*	Data persistence
+*  Data persistence
     -	Entity Framework with entity-based auditing
-*	Multi-Tenancy
+*  Multi-Tenancy
     -	Asp.net request authorization filter
-*	Logging
+*  Versioning
+   *  Api and model 
+   *  Adhere's to [Microsoft REST Guidelines for versioning](https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#12-versioning)
+*  Logging
     -	Application Insights (supported via [IkeMtz.NRSRx.Logging.ApplicationInsights](https://www.nuget.org/packages/IkeMtz.NRSRx.Logging.ApplicationInsights/) library)
     -	Elastisearch (supported via [IkeMtz.NRSRx.Logging.Elasticsearch](https://www.nuget.org/packages/IkeMtz.NRSRx.Logging.Elasticsearch/) library)
     -	Splunk (Support via [IkeMtz.NRSRx.Logging.Splunk](https://www.nuget.org/packages/IkeMtz.NRSRx.Logging.Splunk/) library)
@@ -38,6 +41,10 @@ NRSRx is highly configurable and extensible, but these are the cross-cutting con
     -	Redis Streams (supported via [IkeMtz.NRSRx.Events.Publishers.Redis](https://www.nuget.org/packages/IkeMtz.NRSRx.Events.Publishers.Redis/) library)
 * Unit testability
     - MSTest (services built on NRSRx can easily achieve 95%+ code coverage)
+
+## Adaptability
+
+Most of the features built into NRSRx are customizable or removable all together.  Don't want authentication?  Remove it.  Nothing in the NRSRx framework is private, internal or sealed, so expansion is a breeze.
 
 ## Flavors
 
