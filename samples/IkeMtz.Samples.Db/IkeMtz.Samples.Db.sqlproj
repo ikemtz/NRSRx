@@ -65,6 +65,11 @@
   <ItemGroup>
     <None Include="Dockerfile" />
     <None Include="IkeMtz.Samples.Db.publish.xml" />
+    <None Include="dbo\Data\Courses.sql" />
+    <None Include="dbo\Data\Schools.sql" />
+    <None Include="dbo\Data\StudentSchools.sql" />
+    <None Include="dbo\Data\SchoolCourses.sql" />
+    <None Include="dbo\Data\StudentCourses.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Students.sql" />
@@ -76,6 +81,6 @@
     <None Include="dbo\Data\Students.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Script.PostDeployment1.sql" />
+    <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>

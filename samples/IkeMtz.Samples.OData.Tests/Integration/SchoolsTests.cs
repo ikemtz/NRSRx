@@ -10,6 +10,8 @@ using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace IkeMtz.Samples.OData.Tests.Integration
 {
@@ -114,7 +116,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.Contains(resp, "total"); 
+      StringAssert.Contains(resp, "total");
     }
   }
 }
