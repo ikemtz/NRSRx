@@ -9,14 +9,19 @@
     <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="SampleWeb\Models\**" />
+    <EmbeddedResource Remove="SampleWeb\Models\**" />
+    <None Remove="SampleWeb\Models\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Configuration\ODataModelProvider.cs" Link="SampleWeb\Configuration\ODataModelProvider.cs" />
-    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Controllers\V1\ItemsController.cs" Link="SampleWeb\Controllers\V1\ItemsController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Controllers\V1\CoursesController.cs" Link="SampleWeb\Controllers\V1\CoursesController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Controllers\V1\SchoolsController.cs" Link="SampleWeb\Controllers\V1\SchoolsController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Controllers\V1\StudentsController.cs" Link="SampleWeb\Controllers\V1\StudentsController.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Data\DatabaseContext.cs" Link="SampleWeb\Data\DatabaseContext.cs" />
-    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Data\IDatabaseContext.cs" Link="SampleWeb\Data\IDatabaseContext.cs" />
-    <Compile Include="..\..\samples\IkeMtz.Samples.OData\Models\Item.cs" Link="SampleWeb\Models\Item.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\Startup.cs" Link="SampleWeb\Startup.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.OData\VersionDefinitions.cs" Link="SampleWeb\VersionDefinitions.cs" />
   </ItemGroup>
@@ -38,6 +43,7 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\samples\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
@@ -48,6 +54,5 @@
     <Folder Include="SampleWeb\Configuration\" />
     <Folder Include="SampleWeb\Controllers\V1\" />
     <Folder Include="SampleWeb\Data\" />
-    <Folder Include="SampleWeb\Models\" />
   </ItemGroup>
 </Project>

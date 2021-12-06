@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
+    <ProjectReference Include="..\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />
     <ProjectReference Include="..\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj" />
   </ItemGroup>
 </Project>

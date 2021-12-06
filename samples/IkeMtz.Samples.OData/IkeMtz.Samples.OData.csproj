@@ -21,5 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.OData\IkeMtz.NRSRx.Core.OData.csproj" />
     <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.ApplicationInsights\IkeMtz.NRSRx.Logging.ApplicationInsights.csproj" />
+    <ProjectReference Include="..\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />
   </ItemGroup>
 </Project>

@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData.Data;
-using IkeMtz.Samples.OData.Models;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -12,35 +12,35 @@ using Newtonsoft.Json;
 namespace IkeMtz.Samples.OData.Tests.Unigration
 {
   [TestClass]
-  public partial class ItemsTests : BaseUnigrationTests
+  public partial class SchoolsTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Unigration")]
     public async Task GetItemsTest()
     {
-      var objA = new Item()
+      var objA = new School()
       {
         Id = Guid.NewGuid(),
-        Value = $"Test- {Guid.NewGuid().ToString()[29..]}",
+        Name = $"Test- {Guid.NewGuid().ToString()[29..]}",
       };
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Items.Add(objA);
+              _ = db.Schools.Add(objA);
             });
           })
        );
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$count=true");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true");
 
       //Validate OData Result
       TestContext.WriteLine($"Server Reponse: {resp}");
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Item>>(resp);
-      Assert.AreEqual(objA.Value, envelope.Value.First().Value);
+      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      Assert.AreEqual(objA.Name, envelope.Value.First().Name);
     }
   }
 }

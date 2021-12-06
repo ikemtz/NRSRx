@@ -33,10 +33,5 @@ namespace IkeMtz.Samples.OData
       _ = services
        .AddDbContextPool<DatabaseContext>(x => x.UseSqlServer(dbConnectionString));
     }
-
-    public override void SetupMiscDependencies(IServiceCollection services)
-    {
-      _ = services.AddScoped<IDatabaseContext, DatabaseContext>();
-    }
   }
 }

@@ -1,37 +1,35 @@
 using System;
-using IkeMtz.Samples.OData.Models;
+using IkeMtz.Samples.Models.V1;
+using static IkeMtz.NRSRx.Core.Unigration.TestDataFactory;
 
 namespace IkeMtz.NRSRx.OData.Tests
 {
   public static partial class Factories
   {
-    public static Item ItemFactory()
+    public static School SchoolFactory()
     {
-      var item = new Item()
-      {
-        Id = Guid.NewGuid(),
-        Value = Guid.NewGuid().ToString()[..6],
-        TenantId = "NRSRX",
-        CreatedBy = "Factory",
-        CreatedOnUtc = DateTime.UtcNow
-      };
-      item.SubItemAs.Add(new SubItemA
-      {
-        Id = Guid.NewGuid(),
-        ValueA = Guid.NewGuid().ToString()[..6]
-      });
-      item.SubItemBs.Add(new SubItemB
-      {
-        Id = Guid.NewGuid(),
-        ValueB = Guid.NewGuid().ToString()[..6]
-      });
-      item.SubItemCs.Add(new SubItemC
-      {
-        Id = Guid.NewGuid(),
-        ValueC = Guid.NewGuid().ToString()[..6]
-      });
+      var school = IdentifiableFactory(AuditableFactory<School>());
+      school.Name = Guid.NewGuid().ToString()[..6];
+      school.TenantId = "NRSRX";
+      return school;
+    }
 
-      return item;
+    public static Student StudentFactory()
+    {
+      var student = IdentifiableFactory(AuditableFactory<Student>());
+      student.FirstName = Guid.NewGuid().ToString()[..6];
+      student.LastName = Guid.NewGuid().ToString()[..6];
+      student.BirthDate = DateTime.UtcNow;
+      return student;
+    }
+
+    public static Course CourseFactory()
+    {
+      var course = IdentifiableFactory(AuditableFactory<Course>());
+      course.Num = Guid.NewGuid().ToString()[..4];
+      course.Title = Guid.NewGuid().ToString()[..6];
+      course.Description = Guid.NewGuid().ToString()[..20];
+      return course;
     }
   }
 }

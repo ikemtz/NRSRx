@@ -6,7 +6,7 @@ using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.OData.Tests;
 using IkeMtz.Samples.OData.Data;
-using IkeMtz.Samples.OData.Models;
+using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace IkeMtz.Samples.OData.Tests.Integration
 {
   [TestClass]
-  public partial class ItemsTests : BaseUnigrationTests
+  public partial class SchoolsTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Integration")]
@@ -25,13 +25,13 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$count=true");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Item>>(resp);
+      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.AreEqual(envelope.Count, envelope.Value.Count());
       envelope.Value.ToList().ForEach(t =>
       {
-        Assert.IsNotNull(t.Value);
+        Assert.IsNotNull(t.Name);
         Assert.AreNotEqual(Guid.Empty, t.Id);
       });
     }
@@ -41,13 +41,13 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestCategory("SqlIntegration")]
     public async Task GetGroupByItemsTest()
     {
-      var item = Factories.ItemFactory();
+      var item = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Items.Add(item);
+              _ = db.Schools.Add(item);
             });
           })
        );
@@ -56,13 +56,13 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       HttpResponseMessage resp = null;
       try
       {
-        resp = await client.GetAsync($"odata/v1/{nameof(Item)}s?$apply=groupby(({nameof(item.Value)},{nameof(item.TenantId)}))");
+        resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(item.Name)},{nameof(item.TenantId)}))");
       }
       catch (Exception) { }
       var body = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {body}");
       Assert.IsFalse(body.ToLower().Contains("updatedby"));
-      StringAssert.Contains(body, item.Value);
+      StringAssert.Contains(body, item.Name);
     }
 
     [TestMethod]
@@ -70,13 +70,13 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestCategory("SqlIntegration")]
     public async Task GetItemsWithExpansionsTest()
     {
-      var item = Factories.ItemFactory();
+      var item = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Items.Add(item);
+              _ = db.Schools.Add(item);
             });
           })
        );
@@ -84,13 +84,13 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync(
-        $"odata/v1/{nameof(Item)}s?$expand=subItemAs,subItemBs,subItemCs");
+        $"odata/v1/{nameof(School)}s ?$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}");
       TestContext.WriteLine($"Server Reponse: {resp}");
 
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Item>>(resp);
+      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      Assert.AreEqual(1, envelope.Value.First().SubItemAs.Count);
-      StringAssert.Contains(resp, item.Value);
+      Assert.AreEqual(1, envelope.Value.First().SchoolCourses.Count);
+      StringAssert.Contains(resp, item.Name);
     }
 
     [TestMethod]
@@ -98,20 +98,20 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestCategory("SqlIntegration")]
     public async Task GetGroupByItemsTestWithAggregations()
     {
-      var item = Factories.ItemFactory();
+      var item = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Items.Add(item);
+              _ = db.Schools.Add(item);
             });
           })
        );
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Item)}s?$apply=aggregate(id with countdistinct as total)");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       StringAssert.Contains(resp, "total"); 

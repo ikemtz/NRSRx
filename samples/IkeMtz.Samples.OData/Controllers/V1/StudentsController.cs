@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData.Data;
-using IkeMtz.Samples.OData.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
@@ -16,31 +16,31 @@ namespace IkeMtz.Samples.OData.Controllers.V1
   [ApiVersion("1.0")]
   [Authorize]
   [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 6000)]
-  public class ItemsController : ODataController
+  public class StudentsController : ODataController
   {
-    private readonly IDatabaseContext _databaseContext;
+    private readonly DatabaseContext _databaseContext;
 
-    public ItemsController(IDatabaseContext databaseContext)
+    public StudentsController(DatabaseContext databaseContext)
     {
       _databaseContext = databaseContext;
     }
 
-    [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
+    [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet]
-    public IQueryable<Item> Get()
+    public IQueryable<School> Get()
     {
-      return _databaseContext.Items
+      return _databaseContext.Schools
         .AsNoTracking();
     }
 
     [Produces("application/json")]
-    [ProducesResponseType(typeof(ODataEnvelope<Item, Guid>), Status200OK)]
+    [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet("odata/v1/items/nolimit")]
-    public IQueryable<Item> NoLimit()
+    public IQueryable<School> NoLimit()
     {
-      return _databaseContext.Items
+      return _databaseContext.Schools
         .AsNoTracking();
     }
 
