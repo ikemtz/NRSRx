@@ -162,15 +162,20 @@ jobs:
       buildType: 'current'
       artifactName: 'dacpac_drop'
       targetPath: 'samples/IkeMtz.Samples.Db/bin/Debug/'
-  
+
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk 6.0.x'
     inputs:
       version: 6.0.x
 
-  - task: Bash@3
+  - task: DotNetCoreCLI@2
     inputs:
-      filePath: 'samples/IkeMtz.Samples.OData.Tests/publish.sh'
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
 
   - task: Docker@2

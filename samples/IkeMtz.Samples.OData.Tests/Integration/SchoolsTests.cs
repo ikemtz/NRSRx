@@ -72,13 +72,17 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestCategory("SqlIntegration")]
     public async Task GetItemsWithExpansionsTest()
     {
-      var item = Factories.SchoolFactory();
+      var school = Factories.SchoolFactory();
+      var course = Factories.CourseFactory();
+      school.SchoolCourses.Add(Factories.SchoolCourseFactory(school, course));
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Schools.Add(item);
+              _ = db.Schools.Add(school);
+              _ = db.Courses.Add(course);
+              db.SchoolCourses.AddRange(school.SchoolCourses);
             });
           })
        );
@@ -86,13 +90,13 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync(
-        $"odata/v1/{nameof(School)}s ?$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}");
+        $"odata/v1/{nameof(School)}s?$filter=id eq {school.Id}&$expand={nameof(school.SchoolCourses)},{nameof(school.StudentSchools)}");
       TestContext.WriteLine($"Server Reponse: {resp}");
 
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       Assert.AreEqual(1, envelope.Value.First().SchoolCourses.Count);
-      StringAssert.Contains(resp, item.Name);
+      StringAssert.Contains(resp, school.Name);
     }
 
     [TestMethod]
