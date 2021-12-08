@@ -66,6 +66,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       studentCourse.SchoolId = school.Id;
       studentCourse.FinalScore = new Random().Next(0, 5);
       studentCourse.Semester = "Summer";
+      studentCourse.Year = DateTime.UtcNow.Year;
       course.StudentCourses.Add(studentCourse);
       student.StudentCourses.Add(studentCourse);
       return studentCourse;

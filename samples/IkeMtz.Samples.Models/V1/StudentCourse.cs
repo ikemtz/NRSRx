@@ -23,6 +23,8 @@ namespace IkeMtz.Samples.Models.V1
     [Required]
     public double FinalScore { get; set; }
     [Required]
+    public int Year { get; set; }
+    [Required]
     [MaxLength(250)]
     public string CreatedBy { get; set; }
     [Required]
