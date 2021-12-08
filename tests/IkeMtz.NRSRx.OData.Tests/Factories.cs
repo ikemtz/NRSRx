@@ -23,6 +23,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       student.FirstName = Guid.NewGuid().ToString()[..6];
       student.LastName = Guid.NewGuid().ToString()[..6];
       student.BirthDate = DateTime.UtcNow;
+      student.Email = $"{Guid.NewGuid().ToString()[4]}@x{Guid.NewGuid().ToString()[4]}.com";
       return student;
     }
 
@@ -33,6 +34,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       course.Title = Guid.NewGuid().ToString()[..6];
       course.Description = Guid.NewGuid().ToString()[..20];
       course.Department = Guid.NewGuid().ToString()[0..25];
+      course.AvgScore = new Random().NextDouble();
+      course.PassRate = new Random().Next();
       return course;
     }
 
@@ -41,12 +44,31 @@ namespace IkeMtz.NRSRx.OData.Tests
       var schoolCourse = IdentifiableFactory(AuditableFactory<SchoolCourse>());
 
       schoolCourse.Course = course;
+      schoolCourse.CourseId = course.Id;
       schoolCourse.School = school;
+      schoolCourse.SchoolId = school.Id;
       schoolCourse.AvgScore = new Random().Next(0, 5);
       schoolCourse.PassRate = new Random().NextDouble();
       course.SchoolCourses.Add(schoolCourse);
       school.SchoolCourses.Add(schoolCourse);
       return schoolCourse;
+    }
+
+    internal static StudentCourse StudentCourseFactory(Student student, Course course, School school)
+    {
+      var studentCourse = IdentifiableFactory(AuditableFactory<StudentCourse>());
+
+      studentCourse.Course = course;
+      studentCourse.CourseId = course.Id;
+      studentCourse.Student = student;
+      studentCourse.StudentId = student.Id;
+      studentCourse.School = school;
+      studentCourse.SchoolId = school.Id;
+      studentCourse.FinalScore = new Random().Next(0, 5);
+      studentCourse.Semester = "Summer";
+      course.StudentCourses.Add(studentCourse);
+      student.StudentCourses.Add(studentCourse);
+      return studentCourse;
     }
   }
 }

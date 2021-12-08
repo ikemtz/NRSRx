@@ -33,6 +33,7 @@ namespace IkeMtz.Samples.Models.V1
     public DateTime BirthDate { get; set; }
     [Required]
     [MaxLength(250)]
+    [EmailAddress]
     public string Email { get; set; }
     [MaxLength(15)]
     public string Tel1 { get; set; }

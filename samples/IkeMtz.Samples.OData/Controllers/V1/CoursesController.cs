@@ -24,12 +24,12 @@ namespace IkeMtz.Samples.OData.Controllers.V1
       _databaseContext = databaseContext;
     }
 
-    [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
+    [ProducesResponseType(typeof(ODataEnvelope<Course, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet]
-    public IQueryable<School> Get()
+    public IQueryable<Course> Get()
     {
-      return _databaseContext.Schools
+      return _databaseContext.Courses
         .AsNoTracking();
     }
   }

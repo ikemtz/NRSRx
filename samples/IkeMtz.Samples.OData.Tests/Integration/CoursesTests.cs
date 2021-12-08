@@ -14,24 +14,24 @@ using Newtonsoft.Json;
 namespace IkeMtz.Samples.OData.Tests.Integration
 {
   [TestClass]
-  public partial class SchoolsTests : BaseUnigrationTests
+  public partial class CoursesTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("SqlIntegration")]
-    public async Task GetSchoolsTest()
+    public async Task GetCoursesTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>());
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.AreEqual(envelope.Count, envelope.Value.Count());
       envelope.Value.ToList().ForEach(t =>
       {
-        Assert.IsNotNull(t.Name);
+        Assert.IsNotNull(t.Num);
         Assert.AreNotEqual(Guid.Empty, t.Id);
       });
     }
@@ -39,15 +39,15 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("SqlIntegration")]
-    public async Task GetGroupBySchoolsTest()
+    public async Task GetGroupByCoursesTest()
     {
-      var School = Factories.SchoolFactory();
+      var Course = Factories.CourseFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Schools.Add(School);
+              _ = db.Courses.Add(Course);
             });
           })
        );
@@ -56,23 +56,23 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       HttpResponseMessage resp = null;
       try
       {
-        resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(School.Name)},{nameof(School.TenantId)}))");
+        resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
       }
       catch (Exception) { }
       var body = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {body}");
       Assert.IsFalse(body.ToLower().Contains("updatedby"));
-      StringAssert.Contains(body, School.Name);
+      StringAssert.Contains(body, Course.Num);
     }
 
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("SqlIntegration")]
-    public async Task GetSchoolsWithExpansionsTest()
+    public async Task GetCoursesWithExpansionsTest()
     {
       var school = Factories.SchoolFactory();
       var course = Factories.CourseFactory();
-      school.SchoolCourses.Add(Factories.SchoolCourseFactory(school, course));
+      course.SchoolCourses.Add(Factories.SchoolCourseFactory(school, course));
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
@@ -88,34 +88,34 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync(
-        $"odata/v1/{nameof(School)}s?$filter=id eq {school.Id}&$expand={nameof(school.SchoolCourses)},{nameof(school.StudentSchools)}");
+        $"odata/v1/{nameof(Course)}s?$filter=id eq {course.Id}&$expand={nameof(course.SchoolCourses)},{nameof(course.StudentCourses)}");
       TestContext.WriteLine($"Server Reponse: {resp}");
 
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       Assert.AreEqual(1, envelope.Value.First().SchoolCourses.Count);
-      StringAssert.Contains(resp, school.Name);
+      StringAssert.Contains(resp, course.Num);
     }
 
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("SqlIntegration")]
-    public async Task GetGroupBySchoolsTestWithAggregations()
+    public async Task GetGroupByCoursesTestWithAggregations()
     {
-      var School = Factories.SchoolFactory();
+      var Course = Factories.CourseFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Schools.Add(School);
+              _ = db.Courses.Add(Course);
             });
           })
        );
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=aggregate(id with countdistinct as total)");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       StringAssert.Contains(resp, "total");
