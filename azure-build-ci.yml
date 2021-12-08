@@ -1,4 +1,6 @@
 name: 5.6.$(DayOfYear)$(Rev:.rr)
+pool:
+  vmImage: 'windows-latest'
 
 variables:
   ALL_PROJECTS: '**/*.csproj'
