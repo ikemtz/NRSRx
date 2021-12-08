@@ -25,22 +25,22 @@ namespace IkeMtz.Samples.OData.Controllers.V1
       _databaseContext = databaseContext;
     }
 
-    [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
+    [ProducesResponseType(typeof(ODataEnvelope<Student, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet]
-    public IQueryable<School> Get()
+    public IQueryable<Student> Get()
     {
-      return _databaseContext.Schools
+      return _databaseContext.Students
         .AsNoTracking();
     }
 
     [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
-    [HttpGet("odata/v1/items/nolimit")]
-    public IQueryable<School> NoLimit()
+    [HttpGet("odata/v1/students/nolimit")]
+    public IQueryable<Student> NoLimit()
     {
-      return _databaseContext.Schools
+      return _databaseContext.Students
         .AsNoTracking();
     }
 

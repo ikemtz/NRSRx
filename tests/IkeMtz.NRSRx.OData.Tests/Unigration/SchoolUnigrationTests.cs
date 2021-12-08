@@ -20,13 +20,13 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task GetSchoolsTest()
     {
-      var item = Factories.SchoolFactory();
+      var School = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Schools.Add(item);
+              _ = db.Schools.Add(School);
             });
           })
        );
@@ -37,62 +37,63 @@ namespace IkeMtz.NRSRx.OData.Tests
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
-      Assert.AreEqual(item.Name, envelope.Value.First().Name);
+      Assert.AreEqual(School.Name, envelope.Value.First().Name);
     }
 
     [TestMethod]
     [TestCategory("Unigration")]
     public async Task GetGroupBySchoolsTest()
     {
-      var item = Factories.SchoolFactory();
+      var School = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Schools.Add(item);
+              _ = db.Schools.Add(School);
             });
           })
        );
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(item.Name)},{nameof(item.Id)}),aggregate(id with countdistinct as total))");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(School.Name)},{nameof(School.Id)}),aggregate(id with countdistinct as total))");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.Contains(resp, item.Id.ToString());
-      StringAssert.Contains(resp, item.Name);
+      StringAssert.Contains(resp, School.Id.ToString());
+      StringAssert.Contains(resp, School.Name);
     }
 
     [TestMethod]
     [TestCategory("Unigration")]
     public async Task GetSchoolsWithExpansionTest()
     {
-      var item = Factories.SchoolFactory();
+      var schoolCourse = Factories.SchoolCourseFactory(Factories.SchoolFactory(), Factories.CourseFactory());
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Schools.Add(item);
+              _ = db.Schools.Add(schoolCourse.School);
+              _ = db.Courses.Add(schoolCourse.Course);
+              _ = db.SchoolCourses.Add(schoolCourse);
             });
           })
        );
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(schoolCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
-      Assert.AreEqual(item.Name, envelope.Value.First().Name);
-      Assert.AreEqual(item.SchoolCourses.First().Id, envelope.Value.First().SchoolCourses.First().Id);
-      Assert.AreEqual(item.StudentSchools.First().Id, envelope.Value.First().StudentSchools.First().Id);
+      Assert.AreEqual(schoolCourse.School.Name, envelope.Value.First().Name);
+      Assert.AreEqual(schoolCourse.Id, envelope.Value.First().SchoolCourses.First().Id); 
     }
 
     [TestMethod]
     [TestCategory("Unigration")]
-    public async Task GetMaxErrorItemsTest()
+    public async Task GetMaxErrorSchoolsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient();
@@ -108,7 +109,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     [TestMethod]
     [TestCategory("Unigration")]
-    public async Task GetMaxItemsTest()
+    public async Task GetMaxSchoolsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient();
@@ -122,7 +123,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     [TestMethod]
     [TestCategory("Unigration")]
-    public async Task DeleteItemsTest()
+    public async Task DeleteSchoolsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient();

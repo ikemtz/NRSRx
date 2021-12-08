@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.NRSRx.OData.Tests;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData.Data;
 using Microsoft.AspNetCore.TestHost;
@@ -16,13 +17,9 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
   {
     [TestMethod]
     [TestCategory("Unigration")]
-    public async Task GetItemsTest()
+    public async Task GetSchoolsTest()
     {
-      var objA = new School()
-      {
-        Id = Guid.NewGuid(),
-        Name = $"Test- {Guid.NewGuid().ToString()[29..]}",
-      };
+      var objA = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {

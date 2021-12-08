@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var school = IdentifiableFactory(AuditableFactory<School>());
       school.Name = fullName[..6];
       school.FullName = fullName[..30];
-      school.TenantId = "NRSRX";
+      school.TenantId = fullName[..5];
       return school;
     }
 
@@ -44,6 +44,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       schoolCourse.School = school;
       schoolCourse.AvgScore = new Random().Next(0, 5);
       schoolCourse.PassRate = new Random().NextDouble();
+      course.SchoolCourses.Add(schoolCourse);
+      school.SchoolCourses.Add(schoolCourse);
       return schoolCourse;
     }
   }

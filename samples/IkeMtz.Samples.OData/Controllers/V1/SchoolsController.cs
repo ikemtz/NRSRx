@@ -5,6 +5,7 @@ using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,22 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     {
       return _databaseContext.Schools
         .AsNoTracking();
+    }
+
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
+    [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
+    [HttpGet("odata/v1/schools/nolimit")]
+    public IQueryable<School> NoLimit()
+    {
+      return _databaseContext.Schools
+        .AsNoTracking();
+    }
+
+    [HttpDelete]
+    public ActionResult Delete([FromODataUri] Guid key)
+    {
+      return key != Guid.Empty ? Ok() : NotFound();
     }
   }
 }
