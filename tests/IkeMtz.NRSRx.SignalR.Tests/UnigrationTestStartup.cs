@@ -10,9 +10,5 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     public UnigrationTestStartup(IConfiguration configuration) : base(new Startup(configuration))
     {
     }
-    public override void MapHubs(IEndpointRouteBuilder endpoints)
-    {
-      Startup.MapHubs(endpoints);
-    }
   }
 }

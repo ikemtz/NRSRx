@@ -2,6 +2,7 @@ using IkeMtz.NRSRx.Core.SignalR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -27,9 +28,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
       base.Configure(app, env);
     }
 
-    public override void SetupAuthentication(AuthenticationBuilder builder)
-    {
+    public override void MapHubs(IEndpointRouteBuilder endpoints) =>
+      Startup.MapHubs(endpoints);
+
+    public override void SetupAuthentication(AuthenticationBuilder builder) =>
       builder.SetupTestAuthentication(Configuration, TestContext);
-    }
   }
 }
