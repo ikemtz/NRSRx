@@ -58,3 +58,4 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
   }
+}
