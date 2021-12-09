@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
 namespace IkeMtz.NRSRx.Core.Jwt
 {
-  public interface ITokenValidtor
+  public interface ITokenValidator
   {
     TokenValidationParameters TokenValidationParameters { get; }
 
