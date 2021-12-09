@@ -1,18 +1,20 @@
 using Microsoft.EntityFrameworkCore;
-using IkeMtz.Samples.OData.Models;
+using V1 = IkeMtz.Samples.Models.V1;
 
 namespace IkeMtz.Samples.OData.Data
 {
-  public class DatabaseContext : DbContext, IDatabaseContext
+  public class DatabaseContext : DbContext
   {
     public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<Item> Items { get; set; }
-    public virtual DbSet<SubItemA> SubItemAs { get; set; }
-    public virtual DbSet<SubItemB> SubItemBs { get; set; }
-    public virtual DbSet<SubItemC> SubItemCs { get; set; }
+    public virtual DbSet<V1.Course> Courses { get; set; }
+    public virtual DbSet<V1.SchoolCourse> SchoolCourses { get; set; }
+    public virtual DbSet<V1.School> Schools { get; set; }
+    public virtual DbSet<V1.StudentCourse> StudentCourses { get; set; }
+    public virtual DbSet<V1.Student> Students { get; set; }
+    public virtual DbSet<V1.StudentSchool> StudentSchools { get; set; }
   }
 }

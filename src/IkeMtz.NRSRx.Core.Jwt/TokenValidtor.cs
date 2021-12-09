@@ -8,14 +8,19 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace IkeMtz.NRSRx.Core.Jwt
 {
-  public static class TokenValidtor
+  public class TokenValidtor : ITokenValidtor
   {
-    public static TokenValidationParameters TokenValidationParameters { get; private set; }
-    private static ConfigurationManager<OpenIdConnectConfiguration> _configurationManager;
+    public TokenValidationParameters TokenValidationParameters { get; private set; }
+    private ConfigurationManager<OpenIdConnectConfiguration> _configurationManager;
     static TokenValidtor() { }
-    public static async Task InitAsync(string metaDataAddress, string issuer, string audience)
+    public Task InitAsync(string metaDataAddress, string audience)
     {
-      var openIdConfigurationRetriever = new OpenIdConnectConfigurationRetriever();
+      return InitAsync(metaDataAddress, null, audience);
+    }
+
+    public async Task InitAsync(string metaDataAddress, string issuer, string audience)
+    {
+      var openIdConfigurationRetriever = new OpenIdConnectConfigurationRetriever() { };
       _configurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(metaDataAddress, openIdConfigurationRetriever)
       {
         AutomaticRefreshInterval = new TimeSpan(0, 15, 0),
@@ -25,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Jwt
       var openIdConnectConfiguration = await _configurationManager.GetConfigurationAsync().ConfigureAwait(false);
       TokenValidationParameters = new TokenValidationParameters()
       {
-        ValidIssuer = issuer,
+        ValidIssuer = issuer ?? openIdConnectConfiguration.Issuer,
         ValidAudience = audience,
         IssuerSigningKeys = openIdConnectConfiguration.SigningKeys,
         ValidateIssuer = true,
@@ -37,8 +42,12 @@ namespace IkeMtz.NRSRx.Core.Jwt
       };
     }
 
-    public static bool ValidateToken(string token)
+    public bool ValidateToken(string token)
     {
+      if (_configurationManager == null)
+      {
+        throw new InvalidProgramException("Token Validator has to be initialized first.");
+      }
       _configurationManager.RequestRefresh();
       var handler = new JwtSecurityTokenHandler();
       var principal = Thread.CurrentPrincipal = handler.ValidateToken(token, TokenValidationParameters, out _);

@@ -3,8 +3,8 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.Tests;
-using IkeMtz.Samples.Models;
+using IkeMtz.NRSRx.OData.Tests;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.WebApi;
 using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.TestHost;
@@ -17,26 +17,26 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   {
     [TestMethod]
     [TestCategory("Unigration")]
-    public async Task GetMultiTenantItemTestAsync()
+    public async Task GetMultiTenantSchoolTestAsync()
     {
-      var item = Factories.ItemFactory();
+      var item = Factories.SchoolFactory();
       item.TenantId = "a-b-c";
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>
           {
-            _ = db.Items.Add(item);
+            _ = db.Schools.Add(item);
           });
         }));
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("tids", item.TenantId) }));
 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(Item)}s.json?id={item.Id}&tid={item.TenantId}");
-      var httpItem = await DeserializeResponseAsync<Item>(resp);
+      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}");
+      var httpSchool = await DeserializeResponseAsync<School>(resp);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
-      Assert.AreEqual(item.Value, httpItem.Value);
+      Assert.AreEqual(item.Name, httpSchool.Name);
     }
 
     [TestMethod]
@@ -47,7 +47,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(Item)}s.json?id={Guid.NewGuid()}&tid=xyz");
+      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={Guid.NewGuid()}&tid=xyz");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
@@ -58,20 +58,20 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     [TestCategory("Unigration")]
     public async Task NoAccessToTenantTestAsync()
     {
-      var item = Factories.ItemFactory();
+      var item = Factories.SchoolFactory();
       item.TenantId = "a-b-c";
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>
           {
-            _ = db.Items.Add(item);
+            _ = db.Schools.Add(item);
           });
         }));
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("tids", item.TenantId) }));
       //Get 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(Item)}s.json?id={item.Id}&tid={item.TenantId}x");
+      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}x");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
@@ -86,7 +86,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(Item)}s.json?id={Guid.NewGuid()}");
+      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={Guid.NewGuid()}");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);

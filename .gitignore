@@ -19,3 +19,5 @@ TestResults/
 *.zip
 /templates/NRSRx.Extensions/ProjectTemplates/netcoreapp3.1
 *.pubxml
+dist
+/samples/IkeMtz.Samples.Db/IkeMtz.Samples.Db.Azure.publish.xml

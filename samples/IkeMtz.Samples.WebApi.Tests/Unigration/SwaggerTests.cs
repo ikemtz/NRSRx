@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;
-using IkeMtz.Samples.Models;
+using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -25,7 +25,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationWebApiTestStartup>());
       var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
-      Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Item)));
+      Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
     }
   }

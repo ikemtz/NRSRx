@@ -9,9 +9,6 @@
     <DocumentationFile>./IkeMtz.Samples.OData.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\tests\IkeMtz.NRSRx.OData.Tests\Factories.cs" Link="Factories.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
     <PackageReference Include="coverlet.collector" Version="3.1.0">
@@ -23,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
+    <ProjectReference Include="..\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />
     <ProjectReference Include="..\IkeMtz.Samples.OData\IkeMtz.Samples.OData.csproj" />
   </ItemGroup>
 </Project>

@@ -67,8 +67,10 @@ namespace IkeMtz.NRSRx.Core.Web
             options.Authority = Configuration.GetValue<string>("IdentityProvider");
             options.TokenValidationParameters = new TokenValidationParameters()
             {
+              ValidateIssuer = true,
               NameClaimType = JwtNameClaimMapping,
               ValidAudiences = GetIdentityAudiences(),
+              
             };
           });
     }

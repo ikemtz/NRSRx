@@ -136,6 +136,36 @@ jobs:
     inputs:
       ArtifactName: 'symbol_drop'
 
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
+      workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Sample OData Artifact'
+    inputs:
+      ArtifactName: 'sample_odata_drop'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
+      workingDirectory: 'samples/IkeMtz.Samples.WebApi.Tests/'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Sample WebApi Artifact'
+    inputs:
+      ArtifactName: 'sample_webapi_drop'
+
   - task: GitTag@5
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
@@ -162,16 +192,32 @@ jobs:
       buildType: 'current'
       artifactName: 'dacpac_drop'
       targetPath: 'samples/IkeMtz.Samples.Db/bin/Debug/'
-  
+
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk 6.0.x'
     inputs:
       version: 6.0.x
 
-  - task: Bash@3
+  - task: DotNetCoreCLI@2
     inputs:
-      filePath: 'samples/IkeMtz.Samples.OData.Tests/publish.sh'
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
+      workingDirectory: 'samples/IkeMtz.Samples.WebApi.Tests/'
+
 
   - task: Docker@2
     inputs:
