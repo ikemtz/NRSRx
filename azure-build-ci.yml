@@ -96,7 +96,7 @@ jobs:
     inputs:
       command: test
       projects: '$(TEST_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
+      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test - Sonar'
@@ -141,7 +141,7 @@ jobs:
       command: 'publish'
       publishWebProjects: false
       projects: 'samples/IkeMtz.Samples.OData/IkeMtz.Samples.OData.csproj'
-      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata'
+      arguments: '--no-build --no-restore --runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata'
       zipAfterPublish: false
       modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.OData/'
@@ -158,7 +158,7 @@ jobs:
       command: 'publish'
       publishWebProjects: false
       projects: 'samples/IkeMtz.Samples.WebApi/IkeMtz.Samples.WebApi.csproj'
-      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi'
+      arguments: '--no-build --no-restore--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi'
       zipAfterPublish: false
       modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.WebApi/'
