@@ -141,7 +141,7 @@ jobs:
       command: 'publish'
       publishWebProjects: false
       projects: 'samples/IkeMtz.Samples.OData/IkeMtz.Samples.OData.csproj'
-      arguments: '--no-build --no-restore --runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata'
+      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata'
       zipAfterPublish: false
       modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.OData/'
@@ -158,7 +158,7 @@ jobs:
       command: 'publish'
       publishWebProjects: false
       projects: 'samples/IkeMtz.Samples.WebApi/IkeMtz.Samples.WebApi.csproj'
-      arguments: '--no-build --no-restore--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi'
+      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi'
       zipAfterPublish: false
       modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.WebApi/'
