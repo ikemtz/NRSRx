@@ -136,6 +136,36 @@ jobs:
     inputs:
       ArtifactName: 'symbol_drop'
 
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
+      workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Sample OData Artifact'
+    inputs:
+      ArtifactName: 'sample_odata_drop'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
+      workingDirectory: 'samples/IkeMtz.Samples.WebApi.Tests/'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Sample WebApi Artifact'
+    inputs:
+      ArtifactName: 'sample_webapi_drop'
+
   - task: GitTag@5
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
@@ -194,35 +224,6 @@ jobs:
       containerRegistry: 'Azure Container Registry'
       command: 'build'
       Dockerfile: '**/integration-tests-ci.Dockerfile'
-
-- job: sample_sites_docker_builds
-  displayName: NRSRx Sample Sites Docker Builds
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  dependsOn:
-  - APIs
-  pool:
-    vmImage: ubuntu-latest
-
-  steps:
-  - task: Docker@2
-    inputs:
-      containerRegistry: 'IkeMtz Docker Hub'
-      repository: 'ikemtz/nrsrx-sample-odata-sql'
-      command: 'buildAndPush'
-      Dockerfile: '**/samples.odata.Dockerfile'
-      tags: |
-        $(Build.BuildId)
-        latest
-
-  - task: Docker@2
-    inputs:
-      containerRegistry: 'IkeMtz Docker Hub'
-      repository: 'ikemtz/nrsrx-sample-webapi-sql'
-      command: 'buildAndPush'
-      Dockerfile: '**/samples.webapi.Dockerfile'
-      tags: |
-        $(Build.BuildId)
-        latest
 
 trigger:
   batch: true
