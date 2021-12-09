@@ -2,7 +2,7 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.Samples.Events.Redis.Publishers;
-using IkeMtz.Samples.Models;
+using IkeMtz.Samples.Models.V1;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
@@ -14,24 +14,24 @@ namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
     [TestCategory("Unit")]
     public void TestCreatePublisher()
     {
-      var (Connection, _) = MockRedisStreamFactory<Item, CreatedEvent>.CreateConnection();
-      var publisher = new ItemCreatedPublisher(Connection.Object);
+      var (Connection, _) = MockRedisStreamFactory<Student, CreatedEvent>.CreateConnection();
+      var publisher = new StudentCreatedPublisher(Connection.Object);
       Assert.AreEqual(Connection.Object.GetDatabase(), publisher.Database);
     }
     [TestMethod]
     [TestCategory("Unit")]
     public void TestUpdatePublisher()
     {
-      var (Connection, _) = MockRedisStreamFactory<Item, UpdatedEvent>.CreateConnection();
-      var publisher = new ItemUpdatedPublisher(Connection.Object);
+      var (Connection, _) = MockRedisStreamFactory<Student, UpdatedEvent>.CreateConnection();
+      var publisher = new StudentUpdatedPublisher(Connection.Object);
       Assert.AreEqual(Connection.Object.GetDatabase(), publisher.Database);
     }
     [TestMethod]
     [TestCategory("Unit")]
     public void TestDeletedPublisher()
     {
-      var (Connection, _) = MockRedisStreamFactory<Item, DeletedEvent>.CreateConnection();
-      var publisher = new ItemDeletedPublisher(Connection.Object);
+      var (Connection, _) = MockRedisStreamFactory<Student, DeletedEvent>.CreateConnection();
+      var publisher = new StudentDeletedPublisher(Connection.Object);
       Assert.AreEqual(Connection.Object.GetDatabase(), publisher.Database);
     }
   }

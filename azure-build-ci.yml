@@ -178,6 +178,17 @@ jobs:
       modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
 
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj'
+      arguments: '--runtime linux-x64'
+      zipAfterPublish: false
+      modifyOutputPath: false
+      workingDirectory: 'samples/IkeMtz.Samples.WebApi.Tests/'
+
+
   - task: Docker@2
     inputs:
       containerRegistry: 'Azure Container Registry'

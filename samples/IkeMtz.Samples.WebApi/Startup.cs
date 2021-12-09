@@ -29,10 +29,5 @@ namespace IkeMtz.Samples.WebApi
     }
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
       this.SetupElasticsearch(app);
-
-    public override void SetupMiscDependencies(IServiceCollection services)
-    {
-      _ = services.AddScoped<IDatabaseContext, DatabaseContext>();
-    }
   }
 }

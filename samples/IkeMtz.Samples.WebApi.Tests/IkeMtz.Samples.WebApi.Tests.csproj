@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -9,7 +9,7 @@
     <DocumentationFile>./IkeMtz.Samples.WebApi.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\tests\IkeMtz.NRSRx.WebApi.Tests\Factories.cs" Link="Factories.cs" />
+    <Compile Include="..\..\tests\IkeMtz.NRSRx.OData.Tests\Factories.cs" Link="Factories.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
+    <ProjectReference Include="..\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />
     <ProjectReference Include="..\IkeMtz.Samples.WebApi\IkeMtz.Samples.WebApi.csproj" />
   </ItemGroup>
 </Project>

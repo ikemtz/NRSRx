@@ -18,6 +18,8 @@ namespace IkeMtz.Samples.Models.V1
     [Required]
     public Guid CourseId { get; set; }
     [Required]
+    public Guid SchoolCourseId { get; set; }
+    [Required]
     [MaxLength(50)]
     public string Semester { get; set; }
     [Required]
@@ -35,5 +37,6 @@ namespace IkeMtz.Samples.Models.V1
     public virtual Student Student { get; set; }
     public virtual School School { get; set; }
     public virtual Course Course { get; set; }
+    public virtual SchoolCourse SchoolCourse { get; set; }
   }
 }

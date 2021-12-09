@@ -9,12 +9,16 @@
     <DocumentationFile>./IkeMtz.NRSRx.WebApi.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\ItemsController.cs" Link="SampleWeb\Controllers\V1\ItemsController.cs" />
+    <Compile Remove="SampleWeb\Models\**" />
+    <EmbeddedResource Remove="SampleWeb\Models\**" />
+    <None Remove="SampleWeb\Models\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\CoursesController.cs" Link="SampleWeb\Controllers\V1\CoursesController.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Data\DatabaseContext.cs" Link="SampleWeb\Data\DatabaseContext.cs" />
-    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Data\IDatabaseContext.cs" Link="SampleWeb\Data\IDatabaseContext.cs" />
-    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Models\Item.cs" Link="SampleWeb\Models\Item.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Startup.cs" Link="SampleWeb\Startup.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\VersionDefinitions.cs" Link="SampleWeb\VersionDefinitions.cs" />
+    <Compile Include="..\IkeMtz.NRSRx.OData.Tests\Factories.cs" Link="Factories.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="3.1.0">
@@ -27,6 +31,7 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\samples\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
@@ -35,6 +40,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SampleWeb\Data\" />
-    <Folder Include="SampleWeb\Models\" />
   </ItemGroup>
 </Project>

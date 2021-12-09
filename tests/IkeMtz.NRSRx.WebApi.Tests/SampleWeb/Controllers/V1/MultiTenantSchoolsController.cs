@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.WebApi.Tests.SampleWeb;
-using IkeMtz.Samples.Models;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,21 +14,21 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
-  public class MultiTenantItemsController : ControllerBase
+  public class MultiTenantSchoolsController : ControllerBase
   {
-    private readonly IDatabaseContext _databaseContext;
-    public MultiTenantItemsController(IDatabaseContext databaseContext)
+    private readonly DatabaseContext _databaseContext;
+    public MultiTenantSchoolsController(DatabaseContext databaseContext)
     {
       _databaseContext = databaseContext;
     }
 
-    // Get api/MultiTenantItems
+    // Get api/MultiTenantSchools
     [HttpGet]
-    [ProducesResponseType(Status200OK, Type = typeof(Item))]
+    [ProducesResponseType(Status200OK, Type = typeof(School))]
     [SampleTenantFilter()]
     public async Task<ActionResult> Get([FromQuery] Guid id, [FromQuery] string tid)
     {
-      var obj = await _databaseContext.Items
+      var obj = await _databaseContext.Schools
         .AsNoTracking()
         .FirstOrDefaultAsync(t => t.Id == id && t.TenantId == tid)
         .ConfigureAwait(false);

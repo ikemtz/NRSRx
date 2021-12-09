@@ -2,12 +2,12 @@ using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.WebApi;
+using IkeMtz.Samples.Models.V1;
+using IkeMtz.Samples.WebApi.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using IkeMtz.Samples.WebApi.Data;
-using IkeMtz.Samples.Models;
 using static Microsoft.AspNetCore.Http.StatusCodes;
-using Microsoft.AspNetCore.Authorization;
 
 namespace IkeMtz.Samples.WebApi.Controllers.V1
 {
@@ -15,58 +15,58 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
-  public class ItemsController : ControllerBase
+  public class CoursesController : ControllerBase
   {
-    private readonly IDatabaseContext _databaseContext;
-    public ItemsController(IDatabaseContext databaseContext)
+    private readonly DatabaseContext _databaseContext;
+    public CoursesController(DatabaseContext databaseContext)
     {
       _databaseContext = databaseContext;
     }
 
-    // Get api/Items
+    // Get api/Courses
     [HttpGet]
-    [ProducesResponseType(Status200OK, Type = typeof(Item))]
-    public async Task<ActionResult> Get([FromQuery]Guid id)
+    [ProducesResponseType(Status200OK, Type = typeof(Course))]
+    public async Task<ActionResult> Get([FromQuery] Guid id)
     {
-      var obj = await _databaseContext.Items
+      var obj = await _databaseContext.Courses
         .AsNoTracking()
         .FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
       return Ok(obj);
     }
 
-    // Post api/Items
+    // Post api/Courses
     [HttpPost]
-    [ProducesResponseType(Status200OK, Type = typeof(Item))]
+    [ProducesResponseType(Status200OK, Type = typeof(Course))]
     [ValidateModel]
-    public async Task<ActionResult> Post([FromBody] Item value)
+    public async Task<ActionResult> Post([FromBody] Course value)
     {
-      var dbContextObject = _databaseContext.Items.Add(value);
+      var dbContextObject = _databaseContext.Courses.Add(value);
       _ = await _databaseContext.SaveChangesAsync()
           .ConfigureAwait(false);
       return Ok(dbContextObject.Entity);
     }
 
-    // Put api/Items
+    // Put api/Courses
     [HttpPut]
-    [ProducesResponseType(Status200OK, Type = typeof(Item))]
+    [ProducesResponseType(Status200OK, Type = typeof(Course))]
     [ValidateModel]
-    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] Item value)
+    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] Course value)
     {
-      var obj = await _databaseContext.Items.FirstOrDefaultAsync(t => t.Id == id)
+      var obj = await _databaseContext.Courses.FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
-      SimpleMapper<Item>.Instance.ApplyChanges(value, obj);
+      SimpleMapper<Course>.Instance.ApplyChanges(value, obj);
       _ = await _databaseContext.SaveChangesAsync()
           .ConfigureAwait(false);
       return Ok(obj);
     }
 
-    // Put api/Items
+    // Put api/Courses
     [HttpDelete]
-    [ProducesResponseType(Status200OK, Type = typeof(Item))]
+    [ProducesResponseType(Status200OK, Type = typeof(Course))]
     public async Task<ActionResult> Delete([FromQuery] Guid id)
     {
-      var obj = await _databaseContext.Items.FirstOrDefaultAsync(t => t.Id == id)
+      var obj = await _databaseContext.Courses.FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
       _ = _databaseContext.Remove(obj);
       _ = await _databaseContext.SaveChangesAsync()
