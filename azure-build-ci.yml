@@ -96,7 +96,7 @@ jobs:
     inputs:
       command: test
       projects: '$(TEST_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
+      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test - Sonar'
@@ -140,11 +140,11 @@ jobs:
     inputs:
       command: 'publish'
       publishWebProjects: false
-      projects: 'samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj'
+      projects: 'samples/IkeMtz.Samples.OData/IkeMtz.Samples.OData.csproj'
       arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata'
       zipAfterPublish: false
       modifyOutputPath: false
-      workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
+      workingDirectory: 'samples/IkeMtz.Samples.OData/'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Sample OData Artifact'
@@ -157,11 +157,11 @@ jobs:
     inputs:
       command: 'publish'
       publishWebProjects: false
-      projects: 'samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj'
+      projects: 'samples/IkeMtz.Samples.WebApi/IkeMtz.Samples.WebApi.csproj'
       arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi'
       zipAfterPublish: false
       modifyOutputPath: false
-      workingDirectory: 'samples/IkeMtz.Samples.WebApi.Tests/'
+      workingDirectory: 'samples/IkeMtz.Samples.WebApi/'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Sample WebApi Artifact'
