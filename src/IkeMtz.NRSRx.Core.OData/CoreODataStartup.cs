@@ -34,6 +34,7 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
       SetupSwagger(services);
+      SetupHealthChecks(services);
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -56,7 +57,11 @@ namespace IkeMtz.NRSRx.Core.OData
           .UseSwagger()
           .UseSwaggerUI(SetupSwaggerUI);
 
-      _ = app.UseEndpoints(endpoints => endpoints.MapControllers());
+      _ = app.UseEndpoints(endpoints =>
+      {
+        _ = endpoints.MapHealthChecks("/health");
+        _ = endpoints.MapControllers();
+      });
     }
 
     public virtual void SetupSwaggerUI(SwaggerUIOptions options)
@@ -71,7 +76,7 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupSwaggerCommonUi(options);
     }
 
-    public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
+    public virtual IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
     {
       var mvcBuilder = services
            .AddMvc();
@@ -93,7 +98,7 @@ namespace IkeMtz.NRSRx.Core.OData
       return mvcBuilder;
     }
 
-    public void SetupSwagger(IServiceCollection services)
+    public virtual void SetupSwagger(IServiceCollection services)
     {
       _ = services
         .AddHttpClient()

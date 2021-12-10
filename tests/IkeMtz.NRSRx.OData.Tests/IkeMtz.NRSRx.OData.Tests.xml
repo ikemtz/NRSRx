@@ -4,5 +4,47 @@
         <name>IkeMtz.NRSRx.OData.Tests</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.OData.Tests.SnapShotResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.OData.Tests.SnapShotResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.OData.Tests.SnapShotResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.OData.Tests.SnapShotResources.ODataDebugPage">
+             <summary>
+               Looks up a localized string similar to &lt;html&gt;
+            &lt;head&gt;
+                &lt;title&gt;OData Endpoint Routing Debugger&lt;/title&gt;
+                &lt;style&gt;
+                    table {
+                        font-family: arial, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    td,
+                    th {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+                    tr:nth-child(even) {
+                        background-color: #dddddd;
+                    }
+                &lt;/style&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+                &lt;h1 id=&quot;odata&quot;&gt;OData Endpoint Mappings&lt;/ [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
     </members>
 </doc>

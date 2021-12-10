@@ -15,6 +15,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\CoursesController.cs" Link="SampleWeb\Controllers\V1\CoursesController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\SchoolsController.cs" Link="SampleWeb\Controllers\V1\SchoolsController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\StudentsController.cs" Link="SampleWeb\Controllers\V1\StudentsController.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Data\DatabaseContext.cs" Link="SampleWeb\Data\DatabaseContext.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Startup.cs" Link="SampleWeb\Startup.cs" />
     <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\VersionDefinitions.cs" Link="SampleWeb\VersionDefinitions.cs" />
