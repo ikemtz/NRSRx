@@ -55,4 +55,17 @@
     <Folder Include="SampleWeb\Controllers\V1\" />
     <Folder Include="SampleWeb\Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="SnapShotResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SnapShotResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="SnapShotResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SnapShotResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

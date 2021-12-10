@@ -1,6 +1,5 @@
 using IkeMtz.NRSRx.Core.Unigration.SignalR;
 using IkeMtz.Samples.SignalR;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 
 namespace IkeMtz.NRSRx.SignalR.Tests

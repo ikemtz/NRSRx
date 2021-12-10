@@ -24,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.Web
   {
     public abstract string MicroServiceTitle { get; }
     public abstract Assembly StartupAssembly { get; }
-    public virtual string SwaggerUiRoutePrefix { get; } = string.Empty; 
+    public virtual string SwaggerUiRoutePrefix { get; } = string.Empty;
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
 
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
@@ -70,7 +70,6 @@ namespace IkeMtz.NRSRx.Core.Web
               ValidateIssuer = true,
               NameClaimType = JwtNameClaimMapping,
               ValidAudiences = GetIdentityAudiences(),
-              
             };
           });
     }
@@ -85,6 +84,11 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupMvcOptions(IServiceCollection services, MvcOptions options)
     {
+    }
+
+    public virtual void SetupHealthChecks(IServiceCollection services)
+    {
+      services.AddHealthChecks();
     }
 
     public virtual void SetupMiscDependencies(IServiceCollection services) { }

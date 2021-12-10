@@ -31,6 +31,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
+      SetupHealthChecks(services);
       _ = SetupCoreEndpointFunctionality(services)
          .AddApplicationPart(StartupAssembly)
          .AddControllersAsServices();
@@ -56,6 +57,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseSwaggerUI(options => SetupSwaggerUI(options, provider))
        .UseEndpoints(endpoints =>
       {
+        _ = endpoints.MapHealthChecks("/health");
         _ = endpoints.MapControllers();
       });
     }

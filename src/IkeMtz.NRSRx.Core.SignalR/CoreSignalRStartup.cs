@@ -25,6 +25,7 @@ namespace IkeMtz.NRSRx.Core.SignalR
     {
       SetupLogging(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
+      SetupHealthChecks(services);
       _ = services.AddSignalR();
     }
 
@@ -34,7 +35,11 @@ namespace IkeMtz.NRSRx.Core.SignalR
         .UseRouting()
         .UseAuthentication()
         .UseAuthorization()
-        .UseEndpoints(MapHubs);
+        .UseEndpoints(endpoints =>
+        {
+          _ = endpoints.MapHealthChecks("/health");
+          MapHubs(endpoints);
+        });
     }
 
     public override void SetupAuthentication(AuthenticationBuilder builder)

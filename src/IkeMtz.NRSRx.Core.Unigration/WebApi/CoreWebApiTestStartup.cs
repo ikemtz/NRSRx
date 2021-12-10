@@ -28,6 +28,12 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     protected TestContext TestContext { get; private set; }
 
+    public override void SetupHealthChecks(IServiceCollection services)
+    {
+      Startup.SetupHealthChecks(services);
+      base.SetupHealthChecks(services);
+    }
+
     public override void SetupMiscDependencies(IServiceCollection services)
     {
       Startup.SetupMiscDependencies(services);
