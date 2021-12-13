@@ -141,7 +141,7 @@ jobs:
       command: 'publish'
       publishWebProjects: false
       projects: 'samples/IkeMtz.Samples.OData/IkeMtz.Samples.OData.csproj'
-      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata'
+      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata --no-self-contained'
       zipAfterPublish: false
       modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.OData/'
@@ -153,12 +153,19 @@ jobs:
       ArtifactName: 'sample_odata_drop'
       publishLocation: 'Container'
 
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Sample OData Artifact'
+    inputs:
+      PathtoPublish: 'samples/IkeMtz.Samples.OData/ci.Dockerfile'
+      ArtifactName: 'sample_odata_drop'
+      publishLocation: 'Container'
+
   - task: DotNetCoreCLI@2
     inputs:
       command: 'publish'
       publishWebProjects: false
       projects: 'samples/IkeMtz.Samples.WebApi/IkeMtz.Samples.WebApi.csproj'
-      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi'
+      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi --no-self-contained'
       zipAfterPublish: false
       modifyOutputPath: false
       workingDirectory: 'samples/IkeMtz.Samples.WebApi/'
@@ -167,6 +174,13 @@ jobs:
     displayName: 'Publish Sample WebApi Artifact'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapi'
+      ArtifactName: 'sample_webapi_drop'
+      publishLocation: 'Container'
+  
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Sample WebApi Dockerfile'
+    inputs:
+      PathtoPublish: 'samples/IkeMtz.Samples.WebApi/ci.Dockerfile'
       ArtifactName: 'sample_webapi_drop'
       publishLocation: 'Container'
 

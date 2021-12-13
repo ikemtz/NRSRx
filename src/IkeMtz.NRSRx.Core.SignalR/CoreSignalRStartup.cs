@@ -26,6 +26,7 @@ namespace IkeMtz.NRSRx.Core.SignalR
       SetupLogging(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupHealthChecks(services);
+      SetupMiscDependencies(services);
       _ = services.AddSignalR();
     }
 
