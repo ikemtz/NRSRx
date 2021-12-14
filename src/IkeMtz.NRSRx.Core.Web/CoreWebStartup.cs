@@ -121,6 +121,7 @@ namespace IkeMtz.NRSRx.Core.Web
       // add a custom operation filter which sets default values
       options.OperationFilter<SwaggerDefaultValues>();
       options.OperationFilter<SwaggerAuthorizeOperationFilter>();
+      options.DocumentFilter<SwaggerReverseProxyDocumentFilter>();
 
       if (IncludeXmlCommentsInSwaggerDocs)
       {
