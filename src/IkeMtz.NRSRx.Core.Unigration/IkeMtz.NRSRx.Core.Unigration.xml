@@ -19,5 +19,19 @@
             <param name="version"></param>
             <returns></returns>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestReverseProxyJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
+            <summary>
+            Validates the support for reverse proxy in the OpenApiDocument in JSON format
+            </summary>
+            <param name="testServer"></param>
+            <param name="version"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.FixSwaggerDocument(System.String)">
+            <summary>
+            This was required because there's a type mismatch on the OpenApi Doc spec
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

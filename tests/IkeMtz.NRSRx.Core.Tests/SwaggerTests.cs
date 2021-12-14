@@ -17,6 +17,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
+      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv);
       Assert.IsNotNull(doc);
     }
 
