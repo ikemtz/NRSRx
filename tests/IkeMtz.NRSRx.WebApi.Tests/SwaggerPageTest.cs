@@ -18,6 +18,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var htmlPage = await SwaggerUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
       var jsonDoc = await SwaggerUnitTests.TestJsonDocAsync(srv);
+      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv);
       Assert.IsNotNull(jsonDoc);
     }
   }

@@ -25,6 +25,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationWebApiTestStartup>());
       var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
+      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv);
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
     }

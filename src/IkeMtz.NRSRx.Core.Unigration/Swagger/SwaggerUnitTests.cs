@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -48,15 +49,50 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
 
-      // This was required because there's a type mismatch on the OpenApi Doc spec
-      var additionPropertiesPattern = @",\s*\""additionalProperties\""\: false";
-      result = Regex.Replace(result, additionPropertiesPattern, "");
-      var enumPattern = @"""enum"":[\s\[\d,\]]*";
-      result = Regex.Replace(result, enumPattern, "");
+      result = FixSwaggerDocument(result);
 
       var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
       Assert.AreEqual($"{version}.0", doc.Info.Version);
       return doc;
+    }
+
+
+    /// <summary>
+    /// Validates the support for reverse proxy in the OpenApiDocument in JSON format
+    /// </summary>
+    /// <param name="testServer"></param>
+    /// <param name="version"></param>
+    /// <returns></returns>
+    public static async Task<OpenApiDocument> TestReverseProxyJsonDocAsync(TestServer testServer, int version = 1)
+    {
+      testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
+      var client = testServer.CreateClient();
+      //Get 
+      var resp = await client.GetAsync($"/swagger/v{version}/swagger.json").ConfigureAwait(true);
+
+      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
+      var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
+
+      result = FixSwaggerDocument(result);
+
+      var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
+
+      var paths = doc.Paths.Select(t => t.Key).ToList();
+      paths.ForEach(x => StringAssert.StartsWith(x, "/./", $"Path {x} does not start with the desired '/./'"));
+      return doc;
+    }
+
+    /// <summary>
+    /// This was required because there's a type mismatch on the OpenApi Doc spec
+    /// </summary>
+    /// <returns></returns>
+    public static string FixSwaggerDocument(string result)
+    {
+      var additionPropertiesPattern = @",\s*\""additionalProperties\""\: false";
+      result = Regex.Replace(result, additionPropertiesPattern, "");
+      var enumPattern = @"""enum"":[\s\[\d,\]]*";
+      result = Regex.Replace(result, enumPattern, "");
+      return result;
     }
   }
 }
