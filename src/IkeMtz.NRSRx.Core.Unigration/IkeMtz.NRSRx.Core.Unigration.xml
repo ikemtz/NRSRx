@@ -19,11 +19,12 @@
             <param name="version"></param>
             <returns></returns>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestReverseProxyJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestReverseProxyJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.String,System.Int32)">
             <summary>
             Validates the support for reverse proxy in the OpenApiDocument in JSON format
             </summary>
             <param name="testServer"></param>
+            <param name="swaggerReverseProxyDocumentFilter"></param>
             <param name="version"></param>
             <returns></returns>
         </member>

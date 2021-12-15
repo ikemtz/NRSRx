@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.Samples.WebApi.Tests.Unigration
@@ -23,9 +26,16 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task GetSwaggerJsonTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationWebApiTestStartup>());
+      var myConfiguration = new Dictionary<string, string>
+      {
+        {SwaggerReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
+      };
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationWebApiTestStartup>()
+        .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
+          configurationBuilder.AddInMemoryCollection(myConfiguration)
+        ));
       var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
-      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv);
+      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv, "/my-api");
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
     }

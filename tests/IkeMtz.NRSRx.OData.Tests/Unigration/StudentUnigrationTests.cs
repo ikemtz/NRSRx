@@ -141,15 +141,11 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient();
       var resp = await client.GetAsync($"$odata");
       var data = await resp.Content.ReadAsStringAsync();
-      var dataLines = data.Split("\n").Select(x => x.Trim()).ToArray();
-      var snapShotLines = SnapShotResources.ODataDebugPage.Split("\n").Select(x => x.Trim()).ToArray();
       TestContext.WriteLine($"Server Reponse: {data}");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
 
-      for (int i = 0; dataLines.Length > i; i++)
-      {
-        Assert.AreEqual(snapShotLines[i], dataLines[i]);
-      }
+      SnapshotAsserter.AssertEachLineIsEqual(SnapShotResources.ODataDebugPage, data);
     }
   }
 }
+

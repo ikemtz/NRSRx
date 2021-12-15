@@ -61,10 +61,15 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
     /// Validates the support for reverse proxy in the OpenApiDocument in JSON format
     /// </summary>
     /// <param name="testServer"></param>
+    /// <param name="swaggerReverseProxyDocumentFilter"></param>
     /// <param name="version"></param>
     /// <returns></returns>
-    public static async Task<OpenApiDocument> TestReverseProxyJsonDocAsync(TestServer testServer, int version = 1)
+    public static async Task<OpenApiDocument> TestReverseProxyJsonDocAsync(TestServer testServer, string swaggerReverseProxyDocumentFilter = "", int version = 1)
     {
+      if (string.IsNullOrWhiteSpace(swaggerReverseProxyDocumentFilter))
+      {
+        throw new InvalidProgramException($"{nameof(swaggerReverseProxyDocumentFilter)} should not be empty.");
+      }
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
       //Get 
@@ -78,7 +83,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
 
       var paths = doc.Paths.Select(t => t.Key).ToList();
-      paths.ForEach(x => StringAssert.StartsWith(x, "/./", $"Path {x} does not start with the desired '/./'"));
+      paths.ForEach(x => StringAssert.StartsWith(x, swaggerReverseProxyDocumentFilter, $"Path {x} does not start with the desired '/./'"));
       return doc;
     }
 
