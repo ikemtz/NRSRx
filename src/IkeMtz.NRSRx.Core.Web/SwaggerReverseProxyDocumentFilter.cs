@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -6,14 +7,24 @@ namespace IkeMtz.NRSRx.Core.Web
 {
   public class SwaggerReverseProxyDocumentFilter : IDocumentFilter
   {
+    public const string SwaggerReverseProxyBasePath = "swaggerReverseProxyBasePath";
+    public IConfiguration Configuration { get; private set; }
+    public SwaggerReverseProxyDocumentFilter(IConfiguration config)
+    {
+      Configuration = config;
+    }
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
-      var paths = swaggerDoc.Paths.ToList();
-      for (int i = 0; i < paths.Count; i++)
+      var swaggerReverseProxyBasePath = Configuration.GetValue<string>(SwaggerReverseProxyBasePath);
+      if (!string.IsNullOrWhiteSpace(swaggerReverseProxyBasePath))
       {
-        var path = paths.ElementAt(i);
-        _ = swaggerDoc.Paths.Remove(path.Key);
-        swaggerDoc.Paths.Add($"/.{path.Key}", path.Value);
+        var paths = swaggerDoc.Paths.ToList();
+        for (int i = 0; i < paths.Count; i++)
+        {
+          var path = paths.ElementAt(i);
+          _ = swaggerDoc.Paths.Remove(path.Key);
+          swaggerDoc.Paths.Add($"{swaggerReverseProxyBasePath}{path.Key}", path.Value);
+        }
       }
     }
   }

@@ -88,7 +88,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
       Assert.AreEqual(item.Student.FirstName, envelope.Value.First().FirstName);
-      Assert.AreEqual(item.Id, envelope.Value.First().StudentCourses.First().Id); 
+      Assert.AreEqual(item.Id, envelope.Value.First().StudentCourses.First().Id);
     }
 
     [TestMethod]
@@ -143,7 +143,9 @@ namespace IkeMtz.NRSRx.OData.Tests
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {data}");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
-      Assert.AreEqual(SnapShotResources.ODataDebugPage, data);
+
+      SnapshotAsserter.AssertEachLineIsEqual(SnapShotResources.ODataDebugPage, data);
     }
   }
 }
+
