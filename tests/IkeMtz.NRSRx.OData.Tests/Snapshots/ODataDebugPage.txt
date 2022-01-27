@@ -1,0 +1,59 @@
+<html>
+<head>
+    <title>OData Endpoint Routing Debugger</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="odata">OData Endpoint Mappings</h1>
+    <p>
+        <a href="#standard">Go to non-OData endpoint mappings</a>
+    </p>
+    <table>
+        <tr>
+            <th> Controller & Action </th>
+            <th> HttpMethods </th>
+            <th> Template </th>
+        </tr>
+        <tr><td>IkeMtz.Samples.OData.Controllers.V1.CoursesController.Get (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/Courses">odata/v1/Courses</a></td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.CoursesController.Get (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/Courses/$count">odata/v1/Courses/$count</a></td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Get (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/Schools">odata/v1/Schools</a></td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Get (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/Schools/$count">odata/v1/Schools/$count</a></td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Delete (IkeMtz.NRSRx.OData.Tests)</td><td>DELETE</td><td>odata/v1/Schools({key})</td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Delete (IkeMtz.NRSRx.OData.Tests)</td><td>DELETE</td><td>odata/v1/Schools/{key}</td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.StudentsController.Get (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/Students">odata/v1/Students</a></td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.StudentsController.Get (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/Students/$count">odata/v1/Students/$count</a></td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.StudentsController.NoLimit (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/students/nolimit">odata/v1/students/nolimit</a></td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.StudentsController.Delete (IkeMtz.NRSRx.OData.Tests)</td><td>DELETE</td><td>odata/v1/Students({key})</td></tr>
+<tr><td>IkeMtz.Samples.OData.Controllers.V1.StudentsController.Delete (IkeMtz.NRSRx.OData.Tests)</td><td>DELETE</td><td>odata/v1/Students/{key}</td></tr>
+
+    </table>
+    <h1 id="standard">Non-OData Endpoint Mappings</h1>
+    <p>
+        <a href="#odata">Go to OData endpoint mappings</a>
+    </p>
+    <table>
+        <tr>
+            <th> Controller </th>
+            <th> HttpMethods </th>
+            <th> Template </th>
+        </tr>
+        <tr><td>IkeMtz.Samples.OData.Controllers.V1.SchoolsController.NoLimit (IkeMtz.NRSRx.OData.Tests)</td><td>GET</td><td><a href="odata/v1/schools/nolimit">odata/v1/schools/nolimit</a></td></tr>
+
+    </table>
+</body>
+</html>
