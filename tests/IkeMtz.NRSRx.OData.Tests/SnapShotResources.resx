@@ -117,65 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ODataDebugPage" xml:space="preserve">
-    <value>&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;OData Endpoint Routing Debugger&lt;/title&gt;
-    &lt;style&gt;
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1 id="odata"&gt;OData Endpoint Mappings&lt;/h1&gt;
-    &lt;p&gt;
-        &lt;a href="#standard"&gt;Go to none OData endpoint mappings&lt;/a&gt;
-    &lt;/p&gt;
-    &lt;table&gt;
-        &lt;tr&gt;
-            &lt;th&gt; Controller &amp; Action &lt;/th&gt;
-            &lt;th&gt; HttpMethods &lt;/th&gt;
-            &lt;th&gt; Template &lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.CoursesController.Get (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/Courses"&gt;odata/v1/Courses&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.CoursesController.Get (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/Courses/$count"&gt;odata/v1/Courses/$count&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Get (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/Schools"&gt;odata/v1/Schools&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Get (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/Schools/$count"&gt;odata/v1/Schools/$count&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Delete (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;DELETE&lt;/td&gt;&lt;td&gt;odata/v1/Schools({key})&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.SchoolsController.Delete (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;DELETE&lt;/td&gt;&lt;td&gt;odata/v1/Schools/{key}&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.StudentsController.Get (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/Students"&gt;odata/v1/Students&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.StudentsController.Get (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/Students/$count"&gt;odata/v1/Students/$count&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.StudentsController.NoLimit (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/students/nolimit"&gt;odata/v1/students/nolimit&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.StudentsController.Delete (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;DELETE&lt;/td&gt;&lt;td&gt;odata/v1/Students({key})&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.StudentsController.Delete (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;DELETE&lt;/td&gt;&lt;td&gt;odata/v1/Students/{key}&lt;/td&gt;&lt;/tr&gt;
-
-    &lt;/table&gt;
-    &lt;h1 id="standard"&gt;None OData Endpoint Mappings&lt;/h1&gt;
-    &lt;p&gt;
-        &lt;a href="#odata"&gt;Go to OData endpoint mappings&lt;/a&gt;
-    &lt;/p&gt;
-    &lt;table&gt;
-        &lt;tr&gt;
-            &lt;th&gt; Controller &lt;/th&gt;
-            &lt;th&gt; HttpMethods &lt;/th&gt;
-            &lt;th&gt; Template &lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;IkeMtz.Samples.OData.Controllers.V1.SchoolsController.NoLimit (IkeMtz.NRSRx.OData.Tests)&lt;/td&gt;&lt;td&gt;GET&lt;/td&gt;&lt;td&gt;&lt;a href="odata/v1/schools/nolimit"&gt;odata/v1/schools/nolimit&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-
-    &lt;/table&gt;
-&lt;/body&gt;
-&lt;/html&gt;</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ODataDebugPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Snapshots\ODataDebugPage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

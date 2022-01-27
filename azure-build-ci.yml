@@ -1,4 +1,4 @@
-name: 5.6.$(DayOfYear)$(Rev:.rr)
+name: 6.0.$(DayOfYear)$(Rev:.rr)
 pool:
   vmImage: 'windows-latest'
 
