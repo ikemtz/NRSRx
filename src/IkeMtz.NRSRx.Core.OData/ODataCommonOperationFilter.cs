@@ -18,8 +18,8 @@ namespace IkeMtz.NRSRx.Core.OData
         AddParameter(operation, "$top", "number", "Specifies the subset of entries by count.");
         AddParameter(operation, "$expand", "string", "Indicates the related entities to be represented inline.  The default maximum depth is 2.");
         AddParameter(operation, "$skip", "number", "Specifies the count of entries to skip.");
+        AddParameter(operation, "$compute", "string", "Specifies computed properties that can be used in $select, $filter or $orderby expressions.");
         AddParameter(operation, "$count", "boolean", "Indicates whether or not to include a total entry count.");
-        AddParameter(operation, "$compute", "string", "Specifies computed properties that can be used in a $select, $filter or $orderby expressions.");
       }
     }
 
