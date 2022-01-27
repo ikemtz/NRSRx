@@ -107,6 +107,38 @@ namespace IkeMtz.NRSRx.OData.Tests
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
     }
 
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    public async Task ComputeMinSchoolTest()
+    {
+      var school = Factories.SchoolFactory();
+      var schoolCourseA = Factories.SchoolCourseFactory(school, Factories.CourseFactory());
+      var schoolCourseB = Factories.SchoolCourseFactory(school, Factories.CourseFactory());
+      var schoolCourseC = Factories.SchoolCourseFactory(school, Factories.CourseFactory());
+      var schoolCourseD = Factories.SchoolCourseFactory(school, Factories.CourseFactory());
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+          .ConfigureTestServices(x =>
+          {
+            ExecuteOnContext<DatabaseContext>(x, db =>
+            {
+              _ = db.Schools.Add(school); 
+              _ = db.SchoolCourses.Add(schoolCourseA);
+              _ = db.SchoolCourses.Add(schoolCourseB);
+              _ = db.SchoolCourses.Add(schoolCourseC);
+              _ = db.SchoolCourses.Add(schoolCourseD);
+            });
+          })
+       );
+      var client = srv.CreateClient();
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=100&$count=true&$compute={nameof(school.SchoolCourses)}/$count as Courses&$select={nameof(school.Id)},Courses");
+      var data = await resp.Content.ReadAsStringAsync();
+      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(data);
+      Assert.IsTrue(data.Contains($"\"id\":\"{school.Id}\",\"Courses\":4"));
+    }
+
     [TestMethod]
     [TestCategory("Unigration")]
     public async Task GetMaxSchoolsTest()
