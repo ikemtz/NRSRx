@@ -44,7 +44,9 @@ namespace IkeMtz.NRSRx.Core.Web
         {
           IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
           AutoRegisterTemplate = true,
-          AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+          AutoRegisterTemplateVersion =
+          startup.Configuration.GetValue<string>("ELASTICSEARCH_VERSION").StartsWith("6") ? AutoRegisterTemplateVersion.ESv6
+          : AutoRegisterTemplateVersion.ESv7,
         };
         var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>
         {
