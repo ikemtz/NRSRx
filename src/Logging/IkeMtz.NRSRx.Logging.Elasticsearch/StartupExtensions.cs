@@ -23,8 +23,10 @@ namespace IkeMtz.NRSRx.Core.Web
     /// Note: The following configuration values should be set for Elasticsearch api key authentication
     /// ELASTICSEARCH_USERNAME => This should be the "id" of your token
     /// ELASTICSEARCH_APIKEY => This should be the "api_key" of your token
-    /// Note: IF your Elasticsearch instance is using an invalid SSL cert
+    /// Note: If your Elasticsearch instance is using an invalid SSL cert
     /// ELASTICSEARCH_DISABLE_SSL_VALIDATION => set this value to "true"
+    /// Note: This library only has support for v6.x and v7.x versions of Elasticsearch, to use 6.x provide the following:
+    /// ELASTICSEARCH_VERSION => set this value to 6.x
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
@@ -45,7 +47,7 @@ namespace IkeMtz.NRSRx.Core.Web
           IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
           AutoRegisterTemplate = true,
           AutoRegisterTemplateVersion =
-          startup.Configuration.GetValue<string>("ELASTICSEARCH_VERSION").StartsWith("6") ? AutoRegisterTemplateVersion.ESv6
+          startup.Configuration.GetValue("ELASTICSEARCH_VERSION", "7x").StartsWith("6") ? AutoRegisterTemplateVersion.ESv6
           : AutoRegisterTemplateVersion.ESv7,
         };
         var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>
