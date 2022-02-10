@@ -61,13 +61,13 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual void SetupAuthentication(AuthenticationBuilder builder)
     {
       _ = builder
-
           .AddJwtBearer(options =>
           {
             options.Authority = Configuration.GetValue<string>("IdentityProvider");
             options.TokenValidationParameters = new TokenValidationParameters()
             {
               ValidateIssuer = true,
+              ValidateIssuerSigningKey = true,
               NameClaimType = JwtNameClaimMapping,
               ValidAudiences = GetIdentityAudiences(),
             };
