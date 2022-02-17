@@ -10,6 +10,7 @@ IkeMtz's DB, EF and Microservices Best Practices
   - [Foreign key column names should follow the {ParentKeyTableName[Singular]}+'Id' naming convention](#foreign-key-column-names-should-follow-the-parentkeytablenamesingularid-naming-convention)
   - [Column names should not repeat table names](#column-names-should-not-repeat-table-names)
   - [Child column names should not repeat table names](#child-column-names-should-not-repeat-table-names)
+  - [Avoid acronyms](#avoid-acronyms)
   - [Apply a standard list of abbreviations on column names](#apply-a-standard-list-of-abbreviations-on-column-names)
     - [**Suggested Standards**](#suggested-standards)
   - [DateTime values should be stored in UTC and the column name should be suffixed with '**Utc**'](#datetime-values-should-be-stored-in-utc-and-the-column-name-should-be-suffixed-with-utc)
@@ -31,7 +32,7 @@ IkeMtz's DB, EF and Microservices Best Practices
   - [Microservices should wrap a single business domain and all of it's logic](#microservices-should-wrap-a-single-business-domain-and-all-of-its-logic)
   - [Microservice naming](#microservice-naming)
   - [Microservices should have well documented APIs](#microservices-should-have-well-documented-apis)
-  - [Microservices should be built around the technology best suited to meet business needs.](#microservices-should-be-built-around-the-technology-best-suited-to-meet-business-needs)
+  - [Microservices should be built around the technology best suited to meet business needs](#microservices-should-be-built-around-the-technology-best-suited-to-meet-business-needs)
   - [Eventing and inter-microservice dependencies](#eventing-and-inter-microservice-dependencies)
   - [Microservices should validate each piece of input data](#microservices-should-validate-each-piece-of-input-data)
   - [Each Microservice endpoint should require authentication](#each-microservice-endpoint-should-require-authentication)
@@ -224,6 +225,28 @@ CREATE TABLE Persons {
   [Name] NVARCHAR (50) NOT NULL,
   [BirthDate] DATE NOT NULL }
 ```
+## Avoid acronyms
+
+In day to day operations acronyms increase efficiency amongst team members familiar with the business domain acumen.  However, this violates clean code standards and will increase the level of effort of onboarding new team members.  Following this practice will avoid hours of confusion and explanations.
+
+**Don't**:
+
+```SQL
+CREATE TABLE ICDs {
+  [Id] string NOT NULL,
+  [SD] NVARCHAR (50) NOT NULL,
+  [LD] NVARCHAR (250) NOT NULL }
+```
+
+**Do**:
+
+```SQL
+CREATE TABLE InternationalClassificationOfDiseaseCodes {
+  [Id] string NOT NULL,
+  [ShortDescription] NVARCHAR (50) NOT NULL,
+  [LongDescription] NVARCHAR (250) NOT NULL }
+```
+
 
 ## Apply a standard list of abbreviations on column names
 When applying this rule, it's absolutely important to avoid ambiguity.  People should know immediately when the column name is referring to.
@@ -601,7 +624,7 @@ Ensuring that these components are available to developers will be crucial to fa
 
 It's also important that the Swagger application be configured to support the same authentication mechanisms as the API.
 
-## Microservices should be built around the technology best suited to meet business needs.
+## Microservices should be built around the technology best suited to meet business needs
 If you need to serve data, then OData is an excellent choice.  If you need to persist domain objects and state, then WebApi would be the appropriate direction.
 
 ## Eventing and inter-microservice dependencies
