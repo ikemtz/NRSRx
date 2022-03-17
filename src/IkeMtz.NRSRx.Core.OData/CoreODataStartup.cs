@@ -53,10 +53,12 @@ namespace IkeMtz.NRSRx.Core.OData
       _ = app.UseRouting();
       _ = app.UseAuthentication()
           .UseAuthorization();
-      _ = app
-          .UseSwagger()
-          .UseSwaggerUI(SetupSwaggerUI);
-
+      if (!DisableSwagger && Configuration?.GetValue<bool>("DisableSwagger", false) != true)
+      {
+        _ = app
+            .UseSwagger()
+            .UseSwaggerUI(SetupSwaggerUI);
+      }
       _ = app.UseEndpoints(endpoints =>
       {
         _ = endpoints.MapHealthChecks("/health");

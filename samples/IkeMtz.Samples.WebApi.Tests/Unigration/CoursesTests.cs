@@ -69,6 +69,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var updatedDbCourse = await dbContext.Courses.FirstOrDefaultAsync(t => t.Id == originalCourse.Id);
 
       Assert.IsNotNull(updatedDbCourse);
+      Assert.AreEqual("IntegrationTester@email.com", updatedDbCourse.UpdatedBy);
       Assert.IsNotNull(updatedDbCourse.UpdatedOnUtc);
       Assert.AreEqual(httpUpdatedCourse.UpdatedOnUtc, updatedDbCourse.UpdatedOnUtc);
     }

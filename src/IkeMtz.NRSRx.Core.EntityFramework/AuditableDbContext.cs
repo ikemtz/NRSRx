@@ -11,13 +11,19 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public class AuditableDbContext : DbContext, IAuditableDbContext
   {
-    protected IHttpContextAccessor HttpContextAccessor { get; }
+    protected IHttpContextAccessor HttpContextAccessor { get; set; }
     public AuditableDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor)
         : base(options)
     {
       HttpContextAccessor = httpContextAccessor;
     }
 
+#pragma warning disable IDE0051 // Remove unused private members - This is used in Unigration Library
+    private void SetHttpContext(IHttpContextAccessor httpContextAccessor)
+#pragma warning restore IDE0051 // Remove unused private members
+    {
+      this.HttpContextAccessor = httpContextAccessor;
+    }
     public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
     {
       if (entity is IAuditable)
@@ -48,6 +54,18 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       auditable.UpdatedOnUtc = DateTime.UtcNow;
       auditable.UpdatedBy = HttpContextAccessor.HttpContext.User.Identity.Name;
     }
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+      CalculateValues();
+      AddAuditables();
+      UpdateAuditables();
+      return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+    public override int SaveChanges()
+      => SaveChanges(acceptAllChangesOnSuccess: true);
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+      => SaveChangesAsync(acceptAllChangesOnSuccess: true, cancellationToken);
+
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
       CalculateValues();

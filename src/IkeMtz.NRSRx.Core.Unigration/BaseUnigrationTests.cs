@@ -4,9 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
@@ -96,7 +98,15 @@ namespace IkeMtz.NRSRx.Core.Unigration
       var db = scopedServices.GetRequiredService<TDbContext>();
       // Ensure the database is created.
       _ = db.Database.EnsureCreated();
-
+      if (db is AuditableDbContext)
+      {
+        var dbType = db.GetType();
+        var httpContextAccessor = new MockHttpContextAccessorFactory().CreateAccessor();
+        var bindingFlags = BindingFlags.NonPublic | BindingFlags.Instance;
+        dbType
+          .GetProperty("HttpContextAccessor", bindingFlags)
+          .SetValue(db, httpContextAccessor);
+      }
       TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
       callback(db);
       _ = db.SaveChanges();

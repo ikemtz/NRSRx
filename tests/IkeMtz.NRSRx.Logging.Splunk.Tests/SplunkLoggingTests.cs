@@ -20,6 +20,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     public void ConsoleLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
+     _= moqConfiguration.SetupGet(s => s["DisableSwagger"]).Returns(true.ToString); 
       var startup = new StartUp_Splunk(moqConfiguration.Object);
       var result = startup.SetupConsoleLogging(null);
       Assert.IsNotNull(result);
