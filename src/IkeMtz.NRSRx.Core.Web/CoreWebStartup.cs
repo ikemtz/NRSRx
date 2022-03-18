@@ -26,6 +26,7 @@ namespace IkeMtz.NRSRx.Core.Web
     public abstract Assembly StartupAssembly { get; }
     public virtual string SwaggerUiRoutePrefix { get; } = string.Empty;
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
+    public virtual bool DisableSwagger { get; }
 
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
     public virtual IEnumerable<OAuthScope> SwaggerScopes => new[]

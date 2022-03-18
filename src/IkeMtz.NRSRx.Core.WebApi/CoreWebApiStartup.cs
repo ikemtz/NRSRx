@@ -52,14 +52,19 @@ namespace IkeMtz.NRSRx.Core.WebApi
       _ = app
        .UseRouting()
        .UseAuthentication()
-       .UseAuthorization()
-       .UseSwagger()
-       .UseSwaggerUI(options => SetupSwaggerUI(options, provider))
-       .UseEndpoints(endpoints =>
+       .UseAuthorization();
+      if (!DisableSwagger && Configuration?.GetValue<bool>("DisableSwagger", false) != true)
       {
-        _ = endpoints.MapHealthChecks("/health");
-        _ = endpoints.MapControllers();
-      });
+        _ = app
+        .UseSwagger()
+        .UseSwaggerUI(options => SetupSwaggerUI(options, provider));
+      }
+      _ = app
+      .UseEndpoints(endpoints =>
+     {
+       _ = endpoints.MapHealthChecks("/health");
+       _ = endpoints.MapControllers();
+     });
     }
 
     public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
