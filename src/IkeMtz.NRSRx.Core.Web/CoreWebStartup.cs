@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
@@ -28,11 +29,13 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
 
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
+    public virtual string[] AdditionalAssemblyXmlDocumentFiles { get; }
     public virtual IEnumerable<OAuthScope> SwaggerScopes => new[]
       {
         OAuthScope.OpenId
       };
     public IConfiguration Configuration { get; }
+
     protected CoreWebStartup(IConfiguration configuration)
     {
       Configuration = configuration;
@@ -127,6 +130,10 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         // Set the comments path for the Swagger JSON and UI.
         options.IncludeXmlComments(xmlPath ?? StartupAssembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
+      }
+      if (AdditionalAssemblyXmlDocumentFiles?.Any() == true)
+      {
+        AdditionalAssemblyXmlDocumentFiles.ToList().ForEach(f => options.IncludeXmlComments(f));
       }
     }
 
