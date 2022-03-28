@@ -15,14 +15,14 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var appSettings = new AppSettings
       {
-        IdentityProvider = "https://demo.identityserver.io/",
+        IdentityProvider = "https://accounts.google.com/",
         IdentityAudiences = "x,y,z"
       };
       var startup = new StartUp_AppInsights(null);
       var result = startup.GetOpenIdConfiguration(new TestHttpClientFactory(), appSettings);
-      Assert.AreEqual($"{appSettings.IdentityProvider}connect/authorize", result.AuthorizeEndpoint);
-      Assert.AreEqual(new Uri($"{ appSettings.IdentityProvider}connect/authorize?audience=x"), result.GetAuthorizationEndpointUri(appSettings));
-      Assert.AreEqual(new Uri($"{appSettings.IdentityProvider}connect/token"), result.GetTokenEndpointUri());
+      Assert.AreEqual($"{appSettings.IdentityProvider}o/oauth2/v2/auth", result.AuthorizeEndpoint);
+      Assert.AreEqual(new Uri($"{ appSettings.IdentityProvider}o/oauth2/v2/auth?audience=x"), result.GetAuthorizationEndpointUri(appSettings));
+      Assert.AreEqual(new Uri("https://oauth2.googleapis.com/token"), result.GetTokenEndpointUri());
     }
   }
 
