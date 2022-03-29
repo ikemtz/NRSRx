@@ -26,6 +26,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public override Assembly StartupAssembly => Startup.StartupAssembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => Startup.IncludeXmlCommentsInSwaggerDocs;
+    public override string[] AdditionalAssemblyXmlDocumentFiles => Startup.AdditionalAssemblyXmlDocumentFiles;
 
     public override void SetupMiscDependencies(IServiceCollection services)
     {
