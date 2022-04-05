@@ -9,7 +9,7 @@ namespace IkeMtz.Samples.SignalR.Hubs
   {
     public Task SendMessage(string message) =>
       Clients
-        .Caller
+        .All
         .SendAsync("OnMessageRecieved", $"{Context.User.Identity.Name} - {message}");
   }
 }

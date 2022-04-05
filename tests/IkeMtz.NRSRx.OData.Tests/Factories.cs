@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     {
       //TODO: Create a bettery string generator
       var fullName = Guid.NewGuid().ToString();
-      var school = IdentifiableFactory(AuditableFactory<School>());
+      var school = CreateIdentifiable(CreateAuditable<School>());
       school.Name = fullName[..6];
       school.FullName = fullName[..30];
       school.TenantId = fullName[..5];
@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     public static Student StudentFactory()
     {
-      var student = IdentifiableFactory(AuditableFactory<Student>());
+      var student = CreateIdentifiable(CreateAuditable<Student>());
       student.FirstName = Guid.NewGuid().ToString()[..6];
       student.LastName = Guid.NewGuid().ToString()[..6];
       student.BirthDate = DateTime.UtcNow;
@@ -29,7 +29,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     public static Course CourseFactory()
     {
-      var course = IdentifiableFactory(AuditableFactory<Course>());
+      var course = CreateIdentifiable(CreateAuditable<Course>());
       course.Num = Guid.NewGuid().ToString()[..4];
       course.Title = Guid.NewGuid().ToString()[..6];
       course.Description = Guid.NewGuid().ToString()[..20];
@@ -41,7 +41,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     public static SchoolCourse SchoolCourseFactory(School school, Course course)
     {
-      var schoolCourse = IdentifiableFactory(AuditableFactory<SchoolCourse>());
+      var schoolCourse = CreateIdentifiable(CreateAuditable<SchoolCourse>());
 
       schoolCourse.Course = course;
       schoolCourse.CourseId = course.Id;
@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     internal static StudentCourse StudentCourseFactory(Student student, Course course, School school)
     {
-      var studentCourse = IdentifiableFactory(AuditableFactory<StudentCourse>());
+      var studentCourse = CreateIdentifiable(CreateAuditable<StudentCourse>());
 
       studentCourse.Course = course;
       studentCourse.CourseId = course.Id;
