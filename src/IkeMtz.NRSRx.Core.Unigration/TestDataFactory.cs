@@ -34,12 +34,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
     }
 
     public static string StringGenerator(int length, bool allowSpaces = false, string characterSet = CharacterSets.AlphaChars, int? seed = null)
-    { 
+    {
       var random = new Random(seed ?? DateTime.UtcNow.Millisecond);
       var sb = new StringBuilder();
       Enumerable.Range(1, length).ToList().ForEach(x =>
-      sb.Append(characterSet.ElementAt(random.Next((x == 1 ? CharacterSets.AllCaps : characterSet).Length)))
-        );
+      sb.Append(characterSet.ElementAt(random.Next((x == 1 ? CharacterSets.UpperCase : characterSet).Length))));
       var result = sb.ToString();
       if (allowSpaces)
       {
