@@ -37,23 +37,51 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       var random = new Random(seed ?? DateTime.UtcNow.Millisecond);
       var sb = new StringBuilder();
+      var charsetLength = characterSet.Length;
       Enumerable.Range(1, length).ToList().ForEach(x =>
-      sb.Append(characterSet.ElementAt(random.Next((x == 1 ? CharacterSets.UpperCase : characterSet).Length))));
-      var result = sb.ToString();
+        sb.Append(characterSet.ElementAt(random.Next(charsetLength))));
+      var result = CapitalizeFirstChar(sb.ToString(), characterSet);
       if (allowSpaces)
       {
-        var averageWordSize = 5; //English (4.7)
-        var spacesPerString = length / averageWordSize;
-        var previousSpace = 1;
-        for (int i = 0; i < spacesPerString; i++)
-        {
-          var nextSpace = random.Next(previousSpace, previousSpace + averageWordSize);
-          result = result.Insert(nextSpace, " ");
-          previousSpace = nextSpace + 2;
-        }
+        result = InjectSpaces(length, random, result, characterSet);
+      }
+      return result;
+    }
+
+    public static string InjectSpaces(int length, Random random, string result, string characterSet)
+    {
+      var averageWordSize = 5; //English (4.7)
+      var spacesPerString = (length / averageWordSize);
+      var previousSpace = 2;
+      for (int i = 0; i < spacesPerString; i++)
+      {
+        var nextSpace = random.Next(previousSpace, previousSpace + averageWordSize);
+        result = result.Insert(Math.Min(nextSpace, result.Length), " ");
+        previousSpace = nextSpace + 2;
+      }
+      if (characterSet.Any(char.IsLetter))
+      {
         result = NumberAfterSpace.Replace(result, " ");
-        result = result.Replace("  ", " ");
-        return result[..length];
+      }
+      result = result.Trim().Replace("  ", " ");
+      return result[..length];
+    }
+
+    public static string CapitalizeFirstChar(string result, string characterSet)
+    {
+      if (characterSet.Any(char.IsUpper))
+      {
+        var firstChar = result[0];
+        while (char.IsNumber(firstChar))
+        {
+          result = result.Remove(0, 1);
+          firstChar = result[0];
+        }
+        if (char.IsLower(firstChar))
+        {
+          firstChar = char.ToUpper(firstChar);
+          result = result.Remove(0, 1).Insert(0, firstChar.ToString());
+        }
       }
       return result;
     }
