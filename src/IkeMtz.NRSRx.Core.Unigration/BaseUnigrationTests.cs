@@ -151,5 +151,12 @@ namespace IkeMtz.NRSRx.Core.Unigration
              TestServerConfiguration = webHostBuilderContext.Configuration;
            });
     }
+
+    public T JsonClone<T>(T source)
+    {
+      return JsonConvert.DeserializeObject<T>(
+        JsonConvert.SerializeObject(source, Constants.JsonSerializerSettings),
+          Constants.JsonSerializerSettings);
+    }
   }
 }

@@ -54,7 +54,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var updatedCourse = JsonConvert.DeserializeObject<Course>(JsonConvert.SerializeObject(originalCourse));
+      var updatedCourse = JsonClone(originalCourse);
       updatedCourse.Num = Guid.NewGuid().ToString()[..6];
 
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);

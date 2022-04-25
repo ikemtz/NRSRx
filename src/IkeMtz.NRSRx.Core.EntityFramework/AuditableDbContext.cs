@@ -18,9 +18,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       HttpContextAccessor = httpContextAccessor;
     }
 
-#pragma warning disable IDE0051 // Remove unused private members - This is used in Unigration Library
-    private void SetHttpContext(IHttpContextAccessor httpContextAccessor)
-#pragma warning restore IDE0051 // Remove unused private members
+    public void SetHttpContext(IHttpContextAccessor httpContextAccessor)
     {
       this.HttpContextAccessor = httpContextAccessor;
     }

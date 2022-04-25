@@ -95,7 +95,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var updatedSchool = JsonConvert.DeserializeObject<School>(JsonConvert.SerializeObject(originalSchool));
+      var updatedSchool = JsonClone(originalSchool);
       updatedSchool.Name = Guid.NewGuid().ToString()[..6];
 
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(School)}s.json?id={updatedSchool.Id}", updatedSchool);
