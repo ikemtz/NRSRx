@@ -48,7 +48,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       GenerateAuthHeader(client, GenerateTestToken(x =>
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 
-      var updatedCourse = JsonConvert.DeserializeObject<Course>(JsonConvert.SerializeObject(originalCourse));
+      var updatedCourse = JsonClone(originalCourse);
       updatedCourse.Num = Guid.NewGuid().ToString()[..6];
 
       var result = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
