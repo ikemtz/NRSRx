@@ -95,7 +95,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var updatedCourse = JsonConvert.DeserializeObject<Course>(JsonConvert.SerializeObject(originalCourse));
+      var updatedCourse = JsonClone(originalCourse);
       updatedCourse.Title = Guid.NewGuid().ToString()[..6];
 
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
