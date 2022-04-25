@@ -5,9 +5,9 @@
     <ProjectGuid>B5360C5D-3AA0-44B1-A0E1-5B6B7214B4C4</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.9" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.9" />
     <PackageReference Include="coverlet.collector" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
