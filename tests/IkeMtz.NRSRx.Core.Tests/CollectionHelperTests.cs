@@ -8,9 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.Core.Tests
 {
   [TestClass]
-  public class CollectionHelperTests
-  {
-    public TestContext TestContext { get; set; }
+  public class CollectionHelperTests : BaseUnigrationTests
+  { 
 
     [TestMethod]
     [TestCategory("Unit")]
