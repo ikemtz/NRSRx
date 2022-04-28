@@ -14,7 +14,9 @@ namespace IkeMtz.NRSRx.Core.Web
     }
     public static IWebHostBuilder UseLogging(this IWebHostBuilder webHostBuilder)
     {
+#pragma warning disable CS0618 // Type or member is obsolete
       return webHostBuilder.UseSerilog();
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 
     internal static ILogger Logger { get; set; }

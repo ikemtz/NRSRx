@@ -57,11 +57,12 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true");
+      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true");
+      var content = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.Contains(resp, item.Id.ToString());
-      StringAssert.Contains(resp, item.Title);
+      Assert.IsFalse(content.ToLower().Contains("updatedby"));
+      StringAssert.Contains(content, item.Id.ToString());
+      StringAssert.Contains(content, item.Title);
     }
 
     [TestMethod]

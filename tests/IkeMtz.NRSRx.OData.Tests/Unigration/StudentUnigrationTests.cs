@@ -135,6 +135,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     [TestMethod]
     [TestCategory("Unigration")]
+    [Ignore("waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task GetODataDebugPage()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
