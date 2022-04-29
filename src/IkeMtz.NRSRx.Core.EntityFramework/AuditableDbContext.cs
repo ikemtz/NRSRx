@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (entity is IAuditable)
       {
-        handleIAuditableCreate(entity as IAuditable);
+        OnIAuditableCreate(entity as IAuditable);
       }
       if (entity is ICalculateable)
       {
@@ -34,18 +34,18 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
       return base.AddAsync(entity, cancellationToken);
     }
-    private void handleIAuditableCreate(IAuditable auditable)
+    public virtual void OnIAuditableCreate(IAuditable auditable)
     {
-      if (string.IsNullOrWhiteSpace(HttpContextAccessor.HttpContext.User.Identity.Name))
+      if (string.IsNullOrWhiteSpace(HttpContextAccessor?.HttpContext?.User?.Identity?.Name))
       {
         throw new AuditableInvalidUserException();
       }
       auditable.CreatedOnUtc = auditable.CreatedOnUtc.Year != 1 ? auditable.CreatedOnUtc : DateTime.UtcNow;
       auditable.CreatedBy = HttpContextAccessor.HttpContext.User.Identity.Name;
     }
-    private void handleIAuditableUpdate(IAuditable auditable)
+    public virtual void OnIAuditableUpdate(IAuditable auditable)
     {
-      if (string.IsNullOrWhiteSpace(HttpContextAccessor.HttpContext.User.Identity.Name))
+      if (string.IsNullOrWhiteSpace(HttpContextAccessor?.HttpContext?.User?.Identity?.Name))
       {
         throw new AuditableInvalidUserException();
       }
@@ -71,7 +71,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       UpdateAuditables();
       return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
-    private void CalculateValues()
+    public virtual void CalculateValues()
     {
       var entities = base.ChangeTracker.Entries().Where(x => x.Entity is ICalculateable);
 
@@ -94,7 +94,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
     }
 
-    private void AddAuditables()
+    public virtual void AddAuditables()
     {
       var entities = base.ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Added));
 
@@ -102,11 +102,11 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
           .Select(t => t.Entity as IAuditable)
           .Where(t => t != null))
       {
-        handleIAuditableCreate(auditable);
+        OnIAuditableCreate(auditable);
       }
     }
 
-    private void UpdateAuditables()
+    public virtual void UpdateAuditables()
     {
       var entities = base.ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Modified));
 
@@ -114,7 +114,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
          .Select(t => t.Entity as IAuditable)
          .Where(t => t != null))
       {
-        handleIAuditableUpdate(auditable);
+        OnIAuditableUpdate(auditable);
       }
     }
   }
