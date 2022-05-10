@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       TestContext.WriteLine("Generated String: {0}", result);
       Assert.IsFalse(result.Contains("  "));
       Assert.IsTrue(char.IsUpper(result.First()));
-      Assert.AreEqual(result.Length, 50);
+      Assert.AreEqual(50, result.Length);
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       StringAssert.DoesNotMatch(result, new Regex(@"/d"));
       Assert.IsFalse(result.Contains("  "));
       Assert.IsTrue(char.IsUpper(result.First()));
-      Assert.AreEqual(result.Length, 50);
+      Assert.AreEqual(50, result.Length);
     }
 
     [TestMethod]
@@ -38,7 +38,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var result = TestDataFactory.StringGenerator(50, true);
       TestContext.WriteLine("Generated String: {0}", result);
       Assert.IsFalse(result.Contains("  "));
-      Assert.AreEqual(result.Length, 50);
+      Assert.AreEqual(50, result.Length);
       Assert.IsTrue(char.IsUpper(result.First()));
     }
     [TestMethod]
@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       TestContext.WriteLine("Generated String: {0}", result);
       Assert.IsFalse(result.Contains("  "));
       Assert.IsTrue(char.IsLower(result.First()));
-      Assert.AreEqual(result.Length, 50);
+      Assert.AreEqual(50, result.Length);
     }
 
     [TestMethod]
