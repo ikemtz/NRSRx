@@ -36,9 +36,9 @@ namespace IkeMtz.NRSRx.Core.Web
 
       return SeriLogExtensions.GetLogger(() =>
       {
-        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        var environment = Environment.GetEnvironmentVariable("ENVIRONMENT_NAME");
 
-        var host = startup.Configuration.GetValue<string>("ELASTICSEARCH_HOST", "http://localhost:9200");
+        var host = startup.Configuration.GetValue("ELASTICSEARCH_HOST", "http://localhost:9200");
         var username = startup.Configuration.GetValue<string>("ELASTICSEARCH_USERNAME");
         var password = startup.Configuration.GetValue<string>("ELASTICSEARCH_PASSWORD");
         var apiKey = startup.Configuration.GetValue<string>("ELASTICSEARCH_APIKEY");
