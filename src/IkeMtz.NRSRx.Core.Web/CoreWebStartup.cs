@@ -122,7 +122,6 @@ namespace IkeMtz.NRSRx.Core.Web
     }
     public virtual void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
     {
-      options.UseInlineDefinitionsForEnums();
       // add a custom operation filter which sets default values
       options.OperationFilter<DefaultValueFilter>();
       options.OperationFilter<AuthorizeOperationFilter>();

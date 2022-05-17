@@ -123,7 +123,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
         .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
         .AddSwaggerGen(options =>
         {
-          options.UseInlineDefinitionsForEnums();
           SetupSwaggerGen(options);
         });
     }

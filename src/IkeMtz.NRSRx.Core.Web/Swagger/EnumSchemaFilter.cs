@@ -9,15 +9,16 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
   {
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
-      if (context.Type.IsEnum)
-      {
-        schema.Enum.Clear();
-        schema.Type = "string";
-        foreach( int i in Enum.GetValues(context.Type))
-        {
-          schema.Enum.Add(new OpenApiString($"{i} - {Enum.GetName(context.Type, i)}"));
-        }
-      }
+   //  if (context.Type.IsEnum)
+   //  {
+   //    schema.Enum.Clear();
+   //    schema.Type = "string";
+   //    schema.Format = null;
+   //    foreach( int i in Enum.GetValues(context.Type))
+   //    {
+   //      schema.Enum.Add(new OpenApiString($"{i} - {Enum.GetName(context.Type, i)}"));
+   //    }
+   //  }
     }
   }
 }
