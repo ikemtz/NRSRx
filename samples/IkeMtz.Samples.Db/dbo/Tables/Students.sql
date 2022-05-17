@@ -5,6 +5,7 @@
     [LastName]     NVARCHAR (250)     NOT NULL,
     [MiddleName]   NVARCHAR (250)     NULL,
     [BirthDate]    DATE               NOT NULL,
+    [Gender]       INT                NOT NULL,
     [Email]        VARCHAR (250)      NOT NULL,
     [Tel1]         VARCHAR (15)       NULL,
     [Tel2]         VARCHAR (15)       NULL,
@@ -14,6 +15,8 @@
     [UpdatedOnUtc] DATETIMEOFFSET (7) NULL,
     CONSTRAINT [PK_Students] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 
 

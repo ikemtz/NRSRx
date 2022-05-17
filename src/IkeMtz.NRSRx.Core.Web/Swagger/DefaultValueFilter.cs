@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace IkeMtz.NRSRx.Core.Web
+namespace IkeMtz.NRSRx.Core.Web.Swagger
 {
   /// <summary>
   /// Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
   /// </summary>
   /// <remarks>This <see cref="IOperationFilter"/> is only required due to bugs in the <see cref="SwaggerGenerator"/>.
   /// Once they are fixed and published, this class can be removed.</remarks>
-  public class SwaggerDefaultValues : IOperationFilter
+  public class DefaultValueFilter : IOperationFilter
   {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {

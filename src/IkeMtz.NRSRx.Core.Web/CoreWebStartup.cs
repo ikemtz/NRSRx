@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using IkeMtz.NRSRx.Core.Web.Swagger;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -123,9 +124,9 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       options.UseInlineDefinitionsForEnums();
       // add a custom operation filter which sets default values
-      options.OperationFilter<SwaggerDefaultValues>();
-      options.OperationFilter<SwaggerAuthorizeOperationFilter>();
-      options.DocumentFilter<SwaggerReverseProxyDocumentFilter>();
+      options.OperationFilter<DefaultValueFilter>();
+      options.OperationFilter<AuthorizeOperationFilter>();
+      options.DocumentFilter<ReverseProxyDocumentFilter>();
 
       if (IncludeXmlCommentsInSwaggerDocs)
       {

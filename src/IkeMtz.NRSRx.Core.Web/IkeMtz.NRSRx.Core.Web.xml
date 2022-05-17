@@ -11,7 +11,7 @@
             <remarks>This allows API versioning to define a Swagger document per API version after the
             <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
         </member>
-        <member name="T:IkeMtz.NRSRx.Core.Web.SwaggerDefaultValues">
+        <member name="T:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter">
             <summary>
             Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
             </summary>

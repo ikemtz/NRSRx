@@ -3,13 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace IkeMtz.NRSRx.Core.Web
+namespace IkeMtz.NRSRx.Core.Web.Swagger
 {
-  public class SwaggerReverseProxyDocumentFilter : IDocumentFilter
+  public class ReverseProxyDocumentFilter : IDocumentFilter
   {
     public const string SwaggerReverseProxyBasePath = "swaggerReverseProxyBasePath";
     public IConfiguration Configuration { get; private set; }
-    public SwaggerReverseProxyDocumentFilter(IConfiguration config)
+    public ReverseProxyDocumentFilter(IConfiguration config)
     {
       Configuration = config;
     }

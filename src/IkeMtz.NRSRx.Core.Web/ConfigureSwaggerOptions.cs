@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using IkeMtz.NRSRx.Core.OData;
+using IkeMtz.NRSRx.Core.Web.Swagger;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +56,7 @@ namespace IkeMtz.NRSRx.Core.Web
         foreach (var versionDescription in provider.ApiVersionDescriptions)
         {
           options.SwaggerDoc(versionDescription.GroupName, CreateInfoForApiVersion(versionDescription));
+          options.SchemaFilter<EnumSchemaFilter>();
         }
       }
       if (odataVersionProvider != null)
@@ -62,6 +64,7 @@ namespace IkeMtz.NRSRx.Core.Web
         foreach (var versionDescription in odataVersionProvider.GetODataVersions())
         {
           options.SwaggerDoc(versionDescription.GroupName, CreateInfoForApiVersion(versionDescription));
+          options.SchemaFilter<EnumSchemaFilter>();
         }
       }
       var audiences = this.startup.GetIdentityAudiences(this.appSettings);
