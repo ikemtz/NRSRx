@@ -1,6 +1,6 @@
-﻿namespace IkeMtz.NRSRx.Core.Tests
+namespace IkeMtz.NRSRx.Core.Tests
 {
-  internal class Message
+  public class Message
   {
   }
 }
