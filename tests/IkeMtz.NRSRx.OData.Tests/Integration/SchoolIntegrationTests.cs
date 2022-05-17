@@ -44,12 +44,18 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetItemsWithExpansionTest()
     {
       var item = Factories.SchoolFactory();
+      var student = Factories.StudentFactory();
+      var course = Factories.CourseFactory();
+      _ = Factories.SchoolCourseFactory(item, course);
+      _ = Factories.StudentSchoolFactory(student, item);
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
               _ = db.Schools.Add(item);
+              _ = db.Courses.Add(course);
+              _ = db.Students.Add(student);
             });
           })
        );
