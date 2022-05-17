@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var result = TestDataFactory.StringGenerator(50, true, CharacterSets.AlphaNumericChars);
       TestContext.WriteLine("Generated String: {0}", result);
       Assert.IsFalse(result.Contains("  "));
-      Assert.IsTrue(char.IsUpper(result.First()));
+      Assert.IsTrue(char.IsUpper(result.First()), "First Character is not capitalized: {0}", result.First());
       Assert.AreEqual(50, result.Length);
     }
 

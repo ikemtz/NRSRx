@@ -55,7 +55,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       var previousSpace = 2;
       for (int i = 0; i < spacesPerString; i++)
       {
-        var nextSpace = random.Next(previousSpace, previousSpace + averageWordSize);
+        var nextSpace = random.Next(previousSpace, previousSpace + averageWordSize + 1);
         result = result.Insert(Math.Min(nextSpace, result.Length), " ");
         previousSpace = nextSpace + 2;
       }
