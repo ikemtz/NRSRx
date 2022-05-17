@@ -8,8 +8,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   {
     public static School SchoolFactory()
     {
-      //TODO: Create a bettery string generator
-      var fullName = Guid.NewGuid().ToString();
+      var fullName = StringGenerator(40, true);
       var school = CreateIdentifiable(CreateAuditable<School>());
       school.Name = fullName[..6];
       school.FullName = fullName[..30];
@@ -24,6 +23,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       student.LastName = Guid.NewGuid().ToString()[..6];
       student.BirthDate = DateTime.UtcNow;
       student.Email = $"{Guid.NewGuid().ToString()[4]}@x{Guid.NewGuid().ToString()[4]}.com";
+      student.Gender = (Gender)new Random(DateTime.Now.Millisecond).Next(1, 5);
       return student;
     }
 
@@ -54,7 +54,20 @@ namespace IkeMtz.NRSRx.OData.Tests
       return schoolCourse;
     }
 
-    internal static StudentCourse StudentCourseFactory(Student student, Course course, School school)
+    public static StudentSchool StudentSchoolFactory(Student student, School school)
+    {
+      var studentSchool = CreateIdentifiable(CreateAuditable<StudentSchool>()); 
+      studentSchool.Student = student;
+      studentSchool.StudentId = student.Id;
+      studentSchool.School = school;
+      studentSchool.SchoolId = school.Id;
+      studentSchool.TenantId = school.TenantId;
+      school.StudentSchools.Add(studentSchool);
+      student.StudentSchools.Add(studentSchool);
+      return studentSchool;
+    }
+
+    public static StudentCourse StudentCourseFactory(Student student, Course course, School school)
     {
       var studentCourse = CreateIdentifiable(CreateAuditable<StudentCourse>());
 

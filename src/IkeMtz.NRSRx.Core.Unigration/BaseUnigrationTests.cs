@@ -97,7 +97,14 @@ namespace IkeMtz.NRSRx.Core.Unigration
       var scopedServices = scope.ServiceProvider;
       var db = scopedServices.GetRequiredService<TDbContext>();
       // Ensure the database is created.
-      _ = db.Database.EnsureCreated();
+      try
+      {
+        _ = db.Database.EnsureCreated();
+      }
+      catch (Exception ex)
+      {
+        TestContext.WriteLine($"DB Creation Exception Occured: {ex}");
+      }
       if (db is AuditableDbContext)
       {
         var dbType = db.GetType();

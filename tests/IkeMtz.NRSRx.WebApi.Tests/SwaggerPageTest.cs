@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;
-using IkeMtz.NRSRx.Core.Web;
+using IkeMtz.NRSRx.Core.Web.Swagger;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var myConfiguration = new Dictionary<string, string>
       {
-        {SwaggerReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
+        {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureAppConfiguration((builderContext, configurationBuilder) =>

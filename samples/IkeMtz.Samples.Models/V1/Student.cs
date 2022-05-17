@@ -32,6 +32,8 @@ namespace IkeMtz.Samples.Models.V1
     [Required]
     public DateTime BirthDate { get; set; }
     [Required]
+    public Gender Gender { get; set; }
+    [Required]
     [MaxLength(250)]
     [EmailAddress]
     public string Email { get; set; }

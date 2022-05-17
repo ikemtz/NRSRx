@@ -95,7 +95,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
     {
       var additionPropertiesPattern = @",\s*\""additionalProperties\""\: false";
       result = Regex.Replace(result, additionPropertiesPattern, "");
-      var enumPattern = @"""enum"":[\s\[\d,\]]*";
+      var enumPattern = @"""enum"":[\s\[\d,]*\],";
       result = Regex.Replace(result, enumPattern, "");
       return result;
     }

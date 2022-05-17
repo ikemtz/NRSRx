@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace IkeMtz.NRSRx.Core.Web
+namespace IkeMtz.NRSRx.Core.Web.Swagger
 {
-  public class SwaggerAuthorizeOperationFilter
+  public class AuthorizeOperationFilter
          : IOperationFilter
   {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)

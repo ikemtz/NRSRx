@@ -14,5 +14,5 @@ Post-Deployment Script Template
 :r .\dbo\Data\Schools.sql
 :r .\dbo\Data\Students.sql
 :r .\dbo\Data\SchoolCourses.sql
-:r .\dbo\Data\StudentCourses.sql
 :r .\dbo\Data\StudentSchools.sql
+:r .\dbo\Data\StudentCourses.sql

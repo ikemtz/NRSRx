@@ -16,8 +16,8 @@ ENV SA_PASSWORD=SqlDockerRocks123! \
 ENV NEW_DB_NAME=SamplesDb
 EXPOSE 1433 
  
-COPY --from=sql-temp /var/opt/mssql/data/${NEW_DB_NAME}*.ldf /var/opt/mssql/data/ 
-COPY --from=sql-temp /var/opt/mssql/data/${NEW_DB_NAME}*.mdf /var/opt/mssql/data/ 
+COPY --from=sql-temp /var/opt/mssql/data/${NEW_DB_NAME}*.ldf /var/opt/mssql/data/
+COPY --from=sql-temp /var/opt/mssql/data/${NEW_DB_NAME}*.mdf /var/opt/mssql/data/
 ENV PATH="/opt/mssql-tools/bin:${PATH}"
 USER root
 RUN chown -R mssql /var/opt/mssql/data && \
