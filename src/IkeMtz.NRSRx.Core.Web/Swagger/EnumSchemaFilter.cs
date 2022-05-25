@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
         schema.Format = null;
         foreach (var i in Enum.GetValues(context.Type))
         {
-          schema.Enum.Add(new OpenApiString($"{Convert.ToInt64(i)} - {Enum.GetName(context.Type, i)}"));
+          schema.Enum.Add(new OpenApiString($"{Convert.ToInt64(i)} - {i}"));
         }
       }
     }
