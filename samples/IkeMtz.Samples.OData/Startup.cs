@@ -38,5 +38,10 @@ namespace IkeMtz.Samples.OData
       _ = services
        .AddDbContextPool<DatabaseContext>(x => x.UseSqlServer(dbConnectionString));
     }
+
+    public override void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecks)
+    {
+      _ = healthChecks.AddDbContextCheck<DatabaseContext>();
+    }
   }
 }

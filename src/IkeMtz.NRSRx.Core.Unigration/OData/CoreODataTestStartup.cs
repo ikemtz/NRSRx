@@ -33,10 +33,10 @@ namespace IkeMtz.NRSRx.Core.Unigration
       Startup.SetupMiscDependencies(services);
       base.SetupMiscDependencies(services);
     }
-    public override void SetupHealthChecks(IServiceCollection services)
+    public override void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecksBuilder)
     {
-      Startup.SetupHealthChecks(services);
-      base.SetupHealthChecks(services);
+      Startup.SetupHealthChecks(services, healthChecksBuilder);
+      base.SetupHealthChecks(services, healthChecksBuilder);
     }
 
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }

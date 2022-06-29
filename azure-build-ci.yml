@@ -48,11 +48,13 @@ jobs:
       version: 6.0.x
 
   - task: Bash@3
+    displayName: 'Setting development environment variables'
     inputs:
       targetType: 'inline'
       script: 'export DOTNET_ENVIRONMENT=Development && export ASPNETCORE_ENVIRONMENT=Development'
 
   - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore'
     inputs:
       command: 'restore'
       projects: '$(ALL_PROJECTS)'
