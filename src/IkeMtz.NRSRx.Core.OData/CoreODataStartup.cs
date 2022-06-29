@@ -34,7 +34,8 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
       SetupSwagger(services);
-      SetupHealthChecks(services);
+      var healthCheckBuilder = services.AddHealthChecks();
+      SetupHealthChecks(services, healthCheckBuilder);
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.OData
       }
       _ = app.UseEndpoints(endpoints =>
       {
-        _ = endpoints.MapHealthChecks("/health");
+        _ = endpoints.MapHealthChecks("/healthz");
         _ = endpoints.MapControllers();
       });
     }

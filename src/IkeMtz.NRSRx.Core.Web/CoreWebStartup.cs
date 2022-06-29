@@ -91,9 +91,9 @@ namespace IkeMtz.NRSRx.Core.Web
     {
     }
 
-    public virtual void SetupHealthChecks(IServiceCollection services)
+    public virtual void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecks)
     {
-      services.AddHealthChecks();
+     
     }
 
     public virtual void SetupMiscDependencies(IServiceCollection services) { }

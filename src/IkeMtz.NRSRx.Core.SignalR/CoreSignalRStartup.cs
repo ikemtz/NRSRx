@@ -25,9 +25,10 @@ namespace IkeMtz.NRSRx.Core.SignalR
     {
       SetupLogging(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
-      SetupHealthChecks(services);
       SetupMiscDependencies(services);
       _ = services.AddSignalR();
+      var healthCheckBuilder = services.AddHealthChecks();
+      SetupHealthChecks(services, healthCheckBuilder);
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
