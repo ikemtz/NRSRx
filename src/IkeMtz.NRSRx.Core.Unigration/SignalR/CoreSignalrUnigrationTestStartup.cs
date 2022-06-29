@@ -27,10 +27,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
       _ = app.UseTestContextRequestLogger(TestContext);
       base.Configure(app, env);
     }
-    public override void SetupHealthChecks(IServiceCollection services)
+    public override void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecksBuilder)
     {
-      Startup.SetupHealthChecks(services);
-      base.SetupHealthChecks(services);
+      Startup.SetupHealthChecks(services, healthChecksBuilder);
+      base.SetupHealthChecks(services, healthChecksBuilder);
     }
 
     public override void MapHubs(IEndpointRouteBuilder endpoints) =>

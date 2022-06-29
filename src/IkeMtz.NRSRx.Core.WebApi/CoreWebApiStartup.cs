@@ -31,11 +31,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
-      SetupHealthChecks(services);
       _ = SetupCoreEndpointFunctionality(services)
          .AddApplicationPart(StartupAssembly)
          .AddControllersAsServices();
       _ = services.AddControllers();
+      var healthCheckBuilder = services.AddHealthChecks();
+      SetupHealthChecks(services, healthCheckBuilder);
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
