@@ -29,10 +29,15 @@ namespace IkeMtz.Samples.WebApi
       _ = services
       .AddDbContext<DatabaseContext>(x => x
         .UseSqlServer(dbConnectionString)
-        .EnableDetailedErrors()
         );
     }
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
       this.SetupElasticsearch(app);
+
+    public override void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecks)
+    {
+      _ = healthChecks.AddDbContextCheck<DatabaseContext>();
+    }
+
   }
 }

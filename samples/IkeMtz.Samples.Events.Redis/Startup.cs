@@ -21,6 +21,11 @@ namespace IkeMtz.Samples.Events.Redis
 
     public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) => this.SetupConsoleLogging(app);
 
+    public override void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecks)
+    {
+      _ = healthChecks.AddRedis(Configuration.GetValue<string>("REDIS_CONNECTION_STRING"));
+    }
+
     [ExcludeFromCodeCoverage]
     public override void SetupPublishers(IServiceCollection services)
     {

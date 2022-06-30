@@ -3,6 +3,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>5fb5d75a-1615-4e16-956d-b48f48f4a476</UserSecretsId>
     <ProjectGuid>{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}</ProjectGuid>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CA1707;CS1591</NoWarn>
