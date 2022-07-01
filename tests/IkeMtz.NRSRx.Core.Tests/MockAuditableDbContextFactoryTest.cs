@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.NRSRx.Core.Unigration.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,7 +19,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task MockAuditableContextFactoryTest()
     {
       var modelA = new MyIntModel();
-      var modelB = new MyIntModel(); 
+      var modelB = new MyIntModel();
       using var ctx = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
       _ = ctx.MyModel.Add(modelA);
       _ = ctx.MyModel.Add(modelB);
@@ -35,7 +36,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task MockAuditableContextAddAsyncTest()
     {
       var modelA = new MyIntModel();
-      var modelB = new MyIntModel(); 
+      var modelB = new MyIntModel();
       using var ctx = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
       var dbContextObjA = await ctx.AddAsync(modelA);
       var dbContextObjB = await ctx.AddAsync<MyIntModel>(modelB);
@@ -49,7 +50,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task MockDbContextFactoryTest()
     {
       var modelA = new MyIntModel();
-      var modelB = new MyIntModel(); 
+      var modelB = new MyIntModel();
       using var ctx = DbContextFactory.CreateInMemoryDbContext<TestDbContext>(TestContext);
       _ = ctx.MyModel.Add(modelA);
       _ = ctx.MyModel.Add(modelB);

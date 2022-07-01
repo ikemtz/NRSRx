@@ -108,7 +108,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       if (db is AuditableDbContext)
       {
         var dbType = db.GetType();
-        var httpContextAccessor = new MockHttpContextAccessorFactory().CreateAccessor();
+        var httpContextAccessor = MockHttpContextAccessorFactory.CreateAccessor();
         var bindingFlags = BindingFlags.NonPublic | BindingFlags.Instance;
         dbType
           .GetProperty("HttpContextAccessor", bindingFlags)

@@ -4,10 +4,10 @@ using Moq;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class MockHttpContextAccessorFactory
+  public static class MockHttpContextAccessorFactory
   {
-    public string TestUser { get; set; } = "NRSRx Test User";
-    public IHttpContextAccessor CreateAccessor()
+    public static string TestUser { get; set; } = "NRSRx Test User";
+    public static IHttpContextAccessor CreateAccessor()
     {
       var nameClaim = new Claim(ClaimTypes.Name, TestUser);
       var identity = new ClaimsIdentity(new[] { nameClaim });

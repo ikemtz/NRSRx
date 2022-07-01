@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.NRSRx.Core.Unigration.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
   [TestClass]
   public class CollectionHelperTests : BaseUnigrationTests
-  { 
+  {
 
     [TestMethod]
     [TestCategory("Unit")]
