@@ -1,4 +1,3 @@
-using System;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.EntityFrameworkCore;
@@ -6,15 +5,14 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace IkeMtz.NRSRx.Core.Unigration
+namespace IkeMtz.NRSRx.Core.Unigration.Data
 {
   public static class DbContextFactory
   {
     public static TAuditableDbContext CreateInMemoryAuditableDbContext<TAuditableDbContext>(TestContext testContext)
         where TAuditableDbContext : AuditableDbContext
     {
-      var fac = new MockHttpContextAccessorFactory();
-      var accessor = fac.CreateAccessor();
+      var accessor = MockHttpContextAccessorFactory.CreateAccessor();
       var options = CreateDbContextOptions<TAuditableDbContext>(testContext);
       var constructor = typeof(TAuditableDbContext)
           .GetConstructor(new[] { options.GetType(), accessor.GetType() });
@@ -34,13 +32,13 @@ namespace IkeMtz.NRSRx.Core.Unigration
         where TDbContext : DbContext
     {
       var builder = new DbContextOptionsBuilder<TDbContext>();
-      ConfigureTestDbContextOptions(builder, testContext);
+      _ = builder.ConfigureTestDbContextOptions(testContext);
       return builder.Options;
     }
 
-    public static void ConfigureTestDbContextOptions(this DbContextOptionsBuilder optionsBuilder, TestContext testContext)
+    public static DbContextOptionsBuilder ConfigureTestDbContextOptions(this DbContextOptionsBuilder optionsBuilder, TestContext testContext)
     {
-      optionsBuilder
+      return optionsBuilder
          .UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}")
          .EnableSensitiveDataLogging()
          .EnableDetailedErrors()
