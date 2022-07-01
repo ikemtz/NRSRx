@@ -23,6 +23,11 @@ namespace IkeMtz.NRSRx.Core.OData
       nameof(IEdmExpression),
       nameof(IEdmEntityContainerElement),
 
+      nameof(EdmContainerElementKind),
+      nameof(EdmExpressionKind),
+      nameof(EdmSchemaElementKind),
+      nameof(EdmTypeKind),
+
       nameof(ODataEntitySetInfo),
       nameof(ODataFunctionImportInfo),
       nameof(ODataServiceDocument),
