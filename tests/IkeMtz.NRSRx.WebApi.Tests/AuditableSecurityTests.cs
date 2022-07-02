@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.NRSRx.OData.Tests;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.WebApi;

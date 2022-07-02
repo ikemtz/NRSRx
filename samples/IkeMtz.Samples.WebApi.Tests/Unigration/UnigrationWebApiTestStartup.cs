@@ -13,10 +13,6 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
         : base(new Startup(configuration))
     {
     }
-    public override void SetupAuthentication(AuthenticationBuilder builder)
-    {
-      builder.SetupTestAuthentication(Configuration, TestContext);
-    }
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
     {
       services.SetupTestDbContext<DatabaseContext>();

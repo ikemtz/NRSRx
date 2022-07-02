@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 
-namespace IkeMtz.NRSRx.Core.Unigration
+namespace IkeMtz.NRSRx.Core.Unigration.Http
 {
   public static class HttpClientExtensions
   {
