@@ -119,14 +119,15 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = db.SaveChanges();
     }
 
-    public static async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
+    public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
-      if (httpResponseMessage.Content != null)
+      var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
+      TestContext.WriteLine($"Server Response Status Code: {httpResponseMessage.StatusCode}");
+      if (!string.IsNullOrWhiteSpace(content))
       {
-        var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
-        var result = JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
-        return result;
+        TestContext.WriteLine($"Server Response: {content}");
+        return JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
       }
       _ = httpResponseMessage.EnsureSuccessStatusCode();
       return default;
