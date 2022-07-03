@@ -39,7 +39,8 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
     public static DbContextOptionsBuilder ConfigureTestDbContextOptions(this DbContextOptionsBuilder optionsBuilder, TestContext testContext)
     {
       return optionsBuilder
-         .UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}")
+         .UseInMemoryDatabase($"InMemoryDbForTesting-{testContext.TestName}",
+            x => x.EnableNullChecks(true))
          .EnableSensitiveDataLogging()
          .EnableDetailedErrors()
          .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
