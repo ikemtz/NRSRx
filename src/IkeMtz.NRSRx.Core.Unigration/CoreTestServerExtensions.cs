@@ -87,7 +87,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
           httpContextAccessor = httpContextAccessor.HttpContext != null ? httpContextAccessor : MockHttpContextAccessorFactory.CreateAccessor();
           _ = options.AddInterceptors(new AuditableInterceptor(httpContextAccessor));
         }
-      });
+      }, ServiceLifetime.Singleton);
     }
 
     public static HubConnection BuildSignalrConnection(this TestServer srv, string hubEndpoint, string accessToken)
