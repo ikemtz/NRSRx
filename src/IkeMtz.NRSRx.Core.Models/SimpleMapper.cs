@@ -68,6 +68,8 @@ namespace IkeMtz.NRSRx.Core.Models
       return typeof(TDestinationEntity).GetRuntimeProperties()
             .Where(prop => sourceProperties.Keys.Contains(prop.Name, StringComparer.CurrentCulture))
             .Where(prop => prop.CanWrite)
+            .Where(prop =>
+              prop.PropertyType == sourceProperties.FirstOrDefault(f => f.Key.Equals(prop.Name, StringComparison.CurrentCultureIgnoreCase)).Value?.PropertyType)
             .Select(prop => new Action<TSourceEntity, TDestinationEntity>((src, dest) =>
                SetPropertyValue(prop, sourceProperties, src, dest)
             ));
