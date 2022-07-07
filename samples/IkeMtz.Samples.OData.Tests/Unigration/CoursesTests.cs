@@ -31,11 +31,9 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true");
-
-      //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {resp}");
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$count=true");
+      _ = resp.EnsureSuccessStatusCode(); 
+      var envelope = await DeserializeResponseAsync<ODataEnvelope<Course>>(resp);
       Assert.AreEqual(objA.Title, envelope.Value.First().Title);
     }
   }

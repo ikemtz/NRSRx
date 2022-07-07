@@ -4,9 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.EntityFramework;
+using IkeMtz.NRSRx.Core.Unigration.Data;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
@@ -72,11 +75,19 @@ namespace IkeMtz.NRSRx.Core.Unigration
             new TestContextLoggerProvider(provider.GetService<TestContext>()) }))
           .BuildServiceProvider();
       var testContext = serviceProvider.GetService<TestContext>();
+
       _ = services.AddDbContext<TDbContext>(options =>
       {
-        options.ConfigureTestDbContextOptions(testContext);
-        _ = options.LogTo(testContext.WriteLine);
-      });
+        _ = options
+          .ConfigureTestDbContextOptions(testContext)
+          .LogTo(testContext.WriteLine);
+        if (!typeof(TDbContext).IsAssignableFrom(typeof(AuditableDbContext)))
+        {
+          var httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
+          httpContextAccessor = httpContextAccessor.HttpContext != null ? httpContextAccessor : MockHttpContextAccessorFactory.CreateAccessor();
+          _ = options.AddInterceptors(new AuditableInterceptor(httpContextAccessor));
+        }
+      }, ServiceLifetime.Singleton);
     }
 
     public static HubConnection BuildSignalrConnection(this TestServer srv, string hubEndpoint, string accessToken)

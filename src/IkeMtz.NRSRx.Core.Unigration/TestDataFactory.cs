@@ -11,13 +11,22 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public static readonly Regex NumberAfterSpace = new(@" \d", RegexOptions.None);
 
     public static TENTITY CreateIdentifiable<TENTITY>(TENTITY value = null)
-      where TENTITY : class, IIdentifiable, new()
+      where TENTITY : class, IIdentifiable<Guid>, new()
+    {
+      _ = CreateIdentifiable<TENTITY, Guid>(value);
+      value.Id = Guid.NewGuid();
+      return value;
+    }
+
+    public static TENTITY CreateIdentifiable<TENTITY, TIdentityType>(TENTITY value = null)
+      where TENTITY : class, IIdentifiable<TIdentityType>, new()
+      where TIdentityType : IComparable
     {
       if (value == null)
       {
         value = new TENTITY();
       }
-      value.Id = Guid.NewGuid();
+      value.Id = default;
       return value;
     }
 
