@@ -41,7 +41,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
         throw new AuditableInvalidUserException();
       }
       auditable.CreatedOnUtc = auditable.CreatedOnUtc.Year != 1 ? auditable.CreatedOnUtc : DateTime.UtcNow;
-      auditable.CreatedBy = HttpContextAccessor.HttpContext.User.Identity.Name;
+      auditable.CreatedBy = HttpContextAccessor.HttpContext.User.Identity.Name ?? HttpContextAccessor.HttpContext.User.FindFirst("client_id")?.Value;
     }
     public virtual void OnIAuditableUpdate(IAuditable auditable)
     {
@@ -50,7 +50,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
         throw new AuditableInvalidUserException();
       }
       auditable.UpdatedOnUtc = DateTime.UtcNow;
-      auditable.UpdatedBy = HttpContextAccessor.HttpContext.User.Identity.Name;
+      auditable.UpdatedBy = HttpContextAccessor.HttpContext.User.Identity.Name ?? HttpContextAccessor.HttpContext.User.FindFirst("client_id")?.Value;
     }
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
