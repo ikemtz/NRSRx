@@ -36,21 +36,23 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     }
     public virtual void OnIAuditableCreate(IAuditable auditable)
     {
-      if (string.IsNullOrWhiteSpace(HttpContextAccessor?.HttpContext?.User?.Identity?.Name))
+      var userId = HttpContextAccessor.HttpContext.User.Identity.Name ?? HttpContextAccessor.HttpContext.User.FindFirst("client_id")?.Value;
+      if (string.IsNullOrWhiteSpace(userId))
       {
         throw new AuditableInvalidUserException();
       }
       auditable.CreatedOnUtc = auditable.CreatedOnUtc.Year != 1 ? auditable.CreatedOnUtc : DateTime.UtcNow;
-      auditable.CreatedBy = HttpContextAccessor.HttpContext.User.Identity.Name ?? HttpContextAccessor.HttpContext.User.FindFirst("client_id")?.Value;
+      auditable.CreatedBy = userId;
     }
     public virtual void OnIAuditableUpdate(IAuditable auditable)
     {
-      if (string.IsNullOrWhiteSpace(HttpContextAccessor?.HttpContext?.User?.Identity?.Name))
+      var userId = HttpContextAccessor.HttpContext.User.Identity.Name ?? HttpContextAccessor.HttpContext.User.FindFirst("client_id")?.Value;
+      if (string.IsNullOrWhiteSpace(userId))
       {
         throw new AuditableInvalidUserException();
       }
       auditable.UpdatedOnUtc = DateTime.UtcNow;
-      auditable.UpdatedBy = HttpContextAccessor.HttpContext.User.Identity.Name ?? HttpContextAccessor.HttpContext.User.FindFirst("client_id")?.Value;
+      auditable.UpdatedBy = userId;
     }
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
