@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -122,9 +123,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
-      if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+      if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized && httpResponseMessage.Headers.WwwAuthenticate.Any())
       {
-
+        TestContext.WriteLine($"Error Response WwwAuthenticate Header: {httpResponseMessage.Headers.WwwAuthenticate}");
       }
       var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
       TestContext.WriteLine($"Server Response Status Code: {httpResponseMessage.StatusCode}");
