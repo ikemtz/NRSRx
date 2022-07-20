@@ -122,6 +122,10 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
+      if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+      {
+
+      }
       var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
       TestContext.WriteLine($"Server Response Status Code: {httpResponseMessage.StatusCode}");
       if (!string.IsNullOrWhiteSpace(content))

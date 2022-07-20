@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Data
 {
-  public class AuditableInterceptor : ISaveChangesInterceptor
+  public class AuditableTestInterceptor : ISaveChangesInterceptor
   {
     public IHttpContextAccessor HttpContextAccessor { get; }
-    public AuditableInterceptor(IHttpContextAccessor httpContextAccessor)
+    public AuditableTestInterceptor(IHttpContextAccessor httpContextAccessor)
     {
       HttpContextAccessor = httpContextAccessor;
     }
@@ -61,8 +61,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.CreatedOnUtc = x.CreatedOnUtc != DateTime.MinValue ? x.CreatedOnUtc : DateTime.UtcNow;
-          x.CreatedBy = !string.IsNullOrWhiteSpace(x.CreatedBy) ?
-            x.CreatedBy : HttpContextAccessor.HttpContext.User.Identity.Name;
+          x.CreatedBy = GetUsername(x.CreatedBy);
         });
       entries
         .Where(x => x.State == EntityState.Modified)
@@ -72,9 +71,14 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.UpdatedOnUtc = x.UpdatedOnUtc != DateTime.MinValue ? x.UpdatedOnUtc : DateTime.UtcNow;
-          x.UpdatedBy = !string.IsNullOrWhiteSpace(x.UpdatedBy) ?
-            x.UpdatedBy : HttpContextAccessor.HttpContext.User.Identity.Name;
+          x.UpdatedBy = GetUsername(x.UpdatedBy);
         });
+    }
+
+    public string GetUsername(string currentEntityValue)
+    {
+      return !string.IsNullOrWhiteSpace(currentEntityValue) ? currentEntityValue :
+        HttpContextAccessor.HttpContext == null ? "NRSRx Test User" : HttpContextAccessor.HttpContext.User.Identity.Name;
     }
   }
 }
