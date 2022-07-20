@@ -39,6 +39,31 @@ namespace IkeMtz.NRSRx.OData.Tests
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
     }
+    [TestMethod]
+    [TestCategory("Unigration")]
+    public async Task GetCoursesWithInterceptorTest()
+    {
+      var item = Factories.CourseFactory();
+      item.CreatedBy = null;
+      item.UpdatedBy = null;
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+          .ConfigureTestServices(x =>
+          {
+            ExecuteOnContext<DatabaseContext>(x, db =>
+            {
+              _ = db.Courses.Add(item);
+            });
+          })
+       );
+      var client = srv.CreateClient();
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
+      TestContext.WriteLine($"Server Reponse: {resp}");
+      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      Assert.AreEqual(item.Title, envelope.Value.First().Title);
+    }
 
     [TestMethod]
     [TestCategory("Unigration")]
@@ -89,7 +114,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.AreEqual(item.Course.Title, envelope.Value.First().Title);
-      Assert.AreEqual(item.Id, envelope.Value.First().SchoolCourses.First().Id); 
+      Assert.AreEqual(item.Id, envelope.Value.First().SchoolCourses.First().Id);
     }
 
     [TestMethod]
