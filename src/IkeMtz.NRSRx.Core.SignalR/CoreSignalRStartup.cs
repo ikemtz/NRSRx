@@ -28,6 +28,7 @@ namespace IkeMtz.NRSRx.Core.SignalR
       SetupMiscDependencies(services);
       _ = services.AddSignalR();
       var healthCheckBuilder = services.AddHealthChecks();
+      SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupHealthChecks(services, healthCheckBuilder);
     }
 
