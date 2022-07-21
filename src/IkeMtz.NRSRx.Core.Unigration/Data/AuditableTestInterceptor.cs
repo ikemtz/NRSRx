@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.CreatedOnUtc = x.CreatedOnUtc != DateTime.MinValue ? x.CreatedOnUtc : DateTime.UtcNow;
-          x.CreatedBy = GetUsername(x.CreatedBy);
+          x.CreatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.CreatedBy);
         });
       entries
         .Where(x => x.State == EntityState.Modified)
@@ -71,14 +72,8 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.UpdatedOnUtc = x.UpdatedOnUtc != DateTime.MinValue ? x.UpdatedOnUtc : DateTime.UtcNow;
-          x.UpdatedBy = GetUsername(x.UpdatedBy);
+          x.UpdatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.CreatedBy);
         });
-    }
-
-    public string GetUsername(string currentEntityValue)
-    {
-      return !string.IsNullOrWhiteSpace(currentEntityValue) ? currentEntityValue :
-        HttpContextAccessor.HttpContext == null ? "NRSRx Test User" : HttpContextAccessor.HttpContext.User.Identity.Name;
     }
   }
 }
