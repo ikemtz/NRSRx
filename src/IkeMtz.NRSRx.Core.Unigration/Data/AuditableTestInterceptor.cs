@@ -62,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.CreatedOnUtc = x.CreatedOnUtc != DateTime.MinValue ? x.CreatedOnUtc : DateTime.UtcNow;
-          x.CreatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.CreatedBy);
+          x.CreatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.CreatedBy ?? "NRSRx Test User");
         });
       entries
         .Where(x => x.State == EntityState.Modified)
@@ -72,7 +72,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.UpdatedOnUtc = x.UpdatedOnUtc != DateTime.MinValue ? x.UpdatedOnUtc : DateTime.UtcNow;
-          x.UpdatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.CreatedBy);
+          x.UpdatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.UpdatedBy ?? "NRSRx Test User");
         });
     }
   }
