@@ -130,3 +130,14 @@ Foreach-Object {
      [System.IO.File]::WriteAllText($_.FullName, $fileContents)
     }
 }
+
+Get-ChildItem -Path $PSScriptRoot -Filter *.sh -Recurse | 
+Foreach-Object {
+  $fileContents = [System.IO.File]::ReadAllText($_.FullName)
+    if ( $fileContents.Contains($findValue) )
+    {
+     Write-Host "Updating File Content On:" $_.Name
+     $fileContents = $fileContents.Replace($findValue, $replacementValue);
+     [System.IO.File]::WriteAllText($_.FullName, $fileContents)
+    }
+}
