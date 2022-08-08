@@ -1,5 +1,8 @@
+using System.ComponentModel;
+
 namespace IkeMtz.Samples.Models.V1
 {
+  [DefaultValue(Unknown)]
   public enum Gender
   {
     Male = 1,

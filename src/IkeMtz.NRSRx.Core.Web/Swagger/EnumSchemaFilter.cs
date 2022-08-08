@@ -2,6 +2,8 @@ using System;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.ComponentModel;
+using System.Linq;
 
 namespace IkeMtz.NRSRx.Core.Web.Swagger
 {
@@ -14,9 +16,21 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
         schema.Enum.Clear();
         schema.Type = "string";
         schema.Format = null;
-        foreach (var i in Enum.GetValues(context.Type))
+        var enumValues = Enum.GetValues(context.Type);
+        var attribType = typeof(DefaultValueAttribute);
+        var attribs = context.Type.GetCustomAttributesData().Where(w => w.AttributeType == attribType);
+        foreach (var i in enumValues)
         {
-          schema.Enum.Add(new OpenApiString($"{Convert.ToInt64(i)} - {i}"));
+          var enumVal = Convert.ToInt64(i);
+          schema.Enum.Add(new OpenApiString($"{enumVal} - {i}"));
+          if (attribs.Any())
+          {
+            var defaultVal = Convert.ToInt64(attribs.First().ConstructorArguments.First().Value);
+            if (enumVal == defaultVal)
+            {
+              schema.Default = new OpenApiString($"{enumVal} - {i}");
+            }
+          }
         }
       }
     }
