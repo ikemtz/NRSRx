@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace IkeMtz.Samples.Models.V1
@@ -10,7 +11,8 @@ namespace IkeMtz.Samples.Models.V1
 
   public partial class Course
   : IkeMtz.NRSRx.Core.Models.IIdentifiable, IkeMtz.NRSRx.Core.Models.IAuditable
-  {    public Course()
+  {
+    public Course()
     {
       StudentCourses = new HashSet<StudentCourse>();
       SchoolCourses = new HashSet<SchoolCourse>();
@@ -29,7 +31,9 @@ namespace IkeMtz.Samples.Models.V1
     public string Title { get; set; }
     [MaxLength(500)]
     public string Description { get; set; }
+    [DefaultValue(0)]
     public double? PassRate { get; set; }
+    [DefaultValue(0)]
     public double? AvgScore { get; set; }
     [Required]
     [MaxLength(250)]

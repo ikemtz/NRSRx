@@ -95,6 +95,8 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
     {
       var additionPropertiesPattern = @",\s*\""additionalProperties\""\: false";
       result = Regex.Replace(result, additionPropertiesPattern, "");
+      var defaultZeroPattern = @"""default"": ""?[\d \w-]*""?,?$";
+      result = Regex.Replace(result, defaultZeroPattern, "", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.Multiline);
       var enumPattern = @"\""enum\"": \[[\s\""0-9A-z-,]*],";
       result = Regex.Replace(result, enumPattern, "");
       return result;
