@@ -32,6 +32,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.json", item);
+      var student = await DeserializeResponseAsync<Student>(resp);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Student>(t => t.Id == item.Id)), Times.Once);
     }
@@ -51,6 +52,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}", item);
+      var student = await DeserializeResponseAsync<Student>(resp);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Student>(t => t.Id == item.Id)), Times.Once);
     }
@@ -70,6 +72,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}");
+      var student = await DeserializeResponseAsync<Student>(resp);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Student>(t => t.Id == item.Id)), Times.Once);
     }
