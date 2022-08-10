@@ -2,7 +2,7 @@ using System;
 
 namespace IkeMtz.NRSRx.Core.Models
 {
-  public interface IEnumValue : IIdentifiable<int>, IEnumValue<int>
+  public interface IEnumValue : IEnumValue<int>
   {
   }
   public interface IEnumValue<TIdentityType> : IIdentifiable<TIdentityType>
