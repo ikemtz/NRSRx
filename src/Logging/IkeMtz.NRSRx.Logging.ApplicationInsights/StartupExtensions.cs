@@ -20,8 +20,7 @@ namespace IkeMtz.NRSRx.Core.Web
           .AddApplicationInsightsTelemetry(
             new ApplicationInsightsServiceOptions()
             {
-
-              InstrumentationKey = startup.Configuration.GetValue<string>("InstrumentationKey"),
+              ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
               ApplicationVersion = startup.GetBuildNumber(),
               EnableDiagnosticsTelemetryModule = true,
             });
@@ -38,7 +37,7 @@ namespace IkeMtz.NRSRx.Core.Web
           .AddApplicationInsightsTelemetry(
             new ApplicationInsightsServiceOptions()
             {
-              InstrumentationKey = startup.Configuration.GetValue<string>("InstrumentationKey"),
+              ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
               ApplicationVersion = startup.GetBuildNumber(),
               EnableDiagnosticsTelemetryModule = true,
               DeveloperMode = true,
