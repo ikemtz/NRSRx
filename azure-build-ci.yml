@@ -126,7 +126,6 @@ jobs:
       command: 'pack'
       packagesToPack: '$(PACKAGE_PROJECTS)'
       configuration: 'Debug'
-      nobuild: true
       includesymbols: true
       includesource: true
       versioningScheme: byBuildNumber
