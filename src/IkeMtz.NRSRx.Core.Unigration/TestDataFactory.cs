@@ -8,6 +8,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
 {
   public static partial class TestDataFactory
   {
+    static readonly Random random;
+    static TestDataFactory()
+    {
+      random = new Random(DateTime.UtcNow.Millisecond);
+    }
     public static readonly Regex NumberAfterSpace = new(@" \d", RegexOptions.None);
 
     public static TENTITY CreateIdentifiable<TENTITY>(TENTITY value = null)
@@ -42,22 +47,21 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return value;
     }
 
-    public static string StringGenerator(int length, bool allowSpaces = false, string characterSet = CharacterSets.AlphaChars, int? seed = null)
+    public static string StringGenerator(int length, bool allowSpaces = false, string characterSet = CharacterSets.AlphaChars)
     {
-      var random = new Random(seed ?? DateTime.UtcNow.Millisecond);
       var sb = new StringBuilder();
       var charsetLength = characterSet.Length;
       Enumerable.Range(1, length).ToList().ForEach(x =>
         sb.Append(characterSet.ElementAt(random.Next(charsetLength))));
-      var result = CapitalizeFirstChar(sb.ToString(), characterSet);
+      var result = CapitalizeFirstChar(sb, characterSet);
       if (allowSpaces)
       {
-        result = InjectSpaces(length, random, result, characterSet);
+        return InjectSpaces(length, random, result, characterSet).Trim();
       }
-      return result;
+      return result.ToString().Trim();
     }
 
-    public static string InjectSpaces(int length, Random random, string result, string characterSet)
+    public static string InjectSpaces(int length, Random random, StringBuilder sb, string characterSet)
     {
       var averageWordSize = 5; //English (4.7)
       var spacesPerString = (length / averageWordSize);
@@ -65,18 +69,19 @@ namespace IkeMtz.NRSRx.Core.Unigration
       for (int i = 0; i < spacesPerString; i++)
       {
         var nextSpace = random.Next(previousSpace, previousSpace + averageWordSize + 1);
-        result = result.Insert(Math.Min(nextSpace, result.Length), " ");
+        sb = sb.Insert(Math.Min(nextSpace, sb.Length), " ");
         previousSpace = nextSpace + 2;
       }
+      sb = sb.Replace("  ", " ");
+      var result = sb.ToString();
       if (characterSet.Any(char.IsLetter))
       {
         result = NumberAfterSpace.Replace(result, " ");
       }
-      result = result.Trim().Replace("  ", " ");
-      return result[..length];
+      return result[..Math.Min(length, result.Length)];
     }
 
-    public static string CapitalizeFirstChar(string result, string characterSet)
+    public static StringBuilder CapitalizeFirstChar(StringBuilder result, string characterSet)
     {
       if (characterSet.Any(char.IsUpper))
       {
