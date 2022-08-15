@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void GenerateNumbers()
     {
-      var result = TestDataFactory.StringGenerator(6, true, characterSet: CharacterSets.Numeric);
+      var result = TestDataFactory.StringGenerator(6, false, characterSet: CharacterSets.Numeric);
       TestContext.WriteLine("Generated String: {0}", result);
       Assert.IsFalse(result.Contains("  "));
       Assert.AreEqual(result.Length, 6);
