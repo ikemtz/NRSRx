@@ -38,7 +38,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var result = TestDataFactory.StringGenerator(50, true);
       TestContext.WriteLine("Generated String: {0}", result);
       Assert.IsFalse(result.Contains("  "));
-      Assert.AreEqual(50, result.Length);
+      Assert.IsTrue(45 > result.Length, "generated string is not long enough.");
       Assert.IsTrue(char.IsUpper(result.First()));
     }
     [TestMethod]
@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       TestContext.WriteLine("Generated String: {0}", result);
       Assert.IsFalse(result.Contains("  "));
       Assert.IsTrue(char.IsLower(result.First()));
-      Assert.AreEqual(50, result.Length);
+      Assert.IsTrue(45 > result.Length, "generated string is not long enough.");
     }
 
     [TestMethod]

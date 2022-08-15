@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.Core.Tests
          var result = StringGenerator(1000, true);
          TestContext.WriteLine($"Generated String: {result}");
          Assert.AreNotEqual(lastString, result);
-         Assert.AreEqual(1000, result.Length);
+         Assert.IsTrue(990 > result.Length, "generated string is not long enough.");
          lastString = result;
        });
     }
@@ -34,7 +34,7 @@ namespace IkeMtz.NRSRx.Core.Tests
         var result = StringGenerator(1000,false);
         TestContext.WriteLine($"Generated String: {result}");
         Assert.AreNotEqual(lastString, result);
-        Assert.AreEqual(1000, result.Length);
+        Assert.IsTrue(990 > result.Length, "generated string is not long enough.");
         lastString = result;
       });
     }

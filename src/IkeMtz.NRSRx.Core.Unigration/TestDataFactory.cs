@@ -47,16 +47,16 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return value;
     }
 
-    public static string StringGenerator(int length, bool allowSpaces = false, string characterSet = CharacterSets.AlphaChars)
+    public static string StringGenerator(int maxLength, bool allowSpaces = false, string characterSet = CharacterSets.AlphaChars)
     {
       var sb = new StringBuilder();
       var charsetLength = characterSet.Length;
-      Enumerable.Range(1, length).ToList().ForEach(x =>
+      Enumerable.Range(1, maxLength).ToList().ForEach(x =>
         sb.Append(characterSet.ElementAt(random.Next(charsetLength))));
       var result = CapitalizeFirstChar(sb, characterSet);
       if (allowSpaces)
       {
-        return InjectSpaces(length, random, result, characterSet).Trim();
+        return InjectSpaces(maxLength, random, result, characterSet).Trim();
       }
       return result.ToString().Trim();
     }
