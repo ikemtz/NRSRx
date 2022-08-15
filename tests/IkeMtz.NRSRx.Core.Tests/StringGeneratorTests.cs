@@ -16,10 +16,9 @@ namespace IkeMtz.NRSRx.Core.Tests
       //Trying to replicate random out of index issue and need enough runs to replicate
       Enumerable.Range(0, 10000).ToList().ForEach((x) =>
        {
-         var result = StringGenerator(1000, true);
-         TestContext.WriteLine($"Generated String: {result}");
+         var result = StringGenerator(1000, true); 
          Assert.AreNotEqual(lastString, result);
-         Assert.IsTrue(990 > result.Length, "generated string is not long enough.");
+         Assert.IsTrue(990 < result.Length, "generated string is not long enough, expected: 990, actual: {0}", result.Length);
          lastString = result;
        });
     }
@@ -31,10 +30,9 @@ namespace IkeMtz.NRSRx.Core.Tests
       //Trying to replicate random out of index issue and need enough runs to replicate
       Enumerable.Range(0, 10000).ToList().ForEach((x) =>
       {
-        var result = StringGenerator(1000,false);
-        TestContext.WriteLine($"Generated String: {result}");
-        Assert.AreNotEqual(lastString, result);
-        Assert.IsTrue(990 > result.Length, "generated string is not long enough.");
+        var result = StringGenerator(1000,false); 
+        Assert.AreNotEqual(lastString, result); 
+        Assert.IsTrue(990 < result.Length, "generated string is not long enough, expected: 990, actual: {0}", result.Length);
         lastString = result;
       });
     }
