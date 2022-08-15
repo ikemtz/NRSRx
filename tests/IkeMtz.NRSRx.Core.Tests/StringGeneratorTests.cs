@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Tests
        {
          var result = StringGenerator(1000, true); 
          Assert.AreNotEqual(lastString, result);
-         Assert.IsTrue(990 < result.Length, "generated string is not long enough, expected: 990, actual: {0}", result.Length);
+         Assert.IsTrue(990 <= result.Length, "generated string is not long enough, expected: 990, actual: {0}", result.Length);
          lastString = result;
        });
     }
@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         var result = StringGenerator(1000,false); 
         Assert.AreNotEqual(lastString, result); 
-        Assert.IsTrue(990 < result.Length, "generated string is not long enough, expected: 990, actual: {0}", result.Length);
+        Assert.IsTrue(990 <= result.Length, "generated string is not long enough, expected: 990, actual: {0}", result.Length);
         lastString = result;
       });
     }
