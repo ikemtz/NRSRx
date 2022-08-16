@@ -72,11 +72,14 @@ namespace IkeMtz.NRSRx.Core.Unigration
         sb = sb.Insert(Math.Min(nextSpace, sb.Length), " ");
         previousSpace = nextSpace + 2;
       }
-      sb = sb.Replace("  ", " ");
       var result = sb.ToString();
       if (characterSet.Any(char.IsLetter))
       {
         result = NumberAfterSpace.Replace(result, " ");
+      }
+      while(result.Contains("  "))
+      {
+        result = result.Replace("  ", " ");
       }
       return result[..Math.Min(length, result.Length)];
     }

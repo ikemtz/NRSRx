@@ -12,8 +12,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void GenerateAllChars()
     {
-      var result = TestDataFactory.StringGenerator(50, true, CharacterSets.AlphaNumericChars); 
-      Assert.IsFalse(result.Contains("  "));
+      var result = TestDataFactory.StringGenerator(50, true, CharacterSets.AlphaNumericChars);
+      TestContext.WriteLine("Generated String is: {0}", result);
+      Assert.IsFalse(result.Contains("  "), "String has at least two consecutive spaces.");
       Assert.IsTrue(char.IsUpper(result.First()), "First Character is not capitalized: {0}", result.First());
       Assert.AreEqual(50, result.Length);
     }
