@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       TestContext.WriteLine("Generated String is: {0}", result);
       Assert.IsFalse(result.Contains("  "), "String has at least two consecutive spaces.");
       Assert.IsTrue(char.IsUpper(result.First()), "First Character is not capitalized: {0}", result.First());
-      Assert.AreEqual(50, result.Length);
+      Assert.IsTrue(50 >= result.Length, "Generated string was over the maximum: 50, actual: {0}", result.Length);
     }
 
     [TestMethod]
