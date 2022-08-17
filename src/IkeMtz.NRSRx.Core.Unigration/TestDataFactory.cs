@@ -89,15 +89,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
       if (characterSet.Any(char.IsUpper))
       {
         var firstChar = result[0];
-        while (char.IsNumber(firstChar))
+        if (!char.IsUpper(firstChar))
         {
-          result = result.Remove(0, 1);
-          firstChar = result[0];
-        }
-        if (char.IsLower(firstChar))
-        {
-          firstChar = char.ToUpper(firstChar);
-          result = result.Remove(0, 1).Insert(0, firstChar.ToString());
+          result = result.Insert(0, "G");
         }
       }
       return result;
