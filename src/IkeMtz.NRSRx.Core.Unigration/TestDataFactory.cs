@@ -77,7 +77,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       {
         result = NumberAfterSpace.Replace(result, " ");
       }
-      while(result.Contains("  "))
+      while (result.Contains("  "))
       {
         result = result.Replace("  ", " ");
       }
@@ -86,13 +86,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public static StringBuilder CapitalizeFirstChar(StringBuilder result, string characterSet)
     {
-      if (characterSet.Any(char.IsUpper))
+      if (characterSet.Any(char.IsUpper) && !char.IsUpper(result[0]))
       {
-        var firstChar = result[0];
-        if (!char.IsUpper(firstChar))
-        {
-          result = result.Insert(0, "G");
-        }
+        result = result.Insert(0, "G");
       }
       return result;
     }
