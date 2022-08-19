@@ -7,7 +7,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public static class ContextCollectionSyncer
   {
-    public static void SyncCollections<TEntity>(this IAuditableDbContext auditableContext, IEnumerable<TEntity> sourceCollection, ICollection<TEntity> destinationCollection,
+    public static void SyncCollections<TEntity>(this IAuditableDbContext auditableContext, IEnumerable<TEntity> sourceCollection, IEnumerable<TEntity> destinationCollection,
         Action<TEntity, TEntity> updateLogic = null) where TEntity : class, IIdentifiable, new()
     {
       if (sourceCollection == null)
@@ -24,19 +24,19 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
       var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
-
+      var destCollectiion = (destinationCollection as IList<TEntity>);
       //Add New Records to destination
       sourceCollection.Where(src => !destIds.Contains(src.Id)).ToList().ForEach(item =>
       {
         _ = auditableContext.Add(item);
-        destinationCollection.Add(item);
+        destCollectiion?.Add(item);
       });
 
       //synchronize removed items
       foreach (var destId in destIds.Where(dstId => !sourceIds.Contains(dstId)))
       {
-        var entityFrameworkBoundObject = destinationCollection.First(dst => dst.Id == destId);
-        _ = destinationCollection.Remove(entityFrameworkBoundObject);
+        var entityFrameworkBoundObject = destCollectiion.First(dst => dst.Id == destId);
+        _ = destCollectiion?.Remove(entityFrameworkBoundObject);
         _ = auditableContext.Remove(entityFrameworkBoundObject);
       }
 
@@ -59,7 +59,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
     }
 
-    public static void SyncCollections<TSourceEntity, TDestinationEntity>(this IAuditableDbContext auditableContext, IEnumerable<TSourceEntity> sourceCollection, ICollection<TDestinationEntity> destinationCollection,
+    public static void SyncCollections<TSourceEntity, TDestinationEntity>(this IAuditableDbContext auditableContext, IEnumerable<TSourceEntity> sourceCollection, IEnumerable<TDestinationEntity> destinationCollection,
     Action<TSourceEntity, TDestinationEntity> updateLogic = null) where TSourceEntity : class, IInsertableDto, new()
       where TDestinationEntity : class, IIdentifiable, new()
     {
@@ -77,6 +77,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
       var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
+      var destCollectiion = (destinationCollection as IList<TDestinationEntity>);
 
       updateLogic ??= SimpleMapper<TSourceEntity, TDestinationEntity>.Instance.ApplyChanges;
       //Updating Existing records
@@ -96,14 +97,14 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
           destItem.Id = srcItem.Id.Value;
         }
         _ = auditableContext.Add(destItem);
-        destinationCollection.Add(destItem);
+        destCollectiion?.Add(destItem);
 
       }
 
       //Delete Records from destination
       foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t.Value == src.Id)).ToList())
       {
-        _ = destinationCollection.Remove(destItem);
+        _ = destCollectiion?.Remove(destItem);
         _ = auditableContext.Remove(destItem);
       }
     }
