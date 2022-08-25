@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace IkeMtz.NRSRx.Core.Models
 {
@@ -8,6 +9,7 @@ namespace IkeMtz.NRSRx.Core.Models
 
   public interface IIdentifiable<TIdentityType> where TIdentityType : IComparable
   {
+    [Key]
     TIdentityType Id { get; set; }
   }
 }
