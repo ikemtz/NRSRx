@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[Students] (
     [Tel1]         VARCHAR (15)       NULL,
     [Tel2]         VARCHAR (15)       NULL,
     [CreatedBy]    VARCHAR (250)      NOT NULL,
-    [CourseCount]  INT                NOT NULL,
+    [CourseCount]  INT                NOT NULL DEFAULT 0,
     [CreatedOnUtc] DATETIMEOFFSET (7) CONSTRAINT [DF_Students_CreatedOnUtc] DEFAULT (getutcdate()) NOT NULL,
     [UpdatedBy]    VARCHAR (250)      NULL,
     [UpdatedOnUtc] DATETIMEOFFSET (7) NULL,
