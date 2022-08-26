@@ -85,7 +85,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
         {
           var httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
           httpContextAccessor = httpContextAccessor?.HttpContext != null ? httpContextAccessor : MockHttpContextAccessorFactory.CreateAccessor();
-          _ = options.AddInterceptors(new AuditableTestInterceptor(httpContextAccessor), new CalculatableTestInterceptor());
+          _ = options.AddInterceptors(new CalculatableTestInterceptor(), new AuditableTestInterceptor(httpContextAccessor));
         }
       }, ServiceLifetime.Singleton);
     }

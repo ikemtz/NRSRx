@@ -24,13 +24,13 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     }
     public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
     {
-      if (entity is IAuditable)
-      {
-        OnIAuditableCreate(entity as IAuditable);
-      }
       if (entity is ICalculateable)
       {
         (entity as ICalculateable).CalculateValues();
+      }
+      if (entity is IAuditable)
+      {
+        OnIAuditableCreate(entity as IAuditable);
       }
       return base.AddAsync(entity, cancellationToken);
     }
