@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.Samples.Models.V1
 {
@@ -9,8 +10,7 @@ namespace IkeMtz.Samples.Models.V1
   // Script is available at:
   // https://raw.githubusercontent.com/ikemtz/NRSRx/master/tools/sql-poco-class-generator.sql
 
-  public partial class Course
-  : IkeMtz.NRSRx.Core.Models.IIdentifiable, IkeMtz.NRSRx.Core.Models.IAuditable
+  public partial class Course : IIdentifiable, IAuditable
   {
     public Course()
     {
@@ -30,7 +30,7 @@ namespace IkeMtz.Samples.Models.V1
     [MaxLength(150)]
     public string Title { get; set; }
     [MaxLength(500)]
-    public string Description { get; set; }
+    public string? Description { get; set; }
     [DefaultValue(0)]
     public double? PassRate { get; set; }
     [DefaultValue(0)]
