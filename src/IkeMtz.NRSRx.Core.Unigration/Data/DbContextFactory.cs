@@ -1,8 +1,10 @@
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Data
@@ -32,7 +34,9 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         where TDbContext : DbContext
     {
       var builder = new DbContextOptionsBuilder<TDbContext>();
-      _ = builder.ConfigureTestDbContextOptions(testContext);
+      _ = builder.ConfigureTestDbContextOptions(testContext)
+        .AddInterceptors(new CalculatableTestInterceptor(),
+          new AuditableTestInterceptor(MockHttpContextAccessorFactory.CreateAccessor()));
       return builder.Options;
     }
 

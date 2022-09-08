@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       TestAuditableDbContext? context = null;
       var srcList = new[] { new CollectionModel(), new CollectionModel() };
       var destList = new List<CollectionModel>();
-      context?.SyncCollections(srcList, destList, null);
+      context.SyncCollections(srcList, destList, null);
     }
 
     [TestMethod]
@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       TestAuditableDbContext? context = null;
       var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
       var destList = new List<CollectionModel>();
-      context?.SyncCollections(srcList, destList, null);
+      context.SyncCollections(srcList, destList, null);
     }
 
     [TestMethod]

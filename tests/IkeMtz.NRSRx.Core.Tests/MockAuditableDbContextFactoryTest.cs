@@ -58,7 +58,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.AreEqual(2, await ctx.MyModel.CountAsync());
       modelA.UpdatedBy = "Not Me";
       _ = await ctx.SaveChangesAsync();
-      Assert.AreEqual("Not Me", modelA.UpdatedBy);
+      Assert.AreEqual("NRSRx Test User", modelA.UpdatedBy);
       Assert.IsNull(modelB.UpdatedOnUtc);
     }
   }
