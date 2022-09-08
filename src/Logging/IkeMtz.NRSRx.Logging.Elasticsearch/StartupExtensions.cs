@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder app)
+    public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder? app)
     {
       _ = (app?.UseSerilog());
 
@@ -44,7 +44,7 @@ namespace IkeMtz.NRSRx.Core.Web
         var apiKey = startup.Configuration.GetValue<string>("ELASTICSEARCH_APIKEY");
         var elastiOptions = new ElasticsearchSinkOptions(new Uri(host))
         {
-          IndexFormat = $"{startup.StartupAssembly.GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
+          IndexFormat = $"{startup.StartupAssembly?.GetName().Name?.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
           AutoRegisterTemplate = true,
           AutoRegisterTemplateVersion =
           startup.Configuration.GetValue("ELASTICSEARCH_VERSION", "7x").StartsWith("6") ? AutoRegisterTemplateVersion.ESv6

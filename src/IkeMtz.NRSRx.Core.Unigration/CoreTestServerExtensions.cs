@@ -97,7 +97,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
         hubConnectionOptions =>
         {
           hubConnectionOptions.HttpMessageHandlerFactory = _ => srv.CreateHandler();
-          hubConnectionOptions.AccessTokenProvider = () => Task.FromResult(accessToken);
+          hubConnectionOptions.AccessTokenProvider = () => Task.FromResult<string?>(accessToken);
         })
         .Build();
     }

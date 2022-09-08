@@ -15,8 +15,8 @@ namespace IkeMtz.NRSRx.Core.SignalR
 {
   public abstract class CoreSignalrStartup : CoreWebStartup
   {
-    public override string MicroServiceTitle => null;
-    public override Assembly StartupAssembly => null;
+    public override string? MicroServiceTitle => null;
+    public override Assembly? StartupAssembly => null;
     protected CoreSignalrStartup(IConfiguration configuration) : base(configuration)
     {
     }

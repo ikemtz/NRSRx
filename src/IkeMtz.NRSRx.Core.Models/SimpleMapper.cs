@@ -110,7 +110,7 @@ namespace IkeMtz.NRSRx.Core.Models
       }
     }
 
-    public void ApplyChanges(TSourceEntity sourceEntity, TDestinationEntity destinationEntity)
+    public void ApplyChanges(TSourceEntity? sourceEntity, TDestinationEntity? destinationEntity)
     {
       if (sourceEntity == null)
       {

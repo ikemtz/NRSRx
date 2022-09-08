@@ -22,7 +22,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    public static ILogger SetupSplunk(this CoreWebStartup startup, IApplicationBuilder app)
+    public static ILogger SetupSplunk(this CoreWebStartup startup, IApplicationBuilder? app)
     {
       _ = app?.UseSerilog();
 

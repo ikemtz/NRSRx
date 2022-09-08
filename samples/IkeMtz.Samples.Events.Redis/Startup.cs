@@ -19,7 +19,7 @@ namespace IkeMtz.Samples.Events.Redis
 
     public Startup(IConfiguration configuration) : base(configuration) { }
 
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) => this.SetupConsoleLogging(app);
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) => this.SetupConsoleLogging(app);
 
     public override void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecks)
     {

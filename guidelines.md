@@ -444,7 +444,7 @@ public class Person : IIdentifiable, IIAuditable
     public string Name { get; set; }
     public string CreatedBy { get; set; }
     public string CreatedOnUtc { get; set; }
-    public string UpdatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
     public string UpdatedOnUtc { get; set; }
 } 
 ```

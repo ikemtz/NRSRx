@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       httpClient.DefaultRequestHeaders.Authorization = authHeader;
     }
 
-    public string GenerateTestToken(IEnumerable<Claim> testClaims = null)
+    public string GenerateTestToken(IEnumerable<Claim>? testClaims = null)
     {
       return GenerateTestToken(x =>
      {

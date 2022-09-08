@@ -31,7 +31,7 @@ namespace IkeMtz.Samples.WebApi
         .UseSqlServer(dbConnectionString)
         );
     }
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       this.SetupElasticsearch(app);
 
     public override void SetupHealthChecks(IServiceCollection services, IHealthChecksBuilder healthChecks)

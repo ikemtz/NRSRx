@@ -16,6 +16,6 @@ namespace IkeMtz.NRSRx.Events
     where TEntity : IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
   {
-    Task PublishAsync(TEntity payload, Action<TMessageType> messageCustomizationLogic = null);
+    Task PublishAsync(TEntity payload, Action<TMessageType>? messageCustomizationLogic = null);
   }
 }

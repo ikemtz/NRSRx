@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     public StartUp_Elastic(IConfiguration configuration) : base(configuration)
     {
     }
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       this.SetupElasticsearch(app);
 
 

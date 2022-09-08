@@ -41,7 +41,7 @@ namespace IkeMtz.Samples.Models.V1
     [Required]
     public DateTimeOffset CreatedOnUtc { get; set; }
     [MaxLength(250)]
-    public string UpdatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
     public virtual ICollection<StudentCourse> StudentCourses { get; }
     public virtual ICollection<SchoolCourse> SchoolCourses { get; }

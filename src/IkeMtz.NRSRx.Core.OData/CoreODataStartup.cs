@@ -26,8 +26,11 @@ namespace IkeMtz.NRSRx.Core.OData
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      _ = SetupCoreEndpointFunctionality(services)
-          .AddApplicationPart(StartupAssembly);
+      if (StartupAssembly != null)
+      {
+        _ = SetupCoreEndpointFunctionality(services)
+            .AddApplicationPart(StartupAssembly);
+      }
       SetupAppSettings(services);
       SetupLogging(services);
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));

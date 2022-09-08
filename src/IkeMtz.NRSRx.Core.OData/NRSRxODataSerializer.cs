@@ -29,7 +29,7 @@ namespace IkeMtz.NRSRx.Core.OData
     public NrsrxODataSerializer(ODataSerializerProvider serializerProvider) : base(serializerProvider)
     {
     }
-    public override ODataProperty CreateStructuralProperty(IEdmStructuralProperty structuralProperty, ResourceContext resourceContext)
+    public override ODataProperty? CreateStructuralProperty(IEdmStructuralProperty structuralProperty, ResourceContext resourceContext)
     {
       var property = base.CreateStructuralProperty(structuralProperty, resourceContext);
       if (property.Value == null)

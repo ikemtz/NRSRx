@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
       queueClient = busClient.CreateSender(GetQueueName());
     }
 
-    public Task PublishAsync(TEntity payload, Action<ServiceBusMessage> messageCustomizationLogic = null)
+    public Task PublishAsync(TEntity payload, Action<ServiceBusMessage>? messageCustomizationLogic = null)
     {
       var msg = new ServiceBusMessage(MessageCoder.JsonEncode(payload));
       messageCustomizationLogic?.Invoke(msg);

@@ -4,6 +4,7 @@
     <AssemblyName>IkeMtz.Samples.Events.Redis</AssemblyName>
     <UserSecretsId>ff327954-e2d8-43dd-8594-a0305d93a6b1</UserSecretsId>
     <ProjectGuid>0047AB8C-B49D-42C0-B9C6-5DC850AC2F45</ProjectGuid>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>

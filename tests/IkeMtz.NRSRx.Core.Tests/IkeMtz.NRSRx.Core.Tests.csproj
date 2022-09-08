@@ -2,9 +2,10 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ProjectGuid>CAB43D4A-563D-4942-A080-CF2A883836A0</ProjectGuid>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
+    <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Core.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

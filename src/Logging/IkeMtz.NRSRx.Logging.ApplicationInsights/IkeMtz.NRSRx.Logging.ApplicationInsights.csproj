@@ -15,6 +15,7 @@
     <RepositoryType>Git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <ProjectGuid>ED97213F-4588-4D8B-8ABF-5184F9C7E4DF</ProjectGuid>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>
