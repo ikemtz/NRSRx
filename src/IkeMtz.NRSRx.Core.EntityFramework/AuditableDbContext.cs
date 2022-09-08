@@ -109,7 +109,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
         OnIAuditableUpdate(auditable);
       }
     }
-    public static string GetUserId(IHttpContextAccessor httpContextAccessor, string defaultValue = null)
+    public static string GetUserId(IHttpContextAccessor httpContextAccessor, string? defaultValue = null)
     {
       var userId = httpContextAccessor.HttpContext?.User?.Identity?.Name ?? httpContextAccessor.HttpContext?.User?.FindFirst("client_id")?.Value ?? defaultValue;
       if (string.IsNullOrWhiteSpace(userId))

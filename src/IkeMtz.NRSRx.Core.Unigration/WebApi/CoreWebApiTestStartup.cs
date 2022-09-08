@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       where TStartup : CoreWebApiStartup
   {
     public TStartup Startup { get; private set; }
-    protected CoreWebApiTestStartup(TStartup startup) : base(startup?.Configuration)
+    protected CoreWebApiTestStartup(TStartup startup) : base(startup.Configuration)
     {
       this.Startup = startup;
     }
@@ -41,7 +41,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       base.SetupMiscDependencies(services);
     }
 
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) { }
 
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
@@ -63,7 +63,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       };
     }
 
-    public override void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
+    public override void SetupSwaggerGen(SwaggerGenOptions options, string? xmlPath = null)
     {
       base.SetupSwaggerGen(options, StartupAssembly.GetXmlCommentsFile());
     }

@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
-      Assert.AreEqual(item.Name, envelope.Value.First().Name);
+      Assert.AreEqual(item.Name, envelope?.Value.First().Name);
     }
 
 
@@ -66,7 +66,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
-      Assert.AreEqual(item.Name, envelope.Value.First().Name);
+      Assert.AreEqual(item.Name, envelope?.Value.First().Name);
       Assert.AreEqual(item.SchoolCourses.First().Id, envelope.Value.First().SchoolCourses.First().Id);
       Assert.AreEqual(item.StudentSchools.First().Id, envelope.Value.First().StudentSchools.First().Id);
     }

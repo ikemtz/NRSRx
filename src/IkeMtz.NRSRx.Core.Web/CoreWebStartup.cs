@@ -24,8 +24,8 @@ namespace IkeMtz.NRSRx.Core.Web
 {
   public abstract class CoreWebStartup
   {
-    public abstract string MicroServiceTitle { get; }
-    public abstract Assembly StartupAssembly { get; }
+    public abstract string? MicroServiceTitle { get; }
+    public abstract Assembly? StartupAssembly { get; }
     public virtual string SwaggerUiRoutePrefix { get; } = string.Empty;
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
     public virtual bool DisableSwagger { get; }
@@ -43,7 +43,7 @@ namespace IkeMtz.NRSRx.Core.Web
       Configuration = configuration;
     }
 
-    public virtual void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }
+    public virtual void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) { }
 
     public virtual void SetupAppSettings(IServiceCollection services)
     {
@@ -79,7 +79,7 @@ namespace IkeMtz.NRSRx.Core.Web
           });
     }
 
-    public virtual string[] GetIdentityAudiences(AppSettings appSettings = null)
+    public virtual string[] GetIdentityAudiences(AppSettings? appSettings = null)
     {
       return (appSettings?.IdentityAudiences ?? Configuration.GetValue<string>("IdentityAudiences"))?.Split(',') ?? Array.Empty<string>();
     }
@@ -120,7 +120,7 @@ namespace IkeMtz.NRSRx.Core.Web
       options.OAuthScopeSeparator(" ");
       options.OAuthUsePkce();
     }
-    public virtual void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
+    public virtual void SetupSwaggerGen(SwaggerGenOptions options, string? xmlPath = null)
     {
       // add a custom operation filter which sets default values
       options.OperationFilter<DefaultValueFilter>();

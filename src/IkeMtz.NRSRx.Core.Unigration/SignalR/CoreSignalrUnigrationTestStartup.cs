@@ -12,14 +12,14 @@ namespace IkeMtz.NRSRx.Core.Unigration.SignalR
         where TStartup : CoreSignalrStartup
   {
     public TStartup Startup { get; private set; }
-    protected CoreSignalrUnigrationTestStartup(TStartup startup) : base(startup?.Configuration)
+    protected CoreSignalrUnigrationTestStartup(TStartup startup) : base(startup.Configuration)
     {
       this.Startup = startup;
     }
 
     protected TestContext TestContext { get; private set; }
 
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) { }
 
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {

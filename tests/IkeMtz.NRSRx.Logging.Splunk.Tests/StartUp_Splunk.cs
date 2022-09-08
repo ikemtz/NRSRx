@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     public StartUp_Splunk(IConfiguration configuration) : base(configuration)
     {
     }
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       app.UseSerilog();
 
 

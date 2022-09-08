@@ -38,7 +38,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       //Validate OData Result
       TestContext.WriteLine($"Server Reponse: {resp}");
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
-      Assert.AreEqual(objA.FirstName, envelope.Value.First().FirstName);
+      Assert.AreEqual(objA.FirstName, envelope?.Value.First().FirstName);
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       TestContext.WriteLine($"Server Reponse: {content}");
       _ = resp.EnsureSuccessStatusCode();
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(content);
-      Assert.AreEqual(objA.FirstName, envelope.Value.First().FirstName);
+      Assert.AreEqual(objA.FirstName, envelope?.Value.First().FirstName);
     }
 
     [TestMethod]

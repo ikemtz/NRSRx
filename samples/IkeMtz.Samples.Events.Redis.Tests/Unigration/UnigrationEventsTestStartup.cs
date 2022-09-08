@@ -19,7 +19,7 @@ namespace IkeMtz.Samples.Events.Tests.Integration
     {
       builder.SetupTestAuthentication(Configuration, TestContext);
     }
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       Startup.SetupLogging(services);
 
 

@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       {
         buildNumber = controller.GetType().Assembly.CustomAttributes.FirstOrDefault(t => t.AttributeType == typeof(AssemblyFileVersionAttribute))?.ConstructorArguments[0].Value?.ToString();
       }
-      return buildNumber;
+      return buildNumber ?? "0.0.0.0";
     }
   }
 }

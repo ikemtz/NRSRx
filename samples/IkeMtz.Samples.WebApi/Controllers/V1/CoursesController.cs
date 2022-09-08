@@ -68,10 +68,14 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     {
       var obj = await _databaseContext.Courses.FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
-      _ = _databaseContext.Remove(obj);
-      _ = await _databaseContext.SaveChangesAsync()
-          .ConfigureAwait(false);
-      return Ok(obj);
+      if (obj != null)
+      {
+        _ = _databaseContext.Remove(obj);
+        _ = await _databaseContext.SaveChangesAsync()
+            .ConfigureAwait(false);
+        return Ok(obj);
+      }
+      return NotFound("Invalid Id");
     }
   }
 }

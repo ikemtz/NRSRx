@@ -42,7 +42,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
   public static class TestContextRequestLoggerExtensions
   {
-    public static IApplicationBuilder UseTestContextRequestLogger(this IApplicationBuilder builder, TestContext testContextInstance)
+    public static IApplicationBuilder UseTestContextRequestLogger(this IApplicationBuilder builder, TestContext? testContextInstance)
     {
       return builder.UseMiddleware<TestContextRequestLoggerMiddleware>(testContextInstance);
     }

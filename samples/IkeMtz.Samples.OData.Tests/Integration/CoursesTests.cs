@@ -28,8 +28,8 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true");
       TestContext.WriteLine($"Server Reponse: {resp}");
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
-      Assert.AreEqual(envelope.Count, envelope.Value.Count());
-      envelope.Value.ToList().ForEach(t =>
+      Assert.AreEqual(envelope?.Count, envelope?.Value.Count());
+      envelope?.Value.ToList().ForEach(t =>
       {
         Assert.IsNotNull(t.Num);
         Assert.AreNotEqual(Guid.Empty, t.Id);
@@ -53,12 +53,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
        );
       var client = srv.CreateClient();
       GenerateAuthHeader(client, GenerateTestToken());
-      HttpResponseMessage resp = null;
-      try
-      {
-        resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
-      }
-      catch (Exception) { }
+      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
       var body = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {body}");
       Assert.IsFalse(body.ToLower().Contains("updatedby"));
@@ -93,7 +88,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
 
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      Assert.AreEqual(1, envelope.Value.First().SchoolCourses.Count);
+      Assert.AreEqual(1, envelope?.Value.First().SchoolCourses.Count);
       StringAssert.Contains(resp, course.Num);
     }
 

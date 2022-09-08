@@ -8,7 +8,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
   public static class ContextCollectionSyncer
   {
     public static void SyncCollections<TEntity>(this IAuditableDbContext auditableContext, IEnumerable<TEntity> sourceCollection, IEnumerable<TEntity> destinationCollection,
-        Action<TEntity, TEntity> updateLogic = null) where TEntity : class, IIdentifiable, new()
+        Action<TEntity, TEntity>? updateLogic = null) where TEntity : class, IIdentifiable, new()
     {
       if (sourceCollection == null)
       {
@@ -59,8 +59,8 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
     }
 
-    public static void SyncCollections<TSourceEntity, TDestinationEntity>(this IAuditableDbContext auditableContext, IEnumerable<TSourceEntity> sourceCollection, IEnumerable<TDestinationEntity> destinationCollection,
-    Action<TSourceEntity, TDestinationEntity> updateLogic = null) where TSourceEntity : class, IInsertableDto, new()
+    public static void SyncCollections<TSourceEntity, TDestinationEntity>(this IAuditableDbContext? auditableContext, IEnumerable<TSourceEntity>? sourceCollection, IEnumerable<TDestinationEntity>? destinationCollection,
+    Action<TSourceEntity, TDestinationEntity>? updateLogic = null) where TSourceEntity : class, IInsertableDto, new()
       where TDestinationEntity : class, IIdentifiable, new()
     {
       if (sourceCollection == null)

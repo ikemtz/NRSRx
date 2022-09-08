@@ -23,7 +23,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
       var result = await new CoursesController().Post(course, mockPublisher.Object)
         as OkObjectResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == course.Id)), Times.Once);
-      Assert.AreEqual(200, result.StatusCode);
+      Assert.AreEqual(200, result?.StatusCode);
     }
 
     [TestMethod]
@@ -35,7 +35,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
       var result = await new CoursesController().Put(Course.Id, Course, mockPublisher.Object)
         as OkObjectResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == Course.Id)), Times.Once);
-      Assert.AreEqual(200, result.StatusCode);
+      Assert.AreEqual(200, result?.StatusCode);
     }
 
     [TestMethod]
@@ -47,7 +47,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
       var result = await new CoursesController().Delete(Course.Id, mockPublisher.Object)
         as OkObjectResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == Course.Id)), Times.Once);
-      Assert.AreEqual(200, result.StatusCode);
+      Assert.AreEqual(200, result?.StatusCode);
     }
   }
 }

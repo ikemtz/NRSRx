@@ -28,9 +28,8 @@ namespace IkeMtz.Samples.OData
     {
     }
 
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) =>
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       this.SetupApplicationInsights(services);
-
 
     [ExcludeFromCodeCoverage]
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)

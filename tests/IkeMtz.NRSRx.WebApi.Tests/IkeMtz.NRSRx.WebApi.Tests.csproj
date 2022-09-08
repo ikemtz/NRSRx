@@ -3,9 +3,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <ProjectGuid>D760D847-DA47-4939-87A5-25CEBE04E727</ProjectGuid>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
+    <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.WebApi.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

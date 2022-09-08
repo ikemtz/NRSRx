@@ -24,19 +24,19 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
     {
       var connection = new Mock<IConnectionMultiplexer>();
       var database = new Mock<IDatabase>();
-      connection.Setup(t => t.GetDatabase(It.IsAny<int>(), It.Is<object>(t => t == null))).Returns(database.Object);
+      _ = connection.Setup(t => t.GetDatabase(It.IsAny<int>(), It.Is<object>(t => t == null))).Returns(database.Object);
       return (connection, database);
     }
 
-    public static (Mock<RedisStreamSubscriber<TEntity, TEvent>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity> collection = null)
+    public static (Mock<RedisStreamSubscriber<TEntity, TEvent>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity>? collection = null)
     {
       var (Connection, database) = CreateConnection();
       var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent>>(new object[] { Connection.Object, StreamPosition.NewMessages.ToString() });
       if (collection != null)
       {
-        mockSubscriber
-          .Setup(t => t.GetMessagesAsync(It.Is<int>(t => t == collection.Count())))
-          .Returns(Task.FromResult(collection.Select(t => (new RedisValue(t.Id.ToString()), t))));
+        _ = mockSubscriber
+            .Setup(t => t.GetMessagesAsync(It.Is<int>(t => t == collection.Count())))
+            .Returns(Task.FromResult(collection.Select(t => (new RedisValue(t.Id.ToString()), t))));
       }
       return (mockSubscriber, database);
     }

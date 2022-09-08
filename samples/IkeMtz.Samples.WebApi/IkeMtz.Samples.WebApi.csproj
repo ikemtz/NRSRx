@@ -4,13 +4,14 @@
     <AssemblyName>IkeMtz.Samples.WebApi</AssemblyName>
     <UserSecretsId>bd7d9957-206e-4e55-ac04-c5e3b2c8d730</UserSecretsId>
     <ProjectGuid>648C3B71-FB3C-4D64-BDEF-0791E7661817</ProjectGuid>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>
     </OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CA1707;CS1591</NoWarn>
+    <NoWarn>1701;1702;CA1707;CS1591;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.Samples.WebApi.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

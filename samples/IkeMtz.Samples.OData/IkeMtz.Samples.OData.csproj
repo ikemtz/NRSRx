@@ -5,9 +5,10 @@
     <ProjectGuid>{08B53EF2-654C-46C4-8D1B-C8699F4DFBCD}</ProjectGuid>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CA1707;CS1591</NoWarn>
+    <NoWarn>1701;1702;CA1707;CS1591;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.Samples.OData.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

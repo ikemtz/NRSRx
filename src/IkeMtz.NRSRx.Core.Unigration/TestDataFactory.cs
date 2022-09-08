@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     }
     public static readonly Regex NumberAfterSpace = new(@" \d", RegexOptions.None);
 
-    public static TENTITY CreateIdentifiable<TENTITY>(TENTITY value = null)
+    public static TENTITY CreateIdentifiable<TENTITY>(TENTITY? value = null)
       where TENTITY : class, IIdentifiable<Guid>, new()
     {
       _ = CreateIdentifiable<TENTITY, Guid>(value);
@@ -23,25 +23,19 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return value;
     }
 
-    public static TENTITY CreateIdentifiable<TENTITY, TIdentityType>(TENTITY value = null)
+    public static TENTITY CreateIdentifiable<TENTITY, TIdentityType>(TENTITY? value = null)
       where TENTITY : class, IIdentifiable<TIdentityType>, new()
       where TIdentityType : IComparable
     {
-      if (value == null)
-      {
-        value = new TENTITY();
-      }
+      value ??= new TENTITY();
       value.Id = default;
       return value;
     }
 
-    public static TENTITY CreateAuditable<TENTITY>(TENTITY value = null)
+    public static TENTITY CreateAuditable<TENTITY>(TENTITY? value = null)
       where TENTITY : class, IAuditable, new()
     {
-      if (value == null)
-      {
-        value = new TENTITY();
-      }
+      value ??= new TENTITY();
       value.CreatedBy = "Auditable Factory";
       value.CreatedOnUtc = DateTime.UtcNow;
       return value;

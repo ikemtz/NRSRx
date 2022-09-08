@@ -58,7 +58,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.AreEqual(2, await ctx.MyModel.CountAsync());
       modelA.UpdatedBy = "Not Me";
       _ = await ctx.SaveChangesAsync();
-      Assert.AreEqual("Not Me", modelA.UpdatedBy);
+      Assert.AreEqual("NRSRx Test User", modelA.UpdatedBy);
       Assert.IsNull(modelB.UpdatedOnUtc);
     }
   }
@@ -68,7 +68,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public int Id { get; set; }
     public int? CalculatedValue { get; set; }
     public string CreatedBy { get; set; }
-    public string UpdatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
     public DateTimeOffset CreatedOnUtc { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
 
@@ -85,7 +85,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public Guid Id { get; set; }
     public int? CalculatedValue { get; set; }
     public string CreatedBy { get; set; }
-    public string UpdatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
     public DateTimeOffset CreatedOnUtc { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
 

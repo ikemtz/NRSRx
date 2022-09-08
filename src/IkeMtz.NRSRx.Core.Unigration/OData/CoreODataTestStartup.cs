@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public TStartup Startup { get; private set; }
 
     public override BaseODataModelProvider ODataModelProvider => Startup.ODataModelProvider;
-    protected CoreODataTestStartup(TStartup startup) : base(startup?.Configuration)
+    protected CoreODataTestStartup(TStartup startup) : base(startup.Configuration)
     {
       Startup = startup;
       base.MaxTop = startup?.MaxTop;
@@ -39,7 +39,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       base.SetupHealthChecks(services, healthChecksBuilder);
     }
 
-    public override void SetupLogging(IServiceCollection services = null, IApplicationBuilder app = null) { }
+    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) { }
 
     public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
@@ -53,7 +53,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       base.SetupMvcOptions(services, options);
     }
 
-    public override void SetupSwaggerGen(SwaggerGenOptions options, string xmlPath = null)
+    public override void SetupSwaggerGen(SwaggerGenOptions options, string? xmlPath = null)
     {
       base.SetupSwaggerGen(options, StartupAssembly.GetXmlCommentsFile());
     }

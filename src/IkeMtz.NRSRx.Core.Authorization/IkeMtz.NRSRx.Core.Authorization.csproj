@@ -19,6 +19,7 @@
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <OutputType>Library</OutputType>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591</NoWarn>

@@ -10,15 +10,12 @@ namespace IkeMtz.NRSRx.Core.OData
 {
   public abstract class BaseODataModelProvider : IODataVersionProvider
   {
-    private static IDictionary<ApiVersionDescription, IEdmModel> _cached;
+    private static IDictionary<ApiVersionDescription, IEdmModel>? _cached;
     public IDictionary<ApiVersionDescription, IEdmModel> EdmModels
     {
       get
       {
-        if (_cached == null)
-        {
-          _cached = GetModels();
-        }
+        _cached ??= GetModels();
         return _cached;
       }
     }

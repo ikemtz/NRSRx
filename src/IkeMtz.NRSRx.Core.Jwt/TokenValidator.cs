@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Core.Jwt
       return InitAsync(metaDataAddress, null, audience);
     }
 
-    public async Task InitAsync(string metaDataAddress, string issuer, string audience)
+    public async Task InitAsync(string metaDataAddress, string? issuer, string audience)
     {
       var openIdConfigurationRetriever = new OpenIdConnectConfigurationRetriever() { };
       ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(metaDataAddress, openIdConfigurationRetriever)

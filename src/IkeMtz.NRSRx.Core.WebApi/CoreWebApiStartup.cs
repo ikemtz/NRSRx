@@ -31,9 +31,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
-      _ = SetupCoreEndpointFunctionality(services)
-         .AddApplicationPart(StartupAssembly)
-         .AddControllersAsServices();
+      var mvcBuilder = SetupCoreEndpointFunctionality(services);
+      if (StartupAssembly != null)
+      {
+        mvcBuilder.AddApplicationPart(StartupAssembly);
+      }
+      mvcBuilder.AddControllersAsServices();
       _ = services.AddControllers();
       var healthCheckBuilder = services.AddHealthChecks();
       SetupHealthChecks(services, healthCheckBuilder);

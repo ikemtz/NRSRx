@@ -20,9 +20,10 @@
     <Authors>IkeMtz</Authors>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
+    <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Core.Jwt.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
