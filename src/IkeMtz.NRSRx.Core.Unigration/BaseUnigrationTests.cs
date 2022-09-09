@@ -133,7 +133,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
       if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
       {
         TestContext.WriteLine($"Server Response Body: {content}");
-        Assert.Fail("Bad request");
       }
       else if (!string.IsNullOrWhiteSpace(content))
       {
