@@ -11,7 +11,6 @@ using IkeMtz.Samples.WebApi;
 using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.WebApi.Tests
 {
@@ -24,7 +23,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var item = Factories.CourseFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken(x =>
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 
@@ -45,7 +44,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Courses.Add(originalCourse);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken(x =>
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 

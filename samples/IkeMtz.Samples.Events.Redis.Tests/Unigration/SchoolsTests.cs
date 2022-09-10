@@ -28,7 +28,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
         _ = x.AddSingleton(mockPublisher.Object);
       }));
 
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.json", item);
@@ -48,7 +48,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
         _ = x.AddSingleton(mockPublisher.Object);
       }));
 
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(School)}s.json?id={item.Id}", item);
@@ -68,7 +68,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
         _ = x.AddSingleton(mockPublisher.Object);
       }));
 
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"api/v1/{nameof(School)}s.json?id={item.Id}");

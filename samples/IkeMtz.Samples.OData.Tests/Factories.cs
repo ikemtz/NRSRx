@@ -10,7 +10,7 @@ namespace IkeMtz.Samples.Tests
     {
       //TODO: Create a bettery string generator
       var fullName = Guid.NewGuid().ToString();
-      var school = CreateIdentifiable(CreateAuditable<School>());
+      var school = CreateIdentifiable<School>();
       school.Name = fullName[..6];
       school.FullName = fullName[..30];
       school.TenantId = fullName[..5];
@@ -19,7 +19,7 @@ namespace IkeMtz.Samples.Tests
 
     public static Student StudentFactory()
     {
-      var student = CreateIdentifiable(CreateAuditable<Student>());
+      var student = CreateIdentifiable<Student>();
       student.FirstName = Guid.NewGuid().ToString()[..6];
       student.LastName = Guid.NewGuid().ToString()[..6];
       student.BirthDate = DateTime.UtcNow;
@@ -29,7 +29,7 @@ namespace IkeMtz.Samples.Tests
 
     public static Course CourseFactory()
     {
-      var course = CreateIdentifiable(CreateAuditable<Course>());
+      var course = CreateIdentifiable<Course>();
       course.Num = Guid.NewGuid().ToString()[..4];
       course.Title = Guid.NewGuid().ToString()[..6];
       course.Description = Guid.NewGuid().ToString()[..20];
@@ -41,7 +41,7 @@ namespace IkeMtz.Samples.Tests
 
     public static SchoolCourse SchoolCourseFactory(School school, Course course)
     {
-      var schoolCourse = CreateIdentifiable(CreateAuditable<SchoolCourse>());
+      var schoolCourse = CreateIdentifiable<SchoolCourse>();
       schoolCourse.Course = course;
       schoolCourse.CourseId = course.Id;
       schoolCourse.School = school;
@@ -55,7 +55,7 @@ namespace IkeMtz.Samples.Tests
 
     internal static StudentCourse StudentCourseFactory(Student student, SchoolCourse schoolCourse)
     {
-      var studentCourse = CreateIdentifiable(CreateAuditable<StudentCourse>());
+      var studentCourse = CreateIdentifiable<StudentCourse>();
       studentCourse.Course = schoolCourse.Course;
       studentCourse.CourseId = schoolCourse.CourseId;
       studentCourse.Student = student;

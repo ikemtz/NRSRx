@@ -29,12 +29,12 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Schools.Add(item);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("tids", item.TenantId) }));
 
       var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}");
       var httpSchool = await DeserializeResponseAsync<School>(resp);
-
+      Assert.IsNotNull(httpSchool);
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       Assert.AreEqual(item.Name, httpSchool.Name);
     }
@@ -44,7 +44,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task NoTenantsTestAsync()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
       var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={Guid.NewGuid()}&tid=xyz");
@@ -68,7 +68,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Schools.Add(item);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("tids", item.TenantId) }));
       //Get 
       var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}x");
@@ -83,7 +83,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task NoTenantParameterTestAsync()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
       var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={Guid.NewGuid()}");

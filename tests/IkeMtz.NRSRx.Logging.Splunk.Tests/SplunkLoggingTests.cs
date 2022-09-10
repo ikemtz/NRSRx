@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     public void ConsoleLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
-     _= moqConfiguration.SetupGet(s => s["DisableSwagger"]).Returns(true.ToString); 
+      _ = moqConfiguration.SetupGet(s => s["DisableSwagger"]).Returns(true.ToString);
       var startup = new StartUp_Splunk(moqConfiguration.Object);
       var result = startup.SetupConsoleLogging(null);
       Assert.IsNotNull(result);
@@ -45,10 +45,12 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
       Assert.IsNotNull(host);
       await host.StartAsync();
       var loggerFac = host.Services.GetService<ILoggerFactory>();
+      Assert.IsNotNull(loggerFac);
       var logger = loggerFac.CreateLogger("Unit Test");
       logger.LogError("Validating Error logging");
       await host.StopAsync();
       await host.WaitForShutdownAsync();
+      Assert.IsNotNull(logger);
     }
 
     [TestMethod]
@@ -58,7 +60,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
       using var srv = new TestServer(TestHostBuilder<StartUp_Splunk, StartUp_Splunk>()
         .UseLogging()
      );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       var resp = await client.GetAsync("index.html");
       Assert.AreEqual(HttpStatusCode.OK, resp.EnsureSuccessStatusCode().StatusCode);
     }

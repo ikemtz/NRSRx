@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.NRSRx.Events.Publishers.Redis;
@@ -20,8 +21,10 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     [ProducesResponseType(Status200OK, Type = typeof(School))]
     [ValidateModel]
     [ExcludeFromCodeCoverage()] //Need to figure out why method is not getting code coverage
-    public async Task<ActionResult> Post([FromBody] School value, [FromServices] RedisStreamPublisher<School, CreatedEvent> publisher)
+    public async Task<ActionResult> Post([FromBody] SchoolUpsertRequest request, [FromServices] RedisStreamPublisher<School, CreatedEvent> publisher)
     {
+      var value = SimpleMapper<SchoolUpsertRequest, School>.Instance.Convert(request);
+      value.Id = request.Id;
       var result = await publisher.PublishAsync(value)
         .ConfigureAwait(false);
       return Ok(result);
@@ -32,8 +35,9 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     [ProducesResponseType(Status200OK, Type = typeof(School))]
     [ValidateModel]
     [ExcludeFromCodeCoverage()] //Need to figure out why method is not getting code coverage
-    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] School value, [FromServices] RedisStreamPublisher<School, UpdatedEvent> publisher)
+    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] SchoolUpsertRequest request, [FromServices] RedisStreamPublisher<School, UpdatedEvent> publisher)
     {
+      var value = SimpleMapper<SchoolUpsertRequest, School>.Instance.Convert(request);
       value.Id = id;
       var result = await publisher.PublishAsync(value)
         .ConfigureAwait(false);

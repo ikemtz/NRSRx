@@ -27,7 +27,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder app)
+    public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder? app)
     {
       _ = (app?.UseSerilog());
       return GetLogger(() => new LoggerConfiguration()

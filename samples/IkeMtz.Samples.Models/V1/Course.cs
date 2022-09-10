@@ -10,7 +10,7 @@ namespace IkeMtz.Samples.Models.V1
   // Script is available at:
   // https://raw.githubusercontent.com/ikemtz/NRSRx/master/tools/sql-poco-class-generator.sql
 
-  public partial class Course : IIdentifiable, IAuditable
+  public partial class Course : CourseUpsertRequest, IIdentifiable, IAuditable
   {
     public Course()
     {
@@ -18,21 +18,6 @@ namespace IkeMtz.Samples.Models.V1
       SchoolCourses = new HashSet<SchoolCourse>();
     }
 
-    [Required]
-    public Guid Id { get; set; }
-    [Required]
-    [MaxLength(150)]
-    public string Department { get; set; }
-    [Required]
-    [MaxLength(10)]
-    public string Num { get; set; }
-    [Required]
-    [MaxLength(150)]
-    public string Title { get; set; }
-    [MaxLength(500)]
-    public string? Description { get; set; }
-    [DefaultValue(0)]
-    public double? PassRate { get; set; }
     [DefaultValue(0)]
     public double? AvgScore { get; set; }
     [Required]

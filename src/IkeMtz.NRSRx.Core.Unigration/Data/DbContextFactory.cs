@@ -47,6 +47,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
             x => x.EnableNullChecks(true))
          .EnableSensitiveDataLogging()
          .EnableDetailedErrors()
+         .LogTo(testContext.WriteLine)
          .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
          .UseLoggerFactory(new LoggerFactory(new[] { new TestContextLoggerProvider(testContext) }));
     }

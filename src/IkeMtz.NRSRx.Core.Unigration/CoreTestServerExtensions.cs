@@ -1,6 +1,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -109,6 +110,14 @@ namespace IkeMtz.NRSRx.Core.Unigration
         //This is here to work around an issue on Azure Devops build agents not finding the .xml file.
         .Replace("$(BuildConfiguration)", "Debug", System.StringComparison.InvariantCultureIgnoreCase)
         ;
+    }
+
+    public static HttpClient CreateClient(this TestServer testServer, TestContext testContext)
+    {
+      return new HttpClient(new HttpClientLoggingHandler(testContext, testServer.CreateHandler()))
+      {
+        BaseAddress = testServer.BaseAddress
+      };
     }
   }
 }

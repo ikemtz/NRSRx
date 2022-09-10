@@ -32,12 +32,12 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Schools.Add(item);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("MyTestClaim", Guid.NewGuid().ToString()) }));
       //Get 
       var resp = await client.GetAsync($"api/v1/{nameof(School)}s.json?id={item.Id}");
       var httpSchool = await DeserializeResponseAsync<School>(resp);
-
+      Assert.IsNotNull(httpSchool);
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       Assert.AreEqual(item.Name, httpSchool.Name);
     }
@@ -48,12 +48,13 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var item = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.json", item);
       _ = resp.EnsureSuccessStatusCode();
       var httpSchool = await DeserializeResponseAsync<School>(resp);
+      Assert.IsNotNull(httpSchool);
       Assert.AreEqual("IntegrationTester@email.com", httpSchool.CreatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();
@@ -72,7 +73,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var item = Factories.SchoolFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.xml", item);
@@ -93,7 +94,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Schools.Add(originalSchool);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var updatedSchool = JsonClone(originalSchool);
@@ -102,6 +103,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(School)}s.json?id={updatedSchool.Id}", updatedSchool);
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedSchool = await DeserializeResponseAsync<School>(resp);
+      Assert.IsNotNull(httpUpdatedSchool);
       Assert.AreEqual("IntegrationTester@email.com", httpUpdatedSchool.UpdatedBy);
       Assert.AreEqual(updatedSchool.Name, httpUpdatedSchool.Name);
       Assert.IsNull(updatedSchool.UpdatedOnUtc);
@@ -130,12 +132,13 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Schools.Add(item);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"api/v1/{nameof(School)}s.json?id={item.Id}");
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedSchool = await DeserializeResponseAsync<School>(resp);
+      Assert.IsNotNull(httpUpdatedSchool);
       Assert.IsNull(httpUpdatedSchool.UpdatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();

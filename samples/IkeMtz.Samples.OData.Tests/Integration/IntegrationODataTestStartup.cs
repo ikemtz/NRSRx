@@ -1,6 +1,12 @@
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.NRSRx.Core.Unigration.Data;
+using IkeMtz.Samples.OData.Data;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace IkeMtz.Samples.OData.Tests.Integration
 {
@@ -14,6 +20,18 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
       builder.SetupTestAuthentication(Configuration, TestContext);
+    }
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
+    {
+      _ = services
+       .AddDbContextPool<DatabaseContext>(x =>
+       {
+         _ = x
+          .UseSqlServer(dbConnectionString)
+          .AddInterceptors(
+            new CalculatableTestInterceptor(),
+            new AuditableTestInterceptor(MockHttpContextAccessorFactory.CreateAccessor()));
+       });
     }
   }
 }

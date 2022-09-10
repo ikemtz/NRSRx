@@ -4,9 +4,9 @@ using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData;
 using IkeMtz.Samples.OData.Data;
-using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -30,13 +30,14 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(item.FirstName, envelope.Value.First().FirstName);
     }
 
@@ -54,7 +55,7 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$apply=groupby(({nameof(item.FirstName)},{nameof(item.Id)}),aggregate(id with countdistinct as total))");
@@ -80,13 +81,14 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$count=true&$expand={nameof(StudentCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Student.FirstName, envelope.Value.First().FirstName);
       Assert.AreEqual(item.Id, envelope.Value.First().StudentCourses.First().Id);
     }
@@ -96,7 +98,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetMaxErrorStudentsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s?$top=5000&$count=true");
@@ -112,7 +114,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetMaxStudentsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s/nolimit?$top=500&$count=true");
@@ -126,7 +128,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task DeleteStudentsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s/{Guid.NewGuid()}");
@@ -139,7 +141,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetODataDebugPage()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       var resp = await client.GetAsync($"$odata");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {data}");
