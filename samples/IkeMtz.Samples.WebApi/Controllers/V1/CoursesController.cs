@@ -39,8 +39,10 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     [HttpPost]
     [ProducesResponseType(Status200OK, Type = typeof(Course))]
     [ValidateModel]
-    public async Task<ActionResult> Post([FromBody] Course value)
+    public async Task<ActionResult> Post([FromBody] CourseUpsertRequest request)
     {
+      var value = SimpleMapper<CourseUpsertRequest, Course>.Instance.Convert(request);
+      value.Id = request.Id; ;
       var dbContextObject = _databaseContext.Courses.Add(value);
       _ = await _databaseContext.SaveChangesAsync()
           .ConfigureAwait(false);
@@ -51,11 +53,11 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     [HttpPut]
     [ProducesResponseType(Status200OK, Type = typeof(Course))]
     [ValidateModel]
-    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] Course value)
+    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] CourseUpsertRequest request)
     {
       var obj = await _databaseContext.Courses.FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
-      SimpleMapper<Course>.Instance.ApplyChanges(value, obj);
+      SimpleMapper<CourseUpsertRequest, Course>.Instance.ApplyChanges(request, obj);
       _ = await _databaseContext.SaveChangesAsync()
           .ConfigureAwait(false);
       return Ok(obj);

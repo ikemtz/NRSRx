@@ -17,7 +17,9 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     [Timeout(4000)]
     public void ValidateSignalRStartup()
     {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
       var startup = new Startup(null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
       Assert.IsNull(startup.MicroServiceTitle);
       Assert.IsNotNull(startup.StartupAssembly);
     }

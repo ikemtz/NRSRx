@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task ValidateNoGuidFailure()
     {
       using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel());
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task ValidateEmptyGuidFailure()
     {
       using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.Empty });
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
@@ -62,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task ValidateSuccess()
     {
       using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.NewGuid(), strings = new[] { "Hello World" } });
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
@@ -75,7 +75,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task ValidateEmptyArrayFailure()
     {
       using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.NewGuid(), strings = Array.Empty<string>() });
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();

@@ -9,7 +9,7 @@ namespace IkeMtz.Samples.Models.V1
   // https://raw.githubusercontent.com/ikemtz/NRSRx/master/tools/sql-poco-class-generator.sql
 
   public partial class School
-  : IkeMtz.NRSRx.Core.Models.IIdentifiable, IkeMtz.NRSRx.Core.Models.IAuditable
+  : SchoolUpsertRequest, IkeMtz.NRSRx.Core.Models.IIdentifiable, IkeMtz.NRSRx.Core.Models.IAuditable
   {
     public School()
     {
@@ -17,17 +17,6 @@ namespace IkeMtz.Samples.Models.V1
       StudentSchools = new HashSet<StudentSchool>();
     }
 
-    [Required]
-    public Guid Id { get; set; }
-    [Required]
-    [MaxLength(50)]
-    public string Name { get; set; }
-    [Required]
-    [MaxLength(250)]
-    public string FullName { get; set; }
-    [Required]
-    [MaxLength(5)]
-    public string TenantId { get; set; }
     [Required]
     [MaxLength(250)]
     public string CreatedBy { get; set; }

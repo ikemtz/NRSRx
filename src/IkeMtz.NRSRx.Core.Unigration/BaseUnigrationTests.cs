@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -120,27 +119,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = db.SaveChanges();
     }
 
-    public async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
+    public async Task<T?> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
-      if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized && httpResponseMessage.Headers.WwwAuthenticate.Any())
-      {
-        TestContext.WriteLine($"Error Response WwwAuthenticate Header: {httpResponseMessage.Headers.WwwAuthenticate}");
-      }
       var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
-      TestContext.WriteLine($"Server Response Status Code: {httpResponseMessage.StatusCode}");
-
-      if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
-      {
-        TestContext.WriteLine($"Server Response Body: {content}");
-      }
-      else if (!string.IsNullOrWhiteSpace(content))
-      {
-        TestContext.WriteLine($"Server Response: {content}");
-        return JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
-      }
-      _ = httpResponseMessage.EnsureSuccessStatusCode();
-      return default;
+      return JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
     }
 
     public IWebHostBuilder TestHostBuilder<TSiteStartup, TTestStartup>()

@@ -4,9 +4,9 @@ using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData;
 using IkeMtz.Samples.OData.Data;
-using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -30,13 +30,14 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(School.Name, envelope.Value.First().Name);
     }
 
@@ -54,7 +55,7 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(School.Name)},{nameof(School.Id)}),aggregate(id with countdistinct as total))");
@@ -80,15 +81,16 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(schoolCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(schoolCourse.School.Name, envelope.Value.First().Name);
-      Assert.AreEqual(schoolCourse.Id, envelope.Value.First().SchoolCourses.First().Id); 
+      Assert.AreEqual(schoolCourse.Id, envelope.Value.First().SchoolCourses.First().Id);
     }
 
     [TestMethod]
@@ -96,7 +98,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetMaxErrorSchoolsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=5000&$count=true");
@@ -123,7 +125,7 @@ namespace IkeMtz.NRSRx.OData.Tests
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
             {
-              _ = db.Schools.Add(school); 
+              _ = db.Schools.Add(school);
               _ = db.SchoolCourses.Add(schoolCourseA);
               _ = db.SchoolCourses.Add(schoolCourseB);
               _ = db.SchoolCourses.Add(schoolCourseC);
@@ -131,7 +133,7 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=100&$count=true&$compute={nameof(school.SchoolCourses)}/$count as Courses&$select={nameof(school.Id)},Courses");
@@ -146,7 +148,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetMaxSchoolsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s/nolimit?$top=500&$count=true");
@@ -160,7 +162,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task DeleteSchoolsTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s/{Guid.NewGuid()}");

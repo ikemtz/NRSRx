@@ -30,7 +30,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$count=true");
@@ -55,7 +55,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s/noLimit?$count=true&$top=500");
@@ -72,7 +72,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task DeleteStudentTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s/{Guid.NewGuid()}");

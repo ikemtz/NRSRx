@@ -1,12 +1,11 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData;
 using IkeMtz.Samples.OData.Data;
-using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -30,13 +29,14 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
     }
     [TestMethod]
@@ -44,8 +44,6 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetCoursesWithInterceptorTest()
     {
       var item = Factories.CourseFactory();
-      item.CreatedBy = null;
-      item.UpdatedBy = null;
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
           .ConfigureTestServices(x =>
           {
@@ -55,13 +53,14 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
     }
 
@@ -79,7 +78,7 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true");
@@ -106,13 +105,14 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true&$expand={nameof(SchoolCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Course.Title, envelope.Value.First().Title);
       Assert.AreEqual(item.Id, envelope.Value.First().SchoolCourses.First().Id);
     }
@@ -122,7 +122,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetMaxErrorCoursesTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$top=5000&$count=true");

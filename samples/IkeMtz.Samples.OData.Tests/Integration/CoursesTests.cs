@@ -22,7 +22,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     public async Task GetCoursesTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true");
@@ -51,7 +51,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
       var body = await resp.Content.ReadAsStringAsync();
@@ -79,7 +79,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync(
@@ -107,7 +107,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$apply=aggregate(id with countdistinct as total)");

@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$filter=id eq {item.Id}");
@@ -59,14 +59,15 @@ namespace IkeMtz.NRSRx.OData.Tests
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}&$filter=id eq {item.Id}");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+
       Assert.IsFalse(resp.ToLower().Contains("updatedby"));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
-      Assert.AreEqual(item.Name, envelope?.Value.First().Name);
+      Assert.IsNotNull(envelope);
+      Assert.AreEqual(item.Name, envelope.Value.First().Name);
       Assert.AreEqual(item.SchoolCourses.First().Id, envelope.Value.First().SchoolCourses.First().Id);
       Assert.AreEqual(item.StudentSchools.First().Id, envelope.Value.First().StudentSchools.First().Id);
     }

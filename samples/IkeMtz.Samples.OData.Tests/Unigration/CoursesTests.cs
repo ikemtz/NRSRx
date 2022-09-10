@@ -7,7 +7,6 @@ using IkeMtz.Samples.OData.Data;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 
 namespace IkeMtz.Samples.OData.Tests.Unigration
 {
@@ -28,12 +27,13 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
             });
           })
        );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$count=true");
-      _ = resp.EnsureSuccessStatusCode(); 
+      _ = resp.EnsureSuccessStatusCode();
       var envelope = await DeserializeResponseAsync<ODataEnvelope<Course>>(resp);
+      Assert.IsNotNull(envelope);
       Assert.AreEqual(objA.Title, envelope.Value.First().Title);
     }
   }

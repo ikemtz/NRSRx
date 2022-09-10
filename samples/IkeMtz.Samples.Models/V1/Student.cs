@@ -10,7 +10,7 @@ namespace IkeMtz.Samples.Models.V1
   // https://raw.githubusercontent.com/ikemtz/NRSRx/master/tools/sql-poco-class-generator.sql
 
   public partial class Student
-  : IkeMtz.NRSRx.Core.Models.IIdentifiable, IkeMtz.NRSRx.Core.Models.IAuditable, ICalculateable
+  : StudentUpsertRequest, IkeMtz.NRSRx.Core.Models.IIdentifiable, IkeMtz.NRSRx.Core.Models.IAuditable, ICalculateable
   {
     public Student()
     {
@@ -19,33 +19,8 @@ namespace IkeMtz.Samples.Models.V1
     }
 
     [Required]
-    public Guid Id { get; set; }
-    [MaxLength(50)]
-    public string? Title { get; set; }
-    [Required]
-    [MaxLength(250)]
-    public string FirstName { get; set; }
-    [Required]
-    [MaxLength(250)]
-    public string LastName { get; set; }
-    [MaxLength(250)]
-    public string? MiddleName { get; set; }
-    [Required]
-    public DateTime BirthDate { get; set; }
-    [Required]
-    public Gender Gender { get; set; }
-    [Required]
-    [MaxLength(250)]
-    [EmailAddress]
-    public string Email { get; set; }
-    [MaxLength(15)]
-    public string? Tel1 { get; set; }
-    [MaxLength(15)]
-    public string? Tel2 { get; set; }
-    [Required]
     [MaxLength(250)]
     public string CreatedBy { get; set; }
-    public int CourseCount { get; set; }
     [Required]
     public DateTimeOffset CreatedOnUtc { get; set; }
     [MaxLength(250)]

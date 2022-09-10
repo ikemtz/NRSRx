@@ -32,13 +32,14 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Students.Add(item);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("MyTestClaim", Guid.NewGuid().ToString()) }));
       //Get 
       var resp = await client.GetAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}");
       var httpStudent = await DeserializeResponseAsync<Student>(resp);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
+      Assert.IsNotNull(httpStudent);
       Assert.AreEqual(item.Title, httpStudent.Title);
     }
 
@@ -48,12 +49,13 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var item = Factories.StudentFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.json", item);
       _ = resp.EnsureSuccessStatusCode();
       var httpStudent = await DeserializeResponseAsync<Student>(resp);
+      Assert.IsNotNull(httpStudent);
       Assert.AreEqual("IntegrationTester@email.com", httpStudent.CreatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();
@@ -72,7 +74,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var item = Factories.StudentFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.xml", item);
@@ -93,7 +95,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Students.Add(originalStudent);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var updatedStudent = JsonClone(originalStudent);
@@ -102,6 +104,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Student)}s.json?id={updatedStudent.Id}", updatedStudent);
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedStudent = await DeserializeResponseAsync<Student>(resp);
+      Assert.IsNotNull(httpUpdatedStudent);
       Assert.AreEqual("IntegrationTester@email.com", httpUpdatedStudent.UpdatedBy);
       Assert.AreEqual(updatedStudent.Title, httpUpdatedStudent.Title);
       Assert.IsNull(updatedStudent.UpdatedOnUtc);
@@ -130,12 +133,13 @@ namespace IkeMtz.NRSRx.WebApi.Tests
             _ = db.Students.Add(item);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}");
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedStudent = await DeserializeResponseAsync<Student>(resp);
+      Assert.IsNotNull(httpUpdatedStudent);
       Assert.IsNull(httpUpdatedStudent.UpdatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();

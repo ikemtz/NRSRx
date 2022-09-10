@@ -8,7 +8,6 @@ using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 
 namespace IkeMtz.Samples.WebApi.Tests.Integration
 {
@@ -21,12 +20,13 @@ namespace IkeMtz.Samples.WebApi.Tests.Integration
     {
       var item = Factories.CourseFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, IntegrationWebApiTestStartup>());
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
       _ = resp.EnsureSuccessStatusCode();
       var httpCourse = await DeserializeResponseAsync<Course>(resp);
+      Assert.IsNotNull(httpCourse);
       Assert.AreEqual("IntegrationTester@email.com", httpCourse.CreatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();
@@ -52,7 +52,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Integration
             _ = db.Courses.Add(originalCourse);
           });
         }));
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
       var updatedCourse = JsonClone(originalCourse);
@@ -61,6 +61,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Integration
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedCourse = await DeserializeResponseAsync<Course>(resp);
+      Assert.IsNotNull(httpUpdatedCourse);
       Assert.AreEqual("IntegrationTester@email.com", httpUpdatedCourse.UpdatedBy);
       Assert.AreEqual(updatedCourse.Num, httpUpdatedCourse.Num);
       Assert.IsNull(updatedCourse.UpdatedOnUtc);

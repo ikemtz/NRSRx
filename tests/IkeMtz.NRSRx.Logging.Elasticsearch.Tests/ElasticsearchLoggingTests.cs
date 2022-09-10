@@ -53,7 +53,9 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
       await host.StartAsync();
 
       var loggerFac = host.Services.GetService<ILoggerFactory>();
+      Assert.IsNotNull(loggerFac);
       var logger = loggerFac.CreateLogger("Unit Test");
+      Assert.IsNotNull(logger);
       logger.LogError("Validating Error logging");
       await host.StopAsync();
       await host.WaitForShutdownAsync();
@@ -66,7 +68,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
       using var srv = new TestServer(TestHostBuilder<StartUp_Elastic, StartUp_Elastic>()
         .UseLogging()
      );
-      var client = srv.CreateClient();
+      var client = srv.CreateClient(TestContext);
       var resp = await client.GetAsync("index.html");
       Assert.AreEqual(HttpStatusCode.OK, resp.EnsureSuccessStatusCode().StatusCode);
     }

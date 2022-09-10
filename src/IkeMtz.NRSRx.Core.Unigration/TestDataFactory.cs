@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public static TENTITY CreateIdentifiable<TENTITY>(TENTITY? value = null)
       where TENTITY : class, IIdentifiable<Guid>, new()
     {
-      _ = CreateIdentifiable<TENTITY, Guid>(value);
+      value = CreateIdentifiable<TENTITY, Guid>(value);
       value.Id = Guid.NewGuid();
       return value;
     }
@@ -29,15 +29,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       value ??= new TENTITY();
       value.Id = default;
-      return value;
-    }
-
-    public static TENTITY CreateAuditable<TENTITY>(TENTITY? value = null)
-      where TENTITY : class, IAuditable, new()
-    {
-      value ??= new TENTITY();
-      value.CreatedBy = "Auditable Factory";
-      value.CreatedOnUtc = DateTime.UtcNow;
       return value;
     }
 
