@@ -135,9 +135,10 @@ namespace IkeMtz.NRSRx.Core.Unigration
           .ConfigureAppConfiguration((hostingContext, config) =>
           {
             var appAssembly = typeof(TSiteStartup).Assembly;
-            _ = config
+            _ = config             
              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-             .AddUserSecrets(appAssembly, optional: true);
+             .AddUserSecrets(appAssembly, optional: true)
+             .AddEnvironmentVariables();
           })
            .ConfigureLogging(logging =>
            {
