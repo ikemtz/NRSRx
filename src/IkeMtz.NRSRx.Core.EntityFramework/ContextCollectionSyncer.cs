@@ -77,7 +77,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
       var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
-      var destCollectiion = (destinationCollection as IList<TDestinationEntity>);
+      var destCollectiion = (destinationCollection as ICollection<TDestinationEntity>);
 
       updateLogic ??= SimpleMapper<TSourceEntity, TDestinationEntity>.Instance.ApplyChanges;
       //Updating Existing records
