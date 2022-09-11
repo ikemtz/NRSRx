@@ -24,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
       var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
-      var destCollectiion = (destinationCollection as IList<TEntity>);
+      var destCollectiion = (destinationCollection as ICollection<TEntity>);
       //Add New Records to destination
       sourceCollection.Where(src => !destIds.Contains(src.Id)).ToList().ForEach(item =>
       {
