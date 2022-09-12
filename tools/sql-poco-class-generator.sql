@@ -51,7 +51,7 @@ PRINT '// Script is available at:'
 PRINT '// https://raw.githubusercontent.com/ikemtz/NRSRx/master/tools/sql-poco-class-generator.sql'
 PRINT ''
 
-PRINT '[Table("' + TableName + '")]'
+PRINT '[Table("' + @TableName + '")]'
 PRINT 'public partial class ' + @EntityName
 
 IF @HasId = 1 AND @HasAuditable = 1
@@ -117,8 +117,8 @@ FOR
     -- Accessed ON 5/19/2020
 			 WHEN DATA_TYPE = 'uniqueidentifier' AND IS_NULLABLE = 'YES' THEN 'Guid? '
 			 WHEN DATA_TYPE = 'uniqueidentifier' AND IS_NULLABLE = 'NO' THEN 'Guid '
-			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' AND IS_NULLABLE = 'YES' THEN 'string?'
-			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' THEN 'string'
+			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' AND IS_NULLABLE = 'YES' THEN 'string? '
+			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' THEN 'string '
 			 WHEN DATA_TYPE = 'int64' AND IS_NULLABLE = 'YES' THEN 'Int64? '
 			 WHEN DATA_TYPE = 'int64' AND IS_NULLABLE = 'NO' THEN 'Int64 '
 			 WHEN DATA_TYPE = 'int' AND IS_NULLABLE = 'YES' THEN 'int? '
@@ -132,9 +132,9 @@ FOR
 			 WHEN (DATA_TYPE LIKE '%binary' OR DATA_TYPE = 'image' OR DATA_TYPE = 'timestamp') AND IS_NULLABLE = 'YES' THEN 'byte[]? '
 			 WHEN (DATA_TYPE LIKE '%binary' OR DATA_TYPE = 'image' OR DATA_TYPE = 'timestamp') AND IS_NULLABLE = 'NO' THEN 'byte[] '
 			 WHEN DATA_TYPE = 'time' AND IS_NULLABLE = 'YES' THEN 'TimeSpan? '
-			 WHEN DATA_TYPE = 'time' AND IS_NULLABLE = 'NO' THEN 'TimeSpan '  
+			 WHEN DATA_TYPE = 'time' AND IS_NULLABLE = 'NO' THEN 'TimeSpan '
 			 WHEN DATA_TYPE = 'bit' AND IS_NULLABLE = 'YES' THEN 'bool? '
-			 WHEN DATA_TYPE = 'bit' AND IS_NULLABLE = 'NO' THEN 'bool '  
+			 WHEN DATA_TYPE = 'bit' AND IS_NULLABLE = 'NO' THEN 'bool '
 			 WHEN (DATA_TYPE = 'decimal' OR DATA_TYPE LIKE '%money' OR DATA_TYPE = 'numeric') AND IS_NULLABLE = 'YES' THEN 'decimal? '
 			 WHEN (DATA_TYPE = 'decimal' OR DATA_TYPE LIKE '%money' OR DATA_TYPE = 'numeric') AND IS_NULLABLE = 'NO' THEN 'decimal '
 			 WHEN DATA_TYPE = 'datetimeoffset' AND IS_NULLABLE = 'YES' THEN 'DateTimeOffset? '
