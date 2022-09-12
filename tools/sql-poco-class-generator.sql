@@ -18,9 +18,20 @@ SET @TableName = 'Examples'
 
 
 -- Everything else after this point is part of the script
-DECLARE @property AS NVARCHAR(2000), @HasId AS BIT, @HasAuditable AS BIT
+DECLARE @property AS NVARCHAR(2000),
+	@HasId AS BIT,
+	@HasAuditable AS BIT,
+	@IdDataType AS VARCHAR(5)
 
-SELECT @HasId = 1
+SELECT @HasId = 1, @IdDataType =
+	CASE
+		WHEN (DATA_TYPE = 'uniqueidentifier')
+			THEN 'Guid'
+		WHEN (DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text')
+			THEN 'string'
+		ELSE
+			DATA_TYPE
+	END
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = @TableName
 	AND (COLUMN_NAME = 'Id')
@@ -40,15 +51,16 @@ PRINT '// Script is available at:'
 PRINT '// https://raw.githubusercontent.com/ikemtz/NRSRx/master/tools/sql-poco-class-generator.sql'
 PRINT ''
 
+PRINT '[Table("' + TableName + '")]'
 PRINT 'public partial class ' + @EntityName
 
 IF @HasId = 1 AND @HasAuditable = 1
 BEGIN
-	PRINT ': IkeMtz.NRSRx.Core.Models.IIdentifiable, IkeMtz.NRSRx.Core.Models.IAuditable'
+	PRINT ': IkeMtz.NRSRx.Core.Models.IIdentifiable<' + @IdDataType + '>, IkeMtz.NRSRx.Core.Models.IAuditable'
 END
 ELSE IF @HasId = 1
 BEGIN
-	PRINT ': IkeMtz.NRSRx.Core.Models.IIdentifiable'
+	PRINT ': IkeMtz.NRSRx.Core.Models.IIdentifiable<' + @IdDataType + '>'
 END
 
 PRINT '{'
@@ -96,19 +108,21 @@ FOR
 			WHEN DATA_TYPE LIKE '%char' THEN '[MaxLength(' + CAST(CHARACTER_MAXIMUM_LENGTH AS NVARCHAR) + ')] '
 			ELSE ''
 		END
-		+ 'public ' 
-		+ CASE   
+		+ ' [Column("' + COLUMN_NAME + '")]'
+		+ ' public '
+		+ CASE
 		-- The following logic is based on this Microsoft Docs Article
 		-- SQL Server Data Type Mappings
 		-- https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings
     -- Accessed ON 5/19/2020
 			 WHEN DATA_TYPE = 'uniqueidentifier' AND IS_NULLABLE = 'YES' THEN 'Guid? '
-			 WHEN DATA_TYPE = 'uniqueidentifier' AND IS_NULLABLE = 'NO' THEN 'Guid '  
-			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' THEN 'string '
+			 WHEN DATA_TYPE = 'uniqueidentifier' AND IS_NULLABLE = 'NO' THEN 'Guid '
+			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' AND IS_NULLABLE = 'YES' THEN 'string?'
+			 WHEN DATA_TYPE LIKE '%char' OR DATA_TYPE LIKE '%text' THEN 'string'
 			 WHEN DATA_TYPE = 'int64' AND IS_NULLABLE = 'YES' THEN 'Int64? '
-			 WHEN DATA_TYPE = 'int64' AND IS_NULLABLE = 'NO' THEN 'Int64 '  
+			 WHEN DATA_TYPE = 'int64' AND IS_NULLABLE = 'NO' THEN 'Int64 '
 			 WHEN DATA_TYPE = 'int' AND IS_NULLABLE = 'YES' THEN 'int? '
-			 WHEN DATA_TYPE = 'int' AND IS_NULLABLE = 'NO' THEN 'int '    
+			 WHEN DATA_TYPE = 'int' AND IS_NULLABLE = 'NO' THEN 'int '
 			 WHEN (DATA_TYPE = 'smallint') AND IS_NULLABLE = 'YES' THEN 'Int16? '
 			 WHEN (DATA_TYPE = 'smallint') AND IS_NULLABLE = 'NO' THEN 'Int16 '
 			 WHEN (DATA_TYPE = 'tinyint') AND IS_NULLABLE = 'YES' THEN 'byte? '
@@ -121,11 +135,11 @@ FOR
 			 WHEN DATA_TYPE = 'time' AND IS_NULLABLE = 'NO' THEN 'TimeSpan '  
 			 WHEN DATA_TYPE = 'bit' AND IS_NULLABLE = 'YES' THEN 'bool? '
 			 WHEN DATA_TYPE = 'bit' AND IS_NULLABLE = 'NO' THEN 'bool '  
-			 WHEN (DATA_TYPE = 'decimal' OR DATA_TYPE LIKE '%money' OR DATA_TYPE = 'numeric') AND IS_NULLABLE = 'YES' THEN 'decimal? '  
-			 WHEN (DATA_TYPE = 'decimal' OR DATA_TYPE LIKE '%money' OR DATA_TYPE = 'numeric') AND IS_NULLABLE = 'NO' THEN 'decimal ' 
-			 WHEN DATA_TYPE = 'datetimeoffset' AND IS_NULLABLE = 'YES' THEN 'DateTimeOffset? '  
-			 WHEN DATA_TYPE = 'datetimeoffset' AND IS_NULLABLE = 'NO' THEN 'DateTimeOffset '  
-			 WHEN DATA_TYPE LIKE '%date%' AND IS_NULLABLE = 'YES' THEN 'DateTime? '  
+			 WHEN (DATA_TYPE = 'decimal' OR DATA_TYPE LIKE '%money' OR DATA_TYPE = 'numeric') AND IS_NULLABLE = 'YES' THEN 'decimal? '
+			 WHEN (DATA_TYPE = 'decimal' OR DATA_TYPE LIKE '%money' OR DATA_TYPE = 'numeric') AND IS_NULLABLE = 'NO' THEN 'decimal '
+			 WHEN DATA_TYPE = 'datetimeoffset' AND IS_NULLABLE = 'YES' THEN 'DateTimeOffset? '
+			 WHEN DATA_TYPE = 'datetimeoffset' AND IS_NULLABLE = 'NO' THEN 'DateTimeOffset '
+			 WHEN DATA_TYPE LIKE '%date%' AND IS_NULLABLE = 'YES' THEN 'DateTime? '
 			 WHEN DATA_TYPE LIKE '%date%' AND IS_NULLABLE = 'NO' THEN 'DateTime '
 			 ELSE 'object '  
 		  END
