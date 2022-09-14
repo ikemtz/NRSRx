@@ -73,7 +73,7 @@ BEGIN
 	PRINT '  {'
 	DECLARE child_table_cursor CURSOR
 FOR
-	SELECT OBJECT_NAME(parent_object_id) +' = new HashSet<' + 
+	SELECT OBJECT_NAME(parent_object_id) +' = new HashSet<' +
 	CASE
 		WHEN (OBJECT_NAME(parent_object_id) LIKE '%s')
 			THEN SUBSTRING(OBJECT_NAME(parent_object_id), 0, LEN(OBJECT_NAME(parent_object_id)))
@@ -141,7 +141,7 @@ FOR
 			 WHEN DATA_TYPE = 'datetimeoffset' AND IS_NULLABLE = 'NO' THEN 'DateTimeOffset '
 			 WHEN DATA_TYPE LIKE '%date%' AND IS_NULLABLE = 'YES' THEN 'DateTime? '
 			 WHEN DATA_TYPE LIKE '%date%' AND IS_NULLABLE = 'NO' THEN 'DateTime '
-			 ELSE 'object '  
+			 ELSE 'object '
 		  END
 		+ COLUMN_NAME
 		+ ' { get; set; }' AS PROPERTY
@@ -160,13 +160,13 @@ DEALLOCATE property_cursor;
 
 DECLARE parent_table_cursor CURSOR
 FOR
-	SELECT 'public virtual ' + 
+	SELECT 'public virtual ' +
 	CASE
 		WHEN (OBJECT_NAME(referenced_object_id) LIKE '%s')
 			THEN SUBSTRING(OBJECT_NAME(referenced_object_id), 0, LEN(OBJECT_NAME(referenced_object_id)))
 			ELSE OBJECT_NAME(referenced_object_id)
 	END
-	+ ' ' + 
+	+ ' ' +
 	CASE
 		WHEN (OBJECT_NAME(referenced_object_id) LIKE '%s')
 			THEN SUBSTRING(OBJECT_NAME(referenced_object_id), 0, LEN(OBJECT_NAME(referenced_object_id)))
@@ -189,15 +189,15 @@ DEALLOCATE parent_table_cursor;
 
 DECLARE child_table_cursor CURSOR
 FOR
-	SELECT 'public virtual ICollection<' + 
+	SELECT 'public virtual ICollection<' +
 	CASE
 		WHEN (OBJECT_NAME(parent_object_id) LIKE '%s')
 			THEN SUBSTRING(OBJECT_NAME(parent_object_id), 0, LEN(OBJECT_NAME(parent_object_id)))
 			ELSE OBJECT_NAME(parent_object_id)
 	END
-	+ '> ' + 
-	OBJECT_NAME(parent_object_id) 
-	+ ' { get; } '
+	+ '> ' +
+	OBJECT_NAME(parent_object_id)
+	+ ' { get; set; } '
 	AS PROPERTY
 FROM sys.foreign_keys
 WHERE OBJECT_NAME(referenced_object_id) = @TableName
