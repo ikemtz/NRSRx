@@ -7,62 +7,45 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public static class ContextCollectionSyncer
   {
-    public static void SyncCollections<TEntity>(this IAuditableDbContext auditableContext, IEnumerable<TEntity> sourceCollection, IEnumerable<TEntity> destinationCollection,
-        Action<TEntity, TEntity>? updateLogic = null) where TEntity : class, IIdentifiable, new()
+    public static void SyncGuidCollections<TSourceEntity>(
+      this IAuditableDbContext? auditableContext,
+      ICollection<TSourceEntity>? sourceCollection,
+      ICollection<TSourceEntity>? destinationCollection,
+      Action<TSourceEntity, TSourceEntity>? updateLogic = null)
+    where TSourceEntity : class, IIdentifiable<Guid>, new()
     {
-      if (sourceCollection == null)
-      {
-        return;
-      }
-      else if (destinationCollection == null)
-      {
-        throw new ArgumentNullException(nameof(destinationCollection));
-      }
-      else if (auditableContext == null)
-      {
-        throw new ArgumentNullException(nameof(auditableContext));
-      }
-      var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
-      var destIds = destinationCollection.Select(t => t.Id).ToArray();
-      var destCollectiion = (destinationCollection as ICollection<TEntity>);
-
-      //synchronize removed items
-      foreach (var destId in destIds.Where(dstId => !sourceIds.Contains(dstId)))
-      {
-        var entityFrameworkBoundObject = destCollectiion.First(dst => dst.Id == destId);
-        _ = destCollectiion?.Remove(entityFrameworkBoundObject);
-        _ = auditableContext.Remove(entityFrameworkBoundObject);
-      }
-
-      //Add New Records to destination
-      sourceCollection.Where(src => !destIds.Contains(src.Id)).ToList().ForEach(item =>
-      {
-        _ = auditableContext.Add(item);
-        destCollectiion?.Add(item);
-      });
-
-      //If update record logic has been provided, run it
-      if (updateLogic != null)
-      {
-        foreach (var srcItem in sourceCollection.Where(src => destIds.Contains(src.Id)))
-        {
-          var destItem = destinationCollection.First(dst => dst.Id == srcItem.Id);
-          updateLogic(srcItem, destItem);
-        }
-      }
-      else
-      {
-        foreach (var srcItem in sourceCollection.Where(src => destIds.Contains(src.Id)))
-        {
-          var destItem = destinationCollection.First(dst => dst.Id == srcItem.Id);
-          SimpleMapper<TEntity>.Instance.ApplyChanges(srcItem, destItem);
-        }
-      }
+      SyncCollections<TSourceEntity, TSourceEntity, Guid>(auditableContext, sourceCollection, destinationCollection, updateLogic); ;
     }
 
-    public static void SyncCollections<TSourceEntity, TDestinationEntity>(this IAuditableDbContext? auditableContext, IEnumerable<TSourceEntity>? sourceCollection, IEnumerable<TDestinationEntity>? destinationCollection,
-    Action<TSourceEntity, TDestinationEntity>? updateLogic = null) where TSourceEntity : class, IInsertableDto, new()
-      where TDestinationEntity : class, IIdentifiable, new()
+    public static void SyncGuidCollections<TSourceEntity, TDestinationEntity>(
+     this IAuditableDbContext? auditableContext,
+     ICollection<TSourceEntity>? sourceCollection,
+     ICollection<TDestinationEntity>? destinationCollection,
+     Action<TSourceEntity, TDestinationEntity>? updateLogic = null)
+   where TSourceEntity : class, IIdentifiable<Guid>, new()
+   where TDestinationEntity : class, IIdentifiable<Guid>, new()
+    {
+      SyncCollections<TSourceEntity, TDestinationEntity, Guid>(auditableContext, sourceCollection, destinationCollection, updateLogic);
+    }
+    public static void SyncIntCollections<TSourceEntity, TDestinationEntity>(
+     this IAuditableDbContext? auditableContext,
+     ICollection<TSourceEntity>? sourceCollection,
+     ICollection<TDestinationEntity>? destinationCollection,
+     Action<TSourceEntity, TDestinationEntity>? updateLogic = null)
+   where TSourceEntity : class, IIdentifiable<int>, new()
+   where TDestinationEntity : class, IIdentifiable<int>, new()
+    {
+      SyncCollections<TSourceEntity, TDestinationEntity, int>(auditableContext, sourceCollection, destinationCollection, updateLogic);
+    }
+
+    public static void SyncCollections<TSourceEntity, TDestinationEntity, TKey>(
+      this IAuditableDbContext? auditableContext,
+      ICollection<TSourceEntity>? sourceCollection,
+      ICollection<TDestinationEntity>? destinationCollection,
+      Action<TSourceEntity, TDestinationEntity>? updateLogic = null)
+    where TSourceEntity : class, IIdentifiable<TKey>, new()
+    where TDestinationEntity : class, IIdentifiable<TKey>, new()
+    where TKey : IComparable
     {
       if (sourceCollection == null)
       {
@@ -78,36 +61,36 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       }
       var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
-      var destCollectiion = (destinationCollection as ICollection<TDestinationEntity>);
 
-      updateLogic ??= SimpleMapper<TSourceEntity, TDestinationEntity>.Instance.ApplyChanges;
+      updateLogic ??= SimpleMapper<TSourceEntity, TDestinationEntity, TKey>.Instance.ApplyChanges;
 
       //Delete Records from destination
-      foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t.Value == src.Id)).ToList())
+      foreach (var destItem in destinationCollection.Where(src => !sourceIds.Any(t => t.Equals(src.Id))).ToList())
       {
-        _ = destCollectiion?.Remove(destItem);
+        _ = destinationCollection?.Remove(destItem);
         _ = auditableContext.Remove(destItem);
       }
       //Updating Existing records
-      foreach (var srcItem in sourceCollection.Where(src => destIds.Any(t => t == src.Id.Value)))
+      foreach (var srcItem in sourceCollection.Where(src => destIds.Any(t => t.Equals(src.Id))))
       {
-        var destItem = destinationCollection.First(dst => dst.Id == srcItem.Id);
+        var destItem = destinationCollection.First(dst => dst.Id.Equals(srcItem.Id));
         updateLogic(srcItem, destItem);
       }
 
       //Add New Records to destination
-      foreach (var srcItem in sourceCollection.Where(src => !destIds.Any(t => t == src.Id.Value)))
+      foreach (var srcItem in sourceCollection.Where(src => !destIds.Any(t => t.Equals(src.Id))))
       {
         var destItem = new TDestinationEntity();
         updateLogic(srcItem, destItem);
-        if (srcItem.Id.GetValueOrDefault() != Guid.Empty)
+        if (srcItem.Id.Equals(Guid.Empty))
         {
-          destItem.Id = srcItem.Id.Value;
+          destItem.Id = srcItem.Id;
         }
         _ = auditableContext.Add(destItem);
-        destCollectiion?.Add(destItem);
+        destinationCollection?.Add(destItem);
 
       }
     }
+
   }
 }

@@ -20,8 +20,8 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.IsNotNull(host);
       await host.StartAsync();
       var loggerFac = host.Services.GetService<ILoggerFactory>();
-      var logger = loggerFac.CreateLogger("Unit Test");
-      logger.LogError("Validating Error logging");
+      var logger = loggerFac?.CreateLogger("Unit Test");
+      logger?.LogError("Validating Error logging");
       await host.StopAsync();
       await host.WaitForShutdownAsync();
     }

@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="services"></param>
-    public static void SetupDevelopmentApplicationInsights(this CoreWebStartup startup, IServiceCollection services)
+    public static void SetupDevelopmentApplicationInsights(this CoreWebStartup startup, IServiceCollection? services)
     {
       _ = services?
           .AddApplicationInsightsTelemetry(

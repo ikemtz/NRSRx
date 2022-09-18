@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.Core.Tests
 {
   [TestClass]
-  public class CollectionHelperTests : BaseUnigrationTests
+  public class CollectionIntHelperTests : BaseUnigrationTests
   {
 
     [TestMethod]
@@ -18,8 +18,8 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void NullRefOnNullDestinationCollectionTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      context.SyncCollections(srcList, null, null);
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      context.SyncIntCollections<CollectionIntModel, CollectionIntModel>(srcList, null, null);
     }
 
     [TestMethod]
@@ -28,8 +28,8 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Conversion_NullRefOnNullDestinationCollectionTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
-      context.SyncCollections<CollectionModelDto, CollectionModel>(srcList, null, null);
+      var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
+      context.SyncIntCollections<CollectionIntModelDto, CollectionIntModel>(srcList, null, null);
     }
 
     [TestMethod]
@@ -38,9 +38,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void NullRefOnNullContextTest()
     {
       TestAuditableDbContext? context = null;
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      var destList = new List<CollectionModel>();
-      context.SyncCollections(srcList, destList, null);
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      var destList = new List<CollectionIntModel>();
+      context.SyncIntCollections(srcList, destList, null);
     }
 
     [TestMethod]
@@ -49,9 +49,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Conversion_NullRefOnNullContextTest()
     {
       TestAuditableDbContext? context = null;
-      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
-      var destList = new List<CollectionModel>();
-      context.SyncCollections(srcList, destList, null);
+      var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
+      var destList = new List<CollectionIntModel>();
+      context.SyncIntCollections(srcList, destList, null);
     }
 
     [TestMethod]
@@ -59,12 +59,12 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void RemoveItemsFromCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      context.CollectionIntModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionIntModel() });
       _ = context.SaveChanges();
-      var destList = context.CollectionModel.ToList();
+      var destList = context.CollectionIntModels.ToList();
       srcList.First().Value = "Validate Update";
-      context.SyncCollections(srcList, destList, (src, dest) =>
+      context.SyncIntCollections(srcList, destList, (src, dest) =>
       {
         dest.Value = src.Value;
       });
@@ -77,12 +77,12 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Conversion_RemoveItemsFromCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
-      context.CollectionModel.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionModel() });
+      var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
+      context.CollectionIntModels.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionIntModel() });
       _ = context.SaveChanges();
-      var destList = context.CollectionModel.ToList();
+      var destList = context.CollectionIntModels.ToList();
       srcList.First().Value = "Validate Update";
-      context.SyncCollections(srcList, destList, (src, dest) =>
+      context.SyncIntCollections(srcList, destList, (src, dest) =>
       {
         dest.Value = src.Value;
       });
@@ -95,12 +95,12 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void RemoveItemsFromCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      context.CollectionIntModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionIntModel() });
       _ = context.SaveChanges();
-      var destList = context.CollectionModel.ToList();
+      var destList = context.CollectionIntModels.ToList();
       srcList.First().Value = "Validate Update";
-      context.SyncCollections(srcList, destList);
+      context.SyncIntCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
       Assert.AreEqual("Validate Update", destList.First().Value);
     }
@@ -110,12 +110,12 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Conversion_RemoveItemsFromCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
-      context.CollectionModel.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionModel() });
+      var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
+      context.CollectionIntModels.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionIntModel() });
       _ = context.SaveChanges();
-      var destList = context.CollectionModel.ToList();
+      var destList = context.CollectionIntModels.ToList();
       srcList.First().Value = "Validate Update";
-      context.SyncCollections(srcList, destList);
+      context.SyncIntCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
       Assert.AreEqual("Validate Update", destList.First().Value);
     }
@@ -125,12 +125,12 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void SourceCollectionNullTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      context.CollectionIntModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionIntModel() });
       _ = context.SaveChanges();
-      var destList = context.CollectionModel.ToList();
+      var destList = context.CollectionIntModels.ToList();
       var wasCalled = false;
-      context.SyncCollections(null, destList, (src, dest) =>
+      context.SyncIntCollections<CollectionIntModel, CollectionIntModel>(null, destList, (src, dest) =>
       {
         wasCalled = true;
       });
@@ -143,12 +143,12 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Conversion_SourceCollectionNullTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      context.CollectionModel.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionModel() });
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      context.CollectionIntModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionIntModel() });
       _ = context.SaveChanges();
-      var destList = context.CollectionModel.ToList();
+      var destList = context.CollectionIntModels.ToList();
       var wasCalled = false;
-      context.SyncCollections<CollectionModelDto, CollectionModel>(null, destList, (src, dest) =>
+      context.SyncIntCollections<CollectionIntModelDto, CollectionIntModel>(null, destList, (src, dest) =>
       {
         wasCalled = true;
       });
@@ -161,9 +161,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void AddItemsToCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      var destList = new List<CollectionModel> { };
-      context.SyncCollections(srcList, destList, (src, dest) =>
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      var destList = new List<CollectionIntModel> { };
+      context.SyncIntCollections(srcList, destList, (src, dest) =>
       {
         dest.Value = src.Value;
       });
@@ -175,9 +175,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Converstion_AddItemsToCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
-      var destList = new List<CollectionModel> { };
-      context.SyncCollections(srcList, destList, (src, dest) =>
+      var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
+      var destList = new List<CollectionIntModel> { };
+      context.SyncIntCollections(srcList, destList, (src, dest) =>
      {
        dest.Value = src.Value;
      });
@@ -190,9 +190,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void AddItemsToCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModel(), new CollectionModel() };
-      var destList = new List<CollectionModel> { };
-      context.SyncCollections(srcList, destList);
+      var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
+      var destList = new List<CollectionIntModel> { };
+      context.SyncIntCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
     }
 
@@ -201,9 +201,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void Converstion_AddItemsToCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
-      var srcList = new[] { new CollectionModelDto(), new CollectionModelDto() };
-      var destList = new List<CollectionModel> { };
-      context.SyncCollections(srcList, destList);
+      var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
+      var destList = new List<CollectionIntModel> { };
+      context.SyncIntCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
     }
   }

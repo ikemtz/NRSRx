@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     {
     }
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
-      app.UseSerilog();
+      app?.UseSerilog();
 
 
     public override string MicroServiceTitle => "";

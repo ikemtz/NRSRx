@@ -3,9 +3,9 @@ using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
-  public class CollectionModel : IIdentifiable
+  public class CollectionGuidModel : IIdentifiable
   {
-    public CollectionModel()
+    public CollectionGuidModel()
     {
       Id = Guid.NewGuid();
       Value = Guid.NewGuid().ToString();
@@ -13,9 +13,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public Guid Id { get; set; }
     public string Value { get; set; }
 
-    public CollectionModel Clone()
+    public CollectionGuidModel Clone()
     {
-      return new CollectionModel
+      return new CollectionGuidModel
       {
         Id = Id,
         Value = Value
@@ -23,20 +23,21 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
   }
 
-  public class CollectionModelDto : IInsertableDto
+  public class CollectionGuidModelDto : IIdentifiable
   {
-    public CollectionModelDto()
+    public CollectionGuidModelDto()
     {
       Id = Guid.NewGuid();
       Value = Guid.NewGuid().ToString();
     }
-    public Guid? Id { get; set; }
-    public string Value { get; set; }
-    public CollectionModel ToCollectionModel()
+    public Guid Id { get; set; }
+    public string Value { get; set; } 
+
+    public CollectionGuidModel ToCollectionModel()
     {
-      return new CollectionModel
+      return new CollectionGuidModel
       {
-        Id = Id.GetValueOrDefault(),
+        Id = Id,
         Value = Value
       };
     }
