@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (sourceCollection == null)
       {
-        return;
+        sourceCollection = new List<TSourceEntity>();
       }
       else if (destinationCollection == null)
       {
