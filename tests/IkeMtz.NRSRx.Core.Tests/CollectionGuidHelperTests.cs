@@ -134,7 +134,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         wasCalled = true;
       });
-      Assert.AreEqual(3, destList.Count);
+      Assert.AreEqual(0, destList.Count);
       Assert.IsFalse(wasCalled);
     }
 
@@ -152,7 +152,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         wasCalled = true;
       });
-      Assert.AreEqual(3, destList.Count);
+      Assert.AreEqual(0, destList.Count);
       Assert.IsFalse(wasCalled);
     }
 
