@@ -232,12 +232,6 @@ jobs:
           targetType: "inline"
           script: "cd $(System.DefaultWorkingDirectory)/test-results && ls -R"
 
-      - task: Bash@3
-        displayName: Utilize sed to fix cobertura files Integration Test Results
-        inputs:
-          targetType: 'inline'
-          script: 'find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i ''s->\/src->.-'' {} +'
-
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: "VSTest"
@@ -276,12 +270,6 @@ jobs:
         inputs:
           targetType: "inline"
           script: "docker run -i --name=redis-results ikemtz/nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory)/test-results"
-
-      - task: Bash@3
-        displayName: Utilize sed to fix cobertura files Integration Test Results
-        inputs:
-          targetType: 'inline'
-          script: 'find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i ''s->\/src->.-'' {} +'
 
       - task: PublishTestResults@2
         inputs:
