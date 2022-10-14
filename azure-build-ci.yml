@@ -212,31 +212,6 @@ jobs:
           artifactName: "dacpac_drop"
           targetPath: "samples/IkeMtz.Samples.Db/bin/Debug/"
 
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 6.0.x"
-        inputs:
-          version: 6.0.x
-
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: "publish"
-          publishWebProjects: false
-          projects: "samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj"
-          arguments: "--runtime linux-x64"
-          zipAfterPublish: false
-          modifyOutputPath: false
-          workingDirectory: "samples/IkeMtz.Samples.OData.Tests/"
-
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: "publish"
-          publishWebProjects: false
-          projects: "samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj"
-          arguments: "--runtime linux-x64"
-          zipAfterPublish: false
-          modifyOutputPath: false
-          workingDirectory: "samples/IkeMtz.Samples.WebApi.Tests/"
-
       - task: Docker@2
         inputs:
           containerRegistry: "IkeMtz Docker Hub"
@@ -249,7 +224,19 @@ jobs:
         displayName: Get SQL Integration Test Results
         inputs:
           targetType: "inline"
-          script: "docker run -i --name=sql-results ikemtz/nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory) && cd $(System.DefaultWorkingDirectory) && ls -R"
+          script: "docker run -i --name=sql-results ikemtz/nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory)/test-results"
+
+      - task: Bash@3
+        displayName: List Redis Integration Test Results
+        inputs:
+          targetType: "inline"
+          script: "cd $(System.DefaultWorkingDirectory)/test-results && ls -R"
+
+      - task: Bash@3
+        displayName: Utilize sed to fix cobertura files Integration Test Results
+        inputs:
+          targetType: "inline"
+          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\/src->.-' {} +"
 
       - task: PublishTestResults@2
         inputs:
@@ -262,7 +249,7 @@ jobs:
         inputs:
           codeCoverageTool: "Cobertura"
           summaryFileLocation: "**/coverage.cobertura.xml"
-          failIfCoverageEmpty: true
+          failIfCoverageEmpty: false #https://github.com/coverlet-coverage/coverlet/issues/1390
 
   - job: redis_integration_tests
     displayName: Redis Integration Tests
@@ -276,11 +263,6 @@ jobs:
       - checkout: self
         persistCredentials: true
 
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 6.0.x"
-        inputs:
-          version: 6.0.x
-
       - task: Docker@2
         inputs:
           containerRegistry: "IkeMtz Docker Hub"
@@ -293,7 +275,13 @@ jobs:
         displayName: Get Redis Integration Test Results
         inputs:
           targetType: "inline"
-          script: "docker run -i --name=redis-results ikemtz/nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory) && cd $(System.DefaultWorkingDirectory) && ls -R"
+          script: "docker run -i --name=redis-results ikemtz/nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory)/test-results"
+
+      - task: Bash@3
+        displayName: Utilize sed to fix cobertura files Integration Test Results
+        inputs:
+          targetType: "inline"
+          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\/src->.-' {} +"
 
       - task: PublishTestResults@2
         inputs:
