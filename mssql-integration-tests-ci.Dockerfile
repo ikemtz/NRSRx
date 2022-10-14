@@ -13,6 +13,8 @@ RUN /opt/mssql/bin/sqlservr & sleep 30 \
     && cd /src \
     && dotnet test samples/IkeMtz.Samples.OData.Tests --filter TestCategory=SqlIntegration --logger trx --configuration Debug --collect "XPlat Code Coverage" --results-directory /test-results \
     && dotnet test samples/IkeMtz.Samples.WebApi.Tests --filter TestCategory=SqlIntegration --logger trx --configuration Debug --collect "XPlat Code Coverage" --results-directory /test-results \
-    && pkill sqlservr
+    && pkill sqlservr \
+    && sleep 10 \
+    && find /test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\/src->.-' {} +
 
 ENTRYPOINT bash
