@@ -239,7 +239,7 @@ jobs:
 
       - task: Docker@2
         inputs:
-          containerRegistry: "Azure Container Registry"
+          containerRegistry: "IkeMtz Docker Hub"
           repository: "ikemtz/nrsrx-sql"
           command: "buildAndPush"
           Dockerfile: "**/mssql-integration-tests-ci.Dockerfile"
@@ -257,6 +257,12 @@ jobs:
           testResultsFiles: "**/*.trx"
           mergeTestResults: true
           failTaskOnFailedTests: true
+
+      - task: PublishCodeCoverageResults@1
+        inputs:
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: "**/coverage.cobertura.xml"
+          failIfCoverageEmpty: true
 
   - job: redis_integration_tests
     displayName: Redis Integration Tests
@@ -295,6 +301,12 @@ jobs:
           testResultsFiles: "**/*.trx"
           mergeTestResults: true
           failTaskOnFailedTests: true
+
+      - task: PublishCodeCoverageResults@1
+        inputs:
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: "**/coverage.cobertura.xml"
+          failIfCoverageEmpty: true
 
 trigger:
   batch: true
