@@ -195,7 +195,7 @@ jobs:
           tagMessage: "nrsrx-$(build.buildNumber)"
           useLightweightTags: true
 
-  - job: mssql integration_tests
+  - job: mssql_integration_tests
     displayName: MSSQL Integration Tests
     condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
     dependsOn:
@@ -243,7 +243,7 @@ jobs:
           command: "build"
           Dockerfile: "**/mssql-integration-tests-ci.Dockerfile"
 
-  - job: redis integration_tests
+  - job: redis_integration_tests
     displayName: Redis Integration Tests
     condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
     dependsOn:
