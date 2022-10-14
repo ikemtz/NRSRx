@@ -246,10 +246,10 @@ jobs:
           tags: "latest"
 
       - task: Bash@3
-        displayName: Get Redis Integration Test Results
+        displayName: Get SQL Integration Test Results
         inputs:
           targetType: "inline"
-          script: "docker run -i --name=sql-results ikemtz/nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory)"
+          script: "docker run -i --name=sql-results ikemtz/nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory) && cd $(System.DefaultWorkingDirectory) && ls -R"
 
       - task: PublishTestResults@2
         inputs:
@@ -293,7 +293,7 @@ jobs:
         displayName: Get Redis Integration Test Results
         inputs:
           targetType: "inline"
-          script: "docker run -i --name=redis-results ikemtz/nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory)"
+          script: "docker run -i --name=redis-results ikemtz/nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory) && cd $(System.DefaultWorkingDirectory) && ls -R"
 
       - task: PublishTestResults@2
         inputs:
