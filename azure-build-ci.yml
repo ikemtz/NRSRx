@@ -240,8 +240,23 @@ jobs:
       - task: Docker@2
         inputs:
           containerRegistry: "Azure Container Registry"
+          repository: "nrsrx-sql"
           command: "build"
           Dockerfile: "**/mssql-integration-tests-ci.Dockerfile"
+          tags: "latest"
+
+      - task: Bash@3
+        displayName: Get Redis Integration Test Results
+        inputs:
+          targetType: "inline"
+          script: "docker run -i --name=sql-results nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory)"
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: "VSTest"
+          testResultsFiles: "**/*.trx"
+          mergeTestResults: true
+          failTaskOnFailedTests: true
 
   - job: redis_integration_tests
     displayName: Redis Integration Tests
@@ -263,8 +278,23 @@ jobs:
       - task: Docker@2
         inputs:
           containerRegistry: "Azure Container Registry"
+          repository: "nrsrx-redis"
           command: "build"
           Dockerfile: "**/redis-integration-tests-ci.Dockerfile"
+          tags: "latest"
+
+      - task: Bash@3
+        displayName: Get Redis Integration Test Results
+        inputs:
+          targetType: "inline"
+          script: "docker run -i --name=redis-results nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory)"
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: "VSTest"
+          testResultsFiles: "**/*.trx"
+          mergeTestResults: true
+          failTaskOnFailedTests: true
 
 trigger:
   batch: true

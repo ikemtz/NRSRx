@@ -12,6 +12,8 @@ USER root
 RUN /opt/mssql/bin/sqlservr & sleep 30 \ 
     && sqlpackage /Action:Publish /TargetServerName:localhost /TargetUser:SA /TargetPassword:$SA_PASSWORD /SourceFile:/dacpac/IkeMtz.Samples.Db.dacpac /TargetDatabaseName:SamplesDb /p:BlockOnPossibleDataLoss=false \ 
     && sleep 60 \
-    && dotnet test /odataIntegrationTests/IkeMtz.Samples.OData.Tests.dll --filter TestCategory=SqlIntegration \
-    && dotnet test /webapiIntegrationTests/IkeMtz.Samples.WebApi.Tests.dll --filter TestCategory=SqlIntegration \
+    && dotnet test /odataIntegrationTests/IkeMtz.Samples.OData.Tests.dll --filter TestCategory=SqlIntegration --logger trx --configuration Debug --collect "XPlat Code Coverage" --results-directory /test-results \
+    && dotnet test /webapiIntegrationTests/IkeMtz.Samples.WebApi.Tests.dll --filter TestCategory=SqlIntegration --logger trx --configuration Debug --collect "XPlat Code Coverage" --results-directory /test-results \
     && pkill sqlservr
+
+CMD bash
