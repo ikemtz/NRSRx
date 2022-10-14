@@ -25,8 +25,8 @@ namespace IkeMtz.NRSRx.Core.Tests
       var controller = ControllerFactory<TestController>.Create();
       var result = controller.Get(new ApiVersion(1, 5));
       Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-      var pingResult = (result as OkObjectResult).Value as PingResult;
-      Assert.AreEqual("NRSRx Test Controller", pingResult.Name);
+      var pingResult = (result as OkObjectResult)?.Value as PingResult;
+      Assert.AreEqual("NRSRx Test Controller", pingResult?.Name);
     }
 
     [TestMethod]
@@ -36,8 +36,8 @@ namespace IkeMtz.NRSRx.Core.Tests
       var controller = ControllerFactory<TestController>.Create();
       var result = controller.Get(null);
       Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-      var pingResult = (result as OkObjectResult).Value as PingResult;
-      Assert.AreEqual("NRSRx Test Controller", pingResult.Name);
+      var pingResult = (result as OkObjectResult)?.Value as PingResult;
+      Assert.AreEqual("NRSRx Test Controller", pingResult?.Name);
     }
   }
 }

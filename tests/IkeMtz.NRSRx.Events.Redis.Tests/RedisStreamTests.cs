@@ -136,7 +136,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       _ = subscriber.Init();
       _ = await subscriber.GetMessagesAsync();
       moqDatabase
-        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.Value, null, 1, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 1, false, CommandFlags.None), Times.Once);
     }
     class RedisStreamSubscriberMock : RedisStreamSubscriber<SampleMessage, CreateEvent>
     {
@@ -164,7 +164,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       moqDatabase
          .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, "Unit Test", null, null, CommandFlags.None), Times.Once);
       moqDatabase
-        .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.Value, 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Once);
     }
 
     [TestMethod]
@@ -201,7 +201,6 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
        .Verify(t => t.StreamAcknowledgeAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, "xyz", CommandFlags.None), Times.Once);
     }
 
-
     [TestMethod]
     [TestCategory("Unit")]
     public async Task ValidateMockMessageRecieved()
@@ -210,6 +209,18 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateSubscriber(new[] { message });
       var messages = await Subscriber.Object.GetMessagesAsync(1);
       Assert.AreEqual(message.Name, messages.First().Entity.Name);
+    }
+
+    [TestMethod]
+    [TestCategory("Unit")]
+    public async Task ValidateSubscriberMessageRecieved()
+    {
+      var mockConnection = new Mock<IConnectionMultiplexer>();
+      var database = new Mock<IDatabase>();
+      _ = mockConnection.Setup(t => t.GetDatabase(-1, null)).Returns(database.Object);
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(mockConnection.Object);
+      var messages = await subscriber.GetMessagesAsync(1);
+      Assert.IsFalse(messages.Any());
     }
 
     [TestMethod]

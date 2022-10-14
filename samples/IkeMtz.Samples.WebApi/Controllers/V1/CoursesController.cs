@@ -42,7 +42,7 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     public async Task<ActionResult> Post([FromBody] CourseUpsertRequest request)
     {
       var value = SimpleMapper<CourseUpsertRequest, Course>.Instance.Convert(request);
-      value.Id = request.Id; ;
+      value.Id = request.Id;
       var dbContextObject = _databaseContext.Courses.Add(value);
       _ = await _databaseContext.SaveChangesAsync()
           .ConfigureAwait(false);
