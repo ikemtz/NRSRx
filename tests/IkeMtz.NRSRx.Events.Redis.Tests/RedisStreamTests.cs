@@ -133,7 +133,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
         .Returns(Task.FromResult(Array.Empty<StreamEntry>()));
       _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Object);
-
+      _ = subscriber.Init();
       _ = await subscriber.GetMessagesAsync();
       moqDatabase
         .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.Value, null, 1, false, CommandFlags.None), Times.Once);
@@ -159,7 +159,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
         .Returns(Task.FromResult(new[] { new StreamPendingMessageInfo() }));
       _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var subscriber = new RedisStreamSubscriberMock(moqConnection.Object);
-
+      _ = subscriber.Init();
       _ = await subscriber.GetPendingMessagesAsync();
       moqDatabase
          .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, "Unit Test", null, null, CommandFlags.None), Times.Once);
