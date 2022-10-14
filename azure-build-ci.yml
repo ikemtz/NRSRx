@@ -1,248 +1,270 @@
 name: 6.0.$(DayOfYear)$(Rev:.rr)
 pool:
-  vmImage: 'windows-latest'
+  vmImage: "windows-latest"
 
 variables:
-  ALL_PROJECTS: '**/*.csproj'
-  PACKAGE_PROJECTS: 'src/**/*.csproj'
-  TEST_PROJECTS: '**/*.Tests.csproj'
-  TEMPLATE_PROJECTS: 'templates/**/*.csproj'
-  BUILDCONFIGURATION: 'Debug'
+  ALL_PROJECTS: "**/*.csproj"
+  PACKAGE_PROJECTS: "src/**/*.csproj"
+  TEST_PROJECTS: "**/*.Tests.csproj"
+  TEMPLATE_PROJECTS: "templates/**/*.csproj"
+  BUILDCONFIGURATION: "Debug"
 
 jobs:
-- job: Database
-  displayName: Database build and deploy
-  pool:
-    vmImage: 'windows-latest'
+  - job: Database
+    displayName: Database build and deploy
+    pool:
+      vmImage: "windows-latest"
 
-  steps:
-  - task: VSBuild@1
-    displayName: 'Build soultion NRSRx.DB.sln'
-    inputs:
-      solution: NRSRx.DB.sln
+    steps:
+      - task: VSBuild@1
+        displayName: "Build soultion NRSRx.DB.sln"
+        inputs:
+          solution: NRSRx.DB.sln
 
-  - task: PowerShell@2
-    displayName: 'Artifact SQL Dacpacs'
-    inputs:
-      targetType: filePath
-      filePath: 'samples/IkeMtz.Samples.Db/artifact-dacpacs.ps1'
-      arguments: '-artifactFolder $(build.artifactstagingdirectory)'
+      - task: PowerShell@2
+        displayName: "Artifact SQL Dacpacs"
+        inputs:
+          targetType: filePath
+          filePath: "samples/IkeMtz.Samples.Db/artifact-dacpacs.ps1"
+          arguments: "-artifactFolder $(build.artifactstagingdirectory)"
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: dacpac_drop'
-    inputs:
-      ArtifactName: 'dacpac_drop'
-  
-- job: APIs
-  displayName: Build and test API code
-  pool:
-    vmImage: 'windows-latest'
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: dacpac_drop"
+        inputs:
+          ArtifactName: "dacpac_drop"
 
-  steps:
-  - checkout: self
-    persistCredentials: true
-  
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk 6.0.x'
-    inputs:
-      version: 6.0.x
+  - job: APIs
+    displayName: Build and test API code
+    pool:
+      vmImage: "windows-latest"
 
-  - task: Bash@3
-    displayName: 'Setting development environment variables'
-    inputs:
-      targetType: 'inline'
-      script: 'export DOTNET_ENVIRONMENT=Development && export ASPNETCORE_ENVIRONMENT=Development'
+    steps:
+      - checkout: self
+        persistCredentials: true
 
-  - task: DotNetCoreCLI@2
-    displayName: 'dotnet restore'
-    inputs:
-      command: 'restore'
-      projects: '$(ALL_PROJECTS)'
-      feedsToUse: 'select'
-      noCache: true
-      verbosityRestore: 'Minimal'
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk 6.0.x"
+        inputs:
+          version: 6.0.x
 
-  - task: Assembly-Info-NetCore@2
-    displayName: 'Set Assembly Manifest Data'
-    inputs:  
-      InsertAttributes: true
-      VersionNumber: '$(Build.BuildNumber)'
-      FileVersionNumber: '$(Build.BuildNumber)'
-      InformationalVersion: '$(Build.BuildNumber)'
-      PackageVersion: '$(Build.BuildNumber)'
+      - task: Bash@3
+        displayName: "Setting development environment variables"
+        inputs:
+          targetType: "inline"
+          script: "export DOTNET_ENVIRONMENT=Development && export ASPNETCORE_ENVIRONMENT=Development"
 
-  - task: SonarCloudPrepare@1
-    displayName: 'Prepare analysis on SonarCloud'
-    inputs:
-      SonarCloud: 'SonarCloud IkeMtz'
-      organization: ikemtz
-      projectKey: NRSRx
-      projectName: NRSRx
-      extraProperties: |
-        # Additional properties that will be passed to the scanner,
-        # Put one key=value per line, example:
-        # sonar.cs.vstest.reportsPaths=$(Agent.WorkFolder)/_temp/*.trx
-        # sonar.branch.name=$(System.PullRequest.SourceBranch)
-        # sonar.branch.target=$(System.PullRequest.TargetBranch)
-        sonar.exclusions=templates/**
-        sonar.coverage.exclusions=templates/**
+      - task: DotNetCoreCLI@2
+        displayName: "dotnet restore"
+        inputs:
+          command: "restore"
+          projects: "$(ALL_PROJECTS)"
+          feedsToUse: "select"
+          noCache: true
+          verbosityRestore: "Minimal"
 
-  - task: DotNetCoreCLI@2
-    displayName: 'dotnet build'
-    inputs:
-      projects: '$(ALL_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --no-restore'
+      - task: Assembly-Info-NetCore@2
+        displayName: "Set Assembly Manifest Data"
+        inputs:
+          InsertAttributes: true
+          VersionNumber: "$(Build.BuildNumber)"
+          FileVersionNumber: "$(Build.BuildNumber)"
+          InformationalVersion: "$(Build.BuildNumber)"
+          PackageVersion: "$(Build.BuildNumber)"
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Tests'
-    inputs:
-      command: test
-      projects: '$(TEST_PROJECTS)'
-      arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
+      - task: SonarCloudPrepare@1
+        displayName: "Prepare analysis on SonarCloud"
+        inputs:
+          SonarCloud: "SonarCloud IkeMtz"
+          organization: ikemtz
+          projectKey: NRSRx
+          projectName: NRSRx
+          extraProperties: |
+            # Additional properties that will be passed to the scanner,
+            # Put one key=value per line, example:
+            # sonar.cs.vstest.reportsPaths=$(Agent.WorkFolder)/_temp/*.trx
+            # sonar.branch.name=$(System.PullRequest.SourceBranch)
+            # sonar.branch.target=$(System.PullRequest.TargetBranch)
+            sonar.exclusions=templates/**
+            sonar.coverage.exclusions=templates/**
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Test - Sonar'
-    inputs:
-      command: custom
-      projects: '$(TEST_PROJECTS)'
-      custom: 'test'
-      arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
+      - task: DotNetCoreCLI@2
+        displayName: "dotnet build"
+        inputs:
+          projects: "$(ALL_PROJECTS)"
+          arguments: "--configuration $(BuildConfiguration) --no-restore"
 
-  - task: SonarCloudAnalyze@1
-    displayName: 'Run Code Analysis'
+      - task: DotNetCoreCLI@2
+        displayName: "Tests"
+        inputs:
+          command: test
+          projects: "$(TEST_PROJECTS)"
+          arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
-  - task: SonarCloudPublish@1
-    displayName: 'Publish Quality Gate Result'
+      - task: DotNetCoreCLI@2
+        displayName: "Test - Sonar"
+        inputs:
+          command: custom
+          projects: "$(TEST_PROJECTS)"
+          custom: "test"
+          arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
-  - task: sonarcloud-buildbreaker@2
-    displayName: 'Break build on SonarCloud quality gate failure'
-    inputs:
-      SonarCloud: 'SonarCloud IkeMtz'
-      organization: 'ikemtz'
+      - task: SonarCloudAnalyze@1
+        displayName: "Run Code Analysis"
 
-  - task: DotNetCoreCLI@2
-    displayName: Pack Symbols
-    inputs:
-      command: 'pack'
-      packagesToPack: '$(PACKAGE_PROJECTS)'
-      configuration: 'Debug'
-      includesymbols: true
-      includesource: true
-      versioningScheme: byBuildNumber
-      buildProperties: 'version-suffix=symbols'
-      verbosityPack: 'Minimal'
+      - task: SonarCloudPublish@1
+        displayName: "Publish Quality Gate Result"
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact'
-    inputs:
-      ArtifactName: 'symbol_drop'
+      - task: sonarcloud-buildbreaker@2
+        displayName: "Break build on SonarCloud quality gate failure"
+        inputs:
+          SonarCloud: "SonarCloud IkeMtz"
+          organization: "ikemtz"
 
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'publish'
-      publishWebProjects: false
-      projects: 'samples/IkeMtz.Samples.OData/IkeMtz.Samples.OData.csproj'
-      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata --no-self-contained'
-      zipAfterPublish: false
-      modifyOutputPath: false
-      workingDirectory: 'samples/IkeMtz.Samples.OData/'
+      - task: DotNetCoreCLI@2
+        displayName: Pack Symbols
+        inputs:
+          command: "pack"
+          packagesToPack: "$(PACKAGE_PROJECTS)"
+          configuration: "Debug"
+          includesymbols: true
+          includesource: true
+          versioningScheme: byBuildNumber
+          buildProperties: "version-suffix=symbols"
+          verbosityPack: "Minimal"
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Sample OData Artifact'
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/odata'
-      ArtifactName: 'sample_odata_drop'
-      publishLocation: 'Container'
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact"
+        inputs:
+          ArtifactName: "symbol_drop"
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Sample OData Artifact'
-    inputs:
-      PathtoPublish: 'samples/IkeMtz.Samples.OData/ci.Dockerfile'
-      ArtifactName: 'sample_odata_drop'
-      publishLocation: 'Container'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: "publish"
+          publishWebProjects: false
+          projects: "samples/IkeMtz.Samples.OData/IkeMtz.Samples.OData.csproj"
+          arguments: "--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/odata --no-self-contained"
+          zipAfterPublish: false
+          modifyOutputPath: false
+          workingDirectory: "samples/IkeMtz.Samples.OData/"
 
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'publish'
-      publishWebProjects: false
-      projects: 'samples/IkeMtz.Samples.WebApi/IkeMtz.Samples.WebApi.csproj'
-      arguments: '--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi --no-self-contained'
-      zipAfterPublish: false
-      modifyOutputPath: false
-      workingDirectory: 'samples/IkeMtz.Samples.WebApi/'
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Sample OData Artifact"
+        inputs:
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)/odata"
+          ArtifactName: "sample_odata_drop"
+          publishLocation: "Container"
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Sample WebApi Artifact'
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapi'
-      ArtifactName: 'sample_webapi_drop'
-      publishLocation: 'Container'
-  
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Sample WebApi Dockerfile'
-    inputs:
-      PathtoPublish: 'samples/IkeMtz.Samples.WebApi/ci.Dockerfile'
-      ArtifactName: 'sample_webapi_drop'
-      publishLocation: 'Container'
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Sample OData Artifact"
+        inputs:
+          PathtoPublish: "samples/IkeMtz.Samples.OData/ci.Dockerfile"
+          ArtifactName: "sample_odata_drop"
+          publishLocation: "Container"
 
-  - task: GitTag@5
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    inputs:
-      workingdir: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)'
-      tagUser: 'ikemtz'
-      tagEmail: 'ikemtz@outlook.com'
-      tag: 'nrsrx-$(build.buildNumber)'
-      tagMessage: 'nrsrx-$(build.buildNumber)'
-      useLightweightTags: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: "publish"
+          publishWebProjects: false
+          projects: "samples/IkeMtz.Samples.WebApi/IkeMtz.Samples.WebApi.csproj"
+          arguments: "--runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/webapi --no-self-contained"
+          zipAfterPublish: false
+          modifyOutputPath: false
+          workingDirectory: "samples/IkeMtz.Samples.WebApi/"
 
-- job: integration_tests
-  displayName: Integration Tests
-  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
-  dependsOn:
-  - Database
-  pool:
-    vmImage: ubuntu-latest
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Sample WebApi Artifact"
+        inputs:
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)/webapi"
+          ArtifactName: "sample_webapi_drop"
+          publishLocation: "Container"
 
-  steps:
-  - checkout: self
-    persistCredentials: true
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      buildType: 'current'
-      artifactName: 'dacpac_drop'
-      targetPath: 'samples/IkeMtz.Samples.Db/bin/Debug/'
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Sample WebApi Dockerfile"
+        inputs:
+          PathtoPublish: "samples/IkeMtz.Samples.WebApi/ci.Dockerfile"
+          ArtifactName: "sample_webapi_drop"
+          publishLocation: "Container"
 
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk 6.0.x'
-    inputs:
-      version: 6.0.x
+      - task: GitTag@5
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        inputs:
+          workingdir: "$(SYSTEM.DEFAULTWORKINGDIRECTORY)"
+          tagUser: "ikemtz"
+          tagEmail: "ikemtz@outlook.com"
+          tag: "nrsrx-$(build.buildNumber)"
+          tagMessage: "nrsrx-$(build.buildNumber)"
+          useLightweightTags: true
 
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'publish'
-      publishWebProjects: false
-      projects: 'samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj'
-      arguments: '--runtime linux-x64'
-      zipAfterPublish: false
-      modifyOutputPath: false
-      workingDirectory: 'samples/IkeMtz.Samples.OData.Tests/'
+  - job: mssql integration_tests
+    displayName: MSSQL Integration Tests
+    condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+    dependsOn:
+      - Database
+    pool:
+      vmImage: ubuntu-latest
 
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'publish'
-      publishWebProjects: false
-      projects: 'samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj'
-      arguments: '--runtime linux-x64'
-      zipAfterPublish: false
-      modifyOutputPath: false
-      workingDirectory: 'samples/IkeMtz.Samples.WebApi.Tests/'
+    steps:
+      - checkout: self
+        persistCredentials: true
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: "current"
+          artifactName: "dacpac_drop"
+          targetPath: "samples/IkeMtz.Samples.Db/bin/Debug/"
 
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk 6.0.x"
+        inputs:
+          version: 6.0.x
 
-  - task: Docker@2
-    inputs:
-      containerRegistry: 'Azure Container Registry'
-      command: 'build'
-      Dockerfile: '**/integration-tests-ci.Dockerfile'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: "publish"
+          publishWebProjects: false
+          projects: "samples/IkeMtz.Samples.OData.Tests/IkeMtz.Samples.OData.Tests.csproj"
+          arguments: "--runtime linux-x64"
+          zipAfterPublish: false
+          modifyOutputPath: false
+          workingDirectory: "samples/IkeMtz.Samples.OData.Tests/"
+
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: "publish"
+          publishWebProjects: false
+          projects: "samples/IkeMtz.Samples.WebApi.Tests/IkeMtz.Samples.WebApi.Tests.csproj"
+          arguments: "--runtime linux-x64"
+          zipAfterPublish: false
+          modifyOutputPath: false
+          workingDirectory: "samples/IkeMtz.Samples.WebApi.Tests/"
+
+      - task: Docker@2
+        inputs:
+          containerRegistry: "Azure Container Registry"
+          command: "build"
+          Dockerfile: "**/mssql-integration-tests-ci.Dockerfile"
+
+  - job: redis integration_tests
+    displayName: Redis Integration Tests
+    condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+    dependsOn:
+      - Database
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+      - checkout: self
+        persistCredentials: true
+
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk 6.0.x"
+        inputs:
+          version: 6.0.x
+
+      - task: Docker@2
+        inputs:
+          containerRegistry: "Azure Container Registry"
+          command: "build"
+          Dockerfile: "**/redis-integration-tests-ci.Dockerfile"
 
 trigger:
   batch: true
