@@ -235,8 +235,8 @@ jobs:
       - task: Bash@3
         displayName: Utilize sed to fix cobertura files Integration Test Results
         inputs:
-          targetType: "inline"
-          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\\/src->.-' {} +"
+          targetType: 'inline'
+          script: 'find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i ''s->\/src->.-'' {} +'
 
       - task: PublishTestResults@2
         inputs:
@@ -280,8 +280,8 @@ jobs:
       - task: Bash@3
         displayName: Utilize sed to fix cobertura files Integration Test Results
         inputs:
-          targetType: "inline"
-          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\\/src->.-' {} +"
+          targetType: 'inline'
+          script: 'find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i ''s->\/src->.-'' {} +'
 
       - task: PublishTestResults@2
         inputs:
