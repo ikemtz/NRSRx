@@ -136,7 +136,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       _ = subscriber.Init();
       _ = await subscriber.GetMessagesAsync();
       moqDatabase
-        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.Value, null, 1, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 1, false, CommandFlags.None), Times.Once);
     }
     class RedisStreamSubscriberMock : RedisStreamSubscriber<SampleMessage, CreateEvent>
     {
@@ -164,7 +164,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       moqDatabase
          .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, "Unit Test", null, null, CommandFlags.None), Times.Once);
       moqDatabase
-        .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.Value, 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Once);
     }
 
     [TestMethod]

@@ -37,7 +37,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     public virtual void OnIAuditableCreate(IAuditable auditable)
     {
       auditable.CreatedOnUtc = auditable.CreatedOnUtc.Year != 1 ? auditable.CreatedOnUtc : DateTime.UtcNow;
-      auditable.CreatedBy = GetUserId(HttpContextAccessor); ;
+      auditable.CreatedBy = GetUserId(HttpContextAccessor);
     }
     public virtual void OnIAuditableUpdate(IAuditable auditable)
     {

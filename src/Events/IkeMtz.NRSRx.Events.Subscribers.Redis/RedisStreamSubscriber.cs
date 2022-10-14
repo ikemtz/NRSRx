@@ -55,12 +55,20 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
 
     public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetMessagesAsync(int messageCount = 1)
     {
+      if (ConsumerName == null)
+      {
+        throw new NullReferenceException($"{nameof(ConsumerName)} is null, you probably forgot to call Init().");
+      }
       var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName.Value, count: messageCount);
       return data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value)))));
     }
 
     public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int messageCount = 1, int messageRetryCount = 3)
     {
+      if (ConsumerName == null)
+      {
+        throw new NullReferenceException($"{nameof(ConsumerName)} is null, you probably forgot to call Init().");
+      }
       var pendingMessageInfo = await GetConsumersWithPendingMessagesAsync();
       var messageList = new List<(RedisValue Id, TEntity Entity)>();
       foreach (var consumer in pendingMessageInfo.Where(t => t.PendingMessageCount > 0))
