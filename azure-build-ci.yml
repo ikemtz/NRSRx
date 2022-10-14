@@ -240,8 +240,8 @@ jobs:
       - task: Docker@2
         inputs:
           containerRegistry: "Azure Container Registry"
-          repository: "nrsrx-sql"
-          command: "build"
+          repository: "ikemtz/nrsrx-sql"
+          command: "buildAndPush"
           Dockerfile: "**/mssql-integration-tests-ci.Dockerfile"
           tags: "latest"
 
@@ -249,7 +249,7 @@ jobs:
         displayName: Get Redis Integration Test Results
         inputs:
           targetType: "inline"
-          script: "docker run -i --name=sql-results nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory)"
+          script: "docker run -i --name=sql-results ikemtz/nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory)"
 
       - task: PublishTestResults@2
         inputs:
@@ -277,9 +277,9 @@ jobs:
 
       - task: Docker@2
         inputs:
-          containerRegistry: "Azure Container Registry"
-          repository: "nrsrx-redis"
-          command: "build"
+          containerRegistry: "IkeMtz Docker Hub"
+          repository: "ikemtz/nrsrx-redis"
+          command: "buildAndPush"
           Dockerfile: "**/redis-integration-tests-ci.Dockerfile"
           tags: "latest"
 
@@ -287,7 +287,7 @@ jobs:
         displayName: Get Redis Integration Test Results
         inputs:
           targetType: "inline"
-          script: "docker run -i --name=redis-results nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory)"
+          script: "docker run -i --name=redis-results ikemtz/nrsrx-redis:latest & sleep 5 && docker cp redis-results:/test-results $(System.DefaultWorkingDirectory)"
 
       - task: PublishTestResults@2
         inputs:
