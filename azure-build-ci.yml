@@ -227,7 +227,7 @@ jobs:
           script: "docker run -i --name=sql-results ikemtz/nrsrx-sql:latest & sleep 5 && docker cp sql-results:/test-results $(System.DefaultWorkingDirectory)/test-results"
 
       - task: Bash@3
-        displayName: List Redis Integration Test Results
+        displayName: List SQL Integration Test Results
         inputs:
           targetType: "inline"
           script: "cd $(System.DefaultWorkingDirectory)/test-results && ls -R"
@@ -236,7 +236,7 @@ jobs:
         displayName: Utilize sed to fix cobertura files Integration Test Results
         inputs:
           targetType: "inline"
-          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\/src->.-' {} +"
+          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\\/src->.-' {} +"
 
       - task: PublishTestResults@2
         inputs:
@@ -281,7 +281,7 @@ jobs:
         displayName: Utilize sed to fix cobertura files Integration Test Results
         inputs:
           targetType: "inline"
-          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\/src->.-' {} +"
+          script: "find $(System.DefaultWorkingDirectory)/test-results -type f -name coverage.cobertura.xml -exec sed -i 's->\\/src->.-' {} +"
 
       - task: PublishTestResults@2
         inputs:
