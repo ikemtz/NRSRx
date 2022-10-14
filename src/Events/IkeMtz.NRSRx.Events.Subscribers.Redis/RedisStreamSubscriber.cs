@@ -57,7 +57,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     {
       if (ConsumerName == null)
       {
-        throw new NullReferenceException($"{nameof(ConsumerName)} is null, you probably forgot to call Init().");
+        throw new ArgumentNullException(nameof(ConsumerName), $"You probably forgot to call Init().");
       }
       var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName.Value, count: messageCount);
       return data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value)))));
@@ -67,7 +67,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     {
       if (ConsumerName == null)
       {
-        throw new NullReferenceException($"{nameof(ConsumerName)} is null, you probably forgot to call Init().");
+        throw new ArgumentNullException(nameof(ConsumerName), $"You probably forgot to call Init().");
       }
       var pendingMessageInfo = await GetConsumersWithPendingMessagesAsync();
       var messageList = new List<(RedisValue Id, TEntity Entity)>();
