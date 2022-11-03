@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicense>https://raw.githubusercontent.com/ikemtz/NRSRx/master/LICENSE</PackageLicense>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -21,7 +20,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591;IDE0060;S4792</NoWarn>
-    <DocumentationFile>./IkeMtz.NRSRx.Logging.Splunk.xml</DocumentationFile>
+    <DocumentationFile>./IkeMtz.NRSRx.Jobs.Logging.Splunk.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
@@ -32,6 +31,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
@@ -40,5 +43,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.Jobs\IkeMtz.NRSRx.Core.Jobs.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Include="..\..\..\build\ProfilePic.jpg">
+      <Pack>True</Pack>
+      <PackagePath>
+      </PackagePath>
+    </None>
+  </ItemGroup>
 </Project>

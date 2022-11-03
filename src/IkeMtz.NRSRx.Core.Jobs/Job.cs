@@ -32,7 +32,6 @@ namespace IkeMtz.NRSRx.Core.Jobs
       _ = this.SetupHost();
       var loggerFactory = JobHost.Services.GetService<ILoggerFactory>();
       var jobLogger = loggerFactory?.CreateLogger(this.GetType());
-      //  await JobHost.RunAsync();
       var functions = JobHost.Services.GetServices<IFunction>();
       var functionCount = functions.Count();
       jobLogger?.LogInformation("Found {functionCount} executable functions", functionCount);

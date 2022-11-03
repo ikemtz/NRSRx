@@ -21,7 +21,7 @@ namespace IkeMtz.Samples.Jobs
       _ = services.AddSingleton<IFunction, CourseFunction>();
       return services;
     }
-
+    [ExcludeFromCodeCoverage]
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
       return services
