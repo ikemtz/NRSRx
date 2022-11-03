@@ -14,10 +14,10 @@
 
                 <!-- Newtonsoft.Json -->
                 <PublicKeyToken>^30ad4fe6b2a6aeed$</PublicKeyToken>
-                
+
                 <!-- Microsoft.Azure.ServiceBus -->
                 <PublicKeyToken>^7e34167dcc6d6d8c$</PublicKeyToken>
-                
+
                 <!-- Microsoft.AspNetCore.OData.Versioning.ApiExplorer -->
                 <PublicKeyToken>^adb9793829ddae60</PublicKeyToken>
                 <!-- Microsoft.CodeAnalysis.CSharp.Analyzers -->
@@ -50,7 +50,6 @@
             <AllowLowIntegrityProcesses>True</AllowLowIntegrityProcesses>
             <CollectFromChildProcesses>True</CollectFromChildProcesses>
             <CollectAspDotNet>False</CollectAspDotNet>
-
           </CodeCoverage>
         </Configuration>
       </DataCollector>

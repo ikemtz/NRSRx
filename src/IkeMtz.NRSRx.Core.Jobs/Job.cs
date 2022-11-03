@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,7 +8,6 @@ namespace IkeMtz.NRSRx.Core.Jobs
 {
   public abstract class Job : IJob
   {
-    public abstract string Name { get; }
     public IHost JobHost { get; private set; }
     public IConfiguration Configuration { get; protected set; }
     public virtual IHost SetupHost()
@@ -54,8 +54,8 @@ namespace IkeMtz.NRSRx.Core.Jobs
           }
           var endTime = DateTime.UtcNow;
           var durationInSecs = endTime.Subtract(startTime).TotalSeconds;
-          logger.LogInformation("Function {functionName} completed time: {endTime} UTC", functionName, endTime);
-          logger.LogInformation("Function {functionName} completed in {durationInSecs} secs", functionName, durationInSecs);
+          logger?.LogInformation("Function {functionName} completed time: {endTime} UTC", functionName, endTime);
+          logger?.LogInformation("Function {functionName} completed in {durationInSecs} secs", functionName, durationInSecs);
         }
       }
     }
@@ -68,9 +68,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
       {
         logger?.LogError("An error occurred in {functionName}.", functionName);
       }
-
       logger?.LogInformation("Ending {functionName} function.", functionName);
-
     }
 
     public virtual IConfiguration GetConfig()
@@ -87,8 +85,9 @@ namespace IkeMtz.NRSRx.Core.Jobs
       return config;
 
     }
+    [ExcludeFromCodeCoverage]
     public virtual IServiceCollection SetupDependencies(IServiceCollection services) { return services; }
     public virtual void SetupLogging(IServiceCollection services) { }
-    public virtual IServiceCollection SetupJobs(IServiceCollection services) { return services; }
+    public abstract IServiceCollection SetupJobs(IServiceCollection services);
   }
 }
