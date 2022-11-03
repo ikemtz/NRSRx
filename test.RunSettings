@@ -28,6 +28,12 @@
                 <PublicKeyToken>42ea0a778e13fbe2</PublicKeyToken>
               </Exclude>
             </PublicKeyTokens>
+            <ModulePaths>
+              <Exclude>
+                <ModulePath>.*HealthChecks.Redis.dll</ModulePath>
+                <!-- Add more ModulePath nodes here. -->
+              </Exclude>
+            </ModulePaths>
             <!-- Match attributes on any code element: -->
             <Attributes>
               <Exclude>

@@ -25,9 +25,10 @@
     <ProjectGuid>A965C301-F4FD-4374-B20B-D5BDF0281CBC</ProjectGuid>
     <AnalysisLevel>latest</AnalysisLevel>
     <Nullable>enable</Nullable>
+    <UserSecretsId>7e7b3422-16f2-41ae-8350-818a43e9f198</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;S2436;MSB3277</NoWarn>
+    <NoWarn>1701;1702;S2436;MSB3277;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="6.0.4" />

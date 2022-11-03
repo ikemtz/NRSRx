@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       Action<TSourceEntity, TSourceEntity>? updateLogic = null)
     where TSourceEntity : class, IIdentifiable<Guid>, new()
     {
-      SyncCollections<TSourceEntity, TSourceEntity, Guid>(auditableContext, sourceCollection, destinationCollection, updateLogic); ;
+      SyncCollections<TSourceEntity, TSourceEntity, Guid>(auditableContext, sourceCollection, destinationCollection, updateLogic);
     }
 
     public static void SyncGuidCollections<TSourceEntity, TDestinationEntity>(
@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     {
       if (sourceCollection == null)
       {
-        return;
+        sourceCollection = new List<TSourceEntity>();
       }
       else if (destinationCollection == null)
       {

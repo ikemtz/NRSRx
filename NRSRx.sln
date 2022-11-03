@@ -40,8 +40,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		guidelines.md = guidelines.md
 		integration-tests.Dockerfile = integration-tests.Dockerfile
 		LICENSE = LICENSE
+		mssql-integration-tests-ci.Dockerfile = mssql-integration-tests-ci.Dockerfile
+		mssql-integration-tests-dbg.Dockerfile = mssql-integration-tests-dbg.Dockerfile
 		README.md = README.md
 		test.RunSettings = test.RunSettings
+		redis-integration-tests-ci.Dockerfile = redis-integration-tests-ci.Dockerfile
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Core.Jwt", "src\IkeMtz.NRSRx.Core.Jwt\IkeMtz.NRSRx.Core.Jwt.csproj", "{F392FAD6-6BF7-4B69-BC10-B0A489B9E7F1}"

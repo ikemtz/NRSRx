@@ -25,7 +25,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Fakes
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
     {
-      Logs.Add((logLevel, state.ToString()));
+      Logs.Add((logLevel, state?.ToString() ?? throw new NullReferenceException("State should not be null")));
     }
   }
 }

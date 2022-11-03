@@ -110,7 +110,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       };
       var actCtx = new ActionContext(httpCtx, new RouteData(), new ActionDescriptor());
       var filterMetaData = new List<IFilterMetadata>();
-      var actionArguments = new Dictionary<string, object>();
+      var actionArguments = new Dictionary<string, object?>();
       return new ActionExecutingContext(actCtx, filterMetaData, actionArguments, null);
     }
   }

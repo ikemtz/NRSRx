@@ -18,9 +18,10 @@
 **/*.sqlproj
 **/*.DB_StaticCodeAnalysisSucceededFile
 **/*.Results.xml 
-**/TestResults/**
+TestResults/**
 
 **/obj
 **/dbo
-**/.toolstarget 
+**/.toolstarget
+**/Release
 dist

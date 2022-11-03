@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
     public static (Mock<RedisStreamSubscriber<TEntity, TEvent>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity>? collection = null)
     {
       var (Connection, database) = CreateConnection();
-      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent>>(new object[] { Connection.Object, StreamPosition.NewMessages.ToString() });
+      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent>>(new object[] { Connection.Object });
       if (collection != null)
       {
         _ = mockSubscriber

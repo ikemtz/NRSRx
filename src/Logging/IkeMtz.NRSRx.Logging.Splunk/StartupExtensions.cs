@@ -26,13 +26,26 @@ namespace IkeMtz.NRSRx.Core.Web
       var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");
       var splunkDisableSslValidation = startup.Configuration.GetValue("SPLUNK_DISABLE_SSL_VALIDATION", false);
+      var splunkUriPath = startup.Configuration.GetValue("SPLUNK_URI_PATH", "services/collector/event");
+      var splunkIndex = startup.Configuration.GetValue("SPLUNK_INDEX", "");
+      var splunkSourceType = startup.Configuration.GetValue("SPLUNK_SOURCE_TYPE", "");
+      var host = startup.Configuration.GetValue("ENVIRONMENT_NAME", "");
       return SeriLogExtensions.GetLogger(() => new LoggerConfiguration()
         .MinimumLevel.Debug()
         .Enrich.FromLogContext()
         .Enrich.WithMachineName()
         .WriteTo.Console()
-        .WriteTo.EventCollector(splunkHost, splunkToken,
-          messageHandler: splunkDisableSslValidation ? new HttpClientHandler { ServerCertificateCustomValidationCallback = (x, y, z, a) => true } : null)
+        .WriteTo.EventCollector(
+          splunkHost,
+          splunkToken,
+          uriPath: splunkUriPath,
+          index: splunkIndex,
+          sourceType: splunkSourceType,
+          host: host,
+          messageHandler: splunkDisableSslValidation ? new HttpClientHandler
+          {
+            ServerCertificateCustomValidationCallback = (reqMsg, cert, certChain, sslPolicyErr) => true
+          } : null)
         .CreateLogger());
     }
   }

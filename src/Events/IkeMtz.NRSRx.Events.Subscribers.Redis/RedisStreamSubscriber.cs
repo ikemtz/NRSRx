@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     where TEntity : IIdentifiable<Guid>
     where TEvent : EventType, new()
   {
-    public RedisStreamSubscriber(IConnectionMultiplexer connection, string streamPosition = "$") : base(connection, streamPosition)
+    public RedisStreamSubscriber(IConnectionMultiplexer connection) : base(connection)
     {
     }
   }
@@ -30,34 +30,43 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
 
     public delegate void MessageRecievedEventHandler(TEntity entity);
 
-    public Guid InstanceId { get; }
-    public RedisValue ConsumerName { get; }
-    public string ConsumerGroupName { get; }
+    public RedisValue? ConsumerName { get; set; }
+    public string ConsumerGroupName { get; set; }
     public bool Subscribed { get; private set; }
+    public bool IsInitialized { get; private set; }
     public event MessageRecievedEventHandler OnMessageReceived;
-    public RedisStreamSubscriber(IConnectionMultiplexer connection, string streamPosition = "$") : base(connection)
+    public RedisStreamSubscriber(IConnectionMultiplexer connection) : base(connection)
     {
-      InstanceId = Guid.NewGuid();
-      ConsumerName = InstanceId.ToString("N");
-      ConsumerGroupName = $"cg{StreamKey}";
+    }
+
+    public virtual bool Init(string streamPosition = "$")
+    {
+      ConsumerName ??= Guid.NewGuid().ToString("N");
+      ConsumerGroupName ??= $"cg{StreamKey}-{GetType().Assembly.GetName()}";
       try
       {
-        _ = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition);
+        var result = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition, true);
+        IsInitialized = true;
+        return result;
       }
       catch (RedisServerException x) when (x.Message.Contains("already exists"))
       {
+        IsInitialized = true;
         //We want to ignore this error
+        return false;
       }
     }
 
     public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetMessagesAsync(int messageCount = 1)
     {
-      var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName, count: messageCount);
+      ValidateInit();
+      var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), count: messageCount);
       return data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value)))));
     }
 
     public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int messageCount = 1, int messageRetryCount = 3)
     {
+      ValidateInit();
       var pendingMessageInfo = await GetConsumersWithPendingMessagesAsync();
       var messageList = new List<(RedisValue Id, TEntity Entity)>();
       foreach (var consumer in pendingMessageInfo.Where(t => t.PendingMessageCount > 0))
@@ -68,7 +77,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
           var messageIds = pendingMessages.Where(t => t.DeliveryCount <= messageRetryCount).Select(t => t.MessageId).ToArray();
           if (messageIds.Any())
           {
-            var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName, 10000, messageIds);
+            var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), 10000, messageIds);
             messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, MessageCoder.JsonDecode<TEntity>(Convert.FromBase64String(v.Value))))));
           }
         }
@@ -79,8 +88,10 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       }
       return messageList;
     }
+
     public virtual async Task<IEnumerable<(string ConsumerName, int PendingMessageCount)>> GetConsumersWithPendingMessagesAsync()
     {
+      ValidateInit();
       var result = await Database.StreamPendingAsync(StreamKey, ConsumerGroupName, CommandFlags.None);
       return result.Consumers?.Select(t => (ConsumerName: t.Name.ToString(), t.PendingMessageCount));
     }
@@ -103,6 +114,14 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
           OnMessageReceived.Invoke(entity);
         }
         await Task.Delay(pollFrequency);
+      }
+    }
+
+    private void ValidateInit()
+    {
+      if (!IsInitialized)
+      {
+        _ = Init();
       }
     }
   }
