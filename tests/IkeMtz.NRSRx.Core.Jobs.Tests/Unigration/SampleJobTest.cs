@@ -1,7 +1,8 @@
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.OData.Tests;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Jobs;
+using IkeMtz.Samples.Tests;
+using Microsoft.EntityFrameworkCore;
 
 namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
 {
@@ -12,10 +13,21 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task SampleJobTest()
     {
+      //arange
       var program = new UnigrationProgram(new Program(), TestContext);
-      program.ExecuteOnContext<DatabaseContext>(x => x.Schools.Add(Factories.SchoolFactory()));
       program.ExecuteOnContext<DatabaseContext>(x => x.Courses.Add(Factories.CourseFactory()));
+
+      //act
       await program.RunAsync();
+
+      //assert
+      program.ExecuteOnContext<DatabaseContext>(async x =>
+      {
+        var schoolCount = await x.Schools.CountAsync();
+        Assert.AreEqual(1, schoolCount);
+        var courseCount = await x.Courses.CountAsync();
+        Assert.AreEqual(1, courseCount);
+      });
     }
   }
 }

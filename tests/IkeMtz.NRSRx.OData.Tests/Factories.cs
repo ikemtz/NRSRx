@@ -2,7 +2,7 @@ using System;
 using IkeMtz.Samples.Models.V1;
 using static IkeMtz.NRSRx.Core.Unigration.TestDataFactory;
 
-namespace IkeMtz.NRSRx.OData.Tests
+namespace IkeMtz.Samples.Tests
 {
   public static partial class Factories
   {
