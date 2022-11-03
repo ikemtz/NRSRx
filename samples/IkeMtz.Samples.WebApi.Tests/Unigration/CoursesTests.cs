@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.NRSRx.OData.Tests;
+using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
-using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -41,7 +41,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task UpdateCourseTest()
     {
-      var originalCourse = Factories.CourseFactory(); 
+      var originalCourse = Factories.CourseFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationWebApiTestStartup>()
         .ConfigureTestServices(x =>
         {

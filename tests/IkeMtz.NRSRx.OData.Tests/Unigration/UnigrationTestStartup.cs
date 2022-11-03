@@ -1,6 +1,6 @@
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.Samples.Data;
 using IkeMtz.Samples.OData;
-using IkeMtz.Samples.OData.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

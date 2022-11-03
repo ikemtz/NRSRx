@@ -1,26 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Jobs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using IkeMtz.NRSRx.Core.Unigration.Logging;
 
 namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
 {
-  internal class UnigrationProgram : Program
+  internal class UnigrationProgram : CoreJobUnigrationTestProgram<Program>
   {
-    public UnigrationProgram(TestContext testContext)
+    public UnigrationProgram(Program program, TestContext testContext) : base(program, testContext)
     {
-      TestContext = testContext;
     }
 
-    public TestContext TestContext { get; }
-
-    public override void SetupLogging(IServiceCollection services)
+    public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
-      _ = services.AddLogging(x => x.AddTestContext(TestContext));
+      services.SetupTestDbContext<DatabaseContext>();
+      return services.AddSingleton(x => MockHttpContextAccessorFactory.CreateAccessor());
     }
   }
 }

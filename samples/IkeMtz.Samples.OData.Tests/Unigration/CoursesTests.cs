@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Models.V1;
-using IkeMtz.Samples.OData.Data;
+using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

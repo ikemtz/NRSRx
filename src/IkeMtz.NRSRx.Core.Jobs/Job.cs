@@ -87,6 +87,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
     }
     [ExcludeFromCodeCoverage]
     public virtual IServiceCollection SetupDependencies(IServiceCollection services) { return services; }
+    [ExcludeFromCodeCoverage]
     public virtual void SetupLogging(IServiceCollection services) { }
     public abstract IServiceCollection SetupJobs(IServiceCollection services);
   }

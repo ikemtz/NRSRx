@@ -4,9 +4,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.OData.Tests;
+using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.WebApi;
-using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

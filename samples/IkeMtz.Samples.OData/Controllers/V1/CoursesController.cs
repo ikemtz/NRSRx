@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
+using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
-using IkeMtz.Samples.OData.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
