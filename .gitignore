@@ -21,3 +21,4 @@ TestResults/
 *.pubxml
 dist
 /samples/IkeMtz.Samples.Db/IkeMtz.Samples.Db.Azure.publish.xml
+/tests/IkeMtz.NRSRx.Core.Tests/openapi-ts-generator
