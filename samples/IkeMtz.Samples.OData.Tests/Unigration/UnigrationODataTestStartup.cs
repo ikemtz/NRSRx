@@ -1,5 +1,5 @@
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.Samples.OData.Data;
+using IkeMtz.Samples.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

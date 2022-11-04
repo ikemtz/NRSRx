@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.WebApi.Tests.SampleWeb;
+using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
-using IkeMtz.Samples.WebApi.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using V1 = IkeMtz.Samples.Models.V1;
 
-namespace IkeMtz.Samples.OData.Data
+namespace IkeMtz.Samples.Data
 {
   public class DatabaseContext : DbContext
   {

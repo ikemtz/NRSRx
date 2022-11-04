@@ -82,7 +82,9 @@ namespace IkeMtz.NRSRx.OData.Tests {
         ///    &lt;/style&gt;
         ///&lt;/head&gt;
         ///&lt;body&gt;
-        ///    &lt;h1 id=&quot;odata&quot;&gt;OData Endpoint Mappings&lt;/ [rest of string was truncated]&quot;;.
+        ///    &lt;h1 id=&quot;odata&quot;&gt;OData Endpoint Mappings&lt;/h1&gt;
+        ///    &lt;p&gt;
+        ///        &lt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ODataDebugPage {
             get {

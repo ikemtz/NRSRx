@@ -8,7 +8,8 @@ using StackExchange.Redis;
 namespace IkeMtz.NRSRx.Events.Publishers.Redis
 {
   public class RedisStreamPublisher<TEntity, TEvent> :
-     RedisStreamPublisher<TEntity, TEvent, Guid>
+     RedisStreamPublisher<TEntity, TEvent, Guid>,
+      ISimplePublisher<TEntity, TEvent, RedisValue, Guid>
    where TEntity : IIdentifiable<Guid>
    where TEvent : EventType, new()
   {
