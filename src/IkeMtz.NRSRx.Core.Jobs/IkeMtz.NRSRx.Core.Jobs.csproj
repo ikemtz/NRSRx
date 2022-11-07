@@ -37,6 +37,9 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup> 
+  <ItemGroup>
+    <ProjectReference Include="..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -107,12 +107,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
       }
       if (db is AuditableDbContext)
       {
-        var dbType = db.GetType();
-        var httpContextAccessor = MockHttpContextAccessorFactory.CreateAccessor();
-        var bindingFlags = BindingFlags.NonPublic | BindingFlags.Instance;
-        dbType
-          .GetProperty("HttpContextAccessor", bindingFlags)
-          .SetValue(db, httpContextAccessor);
+        var auditableDbContext = db as AuditableDbContext;
+        auditableDbContext.CurrentUserProvider = new SystemUserProvider();
       }
       TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
       callback(db);
@@ -135,7 +131,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
           .ConfigureAppConfiguration((hostingContext, config) =>
           {
             var appAssembly = typeof(TSiteStartup).Assembly;
-            _ = config             
+            _ = config
              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
              .AddUserSecrets(appAssembly, optional: true)
              .AddEnvironmentVariables();

@@ -26,6 +26,7 @@ namespace IkeMtz.Samples.Models.V1
     public string CreatedBy { get; set; }
     [Required]
     public DateTimeOffset CreatedOnUtc { get; set; }
+    public int? UpdateCount { get; set; }
     [MaxLength(250)]
     public string? UpdatedBy { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }

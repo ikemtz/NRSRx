@@ -1,16 +1,15 @@
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.NRSRx.Core.Jobs
 {
-  public abstract class Job<TProgram> : JobBase<TProgram>, IJob
+  public abstract class MessagingJob<TProgram> : JobBase<TProgram>, IJob
     where TProgram : class, IJob
   {
     public override async Task RunFunctions(ILoggerFactory? loggerFactory)
     {
       var jobLogger = loggerFactory?.CreateLogger(GetType());
-      var functions = JobHost.Services.GetServices<IFunction>();
+      var functions = JobHost.Services.GetServices<IMessageFunction>();
       var functionCount = functions.Count();
       jobLogger?.LogInformation("Found {functionCount} executable functions", functionCount);
       foreach (var func in functions)
@@ -23,7 +22,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
           logger?.LogInformation("Function {functionName} start time: {startTime} UTC", functionName, startTime);
           try
           {
-            await RunFunctionAsync(functionName, func, logger);
+            //     await RunFunctionAsync(functionName, func, logger);
           }
           catch (Exception x)
           {
@@ -36,18 +35,5 @@ namespace IkeMtz.NRSRx.Core.Jobs
         }
       }
     }
-    public override async Task RunFunctionAsync(string functionName, IFunction x, ILogger? logger)
-    {
-      logger?.LogInformation("Starting {functionName} function.", functionName);
-      var result = await x.RunAsync();
-      if (!result)
-      {
-        logger?.LogError("An error occurred in {functionName}.", functionName);
-      }
-      logger?.LogInformation("Ending {functionName} function.", functionName);
-    }
-
-    [ExcludeFromCodeCoverage]
-    public override IServiceCollection SetupDependencies(IServiceCollection services) { return services; }
   }
 }

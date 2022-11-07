@@ -27,8 +27,9 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.AreEqual(2, await ctx.MyModel.CountAsync());
       modelA.UpdatedBy = "Not Me";
       _ = await ctx.SaveChangesAsync();
-      Assert.AreEqual("NRSRx Test User", modelA.UpdatedBy);
+      Assert.AreEqual(SystemUserProvider.SystemUserId, modelA.UpdatedBy);
       Assert.IsNull(modelB.UpdatedOnUtc);
+      Assert.IsNull(modelB.UpdateCount);
     }
 
     [TestMethod]
@@ -58,7 +59,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.AreEqual(2, await ctx.MyModel.CountAsync());
       modelA.UpdatedBy = "Not Me";
       _ = await ctx.SaveChangesAsync();
-      Assert.AreEqual("NRSRx Test User", modelA.UpdatedBy);
+      Assert.AreEqual(SystemUserProvider.SystemUserId, modelA.UpdatedBy);
       Assert.IsNull(modelB.UpdatedOnUtc);
     }
   }
@@ -74,6 +75,8 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     public IEnumerable<ICalculateable> Parents => new[] { new MyIntModel() };
 
+    public int? UpdateCount { get; set; }
+
     void ICalculateable.CalculateValues()
     {
       CalculatedValue ??= new Random().Next();
@@ -88,7 +91,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public string? UpdatedBy { get; set; }
     public DateTimeOffset CreatedOnUtc { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
-
+    public int? UpdateCount { get; set; }
     public IEnumerable<ICalculateable> Parents => new[] { new MyIntModel() };
 
     void ICalculateable.CalculateValues()
@@ -98,7 +101,8 @@ namespace IkeMtz.NRSRx.Core.Tests
   }
   public class TestAuditableContext : AuditableDbContext
   {
-    public TestAuditableContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options, httpContextAccessor)
+    public TestAuditableContext(DbContextOptions options, ICurrentUserProvider currentUserProvider)
+      : base(options, currentUserProvider)
     {
     }
     public DbSet<MyIntModel> MyModel { get; set; }

@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using IkeMtz.NRSRx.Core;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Jobs;
 using IkeMtz.Samples.Data;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.Samples.Jobs
 {
-  public class Program : Job
+  public class Program : Job<Program>
   {
     public static async Task Main()
     {
@@ -15,7 +17,7 @@ namespace IkeMtz.Samples.Jobs
       await prog.RunAsync();
     }
 
-    public override IServiceCollection SetupJobs(IServiceCollection services)
+    public override IServiceCollection SetupFunctions(IServiceCollection services)
     {
       _ = services.AddSingleton<IFunction, SchoolFunction>();
       _ = services.AddSingleton<IFunction, CourseFunction>();
@@ -25,7 +27,8 @@ namespace IkeMtz.Samples.Jobs
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
       return services
-       .AddDbContextPool<DatabaseContext>(x => x.UseSqlServer(Configuration.GetValue<string>("DbConnectionString")));
+       .AddSingleton<ICurrentUserProvider, SystemUserProvider>()
+       .AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetValue<string>("DbConnectionString")));
     }
 
     [ExcludeFromCodeCoverage()]

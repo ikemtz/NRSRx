@@ -6,9 +6,9 @@ namespace IkeMtz.NRSRx.Core.Jobs
 {
   public interface IJob
   {
-    IConfiguration Configuration { get; }
-    IHost JobHost { get; }
+    IConfiguration Configuration { get; set; }
+    IHost JobHost { get; set; }
     IServiceCollection SetupDependencies(IServiceCollection services);
-    IServiceCollection SetupJobs(IServiceCollection services);
+    IServiceCollection SetupFunctions(IServiceCollection services);
   }
 }

@@ -6,7 +6,7 @@ namespace IkeMtz.NRSRx.Core.Tests
 {
   public class TestAuditableDbContext : AuditableDbContext
   {
-    public TestAuditableDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options, httpContextAccessor)
+    public TestAuditableDbContext(DbContextOptions options, ICurrentUserProvider currentUserProvider) : base(options, currentUserProvider)
     {
     }
     public DbSet<MyIntModel> MyModel { get; set; }

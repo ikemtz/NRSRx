@@ -25,6 +25,7 @@ namespace IkeMtz.Samples.Models.V1
     [MaxLength(250)]
     public string? UpdatedBy { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
+    public int? UpdateCount { get; set; }
     public virtual ICollection<SchoolCourse> SchoolCourses { get; }
     public virtual ICollection<StudentSchool> StudentSchools { get; }
   }

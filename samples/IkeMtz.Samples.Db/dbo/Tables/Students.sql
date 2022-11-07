@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[Students] (
     [CreatedBy]    VARCHAR (250)      NOT NULL,
     [CourseCount]  INT                NOT NULL DEFAULT 0,
     [CreatedOnUtc] DATETIMEOFFSET (7) CONSTRAINT [DF_Students_CreatedOnUtc] DEFAULT (getutcdate()) NOT NULL,
+    [UpdateCount]  INT NULL,
     [UpdatedBy]    VARCHAR (250)      NULL,
     [UpdatedOnUtc] DATETIMEOFFSET (7) NULL,
     CONSTRAINT [PK_Students] PRIMARY KEY CLUSTERED ([Id] ASC)

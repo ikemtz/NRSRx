@@ -1,10 +1,8 @@
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Data
@@ -14,11 +12,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
     public static TAuditableDbContext CreateInMemoryAuditableDbContext<TAuditableDbContext>(TestContext testContext)
         where TAuditableDbContext : AuditableDbContext
     {
-      var accessor = MockHttpContextAccessorFactory.CreateAccessor();
       var options = CreateDbContextOptions<TAuditableDbContext>(testContext);
       var constructor = typeof(TAuditableDbContext)
-          .GetConstructor(new[] { options.GetType(), accessor.GetType() });
-      return (TAuditableDbContext)constructor.Invoke(new object[] { options, accessor });
+          .GetConstructor(new[] { options.GetType(), typeof(SystemUserProvider) });
+      return (TAuditableDbContext)constructor.Invoke(new object[] { options, new SystemUserProvider() });
     }
 
     public static TDbContext CreateInMemoryDbContext<TDbContext>(TestContext testContext)
@@ -36,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
       var builder = new DbContextOptionsBuilder<TDbContext>();
       _ = builder.ConfigureTestDbContextOptions(testContext)
         .AddInterceptors(new CalculatableTestInterceptor(),
-          new AuditableTestInterceptor(MockHttpContextAccessorFactory.CreateAccessor()));
+          new AuditableTestInterceptor(new SystemUserProvider()));
       return builder.Options;
     }
 

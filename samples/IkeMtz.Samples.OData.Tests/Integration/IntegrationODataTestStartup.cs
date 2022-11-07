@@ -1,3 +1,4 @@
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Data;
 using IkeMtz.Samples.Data;
@@ -28,7 +29,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
           .UseSqlServer(dbConnectionString)
           .AddInterceptors(
             new CalculatableTestInterceptor(),
-            new AuditableTestInterceptor(MockHttpContextAccessorFactory.CreateAccessor()));
+            new AuditableTestInterceptor(new SystemUserProvider()));
        });
     }
   }
