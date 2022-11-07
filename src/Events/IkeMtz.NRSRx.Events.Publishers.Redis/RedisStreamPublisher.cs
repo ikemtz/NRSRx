@@ -9,7 +9,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
 {
   public class RedisStreamPublisher<TEntity, TEvent> :
      RedisStreamPublisher<TEntity, TEvent, Guid>,
-      ISimplePublisher<TEntity, TEvent, RedisValue, Guid>
+      IPublisher<TEntity, TEvent, Guid>
    where TEntity : IIdentifiable<Guid>
    where TEvent : EventType, new()
   {
@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
 
   public class RedisStreamPublisher<TEntity, TEvent, TIdentityType> :
       RedisStreamCore<TEntity, TEvent, TIdentityType>,
-      ISimplePublisher<TEntity, TEvent, RedisValue, TIdentityType>
+      IPublisher<TEntity, TEvent, TIdentityType>
     where TIdentityType : IComparable
     where TEntity : IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
@@ -29,10 +29,10 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
     public RedisStreamPublisher(IConnectionMultiplexer connection) : base(connection)
     {
     }
-    public virtual async Task<RedisValue> PublishAsync(TEntity payload)
+    public virtual Task PublishAsync(TEntity payload)
     {
       var base64 = Convert.ToBase64String(MessageCoder.JsonEncode(payload));
-      return await Database.StreamAddAsync(StreamKey,
+      return Database.StreamAddAsync(StreamKey,
            new RedisValue(payload.Id.ToString()), new RedisValue(base64));
     }
   }

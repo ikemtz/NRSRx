@@ -25,9 +25,9 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     {
       var value = SimpleMapper<SchoolUpsertRequest, School>.Instance.Convert(request);
       value.Id = request.Id;
-      var result = await publisher.PublishAsync(value)
+      await publisher.PublishAsync(value)
         .ConfigureAwait(false);
-      return Ok(result);
+      return Ok();
     }
 
     // Put api/Schools
@@ -39,9 +39,9 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     {
       var value = SimpleMapper<SchoolUpsertRequest, School>.Instance.Convert(request);
       value.Id = id;
-      var result = await publisher.PublishAsync(value)
-        .ConfigureAwait(false);
-      return Ok(result);
+      await publisher.PublishAsync(value)
+         .ConfigureAwait(false);
+      return Ok();
     }
 
     // Delete api/Schools
@@ -51,9 +51,9 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     public async Task<ActionResult> Delete([FromQuery] Guid id, [FromServices] RedisStreamPublisher<School, DeletedEvent> publisher)
     {
       var value = new School { Id = id };
-      var result = await publisher.PublishAsync(value)
-        .ConfigureAwait(false);
-      return Ok(result);
+      await publisher.PublishAsync(value)
+         .ConfigureAwait(false);
+      return Ok();
     }
   }
 }

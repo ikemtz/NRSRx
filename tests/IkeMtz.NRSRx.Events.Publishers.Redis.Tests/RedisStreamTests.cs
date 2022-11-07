@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
       var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent, Guid>(connectionMultiplexer);
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
-      _ = await publisher.PublishAsync(new SampleMessage());
+      await publisher.PublishAsync(new SampleMessage());
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       Assert.AreEqual(original.Length + 1, result.Length);
     }
@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent, Guid>(moqConnection.Object);
       var msg = new SampleMessage();
-      _ = await publisher.PublishAsync(msg);
+      await publisher.PublishAsync(msg);
       moqDatabase
         .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.StartsWith(msg.Id.ToString())), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
     }

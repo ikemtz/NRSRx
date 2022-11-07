@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       _ = subscriber.Init(StreamPosition.NewMessages);
       var sampleMessage = new SampleMessage();
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
-      _ = await publisher.PublishAsync(sampleMessage);
+      await publisher.PublishAsync(sampleMessage);
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       Assert.AreEqual(original.Length + 1, result.Length);
       var subscribedMessages = await subscriber.GetMessagesAsync();
@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       Assert.IsFalse(subscriberB.Init(StreamPosition.NewMessages));
       var sampleMessage = new SampleMessage();
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
-      _ = await publisher.PublishAsync(sampleMessage);
+      await publisher.PublishAsync(sampleMessage);
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       Assert.AreEqual(original.Length + 1, result.Length);
       var subscribedMessages = await subscriberA.GetMessagesAsync();
@@ -94,7 +94,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       Assert.IsTrue(subscriberB.Init(StreamPosition.NewMessages));
       var sampleMessage = new SampleMessage();
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
-      _ = await publisher.PublishAsync(sampleMessage);
+      await publisher.PublishAsync(sampleMessage);
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       Assert.AreEqual(original.Length + 1, result.Length);
       var subscribedMessages = await subscriberA.GetMessagesAsync();
@@ -117,7 +117,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
       var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(moqConnection.Object);
       var msg = new SampleMessage();
-      _ = await publisher.PublishAsync(msg);
+      await publisher.PublishAsync(msg);
       moqDatabase
         .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.StartsWith(msg.Id.ToString())), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
     }

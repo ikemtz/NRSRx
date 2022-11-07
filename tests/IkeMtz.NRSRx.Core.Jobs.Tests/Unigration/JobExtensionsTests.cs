@@ -8,6 +8,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
   public class JobExtensionsTests
   {
     [TestMethod]
+    [TestCategory("Unigration")]
     public void SetupSplunkTest()
     {
       var job = new Program();

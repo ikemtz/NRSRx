@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 {
   public class ServiceBusQueuePublisher<TEntity, TEvent> :
       ServiceBusQueuePublisher<TEntity, TEvent, Guid>,
-      IPublisher<TEntity, TEvent, ServiceBusMessage>
+      IPublisher<TEntity, TEvent>
    where TEntity : IIdentifiable<Guid>
    where TEvent : EventType, new()
   {
@@ -25,7 +25,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
 
   [ExcludeFromCodeCoverage]
   public class ServiceBusQueuePublisher<TEntity, TEvent, TIdentityType> :
-      IPublisher<TEntity, TEvent, ServiceBusMessage, TIdentityType>
+      IPublisher<TEntity, TEvent, TIdentityType>
     where TIdentityType : IComparable
     where TEntity : IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
@@ -49,10 +49,9 @@ namespace IkeMtz.NRSRx.Events.Publishers.ServiceBus
       queueClient = busClient.CreateSender(GetQueueName());
     }
 
-    public Task PublishAsync(TEntity payload, Action<ServiceBusMessage>? messageCustomizationLogic = null)
+    public Task PublishAsync(TEntity payload)
     {
       var msg = new ServiceBusMessage(MessageCoder.JsonEncode(payload));
-      messageCustomizationLogic?.Invoke(msg);
       return queueClient.SendMessageAsync(msg);
     }
 
