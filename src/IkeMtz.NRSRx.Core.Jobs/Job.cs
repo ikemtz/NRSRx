@@ -36,16 +36,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         }
       }
     }
-    public override async Task RunFunctionAsync(string functionName, IFunction x, ILogger? logger)
-    {
-      logger?.LogInformation("Starting {functionName} function.", functionName);
-      var result = await x.RunAsync();
-      if (!result)
-      {
-        logger?.LogError("An error occurred in {functionName}.", functionName);
-      }
-      logger?.LogInformation("Ending {functionName} function.", functionName);
-    }
+
 
     [ExcludeFromCodeCoverage]
     public override IServiceCollection SetupDependencies(IServiceCollection services) { return services; }

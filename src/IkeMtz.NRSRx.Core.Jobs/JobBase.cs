@@ -33,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
       var loggerFactory = JobHost.Services.GetService<ILoggerFactory>();
       await RunFunctions(loggerFactory);
     }
-    public abstract Task RunFunctionAsync(string functionName, IFunction x, ILogger? logger);
+
     public abstract Task RunFunctions(ILoggerFactory? loggerFactory);
 
     public virtual IHost SetupHost()
@@ -62,6 +62,16 @@ namespace IkeMtz.NRSRx.Core.Jobs
     public virtual IServiceCollection SetupUserProvider(IServiceCollection services)
     {
       return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
+    }
+    public virtual async Task RunFunctionAsync(string functionName, IFunction x, ILogger? logger)
+    {
+      logger?.LogInformation("Starting {functionName} function.", functionName);
+      var result = await x.RunAsync();
+      if (!result)
+      {
+        logger?.LogError("An error occurred in {functionName}.", functionName);
+      }
+      logger?.LogInformation("Ending {functionName} function.", functionName);
     }
   }
 }
