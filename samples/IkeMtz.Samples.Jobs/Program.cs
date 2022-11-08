@@ -1,6 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using IkeMtz.NRSRx.Core;
-using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Jobs;
 using IkeMtz.Samples.Data;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +25,6 @@ namespace IkeMtz.Samples.Jobs
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
       return services
-       .AddSingleton<ICurrentUserProvider, SystemUserProvider>()
        .AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetValue<string>("DbConnectionString")));
     }
 

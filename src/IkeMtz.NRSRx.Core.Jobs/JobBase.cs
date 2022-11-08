@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -44,6 +45,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
            .ConfigureServices((services) =>
            {
              SetupLogging(services);
+             _ = SetupUserProvider(services);
              _ = SetupDependencies(services);
              _ = SetupFunctions(services);
            })
@@ -56,5 +58,10 @@ namespace IkeMtz.NRSRx.Core.Jobs
     [ExcludeFromCodeCoverage]
     public virtual IServiceCollection SetupDependencies(IServiceCollection services) { return services; }
     public abstract IServiceCollection SetupFunctions(IServiceCollection services);
+
+    public virtual IServiceCollection SetupUserProvider(IServiceCollection services)
+    {
+      return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
+    }
   }
 }

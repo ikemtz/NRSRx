@@ -23,7 +23,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
-      _ = services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
       return Program.SetupDependencies(services);
     }
 

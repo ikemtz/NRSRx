@@ -47,10 +47,16 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupAppSettings(IServiceCollection services)
     {
-      services
-        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+      SetupCurrentUserProvider(services)
         .Configure<AppSettings>(Configuration)
         .AddScoped(sp => sp.GetRequiredService<IOptionsSnapshot<AppSettings>>().Value);
+    }
+
+    public virtual IServiceCollection SetupCurrentUserProvider(IServiceCollection services)
+    {
+      return services
+        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+        .AddSingleton<ICurrentUserProvider, HttpUserProvider>();
     }
 
     public virtual AuthenticationBuilder SetupJwtAuthSchema(IServiceCollection services)
