@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration.Data;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
+using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -74,9 +75,10 @@ namespace IkeMtz.NRSRx.Core.Unigration
           .AddEntityFrameworkInMemoryDatabase()
           .AddScoped<ILoggerFactory>(provider => new LoggerFactory(new[] {
             new TestContextLoggerProvider(provider.GetService<TestContext>()) }))
-          .AddSingleton<ICurrentUserProvider>(new SystemUserProvider())
+          .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+          .AddSingleton<ICurrentUserProvider, HttpUserProvider>()
           .BuildServiceProvider();
-      var testContext = serviceProvider.GetService<TestContext>(); 
+      var testContext = serviceProvider.GetService<TestContext>();
       _ = services.AddDbContext<TDbContext>(options =>
       {
         _ = options

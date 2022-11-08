@@ -57,7 +57,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       _ = resp.EnsureSuccessStatusCode();
       var httpStudent = await DeserializeResponseAsync<Student>(resp);
       Assert.IsNotNull(httpStudent);
-      Assert.AreEqual(SystemUserProvider.SystemUserId, httpStudent.CreatedBy);
+      Assert.AreEqual("IntegrationTester@email.com", httpStudent.CreatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();
       var dbStudents = await dbContext.Students.ToListAsync();
@@ -106,7 +106,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedStudent = await DeserializeResponseAsync<Student>(resp);
       Assert.IsNotNull(httpUpdatedStudent);
-      Assert.AreEqual(SystemUserProvider.SystemUserId, httpUpdatedStudent.UpdatedBy);
+      Assert.AreEqual("IntegrationTester@email.com", httpUpdatedStudent.UpdatedBy);
       Assert.AreEqual(updatedStudent.Title, httpUpdatedStudent.Title);
       Assert.IsNull(updatedStudent.UpdatedOnUtc);
       Assert.IsNotNull(httpUpdatedStudent.UpdatedOnUtc);

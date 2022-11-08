@@ -11,7 +11,7 @@ namespace IkeMtz.NRSRx.Core.Web
       HttpContextAccessor = httpContextAccessor;
     }
 
-    public string? GetCurrentUserId(string? anonymousValue = null)
+    public string? GetCurrentUserId(string? anonymousValue = null) //NOSONAR
     {
       return HttpContextAccessor.HttpContext?.User?.Identity?.Name ?? anonymousValue;
     }

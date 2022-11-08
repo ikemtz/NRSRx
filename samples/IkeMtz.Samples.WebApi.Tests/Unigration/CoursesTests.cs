@@ -28,7 +28,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       _ = resp.EnsureSuccessStatusCode();
       var httpCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpCourse);
-      Assert.AreEqual(SystemUserProvider.SystemUserId, httpCourse.CreatedBy);
+      Assert.AreEqual("IntegrationTester@email.com", httpCourse.CreatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();
       var dbCourse = await dbContext.Courses.FirstOrDefaultAsync(t => t.Id == item.Id);
@@ -36,7 +36,6 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       Assert.IsNotNull(dbCourse);
       Assert.AreEqual(httpCourse.CreatedOnUtc, dbCourse.CreatedOnUtc);
     }
-
 
     [TestMethod]
     [TestCategory("Unigration")]
@@ -61,7 +60,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpUpdatedCourse);
-      Assert.AreEqual(SystemUserProvider.SystemUserId, httpUpdatedCourse.UpdatedBy);
+      Assert.AreEqual("IntegrationTester@email.com", httpUpdatedCourse.UpdatedBy);
       Assert.AreEqual(updatedCourse.Num, httpUpdatedCourse.Num);
       Assert.IsNull(updatedCourse.UpdatedOnUtc);
       Assert.IsNotNull(httpUpdatedCourse.UpdatedOnUtc);
@@ -70,7 +69,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var updatedDbCourse = await dbContext.Courses.FirstOrDefaultAsync(t => t.Id == originalCourse.Id);
 
       Assert.IsNotNull(updatedDbCourse);
-      Assert.AreEqual(SystemUserProvider.SystemUserId, updatedDbCourse.UpdatedBy);
+      Assert.AreEqual("IntegrationTester@email.com", updatedDbCourse.UpdatedBy);
       Assert.IsNotNull(updatedDbCourse.UpdatedOnUtc);
       Assert.AreEqual(httpUpdatedCourse.UpdatedOnUtc, updatedDbCourse.UpdatedOnUtc);
     }

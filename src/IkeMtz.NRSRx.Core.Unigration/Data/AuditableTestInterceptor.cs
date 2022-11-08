@@ -61,7 +61,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.CreatedOnUtc = x.CreatedOnUtc != DateTime.MinValue ? x.CreatedOnUtc : DateTime.UtcNow;
-          x.CreatedBy = CurrentUserProvider?.GetCurrentUserId();
+          x.CreatedBy = CurrentUserProvider?.GetCurrentUserId() ?? new SystemUserProvider().GetCurrentUserId();
         });
       entries
         .Where(x => x.State == EntityState.Modified)

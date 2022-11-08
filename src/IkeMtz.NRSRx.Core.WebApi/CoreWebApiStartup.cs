@@ -57,7 +57,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseRouting()
        .UseAuthentication()
        .UseAuthorization();
-      if (!DisableSwagger && Configuration?.GetValue<bool>("DisableSwagger", false) != true)
+      if (!DisableSwagger && Configuration?.GetValue("DisableSwagger", false) != true)
       {
         _ = app
         .UseSwagger()
