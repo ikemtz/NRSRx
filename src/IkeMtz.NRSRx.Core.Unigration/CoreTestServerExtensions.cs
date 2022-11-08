@@ -74,9 +74,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
           .AddEntityFrameworkInMemoryDatabase()
           .AddScoped<ILoggerFactory>(provider => new LoggerFactory(new[] {
             new TestContextLoggerProvider(provider.GetService<TestContext>()) }))
+          .AddSingleton<ICurrentUserProvider>(new SystemUserProvider())
           .BuildServiceProvider();
-      var testContext = serviceProvider.GetService<TestContext>();
-
+      var testContext = serviceProvider.GetService<TestContext>(); 
       _ = services.AddDbContext<TDbContext>(options =>
       {
         _ = options

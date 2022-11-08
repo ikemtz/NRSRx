@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 
       var result = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
-      Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+      Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
     }
 
     [TestMethod]
@@ -40,8 +40,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task UpdateCourseCausesAuditInvalidUserExTest()
     {
       var originalCourse = Factories.CourseFactory();
-      originalCourse.CreatedBy = SystemUserProvider.SystemUserId;
-      originalCourse.CreatedOnUtc = DateTime.UtcNow;
+      originalCourse.CreatedBy = "xyz";
+      originalCourse.CreatedOnUtc = DateTime.UtcNow.AddMonths(-500);
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
@@ -58,8 +58,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       updatedCourse.Num = Guid.NewGuid().ToString()[..6];
 
       var result = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
-      Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+      Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
     }
-
   }
 }

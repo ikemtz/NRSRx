@@ -72,7 +72,6 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         {
           x.UpdatedOnUtc = x.UpdatedOnUtc != DateTime.MinValue ? x.UpdatedOnUtc : DateTime.UtcNow;
           x.UpdatedBy = CurrentUserProvider?.GetCurrentUserId();
-          x.UpdateCount = (x.UpdateCount ?? 0) + 1;
         });
     }
   }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
@@ -55,7 +56,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       _ = resp.EnsureSuccessStatusCode();
       var httpCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpCourse);
-      Assert.AreEqual("IntegrationTester@email.com", httpCourse.CreatedBy);
+      Assert.AreEqual(SystemUserProvider.SystemUserId, httpCourse.CreatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();
       var dbCourses = await dbContext.Courses.ToListAsync();
@@ -104,7 +105,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpUpdatedCourse);
-      Assert.AreEqual("IntegrationTester@email.com", httpUpdatedCourse.UpdatedBy);
+      Assert.AreEqual(SystemUserProvider.SystemUserId, httpUpdatedCourse.UpdatedBy);
+      Assert.AreEqual(1, httpUpdatedCourse.UpdateCount);
       Assert.AreEqual(updatedCourse.Title, httpUpdatedCourse.Title);
       Assert.IsNull(updatedCourse.UpdatedOnUtc);
       Assert.IsNotNull(httpUpdatedCourse.UpdatedOnUtc);

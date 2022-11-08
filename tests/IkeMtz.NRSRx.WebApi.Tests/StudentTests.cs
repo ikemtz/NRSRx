@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
@@ -56,7 +57,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       _ = resp.EnsureSuccessStatusCode();
       var httpStudent = await DeserializeResponseAsync<Student>(resp);
       Assert.IsNotNull(httpStudent);
-      Assert.AreEqual("IntegrationTester@email.com", httpStudent.CreatedBy);
+      Assert.AreEqual(SystemUserProvider.SystemUserId, httpStudent.CreatedBy);
 
       var dbContext = srv.GetDbContext<DatabaseContext>();
       var dbStudents = await dbContext.Students.ToListAsync();
@@ -105,7 +106,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedStudent = await DeserializeResponseAsync<Student>(resp);
       Assert.IsNotNull(httpUpdatedStudent);
-      Assert.AreEqual("IntegrationTester@email.com", httpUpdatedStudent.UpdatedBy);
+      Assert.AreEqual(SystemUserProvider.SystemUserId, httpUpdatedStudent.UpdatedBy);
       Assert.AreEqual(updatedStudent.Title, httpUpdatedStudent.Title);
       Assert.IsNull(updatedStudent.UpdatedOnUtc);
       Assert.IsNotNull(httpUpdatedStudent.UpdatedOnUtc);
