@@ -43,8 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		mssql-integration-tests-ci.Dockerfile = mssql-integration-tests-ci.Dockerfile
 		mssql-integration-tests-dbg.Dockerfile = mssql-integration-tests-dbg.Dockerfile
 		README.md = README.md
-		test.RunSettings = test.RunSettings
 		redis-integration-tests-ci.Dockerfile = redis-integration-tests-ci.Dockerfile
+		test.RunSettings = test.RunSettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Core.Jwt", "src\IkeMtz.NRSRx.Core.Jwt\IkeMtz.NRSRx.Core.Jwt.csproj", "{F392FAD6-6BF7-4B69-BC10-B0A489B9E7F1}"
@@ -100,7 +100,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Splunk
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.Elasticsearch.Tests", "tests\IkeMtz.NRSRx.Logging.Elasticsearch.Tests\IkeMtz.NRSRx.Logging.Elasticsearch.Tests.csproj", "{78936EB0-9269-4FD2-B85F-3A9E5DA292F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Events.Publishers.Redis.Tests", "tests\IkeMtz.NRSRx.Events.Publishers.Redis.Tests\IkeMtz.NRSRx.Events.Publishers.Redis.Tests.csproj", "{9E02B609-5409-417C-8516-CF67080AAC38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Events.Publishers.Redis.Tests", "tests\IkeMtz.NRSRx.Events.Publishers.Redis.Tests\IkeMtz.NRSRx.Events.Publishers.Redis.Tests.csproj", "{C20E3326-D799-4D18-B91B-04190A00DF96}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Logging.ApplicationInsights.Tests", "tests\IkeMtz.NRSRx.Logging.ApplicationInsights.Tests\IkeMtz.NRSRx.Logging.ApplicationInsights.Tests.csproj", "{A699C68A-B04F-4049-9143-98001BD27143}"
 EndProject
@@ -112,7 +112,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.Samples.Jobs", "samp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Jobs.Logging.Splunk", "src\Logging\IkeMtz.NRSRx.Jobs.Logging.Splunk\IkeMtz.NRSRx.Jobs.Logging.Splunk.csproj", "{7256C305-4FE0-4098-8D8C-8A45B64FD117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Core.Jobs.Tests", "tests\IkeMtz.NRSRx.Core.Jobs.Tests\IkeMtz.NRSRx.Core.Jobs.Tests.csproj", "{A023D233-3F1C-4ED8-9580-39F789B2A7EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Core.Jobs.Tests", "tests\IkeMtz.NRSRx.Core.Jobs.Tests\IkeMtz.NRSRx.Core.Jobs.Tests.csproj", "{1CD67A71-F1A2-4481-87C6-C8C52C6CBC2C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkeMtz.NRSRx.Jobs.Redis", "src\Events\IkeMtz.NRSRx.Jobs.Redis\IkeMtz.NRSRx.Jobs.Redis.csproj", "{7C2EFF12-4DD1-454C-88B8-F6647F27C6B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.Samples.Redis.Jobs", "samples\IkeMtz.Samples.Redis.Jobs\IkeMtz.Samples.Redis.Jobs.csproj", "{BCD9CEF9-F486-4E1B-B3FB-94FF79C47BF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -246,10 +250,10 @@ Global
 		{78936EB0-9269-4FD2-B85F-3A9E5DA292F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78936EB0-9269-4FD2-B85F-3A9E5DA292F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78936EB0-9269-4FD2-B85F-3A9E5DA292F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E02B609-5409-417C-8516-CF67080AAC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E02B609-5409-417C-8516-CF67080AAC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E02B609-5409-417C-8516-CF67080AAC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E02B609-5409-417C-8516-CF67080AAC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20E3326-D799-4D18-B91B-04190A00DF96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20E3326-D799-4D18-B91B-04190A00DF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20E3326-D799-4D18-B91B-04190A00DF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20E3326-D799-4D18-B91B-04190A00DF96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A699C68A-B04F-4049-9143-98001BD27143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A699C68A-B04F-4049-9143-98001BD27143}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A699C68A-B04F-4049-9143-98001BD27143}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -270,10 +274,18 @@ Global
 		{7256C305-4FE0-4098-8D8C-8A45B64FD117}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7256C305-4FE0-4098-8D8C-8A45B64FD117}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7256C305-4FE0-4098-8D8C-8A45B64FD117}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A023D233-3F1C-4ED8-9580-39F789B2A7EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A023D233-3F1C-4ED8-9580-39F789B2A7EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A023D233-3F1C-4ED8-9580-39F789B2A7EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A023D233-3F1C-4ED8-9580-39F789B2A7EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD67A71-F1A2-4481-87C6-C8C52C6CBC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD67A71-F1A2-4481-87C6-C8C52C6CBC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD67A71-F1A2-4481-87C6-C8C52C6CBC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD67A71-F1A2-4481-87C6-C8C52C6CBC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2EFF12-4DD1-454C-88B8-F6647F27C6B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2EFF12-4DD1-454C-88B8-F6647F27C6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2EFF12-4DD1-454C-88B8-F6647F27C6B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2EFF12-4DD1-454C-88B8-F6647F27C6B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCD9CEF9-F486-4E1B-B3FB-94FF79C47BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCD9CEF9-F486-4E1B-B3FB-94FF79C47BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCD9CEF9-F486-4E1B-B3FB-94FF79C47BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCD9CEF9-F486-4E1B-B3FB-94FF79C47BF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -313,13 +325,15 @@ Global
 		{054028DB-8244-454C-B16B-8DCC0B14CCB5} = {E6526202-4C03-4B5D-A382-25EF86AC1A55}
 		{F8B6A8C9-5299-45AC-94B0-31E8A498C743} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
 		{78936EB0-9269-4FD2-B85F-3A9E5DA292F3} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
-		{9E02B609-5409-417C-8516-CF67080AAC38} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
+		{C20E3326-D799-4D18-B91B-04190A00DF96} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
 		{A699C68A-B04F-4049-9143-98001BD27143} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
 		{86BB7332-99F6-4532-8E79-BDD08723BF30} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
 		{D8F09C9B-75C5-499E-9E54-341A9B6DF626} = {9927A0A8-CB30-482A-B095-4DC6CF397390}
 		{0FE3E972-2870-4AD9-B830-D85C2BD126B9} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
 		{7256C305-4FE0-4098-8D8C-8A45B64FD117} = {E6526202-4C03-4B5D-A382-25EF86AC1A55}
-		{A023D233-3F1C-4ED8-9580-39F789B2A7EA} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
+		{1CD67A71-F1A2-4481-87C6-C8C52C6CBC2C} = {C4A0E3F1-25F7-4D23-A679-45D9E7E1FA1F}
+		{7C2EFF12-4DD1-454C-88B8-F6647F27C6B5} = {348B7937-9B3C-4BE3-93BD-623578B4486A}
+		{BCD9CEF9-F486-4E1B-B3FB-94FF79C47BF3} = {9E58C61E-06C8-4E3E-AC67-E8583CAD82A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4012E7B1-E9FD-4821-A144-B1E5362D9EA7}

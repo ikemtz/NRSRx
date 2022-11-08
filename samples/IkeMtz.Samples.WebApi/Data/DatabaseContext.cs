@@ -1,5 +1,5 @@
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.EntityFramework;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using V1 = IkeMtz.Samples.Models.V1;
 
@@ -7,8 +7,8 @@ namespace IkeMtz.Samples.Data
 {
   public class DatabaseContext : AuditableDbContext
   {
-    public DatabaseContext(DbContextOptions<DatabaseContext> options, IHttpContextAccessor httpContextAccessor)
-        : base(options, httpContextAccessor)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options, ICurrentUserProvider currentUserProvider)
+        : base(options, currentUserProvider)
     {
     }
 

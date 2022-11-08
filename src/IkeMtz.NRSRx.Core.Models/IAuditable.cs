@@ -10,6 +10,7 @@ namespace IkeMtz.NRSRx.Core.Models
     string CreatedBy { get; set; }
     [MaxLength(250)]
     string? UpdatedBy { get; set; }
+    int? UpdateCount { get; set; }
     TDATETIME CreatedOnUtc { get; set; }
     TDATETIME? UpdatedOnUtc { get; set; }
   }

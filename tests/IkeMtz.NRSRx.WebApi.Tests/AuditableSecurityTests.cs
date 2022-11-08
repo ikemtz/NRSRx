@@ -3,6 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
@@ -10,7 +12,9 @@ using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace IkeMtz.NRSRx.WebApi.Tests
 {
@@ -28,7 +32,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 
       var result = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
-      Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+      Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
     }
 
     [TestMethod]
@@ -36,6 +40,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task UpdateCourseCausesAuditInvalidUserExTest()
     {
       var originalCourse = Factories.CourseFactory();
+      originalCourse.CreatedBy = "xyz";
+      originalCourse.CreatedOnUtc = DateTime.UtcNow.AddMonths(-500);
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
@@ -52,8 +58,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       updatedCourse.Num = Guid.NewGuid().ToString()[..6];
 
       var result = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
-      Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+      Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
     }
-
   }
 }

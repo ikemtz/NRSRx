@@ -24,9 +24,9 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
       program.ExecuteOnContext<DatabaseContext>(async x =>
       {
         var schoolCount = await x.Schools.CountAsync();
-        Assert.AreEqual(1, schoolCount);
+        Assert.AreEqual(0, schoolCount);
         var courseCount = await x.Courses.CountAsync();
-        Assert.AreEqual(1, courseCount);
+        Assert.AreEqual(2, courseCount);
       });
     }
   }

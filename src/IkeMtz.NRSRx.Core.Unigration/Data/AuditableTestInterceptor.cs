@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -12,10 +11,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
 {
   public class AuditableTestInterceptor : ISaveChangesInterceptor
   {
-    public IHttpContextAccessor HttpContextAccessor { get; }
-    public AuditableTestInterceptor(IHttpContextAccessor httpContextAccessor)
+    public ICurrentUserProvider CurrentUserProvider { get; }
+    public AuditableTestInterceptor(ICurrentUserProvider currentUserProvider)
     {
-      HttpContextAccessor = httpContextAccessor;
+      CurrentUserProvider = currentUserProvider;
     }
 
 
@@ -62,7 +61,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.CreatedOnUtc = x.CreatedOnUtc != DateTime.MinValue ? x.CreatedOnUtc : DateTime.UtcNow;
-          x.CreatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.CreatedBy ?? "NRSRx Test User");
+          x.CreatedBy = CurrentUserProvider?.GetCurrentUserId() ?? new SystemUserProvider().GetCurrentUserId();
         });
       entries
         .Where(x => x.State == EntityState.Modified)
@@ -72,7 +71,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Data
         .ForEach(x =>
         {
           x.UpdatedOnUtc = x.UpdatedOnUtc != DateTime.MinValue ? x.UpdatedOnUtc : DateTime.UtcNow;
-          x.UpdatedBy = AuditableDbContext.GetUserId(this.HttpContextAccessor, x.UpdatedBy ?? "NRSRx Test User");
+          x.UpdatedBy = CurrentUserProvider?.GetCurrentUserId();
         });
     }
   }

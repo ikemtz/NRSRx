@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
@@ -35,7 +36,6 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       Assert.IsNotNull(dbCourse);
       Assert.AreEqual(httpCourse.CreatedOnUtc, dbCourse.CreatedOnUtc);
     }
-
 
     [TestMethod]
     [TestCategory("Unigration")]

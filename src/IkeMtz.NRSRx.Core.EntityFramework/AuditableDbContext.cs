@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -11,17 +10,13 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public class AuditableDbContext : DbContext, IAuditableDbContext
   {
-    protected IHttpContextAccessor HttpContextAccessor { get; set; }
-    public AuditableDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor)
+    public ICurrentUserProvider CurrentUserProvider { get; set; }
+    public AuditableDbContext(DbContextOptions options, ICurrentUserProvider currentUserProvider)
         : base(options)
     {
-      HttpContextAccessor = httpContextAccessor;
+      CurrentUserProvider = currentUserProvider;
     }
 
-    public void SetHttpContext(IHttpContextAccessor httpContextAccessor)
-    {
-      this.HttpContextAccessor = httpContextAccessor;
-    }
     public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
     {
       if (entity is ICalculateable)
@@ -37,12 +32,13 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     public virtual void OnIAuditableCreate(IAuditable auditable)
     {
       auditable.CreatedOnUtc = auditable.CreatedOnUtc.Year != 1 ? auditable.CreatedOnUtc : DateTime.UtcNow;
-      auditable.CreatedBy = GetUserId(HttpContextAccessor);
+      auditable.CreatedBy = CurrentUserProvider.GetCurrentUserId();
     }
     public virtual void OnIAuditableUpdate(IAuditable auditable)
     {
       auditable.UpdatedOnUtc = DateTime.UtcNow;
-      auditable.UpdatedBy = GetUserId(HttpContextAccessor);
+      auditable.UpdatedBy = CurrentUserProvider.GetCurrentUserId();
+      auditable.UpdateCount = (auditable.UpdateCount ?? 0) + 1;
     }
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
@@ -108,15 +104,6 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       {
         OnIAuditableUpdate(auditable);
       }
-    }
-    public static string GetUserId(IHttpContextAccessor httpContextAccessor, string? defaultValue = null)
-    {
-      var userId = httpContextAccessor.HttpContext?.User?.Identity?.Name ?? httpContextAccessor.HttpContext?.User?.FindFirst("client_id")?.Value ?? defaultValue;
-      if (string.IsNullOrWhiteSpace(userId))
-      {
-        throw new AuditableInvalidUserException();
-      }
-      return userId;
     }
   }
 }

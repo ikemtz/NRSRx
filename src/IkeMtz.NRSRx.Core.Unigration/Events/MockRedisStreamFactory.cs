@@ -12,7 +12,7 @@ using StackExchange.Redis;
 namespace IkeMtz.NRSRx.Core.Unigration.Events
 {
   public static class MockRedisStreamFactory<TEntity, TEvent>
-   where TEntity : IIdentifiable<Guid>
+   where TEntity : class, IIdentifiable<Guid>
    where TEvent : EventType, new()
   {
     public static Mock<RedisStreamPublisher<TEntity, TEvent>> CreatePublisher()

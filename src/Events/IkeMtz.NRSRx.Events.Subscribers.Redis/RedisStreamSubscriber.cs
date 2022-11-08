@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
   [ExcludeFromCodeCoverage]
   public class RedisStreamSubscriber<TEntity, TEvent> :
     RedisStreamSubscriber<TEntity, TEvent, Guid>
-    where TEntity : IIdentifiable<Guid>
+    where TEntity : class, IIdentifiable<Guid>
     where TEvent : EventType, new()
   {
     public RedisStreamSubscriber(IConnectionMultiplexer connection) : base(connection)
@@ -24,7 +24,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
   public class RedisStreamSubscriber<TEntity, TEvent, TIdentityType> :
     RedisStreamCore<TEntity, TEvent, TIdentityType>
     where TIdentityType : IComparable
-    where TEntity : IIdentifiable<TIdentityType>
+    where TEntity : class, IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
   {
 

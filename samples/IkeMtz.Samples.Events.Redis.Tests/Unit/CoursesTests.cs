@@ -21,7 +21,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
       var mockPublisher = MockRedisStreamFactory<Course, CreatedEvent>.CreatePublisher();
       var course = Factories.CourseFactory();
       var result = await new CoursesController().Post(course, mockPublisher.Object)
-        as OkObjectResult;
+        as OkResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == course.Id)), Times.Once);
       Assert.AreEqual(200, result?.StatusCode);
     }
@@ -33,7 +33,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
       var mockPublisher = MockRedisStreamFactory<Course, UpdatedEvent>.CreatePublisher();
       var Course = Factories.CourseFactory();
       var result = await new CoursesController().Put(Course.Id, Course, mockPublisher.Object)
-        as OkObjectResult;
+        as OkResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == Course.Id)), Times.Once);
       Assert.AreEqual(200, result?.StatusCode);
     }
@@ -45,7 +45,7 @@ namespace IkeMtz.Samples.Events.Tests.Unit
       var mockPublisher = MockRedisStreamFactory<Course, DeletedEvent>.CreatePublisher();
       var Course = Factories.CourseFactory();
       var result = await new CoursesController().Delete(Course.Id, mockPublisher.Object)
-        as OkObjectResult;
+        as OkResult;
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == Course.Id)), Times.Once);
       Assert.AreEqual(200, result?.StatusCode);
     }

@@ -1,37 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.NRSRx.Core.Jobs
 {
-  public abstract class Job : IJob
+  public abstract class Job<TProgram> : JobBase<TProgram>, IJob
+    where TProgram : class, IJob
   {
-    public IHost JobHost { get; private set; }
-    public IConfiguration Configuration { get; protected set; }
-    public virtual IHost SetupHost()
+    public override async Task RunFunctions(ILoggerFactory? loggerFactory)
     {
-      if (Configuration == null || JobHost == null)
-      {
-        Configuration = this.GetConfig();
-        JobHost = Host.CreateDefaultBuilder()
-           .ConfigureServices((services) =>
-           {
-             SetupLogging(services);
-             _ = SetupDependencies(services);
-             _ = SetupJobs(services);
-           })
-           .Build();
-      }
-      return JobHost;
-    }
-
-    public virtual async Task RunAsync()
-    {
-      _ = this.SetupHost();
-      var loggerFactory = JobHost.Services.GetService<ILoggerFactory>();
-      var jobLogger = loggerFactory?.CreateLogger(this.GetType());
+      var jobLogger = loggerFactory?.CreateLogger(GetType());
       var functions = JobHost.Services.GetServices<IFunction>();
       var functionCount = functions.Count();
       jobLogger?.LogInformation("Found {functionCount} executable functions", functionCount);
@@ -59,35 +37,8 @@ namespace IkeMtz.NRSRx.Core.Jobs
       }
     }
 
-    public virtual async Task RunFunctionAsync(string functionName, IFunction x, ILogger? logger)
-    {
-      logger?.LogInformation("Starting {functionName} function.", functionName);
-      var result = await x.RunAsync();
-      if (!result)
-      {
-        logger?.LogError("An error occurred in {functionName}.", functionName);
-      }
-      logger?.LogInformation("Ending {functionName} function.", functionName);
-    }
 
-    public virtual IConfiguration GetConfig()
-    {
-      var configBuilder = new ConfigurationBuilder();
-      if (File.Exists("appsettings.json"))
-      {
-        _ = configBuilder.AddJsonFile("appsettings.json");
-      }
-      var config = configBuilder
-         .AddUserSecrets(this.GetType().Assembly)
-         .AddEnvironmentVariables()
-         .Build();
-      return config;
-
-    }
     [ExcludeFromCodeCoverage]
-    public virtual IServiceCollection SetupDependencies(IServiceCollection services) { return services; }
-    [ExcludeFromCodeCoverage]
-    public virtual void SetupLogging(IServiceCollection services) { }
-    public abstract IServiceCollection SetupJobs(IServiceCollection services);
+    public override IServiceCollection SetupDependencies(IServiceCollection services) { return services; }
   }
 }

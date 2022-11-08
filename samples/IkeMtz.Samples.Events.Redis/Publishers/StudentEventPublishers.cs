@@ -6,21 +6,21 @@ using StackExchange.Redis;
 namespace IkeMtz.Samples.Events.Redis.Publishers
 {
   public class StudentCreatedPublisher : RedisStreamPublisher<Student, CreatedEvent>,
-    ISimplePublisher<Student, CreatedEvent, RedisValue>
+    IPublisher<Student, CreatedEvent>
   {
     public StudentCreatedPublisher(IConnectionMultiplexer connection) : base(connection)
     {
     }
   }
   public class StudentDeletedPublisher : RedisStreamPublisher<Student, DeletedEvent>,
-    ISimplePublisher<Student, DeletedEvent, RedisValue>
+    IPublisher<Student, DeletedEvent>
   {
     public StudentDeletedPublisher(IConnectionMultiplexer connection) : base(connection)
     {
     }
   }
   public class StudentUpdatedPublisher : RedisStreamPublisher<Student, UpdatedEvent>,
-    ISimplePublisher<Student, UpdatedEvent, RedisValue>
+    IPublisher<Student, UpdatedEvent>
   {
     public StudentUpdatedPublisher(IConnectionMultiplexer connection) : base(connection)
     {

@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 namespace IkeMtz.NRSRx.Core.Jobs
 {
   public interface IFunction
