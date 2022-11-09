@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\build\ProfilePic.jpg">
+      <pack>true</pack>
       <PackagePath>
       </PackagePath>
     </None>

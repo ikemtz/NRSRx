@@ -24,8 +24,8 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
         Factories.SchoolFactory(),
         Factories.SchoolFactory(),
       }.Select(t => (new RedisValue(t.Id.ToString()), t));
-      var mocks = MockRedisStreamFactory<School, CreatedEvent>.CreateSubscriber();
-      MockSubscriber = mocks.Subscriber;
+      var (Subscriber, _) = MockRedisStreamFactory<School, CreatedEvent>.CreateSubscriber();
+      MockSubscriber = Subscriber;
       _ = MockSubscriber
             .Setup(t => t.GetMessagesAsync(It.Is<int>(x => x == 5)))
             .ReturnsAsync(schools);
