@@ -19,6 +19,5 @@ namespace IkeMtz.NRSRx.Core.Jobs
         firstRun = false;
       }
     }
-
   }
 }
