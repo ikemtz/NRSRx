@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     public virtual RedisStreamSubscriber<TEntity, TEvent, TIdentityType> Subscriber { get; set; }
     public virtual int MessageBufferCount { get; set; } = 5;
 
-    public MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber)
+    protected MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber)
     {
       Logger = logger;
       Subscriber = subscriber;

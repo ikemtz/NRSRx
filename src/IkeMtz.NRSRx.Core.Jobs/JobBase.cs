@@ -7,11 +7,14 @@ using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.NRSRx.Core.Jobs
 {
-  public abstract class JobBase<TProgram>
+  public abstract class JobBase<TProgram, TFunctionType>
     where TProgram : class, IJob
+    where TFunctionType : IFunction
   {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public virtual IHost JobHost { get; set; }
     public virtual IConfiguration Configuration { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     public virtual IConfiguration GetConfig()
     {
@@ -33,8 +36,46 @@ namespace IkeMtz.NRSRx.Core.Jobs
       var loggerFactory = JobHost.Services.GetService<ILoggerFactory>();
       await RunFunctions(loggerFactory);
     }
+    public virtual async Task RunFunctions(ILoggerFactory? loggerFactory)
+    {
+      var functions = GetFunctions(loggerFactory);
+      foreach (var func in functions)
+      {
+        await ScopeFunctionasync(loggerFactory, func);
+      }
+    }
+    public virtual IEnumerable<TFunctionType> GetFunctions(ILoggerFactory? loggerFactory)
+    {
+      var jobLogger = loggerFactory?.CreateLogger(GetType());
+      var functions = JobHost.Services.GetServices<TFunctionType>();
+      var functionTypeName = typeof(TFunctionType).Name;
+      var functionCount = functions.Count();
+      jobLogger?.LogInformation("Found {functionCount} executable {functionTypeName} functions", functionCount, functionTypeName);
+      return functions;
+    }
 
-    public abstract Task RunFunctions(ILoggerFactory? loggerFactory);
+    public virtual async Task ScopeFunctionasync(ILoggerFactory? loggerFactory, TFunctionType func)
+    {
+      var functionName = func.GetType().Name;
+      var logger = loggerFactory?.CreateLogger(func.GetType());
+      var startTime = DateTime.UtcNow;
+      using (logger?.BeginScope("Function {functionName}", functionName))
+      {
+        logger?.LogInformation("Function {functionName} start time: {startTime} UTC", functionName, startTime);
+        try
+        {
+          await RunFunctionAsync(functionName, func, logger);
+        }
+        catch (Exception x)
+        {
+          logger?.LogError(x, "An unhandled exception has occured while executing function: {functionName}", functionName);
+        }
+        var endTime = DateTime.UtcNow;
+        var durationInSecs = endTime.Subtract(startTime).TotalSeconds;
+        logger?.LogInformation("Function {functionName} completed time: {endTime} UTC", functionName, endTime);
+        logger?.LogInformation("Function {functionName} completed in {durationInSecs} secs", functionName, durationInSecs);
+      }
+    }
 
     public virtual IHost SetupHost()
     {
@@ -63,7 +104,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
     {
       return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
     }
-    public virtual async Task RunFunctionAsync(string functionName, IFunction x, ILogger? logger)
+    public virtual async Task RunFunctionAsync(string functionName, TFunctionType x, ILogger? logger)
     {
       logger?.LogInformation("Starting {functionName} function.", functionName);
       var result = await x.RunAsync();

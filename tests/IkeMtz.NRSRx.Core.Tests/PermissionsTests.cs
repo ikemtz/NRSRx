@@ -111,7 +111,9 @@ namespace IkeMtz.NRSRx.Core.Tests
       var actCtx = new ActionContext(httpCtx, new RouteData(), new ActionDescriptor());
       var filterMetaData = new List<IFilterMetadata>();
       var actionArguments = new Dictionary<string, object?>();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
       return new ActionExecutingContext(actCtx, filterMetaData, actionArguments, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
   }
 }

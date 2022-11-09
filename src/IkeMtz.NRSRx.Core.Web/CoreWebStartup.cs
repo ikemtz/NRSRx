@@ -146,7 +146,7 @@ namespace IkeMtz.NRSRx.Core.Web
 
     private static OpenIdConfiguration OpenIdConfiguration;
 
-    public virtual OpenIdConfiguration GetOpenIdConfiguration(IHttpClientFactory clientFactory, AppSettings appSettings)
+    public virtual OpenIdConfiguration? GetOpenIdConfiguration(IHttpClientFactory clientFactory, AppSettings appSettings)
     {
       if (OpenIdConfiguration != null)
       {
