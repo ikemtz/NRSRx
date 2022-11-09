@@ -22,9 +22,9 @@ namespace IkeMtz.NRSRx.Core.Tests
       var startup = new StartUp_AppInsights(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
       var result = startup.GetOpenIdConfiguration(new TestHttpClientFactory(), appSettings);
-      Assert.AreEqual($"{appSettings.IdentityProvider}o/oauth2/v2/auth", result.AuthorizeEndpoint);
-      Assert.AreEqual(new Uri($"{ appSettings.IdentityProvider}o/oauth2/v2/auth?audience=x"), result.GetAuthorizationEndpointUri(appSettings));
-      Assert.AreEqual(new Uri("https://oauth2.googleapis.com/token"), result.GetTokenEndpointUri());
+      Assert.AreEqual($"{appSettings.IdentityProvider}o/oauth2/v2/auth", result?.AuthorizeEndpoint);
+      Assert.AreEqual(new Uri($"{appSettings.IdentityProvider}o/oauth2/v2/auth?audience=x"), result?.GetAuthorizationEndpointUri(appSettings));
+      Assert.AreEqual(new Uri("https://oauth2.googleapis.com/token"), result?.GetTokenEndpointUri());
     }
   }
 

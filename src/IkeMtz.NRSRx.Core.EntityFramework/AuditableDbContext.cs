@@ -32,7 +32,9 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     public virtual void OnIAuditableCreate(IAuditable auditable)
     {
       auditable.CreatedOnUtc = auditable.CreatedOnUtc.Year != 1 ? auditable.CreatedOnUtc : DateTime.UtcNow;
+#pragma warning disable CS8601 // Possible null reference assignment.
       auditable.CreatedBy = CurrentUserProvider.GetCurrentUserId();
+#pragma warning restore CS8601 // Possible null reference assignment.
     }
     public virtual void OnIAuditableUpdate(IAuditable auditable)
     {

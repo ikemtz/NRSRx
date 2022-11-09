@@ -1,6 +1,5 @@
-using System.Net.Http;
+using IkeMtz.NRSRx.Logging.Splunk;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace IkeMtz.NRSRx.Core.Web
@@ -22,31 +21,7 @@ namespace IkeMtz.NRSRx.Core.Web
     public static ILogger SetupSplunk(this CoreWebStartup startup, IApplicationBuilder? app)
     {
       _ = app?.UseSerilog();
-
-      var splunkHost = startup.Configuration.GetValue<string>("SPLUNK_HOST");
-      var splunkToken = startup.Configuration.GetValue<string>("SPLUNK_TOKEN");
-      var splunkDisableSslValidation = startup.Configuration.GetValue("SPLUNK_DISABLE_SSL_VALIDATION", false);
-      var splunkUriPath = startup.Configuration.GetValue("SPLUNK_URI_PATH", "services/collector/event");
-      var splunkIndex = startup.Configuration.GetValue("SPLUNK_INDEX", "");
-      var splunkSourceType = startup.Configuration.GetValue("SPLUNK_SOURCE_TYPE", "");
-      var host = startup.Configuration.GetValue("ENVIRONMENT_NAME", "");
-      return SeriLogExtensions.GetLogger(() => new LoggerConfiguration()
-        .MinimumLevel.Debug()
-        .Enrich.FromLogContext()
-        .Enrich.WithMachineName()
-        .WriteTo.Console()
-        .WriteTo.EventCollector(
-          splunkHost,
-          splunkToken,
-          uriPath: splunkUriPath,
-          index: splunkIndex,
-          sourceType: splunkSourceType,
-          host: host,
-          messageHandler: splunkDisableSslValidation ? new HttpClientHandler
-          {
-            ServerCertificateCustomValidationCallback = (reqMsg, cert, certChain, sslPolicyErr) => true
-          } : null)
-        .CreateLogger());
+      return SeriLogExtensions.GetLogger(() => SplunkExtensions.ConfigureSplunkLogger(startup.Configuration));
     }
   }
 }

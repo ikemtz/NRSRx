@@ -34,7 +34,9 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void TestGetNullPingResult()
     {
       var controller = ControllerFactory<TestController>.Create();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
       var result = controller.Get(null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
       Assert.IsInstanceOfType(result, typeof(OkObjectResult));
       var pingResult = (result as OkObjectResult)?.Value as PingResult;
       Assert.AreEqual("NRSRx Test Controller", pingResult?.Name);

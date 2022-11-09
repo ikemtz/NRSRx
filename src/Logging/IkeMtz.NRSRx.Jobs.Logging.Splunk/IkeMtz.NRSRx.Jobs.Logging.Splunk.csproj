@@ -24,6 +24,9 @@
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\IkeMtz.NRSRx.Logging.Splunk\SplunkExtensions.cs" Link="SplunkExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
       <PackagePath>
       </PackagePath>

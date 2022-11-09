@@ -9,7 +9,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
 {
   public class RedisStreamPublisher<TEntity, TEvent> :
      RedisStreamPublisher<TEntity, TEvent, Guid>,
-      IPublisher<TEntity, TEvent, Guid>
+      IPublisher<TEntity, TEvent>
    where TEntity : IIdentifiable<Guid>
    where TEvent : EventType, new()
   {
