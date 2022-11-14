@@ -1,5 +1,6 @@
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Redis.Jobs;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using StackExchange.Redis;
 
@@ -16,7 +17,30 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
       var program = new UnigrationProgram(new Program(), TestContext)
       {
         RunContinously = false,
+        SecsBetweenRuns = 1,
       };
+
+      //act
+      await program.RunAsync();
+
+      //assert
+      program.MockSubscriber.Verify(t => t.GetMessagesAsync(It.Is<int>(x => x == 5)), Times.Once);
+      program.MockSubscriber.Verify(t => t.AcknowledgeMessageAsync(It.IsAny<RedisValue>()), Times.Exactly(2));
+    }
+
+
+    [TestMethod]
+    [TestCategory("Unigration")]
+    public async Task SampleSchoolCreatedEventTest()
+    {
+      //arange
+      var program = new UnigrationProgram(new Program(), TestContext)
+      {
+        RunContinously = false,
+        SecsBetweenRuns = 1,
+      };
+
+      _ = program.SetupHost(x => x.AddSingleton<SchoolCreatedFunction>());
 
       //act
       await program.RunAsync();

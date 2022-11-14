@@ -22,7 +22,7 @@ namespace IkeMtz.Samples.Redis.Jobs
 
     public override IServiceCollection SetupFunctions(IServiceCollection services)
     {
-      return services.AddSingleton<IMessageFunction, SchoolFunction>();
+      return services.AddSingleton<IMessageFunction, SchoolCreatedFunction>();
     }
 
     [ExcludeFromCodeCoverage]

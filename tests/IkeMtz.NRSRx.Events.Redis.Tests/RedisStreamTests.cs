@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
       var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(connectionMultiplexer);
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(connectionMultiplexer);
-      _ = subscriber.Init(StreamPosition.NewMessages);
+      _ = subscriber.Init(StreamPosition.Beginning);
       var sampleMessage = new SampleMessage();
       var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       await publisher.PublishAsync(sampleMessage);

@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.Samples.Redis.Jobs
 {
-  internal class SchoolFunction : MessageFunction<SchoolFunction, School, CreatedEvent>
+  public class SchoolCreatedFunction : MessageFunction<SchoolCreatedFunction, School, CreatedEvent>
   {
-    public SchoolFunction(ILogger<SchoolFunction> logger, RedisStreamSubscriber<School, CreatedEvent> subscriber)
+    public SchoolCreatedFunction(ILogger<SchoolCreatedFunction> logger, RedisStreamSubscriber<School, CreatedEvent> subscriber)
       : base(logger, subscriber)
     {
     }

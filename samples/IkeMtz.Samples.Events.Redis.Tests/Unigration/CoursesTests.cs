@@ -23,10 +23,8 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<Course, CreatedEvent>.CreatePublisher();
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
-      {
-        _ = x.AddSingleton(mockPublisher.Object);
-      }));
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>()
+        .ConfigureTestServices(x => x.AddSingleton<IPublisher<Course, CreatedEvent>>(x => mockPublisher.Object)));
 
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
@@ -43,9 +41,10 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<Course, UpdatedEvent>.CreatePublisher();
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>()
+        .ConfigureTestServices(x =>
       {
-        _ = x.AddSingleton(mockPublisher.Object);
+        _ = x.AddSingleton<IPublisher<Course, UpdatedEvent>>(mockPublisher.Object);
       }));
 
       var client = srv.CreateClient(TestContext);
@@ -65,7 +64,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       var item = Factories.CourseFactory();
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {
-        _ = x.AddSingleton(mockPublisher.Object);
+        _ = x.AddSingleton<IPublisher<Course, DeletedEvent>>(mockPublisher.Object);
       }));
 
       var client = srv.CreateClient(TestContext);
