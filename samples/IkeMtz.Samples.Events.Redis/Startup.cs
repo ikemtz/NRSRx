@@ -3,7 +3,7 @@ using System.Reflection;
 using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.NRSRx.Events;
-using IkeMtz.Samples.Events.Redis.Publishers;
+using IkeMtz.NRSRx.Events.Publishers.Redis;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -31,15 +31,15 @@ namespace IkeMtz.Samples.Events.Redis
     {
       var redisConnectionString = Configuration.GetValue<string>("REDIS_CONNECTION_STRING");
       var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
-      _ = services.AddSingleton<IPublisher<Course, CreatedEvent>>((x) => new CourseCreatedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<Course, UpdatedEvent>>((x) => new CourseUpdatedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<Course, DeletedEvent>>((x) => new CourseDeletedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<Student, CreatedEvent>>((x) => new StudentCreatedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<Student, UpdatedEvent>>((x) => new StudentUpdatedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<Student, DeletedEvent>>((x) => new StudentDeletedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<School, CreatedEvent>>((x) => new SchoolCreatedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<School, UpdatedEvent>>((x) => new SchoolUpdatedPublisher(connectionMultiplexer));
-      _ = services.AddSingleton<IPublisher<School, DeletedEvent>>((x) => new SchoolDeletedPublisher(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<Course, CreatedEvent>>((x) => new RedisStreamPublisher<Course, CreatedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<Course, UpdatedEvent>>((x) => new RedisStreamPublisher<Course, UpdatedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<Course, DeletedEvent>>((x) => new RedisStreamPublisher<Course, DeletedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<Student, CreatedEvent>>((x) => new RedisStreamPublisher<Student, CreatedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<Student, UpdatedEvent>>((x) => new RedisStreamPublisher<Student, UpdatedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<Student, DeletedEvent>>((x) => new RedisStreamPublisher<Student, DeletedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<School, CreatedEvent>>((x) => new RedisStreamPublisher<School, CreatedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<School, UpdatedEvent>>((x) => new RedisStreamPublisher<School, UpdatedEvent>(connectionMultiplexer));
+      _ = services.AddSingleton<IPublisher<School, DeletedEvent>>((x) => new RedisStreamPublisher<School, DeletedEvent>(connectionMultiplexer));
     }
   }
 }

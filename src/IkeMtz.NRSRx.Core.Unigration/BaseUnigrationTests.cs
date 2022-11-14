@@ -38,10 +38,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       return GenerateTestToken(x =>
      {
-       if (testClaims != null)
-       {
-         testClaims.ToList().ForEach(x.Add);
-       }
+       testClaims?.ToList().ForEach(x.Add);
      });
     }
 

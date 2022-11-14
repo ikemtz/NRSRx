@@ -77,7 +77,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
       }
     }
 
-    public virtual IHost SetupHost()
+    public virtual IHost SetupHost(Action<IServiceCollection>? setupMiscDependencies = null)
     {
       if (Configuration == null || JobHost == null)
       {
@@ -89,6 +89,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
              _ = SetupUserProvider(services);
              _ = SetupDependencies(services);
              _ = SetupFunctions(services);
+             setupMiscDependencies?.Invoke(services);
            })
            .Build();
       }
