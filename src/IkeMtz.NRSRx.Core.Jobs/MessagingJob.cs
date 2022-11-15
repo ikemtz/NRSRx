@@ -8,7 +8,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
   {
     public virtual bool RunContinously { get; set; } = true;
     public virtual int? SecsBetweenRuns { get; set; } = 60;
-    public virtual TimeSpan SleepTimeSpan => new TimeSpan(0, 0, SecsBetweenRuns.GetValueOrDefault());
+    public virtual TimeSpan SleepTimeSpan => new(0, 0, SecsBetweenRuns.GetValueOrDefault());
     public override async Task RunFunctions(ILoggerFactory loggerFactory)
     {
       SecsBetweenRuns ??= Configuration.GetValue("SecsBetweenRuns", 60);
