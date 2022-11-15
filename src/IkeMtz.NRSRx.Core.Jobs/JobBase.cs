@@ -33,10 +33,10 @@ namespace IkeMtz.NRSRx.Core.Jobs
     public async Task RunAsync()
     {
       _ = this.SetupHost();
-      var loggerFactory = JobHost.Services.GetService<ILoggerFactory>();
+      var loggerFactory = JobHost.Services.GetRequiredService<ILoggerFactory>();
       await RunFunctions(loggerFactory);
     }
-    public virtual async Task RunFunctions(ILoggerFactory? loggerFactory)
+    public virtual async Task RunFunctions(ILoggerFactory loggerFactory)
     {
       var functions = GetFunctions(loggerFactory);
       foreach (var func in functions)
@@ -54,26 +54,26 @@ namespace IkeMtz.NRSRx.Core.Jobs
       return functions;
     }
 
-    public virtual async Task ScopeFunctionasync(ILoggerFactory? loggerFactory, TFunctionType func)
+    public virtual async Task ScopeFunctionasync(ILoggerFactory loggerFactory, TFunctionType func)
     {
       var functionName = func.GetType().Name;
-      var logger = loggerFactory?.CreateLogger(func.GetType());
+      var logger = loggerFactory.CreateLogger(func.GetType());
       var startTime = DateTime.UtcNow;
-      using (logger?.BeginScope("Function {functionName}", functionName))
+      using (logger.BeginScope("Function {functionName}", functionName))
       {
-        logger?.LogInformation("Function {functionName} start time: {startTime} UTC", functionName, startTime);
+        logger.LogInformation("Function {functionName} start time: {startTime} UTC", functionName, startTime);
         try
         {
           await RunFunctionAsync(functionName, func, logger);
         }
         catch (Exception x)
         {
-          logger?.LogError(x, "An unhandled exception has occured while executing function: {functionName}", functionName);
+          logger.LogError(x, "An unhandled exception has occured while executing function: {functionName}", functionName);
         }
         var endTime = DateTime.UtcNow;
         var durationInSecs = endTime.Subtract(startTime).TotalSeconds;
-        logger?.LogInformation("Function {functionName} completed time: {endTime} UTC", functionName, endTime);
-        logger?.LogInformation("Function {functionName} completed in {durationInSecs} secs", functionName, durationInSecs);
+        logger.LogInformation("Function {functionName} completed time: {endTime} UTC", functionName, endTime);
+        logger.LogInformation("Function {functionName} completed in {durationInSecs} secs", functionName, durationInSecs);
       }
     }
 
@@ -105,15 +105,15 @@ namespace IkeMtz.NRSRx.Core.Jobs
     {
       return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
     }
-    public virtual async Task RunFunctionAsync(string functionName, TFunctionType x, ILogger? logger)
+    public virtual async Task RunFunctionAsync(string functionName, TFunctionType x, ILogger logger)
     {
-      logger?.LogInformation("Starting {functionName} function.", functionName);
+      logger.LogInformation("Starting {functionName} function.", functionName);
       var result = await x.RunAsync();
       if (!result)
       {
-        logger?.LogError("An error occurred in {functionName}.", functionName);
+        logger.LogError("An error occurred in {functionName}.", functionName);
       }
-      logger?.LogInformation("Ending {functionName} function.", functionName);
+      logger.LogInformation("Ending {functionName} function.", functionName);
     }
   }
 }
