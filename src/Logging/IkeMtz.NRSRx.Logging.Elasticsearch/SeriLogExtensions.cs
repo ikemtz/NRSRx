@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
@@ -33,7 +34,7 @@ namespace IkeMtz.NRSRx.Core.Web
       return GetLogger(() => new LoggerConfiguration()
            .MinimumLevel.Debug()
            .Enrich.FromLogContext()
-           .WriteTo.Console()
+           .WriteTo.Console(theme: AnsiConsoleTheme.Code)
            .CreateLogger());
     }
 

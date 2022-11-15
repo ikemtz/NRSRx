@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
@@ -71,7 +72,7 @@ namespace IkeMtz.NRSRx.Core.Web
           .MinimumLevel.Information()
           .Enrich.FromLogContext()
           .Enrich.WithMachineName()
-          .WriteTo.Console()
+          .WriteTo.Console(theme: AnsiConsoleTheme.Code)
           .WriteTo.Elasticsearch(elastiOptions)
           .Enrich.WithProperty("Environment", environment)
           .CreateLogger();

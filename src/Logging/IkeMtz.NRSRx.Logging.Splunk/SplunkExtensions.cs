@@ -1,6 +1,7 @@
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace IkeMtz.NRSRx.Logging.Splunk
 {
@@ -30,7 +31,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk
             .MinimumLevel.Debug()
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
-            .WriteTo.Console();
+            .WriteTo.Console(theme: AnsiConsoleTheme.Code);
       if (!string.IsNullOrWhiteSpace(splunkHost))
       {
         config = config.WriteTo.EventCollector(splunkHost,
