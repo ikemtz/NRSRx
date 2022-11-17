@@ -1,4 +1,6 @@
+using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
@@ -13,7 +15,8 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public string? GetCurrentUserId(string? anonymousValue = null) //NOSONAR
     {
-      return HttpContextAccessor.HttpContext?.User?.Identity?.Name ?? anonymousValue;
+      var user = HttpContextAccessor.HttpContext?.User;
+      return user?.Identity?.Name ?? anonymousValue ?? user?.Claims.FirstOrDefault(t => t.Type == JwtRegisteredClaimNames.Sub)?.Value;
     }
   }
 }
