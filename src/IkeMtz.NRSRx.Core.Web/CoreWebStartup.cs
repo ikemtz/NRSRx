@@ -60,7 +60,7 @@ namespace IkeMtz.NRSRx.Core.Web
     }
 
     public virtual AuthenticationBuilder SetupJwtAuthSchema(IServiceCollection services)
-    {
+    { 
       return services
           .AddAuthentication(options =>
           {

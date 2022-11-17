@@ -53,6 +53,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       {
           new Claim(JwtRegisteredClaimNames.UniqueName, "Integration Tester"),
           new Claim(JwtRegisteredClaimNames.Email, "IntegrationTester@email.com"),
+          new Claim(JwtRegisteredClaimNames.Sub, "IntegrationTester@subject.com"),
           new Claim(JwtRegisteredClaimNames.Aud, CoreTestServerExtensions.JwtTokenAud) ,
           new Claim(JwtRegisteredClaimNames.Iss, TestServerConfiguration.GetValue<string>("IdentityProvider") ?? CoreTestServerExtensions.JwtTokenIssuer)
       });
@@ -77,7 +78,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       var resp = await client.PostAsJsonAsync(TestServerConfiguration.GetValue<string>("IntegrationTestTokenUrl"), payload).ConfigureAwait(true);
       _ = resp.EnsureSuccessStatusCode();
       var respBody = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
-      TestContext.WriteLine($"Auth0 HttpResponse: {respBody}");
+      TestContext.WriteLine($"Identity Server HttpResponse: {respBody}");
       dynamic o = JsonConvert.DeserializeObject(respBody);
       return o.access_token;
     }
