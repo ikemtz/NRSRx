@@ -57,6 +57,19 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       }
     }
 
+    public virtual async Task<MessageQueueInfo> GetStreamInfoAsync()
+    {
+      ValidateInit();
+      var data = await Database.StreamInfoAsync(StreamKey);
+      var pendingInfo = await Database.StreamPendingAsync(StreamKey, ConsumerGroupName); 
+      return new MessageQueueInfo
+      {
+        MessageCount = data.Length,
+        SubscriberCount = data.ConsumerGroupCount,
+        DeadLetterCount = pendingInfo.PendingMessageCount
+      };
+    }
+
     public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetMessagesAsync(int messageCount = 1)
     {
       ValidateInit();
