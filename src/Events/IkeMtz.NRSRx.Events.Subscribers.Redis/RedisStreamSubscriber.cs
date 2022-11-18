@@ -32,6 +32,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
 
     public RedisValue? ConsumerName { get; set; }
     public string ConsumerGroupName { get; set; }
+    public string ConsumerGroupCounterKey { get; set; }
     public bool Subscribed { get; private set; }
     public bool IsInitialized { get; private set; }
     public event MessageRecievedEventHandler OnMessageReceived;
@@ -42,11 +43,13 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public virtual bool Init(string? streamPosition = null)
     {
       ConsumerName ??= Guid.NewGuid().ToString("N");
-      ConsumerGroupName ??= $"cg{StreamKey}-{GetType().Assembly.GetName()}";
+      ConsumerGroupName ??= $"cg{StreamKey}-{GetType().Assembly.GetName().Name}";
+      ConsumerGroupCounterKey ??= $"cg{StreamKey}-{GetType().Assembly.GetName().Name}-AckMsgCnt";
       try
       {
         var result = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition ?? StreamPosition.Beginning, true);
         IsInitialized = true;
+        _ = Database.StringIncrementAsync(ConsumerGroupCounterKey, 0);
         return result;
       }
       catch (RedisServerException x) when (x.Message.Contains("already exists"))
@@ -60,12 +63,15 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public virtual async Task<MessageQueueInfo> GetStreamInfoAsync()
     {
       ValidateInit();
-      var data = await Database.StreamInfoAsync(StreamKey);
-      var pendingInfo = await Database.StreamPendingAsync(StreamKey, ConsumerGroupName); 
+      var info = await Database.StreamInfoAsync(StreamKey);
+      var ackMsgCount = Convert.ToInt32(await Database.StringGetAsync(ConsumerGroupCounterKey));
+      var data = await Database.StreamGroupInfoAsync(StreamKey);
+      var group = data.First(t => t.Name == ConsumerGroupName);
+      var pendingInfo = await Database.StreamPendingAsync(StreamKey, ConsumerGroupName);
       return new MessageQueueInfo
       {
-        MessageCount = data.Length,
-        SubscriberCount = data.ConsumerGroupCount,
+        MessageCount = info.Length - ackMsgCount,
+        SubscriberCount = group.ConsumerCount,
         DeadLetterCount = pendingInfo.PendingMessageCount
       };
     }
@@ -109,9 +115,10 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       return result.Consumers?.Select(t => (ConsumerName: t.Name.ToString(), t.PendingMessageCount));
     }
 
-    public virtual Task<long> AcknowledgeMessageAsync(RedisValue redisValue)
+    public virtual async Task<long> AcknowledgeMessageAsync(RedisValue redisValue)
     {
-      return Database.StreamAcknowledgeAsync(StreamKey, ConsumerGroupName, redisValue);
+      var result = await Database.StreamAcknowledgeAsync(StreamKey, ConsumerGroupName, redisValue);
+      return await Database.StringIncrementAsync(ConsumerGroupCounterKey, result);
     }
 
     public async Task Subscribe(int pollFrequency = 60000)

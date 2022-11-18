@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
 {
-  internal class UnigrationProgram : CoreJobUnigrationTestProgram<Program>
+  internal class UnigrationProgram : CoreUnigrationTestJob<Program>
   {
     public UnigrationProgram(Program program, TestContext testContext) : base(program, testContext)
     {

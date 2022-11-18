@@ -13,10 +13,11 @@ namespace IkeMtz.Samples.Redis.Jobs
     {
     }
 
-    public override Task HandleMessageAsync(School entity)
+    public override async Task HandleMessageAsync(School entity)
     {
+     _= await Subscriber.GetStreamInfoAsync();
       Logger.LogInformation("Sample handled.");
-      return Task.CompletedTask;
+
     }
   }
 }

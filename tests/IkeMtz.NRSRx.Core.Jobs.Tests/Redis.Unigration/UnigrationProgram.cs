@@ -12,7 +12,7 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 {
-  internal class UnigrationProgram : CoreMessagingJobUnigrationTestProgram<Program>
+  internal class UnigrationProgram : CoreMessagingUnigrationTestJob<Program>
   {
     public Mock<RedisStreamSubscriber<School, CreatedEvent>> MockSubscriber { get; set; }
     public UnigrationProgram(Program program, TestContext testContext) : base(program, testContext)

@@ -8,17 +8,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreMessagingJobUnigrationTestProgram<TProgram> : MessagingJob<TProgram>
+  public class CoreUnigrationTestJob<TProgram> : Job<TProgram>
         where TProgram : class, IJob
   {
     public TProgram Program { get; }
     public TestContext TestContext { get; }
 
-    public CoreMessagingJobUnigrationTestProgram(TProgram program, TestContext testContext)
+    public CoreUnigrationTestJob(TProgram program, TestContext testContext)
     {
       Program = program;
       TestContext = testContext;
     }
+
 
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
@@ -29,7 +30,6 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       return Program.SetupFunctions(services);
     }
-
     public override void SetupLogging(IServiceCollection services)
     {
       _ = services.AddSingleton(TestContext)
