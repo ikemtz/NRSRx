@@ -4,23 +4,22 @@ using IkeMtz.NRSRx.Core.Jobs;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreJobUnigrationTestProgram<TProgram> : Job<TProgram>
+  public class CoreMessagingUnigrationTestJob<TProgram> : MessagingJob<TProgram>
         where TProgram : class, IJob
   {
     public TProgram Program { get; }
     public TestContext TestContext { get; }
 
-    public CoreJobUnigrationTestProgram(TProgram program, TestContext testContext)
+    public CoreMessagingUnigrationTestJob(TProgram program, TestContext testContext)
     {
       Program = program;
       TestContext = testContext;
     }
-
-
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
       return Program.SetupDependencies(services);
@@ -30,6 +29,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       return Program.SetupFunctions(services);
     }
+
     public override void SetupLogging(IServiceCollection services)
     {
       _ = services.AddSingleton(TestContext)

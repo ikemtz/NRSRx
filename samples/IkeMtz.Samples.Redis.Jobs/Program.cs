@@ -11,6 +11,7 @@ namespace IkeMtz.Samples.Redis.Jobs
 {
   public class Program : MessagingJob<Program>
   {
+    public ConnectionMultiplexer RedisConnectionMultiplexer { get; private set; }
     public static async Task Main()
     {
       var prog = new Program
@@ -29,9 +30,9 @@ namespace IkeMtz.Samples.Redis.Jobs
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
       var redisConnectionString = Configuration.GetValue<string>("REDIS_CONNECTION_STRING");
-      var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+      RedisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
       return services.AddSingleton<RedisStreamSubscriber<School, CreatedEvent>>((x) =>
-        new SchoolCreatedSubscriber(connectionMultiplexer));
+        new SchoolCreatedSubscriber(RedisConnectionMultiplexer));
     }
 
     [ExcludeFromCodeCoverage()]
