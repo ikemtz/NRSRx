@@ -39,13 +39,13 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     {
     }
 
-    public virtual bool Init(string streamPosition = "$")
+    public virtual bool Init(string? streamPosition = null)
     {
       ConsumerName ??= Guid.NewGuid().ToString("N");
       ConsumerGroupName ??= $"cg{StreamKey}-{GetType().Assembly.GetName()}";
       try
       {
-        var result = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition, true);
+        var result = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition ?? StreamPosition.Beginning, true);
         IsInitialized = true;
         return result;
       }
