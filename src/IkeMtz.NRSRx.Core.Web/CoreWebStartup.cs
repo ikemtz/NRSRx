@@ -60,7 +60,7 @@ namespace IkeMtz.NRSRx.Core.Web
     }
 
     public virtual AuthenticationBuilder SetupJwtAuthSchema(IServiceCollection services)
-    { 
+    {
       return services
           .AddAuthentication(options =>
           {
@@ -71,6 +71,7 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupAuthentication(AuthenticationBuilder builder)
     {
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
       _ = builder
           .AddJwtBearer(options =>
           {
