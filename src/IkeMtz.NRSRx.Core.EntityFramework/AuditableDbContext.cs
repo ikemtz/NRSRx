@@ -5,16 +5,21 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public class AuditableDbContext : DbContext, IAuditableDbContext
   {
     public ICurrentUserProvider CurrentUserProvider { get; set; }
+    [FromServices]
+    public ILogger<AuditableDbContext> Logger { get; set; }
     public AuditableDbContext(DbContextOptions options, ICurrentUserProvider currentUserProvider)
         : base(options)
     {
       CurrentUserProvider = currentUserProvider;
+      Logger = this.GetService<ILogger<AuditableDbContext>>();
     }
 
     public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
@@ -47,19 +52,24 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       CalculateValues();
       AddAuditables();
       UpdateAuditables();
-      return base.SaveChanges(acceptAllChangesOnSuccess);
+
+      var recordCount = base.SaveChanges(acceptAllChangesOnSuccess);
+      Logger?.LogInformation("State entries written to database: {recordCount}.", recordCount);
+      return recordCount;
     }
     public override int SaveChanges()
       => SaveChanges(acceptAllChangesOnSuccess: true);
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
       => SaveChangesAsync(acceptAllChangesOnSuccess: true, cancellationToken);
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
       CalculateValues();
       AddAuditables();
       UpdateAuditables();
-      return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+      var recordCount = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+      Logger?.LogInformation("State entries written to database: {recordCount}.", recordCount);
+      return recordCount;
     }
     public virtual void CalculateValues()
     {
