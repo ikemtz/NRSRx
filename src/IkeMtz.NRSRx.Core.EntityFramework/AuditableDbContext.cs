@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
   public class AuditableDbContext : DbContext, IAuditableDbContext
   {
     public ICurrentUserProvider CurrentUserProvider { get; set; }
-    [FromServices]
+
     public ILogger<AuditableDbContext> Logger { get; set; }
     public AuditableDbContext(DbContextOptions options, ICurrentUserProvider currentUserProvider)
         : base(options)
