@@ -7,6 +7,7 @@ using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.WebApi.Controllers.V1
@@ -18,9 +19,12 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
   public class SchoolsController : ControllerBase
   {
     private readonly DatabaseContext _databaseContext;
-    public SchoolsController(DatabaseContext databaseContext)
+    private readonly ILogger<SchoolsController> logger;
+
+    public SchoolsController(DatabaseContext databaseContext, ILogger<SchoolsController> logger)
     {
       _databaseContext = databaseContext;
+      this.logger = logger;
     }
 
     // Get api/Schools
@@ -43,7 +47,7 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     {
       var value = SimpleMapper<SchoolUpsertRequest, School>.Instance.Convert(request);
       var dbContextObject = _databaseContext.Schools.Add(value);
-      _ = await _databaseContext.SaveChangesAsync()
+      _ = await _databaseContext.SaveChangesAsync(logger)
           .ConfigureAwait(false);
       return Ok(dbContextObject.Entity);
     }
@@ -57,7 +61,7 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
       var obj = await _databaseContext.Schools.FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
       SimpleMapper<SchoolUpsertRequest, School>.Instance.ApplyChanges(request, obj);
-      _ = await _databaseContext.SaveChangesAsync()
+      _ = await _databaseContext.SaveChangesAsync(logger)
           .ConfigureAwait(false);
       return Ok(obj);
     }
@@ -72,7 +76,7 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
       if (obj != null)
       {
         _ = _databaseContext.Remove(obj);
-        _ = await _databaseContext.SaveChangesAsync()
+        _ = await _databaseContext.SaveChangesAsync(logger)
             .ConfigureAwait(false);
         return Ok(obj);
       }

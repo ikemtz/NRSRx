@@ -13,13 +13,10 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
   public class AuditableDbContext : DbContext, IAuditableDbContext
   {
     public ICurrentUserProvider CurrentUserProvider { get; set; }
-
-    public ILogger<AuditableDbContext> Logger { get; set; }
     public AuditableDbContext(DbContextOptions options, ICurrentUserProvider currentUserProvider)
         : base(options)
     {
       CurrentUserProvider = currentUserProvider;
-      Logger = this.GetService<ILogger<AuditableDbContext>>();
     }
 
     public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
@@ -54,8 +51,17 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       UpdateAuditables();
 
       var recordCount = base.SaveChanges(acceptAllChangesOnSuccess);
-      Logger?.LogInformation("State entries written to database: {recordCount}.", recordCount);
       return recordCount;
+    }
+    public int SaveChanges(bool acceptAllChangesOnSuccess, ILogger logger)
+    {
+      var rowCount = this.SaveChanges(acceptAllChangesOnSuccess);
+      logger?.LogInformation("Save changes completed successfully, affected row count: {rowCount}", rowCount);
+      return rowCount;
+    }
+    public int SaveChanges(ILogger logger)
+    {
+      return SaveChanges(true, logger);
     }
     public override int SaveChanges()
       => SaveChanges(acceptAllChangesOnSuccess: true);
@@ -68,8 +74,17 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       AddAuditables();
       UpdateAuditables();
       var recordCount = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-      Logger?.LogInformation("State entries written to database: {recordCount}.", recordCount);
       return recordCount;
+    }
+    public async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, ILogger logger)
+    {
+      var rowCount = await SaveChangesAsync(acceptAllChangesOnSuccess);
+      logger?.LogInformation("Save changes completed successfully, affected row count: {rowCount}", rowCount);
+      return rowCount;
+    }
+    public Task<int> SaveChangesAsync(ILogger logger)
+    {
+      return SaveChangesAsync(true, logger);
     }
     public virtual void CalculateValues()
     {

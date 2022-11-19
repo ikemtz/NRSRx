@@ -61,9 +61,16 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     public async Task LogStreamHealthInformationAsync()
     {
       var result = await Subscriber.GetStreamInfoAsync();
-      Logger.LogInformation("Stream Message Count: {MessageCount}.", result.MessageCount);
-      Logger.LogInformation("Stream ConsumerGroup Count: {SubscriberCount}.", result.SubscriberCount);
-      Logger.LogInformation("Stream Pending Message Count: {DeadLetterCount}.", result.DeadLetterCount);
+      if (result != null) // This can happen in mocked scenarios
+      {
+        Logger.LogInformation("Stream Message Count: {MessageCount}.", result.MessageCount);
+        Logger.LogInformation("Stream ConsumerGroup Count: {SubscriberCount}.", result.SubscriberCount);
+        Logger.LogInformation("Stream Pending Message Count: {DeadLetterCount}.", result.DeadLetterCount);
+      }
+      else
+      {
+        Logger.LogWarning("Stream Info is not available.");
+      }
     }
 
     public abstract Task HandleMessageAsync(TEntity entity);
