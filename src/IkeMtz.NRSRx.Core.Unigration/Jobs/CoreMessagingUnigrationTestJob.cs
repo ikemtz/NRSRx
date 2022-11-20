@@ -5,6 +5,7 @@ using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
@@ -47,6 +48,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       // context (ApplicationDbContext).
       using var scope = JobHost.Services.CreateAsyncScope();
       var scopedServices = scope.ServiceProvider;
+      var logger = scopedServices.GetRequiredService<ILogger<TDbContext>>();
       var db = scopedServices.GetRequiredService<TDbContext>();
       // Ensure the database is created.
       try
@@ -57,14 +59,18 @@ namespace IkeMtz.NRSRx.Core.Unigration
       {
         TestContext.WriteLine($"DB Creation Exception Occured: {ex}");
       }
+      TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
+      callback(db);
       if (db is AuditableDbContext)
       {
         var dbContext = db as AuditableDbContext;
         dbContext.CurrentUserProvider = new SystemUserProvider();
+        dbContext.SaveChanges(logger);
       }
-      TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
-      callback(db);
-      _ = db.SaveChanges();
+      else
+      {
+        _ = db.SaveChanges();
+      }
     }
   }
 }

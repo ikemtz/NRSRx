@@ -19,7 +19,6 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
       var program = new UnigrationProgram(new Program(), TestContext)
       {
         RunContinously = false,
-        SecsBetweenRuns = 1,
       };
 
       //act
@@ -27,6 +26,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 
       //assert
       program.MockSubscriber.Verify(t => t.GetMessagesAsync(It.Is<int>(x => x == 5)), Times.Once);
+      program.MockSubscriber.Verify(t => t.GetStreamInfoAsync(), Times.Exactly(3));
       program.MockSubscriber.Verify(t => t.AcknowledgeMessageAsync(It.IsAny<RedisValue>()), Times.Exactly(2));
     }
 

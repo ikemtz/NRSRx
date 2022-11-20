@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -94,6 +95,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       using var scope = sp.CreateScope();
       var scopedServices = scope.ServiceProvider;
       var db = scopedServices.GetRequiredService<TDbContext>();
+      var logger = scopedServices.GetRequiredService<ILogger<TDbContext>>();
       // Ensure the database is created.
       try
       {
@@ -103,14 +105,18 @@ namespace IkeMtz.NRSRx.Core.Unigration
       {
         TestContext.WriteLine($"DB Creation Exception Occured: {ex}");
       }
+      TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
+      callback(db);
       if (db is AuditableDbContext)
       {
         var auditableDbContext = db as AuditableDbContext;
         auditableDbContext.CurrentUserProvider = new SystemUserProvider();
+        _ = auditableDbContext.SaveChanges(logger);
       }
-      TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
-      callback(db);
-      _ = db.SaveChanges();
+      else
+      {
+        _ = db.SaveChanges();
+      }
     }
 
     public async Task<T?> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace IkeMtz.NRSRx.Events.Abstraction
+namespace IkeMtz.NRSRx.Events
 {
   public class MessageQueueInfo
   {

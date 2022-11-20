@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events;
+using IkeMtz.NRSRx.Events.Abstraction;
 using IkeMtz.NRSRx.Events.Publishers.Redis;
 using IkeMtz.NRSRx.Events.Subscribers.Redis;
 using Moq;
@@ -35,10 +35,28 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
       if (collection != null)
       {
         _ = mockSubscriber
-            .Setup(t => t.GetMessagesAsync(It.Is<int>(t => t == collection.Count())))
-            .Returns(Task.FromResult(collection.Select(t => (new RedisValue(t.Id.ToString()), t))));
+          .Setup(t => t.GetMessagesAsync(It.IsAny<int>()))
+          .ReturnsAsync(ExpandWithRedisValues(collection));
+        _ = mockSubscriber
+          .Setup(t => t.AcknowledgeMessageAsync(It.IsAny<RedisValue>()))
+          .ReturnsAsync(1);
+        _ = mockSubscriber
+          .Setup(t => t.GetStreamInfoAsync())
+          .ReturnsAsync(new MessageQueueInfo
+          {
+            DeadLetterCount = 0,
+            MessageCount = collection.Count(),
+            SubscriberCount = 1,
+
+          });
       }
       return (mockSubscriber, database);
+    }
+
+    public static IEnumerable<(RedisValue Id, TEntity Entity)> ExpandWithRedisValues(IEnumerable<TEntity>? collection = null)
+    {
+      return collection?
+        .Select(t => (new RedisValue(t.Id.ToString("N")), t));
     }
   }
 }

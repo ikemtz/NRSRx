@@ -51,6 +51,11 @@ namespace IkeMtz.NRSRx.Core.Jobs
       var functionTypeName = typeof(TFunctionType).Name;
       var functionCount = functions.Count();
       jobLogger?.LogInformation("Found {functionCount} executable {functionTypeName} functions", functionCount, functionTypeName);
+      for (var i = 0; i < functionCount; i++)
+      {
+        var functionName = functions.ElementAt(i);
+        jobLogger?.LogInformation("[{i}] {functionName}", i, functionName);
+      }
       return functions;
     }
 

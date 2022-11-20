@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
@@ -47,19 +49,42 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       CalculateValues();
       AddAuditables();
       UpdateAuditables();
-      return base.SaveChanges(acceptAllChangesOnSuccess);
+
+      var recordCount = base.SaveChanges(acceptAllChangesOnSuccess);
+      return recordCount;
+    }
+    public int SaveChanges(bool acceptAllChangesOnSuccess, ILogger logger)
+    {
+      var rowCount = this.SaveChanges(acceptAllChangesOnSuccess);
+      logger?.LogInformation("Save changes completed successfully, affected row count: {rowCount}", rowCount);
+      return rowCount;
+    }
+    public int SaveChanges(ILogger logger)
+    {
+      return SaveChanges(true, logger);
     }
     public override int SaveChanges()
       => SaveChanges(acceptAllChangesOnSuccess: true);
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
       => SaveChangesAsync(acceptAllChangesOnSuccess: true, cancellationToken);
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
       CalculateValues();
       AddAuditables();
       UpdateAuditables();
-      return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+      var recordCount = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+      return recordCount;
+    }
+    public async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, ILogger logger)
+    {
+      var rowCount = await SaveChangesAsync(acceptAllChangesOnSuccess);
+      logger?.LogInformation("Save changes completed successfully, affected row count: {rowCount}", rowCount);
+      return rowCount;
+    }
+    public Task<int> SaveChangesAsync(ILogger logger)
+    {
+      return SaveChangesAsync(true, logger);
     }
     public virtual void CalculateValues()
     {
