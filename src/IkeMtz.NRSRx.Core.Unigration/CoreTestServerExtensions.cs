@@ -68,7 +68,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       });
     }
 
-    public static void SetupTestDbContext<TDbContext>(this IServiceCollection services) where TDbContext : DbContext
+    public static IServiceCollection SetupTestDbContext<TDbContext>(this IServiceCollection services) where TDbContext : DbContext
     {
       // Build the service provider.
       var serviceProvider = services
@@ -79,7 +79,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
           .AddSingleton<ICurrentUserProvider, HttpUserProvider>()
           .BuildServiceProvider();
       var testContext = serviceProvider.GetService<TestContext>();
-      _ = services.AddDbContext<TDbContext>(options =>
+      return services.AddDbContext<TDbContext>(options =>
       {
         _ = options
           .ConfigureTestDbContextOptions(testContext)

@@ -12,9 +12,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
         : base(new Startup(configuration))
     {
     }
-    public override void SetupDatabase(IServiceCollection services, string dbConnectionString)
-    {
+    public override void SetupDatabase(IServiceCollection services, string dbConnectionString) =>
       services.SetupTestDbContext<DatabaseContext>();
-    }
   }
 }

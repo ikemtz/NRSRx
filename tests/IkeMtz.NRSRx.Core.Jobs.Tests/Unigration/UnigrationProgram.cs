@@ -11,10 +11,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
     {
     }
 
-    public override IServiceCollection SetupDependencies(IServiceCollection services)
-    {
-      services.SetupTestDbContext<DatabaseContext>();
-      return services;
-    }
+    public override IServiceCollection SetupDependencies(IServiceCollection services) =>
+        services.SetupTestDbContext<DatabaseContext>();
   }
 }
