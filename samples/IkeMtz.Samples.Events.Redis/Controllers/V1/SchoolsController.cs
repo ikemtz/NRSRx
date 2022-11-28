@@ -21,7 +21,7 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     [ProducesResponseType(Status200OK, Type = typeof(School))]
     [ValidateModel]
     [ExcludeFromCodeCoverage()] //Need to figure out why method is not getting code coverage
-    public async Task<ActionResult> Post([FromBody] SchoolUpsertRequest request, [FromServices] RedisStreamPublisher<School, CreatedEvent> publisher)
+    public async Task<ActionResult> Post([FromBody] SchoolUpsertRequest request, [FromServices] IPublisher<School, CreatedEvent> publisher)
     {
       var value = SimpleMapper<SchoolUpsertRequest, School>.Instance.Convert(request);
       value.Id = request.Id;
@@ -35,7 +35,7 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     [ProducesResponseType(Status200OK, Type = typeof(School))]
     [ValidateModel]
     [ExcludeFromCodeCoverage()] //Need to figure out why method is not getting code coverage
-    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] SchoolUpsertRequest request, [FromServices] RedisStreamPublisher<School, UpdatedEvent> publisher)
+    public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] SchoolUpsertRequest request, [FromServices] IPublisher<School, UpdatedEvent> publisher)
     {
       var value = SimpleMapper<SchoolUpsertRequest, School>.Instance.Convert(request);
       value.Id = id;
@@ -48,7 +48,7 @@ namespace IkeMtz.Samples.Events.Redis.Controllers.V1
     [HttpDelete]
     [ProducesResponseType(Status200OK, Type = typeof(School))]
     [ExcludeFromCodeCoverage()] //Need to figure out why method is not getting code coverage
-    public async Task<ActionResult> Delete([FromQuery] Guid id, [FromServices] RedisStreamPublisher<School, DeletedEvent> publisher)
+    public async Task<ActionResult> Delete([FromQuery] Guid id, [FromServices] IPublisher<School, DeletedEvent> publisher)
     {
       var value = new School { Id = id };
       await publisher.PublishAsync(value)

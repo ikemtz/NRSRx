@@ -10,7 +10,7 @@ namespace IkeMtz.Samples.Events.Redis
     {
         public static void Main()
         {
-            CoreWebStartup.CreateDefaultHostBuilder<Startup>().Build().Run();
+            CoreWebStartup.CreateDefaultHostBuilder<Startup>().UseLogging().Build().Run();
         }
     }
 }
