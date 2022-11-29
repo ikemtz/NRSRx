@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events;
-using IkeMtz.NRSRx.Events.Abstraction;
-using IkeMtz.NRSRx.Events.Publishers.Redis;
 using IkeMtz.NRSRx.Events.Subscribers.Redis;
 using Moq;
 using StackExchange.Redis;
@@ -15,10 +13,9 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
    where TEntity : class, IIdentifiable<Guid>
    where TEvent : EventType, new()
   {
-    public static Mock<RedisStreamPublisher<TEntity, TEvent>> CreatePublisher()
+    public static Mock<IPublisher<TEntity, TEvent>> CreatePublisher()
     {
-      var (Connection, _) = CreateConnection();
-      return new Mock<RedisStreamPublisher<TEntity, TEvent>>(new[] { Connection.Object });
+      return new Mock<IPublisher<TEntity, TEvent>>();
     }
     public static (Mock<IConnectionMultiplexer> Connection, Mock<IDatabase> Database) CreateConnection()
     {
