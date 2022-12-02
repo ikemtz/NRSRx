@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
-      context.SyncGuidCollections(srcList, null, null);
+      context.SyncGuidCollections<CollectionGuidModel, CollectionGuidModel>(srcList, null, null);
     }
 
     [TestMethod]
@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       TestAuditableDbContext? context = null;
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
       var destList = new List<CollectionGuidModel>();
-      context.SyncGuidCollections<CollectionGuidModel>(srcList, destList, null);
+      context.SyncGuidCollections(srcList, destList, null);
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       srcList.First().Value = "Validate Update";
-      context.SyncGuidCollections<CollectionGuidModel>(srcList, destList, (src, dest) =>
+      context.SyncGuidCollections(srcList, destList, (src, dest) =>
       {
         dest.Value = src.Value;
       });
@@ -100,7 +100,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       srcList.First().Value = "Validate Update";
-      context.SyncGuidCollections<CollectionGuidModel>(srcList, destList);
+      context.SyncGuidCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
       Assert.AreEqual("Validate Update", destList.First().Value);
     }
@@ -130,7 +130,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       var wasCalled = false;
-      context.SyncGuidCollections(null, destList, (src, dest) =>
+      context.SyncGuidCollections<CollectionGuidModel, CollectionGuidModel>(null, destList, (src, dest) =>
       {
         wasCalled = true;
       });
@@ -163,7 +163,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
       var destList = new List<CollectionGuidModel> { };
-      context.SyncGuidCollections<CollectionGuidModel>(srcList, destList, (src, dest) =>
+      context.SyncGuidCollections(srcList, destList, (src, dest) =>
       {
         dest.Value = src.Value;
       });
@@ -192,7 +192,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
       var destList = new List<CollectionGuidModel> { };
-      context.SyncGuidCollections<CollectionGuidModel>(srcList, destList);
+      context.SyncGuidCollections(srcList, destList);
       Assert.AreEqual(2, destList.Count);
     }
 
