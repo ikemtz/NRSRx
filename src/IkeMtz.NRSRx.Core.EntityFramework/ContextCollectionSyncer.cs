@@ -7,16 +7,6 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   public static class ContextCollectionSyncer
   {
-    public static void SyncGuidCollections<TSourceEntity>(
-      this IAuditableDbContext? auditableContext,
-      ICollection<TSourceEntity>? sourceCollection,
-      ICollection<TSourceEntity>? destinationCollection,
-      Action<TSourceEntity, TSourceEntity>? updateLogic = null)
-    where TSourceEntity : class, IIdentifiable<Guid>, new()
-    {
-      SyncCollections<TSourceEntity, TSourceEntity, Guid>(auditableContext, sourceCollection, destinationCollection, updateLogic);
-    }
-
     public static void SyncGuidCollections<TSourceEntity, TDestinationEntity>(
      this IAuditableDbContext? auditableContext,
      ICollection<TSourceEntity>? sourceCollection,
@@ -86,7 +76,6 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
         {
           destItem.Id = srcItem.Id;
         }
-        _ = auditableContext.Add(destItem);
         destinationCollection?.Add(destItem);
 
       }
