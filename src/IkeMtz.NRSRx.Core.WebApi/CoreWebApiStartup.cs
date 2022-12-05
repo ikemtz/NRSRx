@@ -28,6 +28,8 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupLogging(services);
       SetupSwagger(services);
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
+      var healthCheckBuilder = services.AddHealthChecks();
+      SetupHealthChecks(services, healthCheckBuilder);
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
@@ -38,8 +40,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
       }
       mvcBuilder.AddControllersAsServices();
       _ = services.AddControllers();
-      var healthCheckBuilder = services.AddHealthChecks();
-      SetupHealthChecks(services, healthCheckBuilder);
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
@@ -57,6 +57,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseRouting()
        .UseAuthentication()
        .UseAuthorization();
+       
       if (!DisableSwagger && Configuration?.GetValue("DisableSwagger", false) != true)
       {
         _ = app
@@ -66,7 +67,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
       _ = app
       .UseEndpoints(endpoints =>
      {
-       _ = endpoints.MapHealthChecks("/health");
+       _ = endpoints.MapHealthChecks("/healthz");
        _ = endpoints.MapControllers();
      });
     }

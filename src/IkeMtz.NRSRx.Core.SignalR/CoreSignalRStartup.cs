@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.Core.SignalR
         .UseAuthorization()
         .UseEndpoints(endpoints =>
         {
-          _ = endpoints.MapHealthChecks("/health");
+          _ = endpoints.MapHealthChecks("/healthz");
           MapHubs(endpoints);
         });
     }
