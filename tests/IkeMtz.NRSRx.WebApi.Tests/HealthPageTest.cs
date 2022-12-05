@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
       var cli = srv.CreateClient();
-      var resp = await cli.GetStringAsync("/health");
+      var resp = await cli.GetStringAsync("/healthz");
       Assert.AreEqual("Healthy", resp);
     }
   }
