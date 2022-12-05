@@ -50,10 +50,6 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       {
         throw new ArgumentNullException(nameof(auditableContext));
       }
-      else if (destinationCollection.Any(t=> t.Id != null && t.Id.Equals(default(TKey))))
-      {
-        throw new InvalidDataException("An Id with a default value was detected in the destination collection.");
-      }
       var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
 
