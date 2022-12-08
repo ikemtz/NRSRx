@@ -7,7 +7,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
     where TProgram : class, IJob
   {
     public virtual bool RunContinously { get; set; } = true;
-    public virtual int? SecsBetweenRuns { get; set; } = 60;
+    public virtual int? SecsBetweenRuns { get; set; }
     public virtual TimeSpan SleepTimeSpan => new(0, 0, SecsBetweenRuns.GetValueOrDefault());
     public override async Task RunFunctions(ILoggerFactory loggerFactory)
     {
