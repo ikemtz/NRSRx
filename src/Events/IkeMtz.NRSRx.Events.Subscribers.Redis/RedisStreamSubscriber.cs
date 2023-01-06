@@ -47,7 +47,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       ConsumerGroupCounterKey ??= $"cg{StreamKey}-{GetType().Assembly.GetName().Name}-AckMsgCnt";
       try
       {
-        var result = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition ?? StreamPosition.Beginning, true);
+        var result = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, streamPosition ?? StreamPosition.NewMessages, true);
         IsInitialized = true;
         _ = Database.StringIncrementAsync(ConsumerGroupCounterKey, 0);
         return result;
