@@ -9,13 +9,14 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Events
 {
-  public static class MockRedisStreamFactory<TEntity, TEvent>
-   where TEntity : class, IIdentifiable<Guid>
+  public static class MockRedisStreamFactory<TEntity, TEvent, TIdentityType>
+    where TIdentityType : IComparable
+   where TEntity : class, IIdentifiable<TIdentityType>
    where TEvent : EventType, new()
   {
-    public static Mock<IPublisher<TEntity, TEvent>> CreatePublisher()
+    public static Mock<IPublisher<TEntity, TEvent, TIdentityType>> CreatePublisher()
     {
-      return new Mock<IPublisher<TEntity, TEvent>>();
+      return new Mock<IPublisher<TEntity, TEvent, TIdentityType>>();
     }
     public static (Mock<IConnectionMultiplexer> Connection, Mock<IDatabase> Database) CreateConnection()
     {
@@ -25,10 +26,17 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
       return (connection, database);
     }
 
-    public static (Mock<RedisStreamSubscriber<TEntity, TEvent>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity>? collection = null)
+    public static (Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity>? collection = null)
     {
-      var (Connection, database) = CreateConnection();
-      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent>>(new object[] { Connection.Object });
+      var (connection, database) = CreateConnection();
+      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>>(new object[] { connection.Object });
+      SetupMockSubscriberCollection(mockSubscriber, collection);
+      return (mockSubscriber, database);
+    }
+
+    public static void SetupMockSubscriberCollection<TSubscriberType>(Mock<TSubscriberType> mockSubscriber, IEnumerable<TEntity>? collection = null)
+      where TSubscriberType : RedisStreamSubscriber<TEntity, TEvent, TIdentityType>
+    {
       if (collection != null)
       {
         _ = mockSubscriber
@@ -47,13 +55,12 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
 
           });
       }
-      return (mockSubscriber, database);
     }
 
     public static IEnumerable<(RedisValue Id, TEntity Entity)> ExpandWithRedisValues(IEnumerable<TEntity>? collection = null)
     {
-      return collection?
-        .Select(t => (new RedisValue(t.Id.ToString("N")), t));
+      return collection?.Select(t => (new RedisValue(t.Id.ToString()), t));
     }
+
   }
 }
