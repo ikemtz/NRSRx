@@ -7,7 +7,7 @@ namespace IkeMtz.NRSRx.Core.Models
 {
   internal static class SimpleMapperHelper
   {
-    internal static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
+    internal static readonly string[] IgnoredProperties = { "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
     internal static readonly string[] IgnoredInterfaces = { nameof(IIdentifiable), typeof(IIdentifiable<>).Name, typeof(ICollection<>).Name };
   }
 
