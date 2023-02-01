@@ -22,10 +22,10 @@
     <PackageIcon>ProfilePic.jpg</PackageIcon>
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <ProjectGuid>E70A93F9-0F0B-408D-97B2-5F4F083104AD</ProjectGuid>
+    <ProjectGuid>E70A93F90F0B408D97B25F4F083104AD</ProjectGuid>
     <AnalysisLevel>latest</AnalysisLevel>
     <Nullable>enable</Nullable>
-    <UserSecretsId>cfdef403-1d5e-41e3-b796-09d2f57fe7a1</UserSecretsId>
+    <UserSecretsId>cfdef4031d5e41e3b79609d2f57fe7a1</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;S2436;MSB3277;CS8618;CS8603;</NoWarn>

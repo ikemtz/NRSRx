@@ -4,5 +4,11 @@
         <name>IkeMtz.NRSRx.Jobs.Redis</name>
     </assembly>
     <members>
+        <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.EnablePendingMsgProcessing">
+            <summary>
+            Only set this to true, if you're absolutely sure that there aren't additional consumers running.
+            should only be used in debugging and error recovery scenarios
+            </summary>
+        </member>
     </members>
 </doc>

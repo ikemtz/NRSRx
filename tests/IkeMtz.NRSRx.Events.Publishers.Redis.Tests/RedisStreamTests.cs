@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Unigration.Events;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StackExchange.Redis;
@@ -25,13 +26,11 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     [TestCategory("Unit")]
     public async Task ValidateRedisMoqPublishAsync()
     {
-      var moqConnection = new Mock<IConnectionMultiplexer>();
-      var moqDatabase = new Mock<IDatabase>();
-      _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
-      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent, Guid>(moqConnection.Object);
+      var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
+      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent, Guid>(Connection.Object);
       var msg = new SampleMessage();
       await publisher.PublishAsync(msg);
-      moqDatabase
+      Database
         .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.StartsWith(msg.Id.ToString())), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
     }
   }

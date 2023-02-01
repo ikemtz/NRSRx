@@ -21,7 +21,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
       var program = new IntegrationProgram(new Program(), TestContext)
       {
         RunContinously = false,
-        SecsBetweenRuns = 1,
+        SecsBetweenRuns = 10,
       };
       _ = program.SetupHost();
 
@@ -40,9 +40,14 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
 
       //assert
       currentStreamInfo = await subscriber.GetStreamInfoAsync();
-      Assert.AreEqual(0, currentStreamInfo.MessageCount);
+      Assert.AreNotEqual(0, currentStreamInfo.MessageCount);
+      Assert.AreNotEqual(0, currentStreamInfo.AckMessageCount);
+      Assert.AreEqual(currentStreamInfo.MessageCount, currentStreamInfo.AckMessageCount);
       Assert.AreEqual(1, currentStreamInfo.SubscriberCount - originalStreamInfo.SubscriberCount);
       Assert.AreEqual(0, currentStreamInfo.DeadLetterCount);
+      _ = await subscriber.DeleteIdleConsumersAsync();
+      _ = await subscriber.Database.KeyDeleteAsync(subscriber.StreamKey);
+      _ = await subscriber.Database.KeyDeleteAsync(subscriber.ConsumerGroupCounterKey);
     }
   }
 }
