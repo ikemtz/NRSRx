@@ -3,6 +3,7 @@ using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.NRSRx.Events.Subscribers.Redis;
 using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Jobs.Redis
 {
@@ -26,6 +27,12 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     public virtual RedisStreamSubscriber<TEntity, TEvent, TIdentityType> Subscriber { get; set; }
     public virtual int MessageBufferCount { get; set; } = 5;
 
+    /// <summary>
+    /// Only set this to true, if you're absolutely sure that there aren't additional consumers running.
+    /// should only be used in debugging and error recovery scenarios
+    /// </summary>
+    public virtual bool EnablePendingMsgProcessing { get; set; } = false;
+
     protected MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber)
     {
       Logger = logger;
@@ -35,28 +42,38 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     public async Task<bool> RunAsync()
     {
       await LogStreamHealthInformationAsync();
-      Logger.LogInformation("Pulling {MessageBufferCount} messages from queue.", MessageBufferCount);
+      await ProcessStreamsAsync("new", Subscriber.GetMessagesAsync);
+
+      if (EnablePendingMsgProcessing)
+      {
+        await ProcessStreamsAsync("pending", Subscriber.GetPendingMessagesAsync);
+      }
       await Subscriber.DeleteIdleConsumersAsync();
-      var messages = await Subscriber.GetMessagesAsync(MessageBufferCount);
+      return true;
+    }
+
+    public async Task ProcessStreamsAsync(string messageType, Func<int, Task<IEnumerable<(RedisValue Id, TEntity Entity)>>> getMessageFunction)
+    {
+      Logger.LogInformation("Pulling {MessageBufferCount} " + messageType + " messages from queue.", MessageBufferCount);
+      var messages = await getMessageFunction(MessageBufferCount);
       var messageCount = messages.Count();
-      Logger.LogInformation("Received {messageCount} messages from queue.", messageCount);
+      Logger.LogInformation("Received {messageCount} " + messageType + " messages from queue.", messageCount);
       foreach (var (redisId, entity) in messages)
       {
         var id = entity.Id;
         try
         {
-          Logger.LogInformation("Handling message with entity id: {id} ", id);
+          Logger.LogInformation("Handling " + messageType + " message with entity id: {id} ", id);
           await HandleMessageAsync(entity);
-          Logger.LogInformation("Handled message with entity id: {id} ", id);
+          Logger.LogInformation("Handled " + messageType + " message with entity id: {id} ", id);
           await Subscriber.AcknowledgeMessageAsync(redisId);
         }
         catch (Exception x)
         {
-          Logger.LogError(x, "An error while handling entity id: {id} ", id);
+          Logger.LogError(x, "An error while handling " + messageType + " message with entity id: {id} ", id);
           throw;
         }
       }
-      return true;
     }
 
     public async Task LogStreamHealthInformationAsync()
@@ -65,6 +82,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       if (result != null) // This can happen in mocked scenarios
       {
         Logger.LogInformation("Stream Message Count: {MessageCount}.", result.MessageCount);
+        Logger.LogInformation("Stream Acknowledged Message Count: {AckMessageCount}.", result.AckMessageCount);
         Logger.LogInformation("Stream ConsumerGroup Count: {SubscriberCount}.", result.SubscriberCount);
         Logger.LogInformation("Stream Pending Message Count: {DeadLetterCount}.", result.DeadLetterCount);
       }
