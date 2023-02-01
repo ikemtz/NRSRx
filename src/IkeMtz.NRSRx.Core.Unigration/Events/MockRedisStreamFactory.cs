@@ -9,6 +9,16 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Events
 {
+  public static class MockRedisStreamFactory
+  {
+    public static (Mock<IConnectionMultiplexer> Connection, Mock<IDatabase> Database) CreateMockConnection()
+    {
+      var connection = new Mock<IConnectionMultiplexer>();
+      var database = new Mock<IDatabase>();
+      _ = connection.Setup(t => t.GetDatabase(It.IsAny<int>(), It.Is<object>(t => t == null))).Returns(database.Object);
+      return (connection, database);
+    }
+  }
   public static class MockRedisStreamFactory<TEntity, TEvent, TIdentityType>
     where TIdentityType : IComparable
    where TEntity : class, IIdentifiable<TIdentityType>
@@ -18,18 +28,11 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
     {
       return new Mock<IPublisher<TEntity, TEvent, TIdentityType>>();
     }
-    public static (Mock<IConnectionMultiplexer> Connection, Mock<IDatabase> Database) CreateConnection()
-    {
-      var connection = new Mock<IConnectionMultiplexer>();
-      var database = new Mock<IDatabase>();
-      _ = connection.Setup(t => t.GetDatabase(It.IsAny<int>(), It.Is<object>(t => t == null))).Returns(database.Object);
-      return (connection, database);
-    }
 
     public static (Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity>? collection = null)
     {
-      var (connection, database) = CreateConnection();
-      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>>(new object[] { connection.Object });
+      var (connection, database) = MockRedisStreamFactory.CreateMockConnection();
+      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>>(new object[] { connection.Object, new RedisSubscriberOptions() });
       SetupMockSubscriberCollection(mockSubscriber, collection);
       return (mockSubscriber, database);
     }

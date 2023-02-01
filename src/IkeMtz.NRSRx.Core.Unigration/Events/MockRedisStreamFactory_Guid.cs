@@ -20,13 +20,13 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
 
     public static (Mock<IConnectionMultiplexer> Connection, Mock<IDatabase> Database) CreateConnection()
     {
-      return MockRedisStreamFactory<TEntity, TEvent, Guid>.CreateConnection();
+      return MockRedisStreamFactory.CreateMockConnection();
     }
 
     public static (Mock<RedisStreamSubscriber<TEntity, TEvent>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity>? collection = null)
     {
       var (connection, database) = CreateConnection();
-      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent>>(new object[] { connection.Object });
+      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent>>(new object[] { connection.Object, new RedisSubscriberOptions() });
       SetupMockSubscriberCollection(mockSubscriber, collection);
       return (mockSubscriber, database);
     }
