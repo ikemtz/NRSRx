@@ -24,10 +24,10 @@
     <PackageIcon>ProfilePic.jpg</PackageIcon>
     <PackageIconUrl />
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <ProjectGuid>15D811DB-068A-47E5-8E46-B9AD5D7C6988</ProjectGuid>
+    <ProjectGuid>15D811DB068A47E58E46B9AD5D7C6988</ProjectGuid>
     <AnalysisLevel>latest</AnalysisLevel>
     <Nullable>enable</Nullable>
-    <UserSecretsId>3B47F350-AF26-459D-AD0D-B68D9C20D0A3</UserSecretsId>
+    <UserSecretsId>3B47F350AF26459DAD0DB68D9C20D0A3</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -10,17 +10,18 @@ namespace IkeMtz.NRSRx.Events.Abstraction.Redis
     where TEvent : EventType, new()
   { 
     public Type EntityType { get; }
+    protected string TypeName { get; }
     public IConnectionMultiplexer Connection { get; }
     public IDatabase Database { get; }
     public RedisKey StreamKey { get; }
     public RedisStreamCore(IConnectionMultiplexer connection)
     {
       EntityType = typeof(TEntity);
-      var typeName = EntityType.IsGenericType ? $"{EntityType.Name}-{EntityType.GenericTypeArguments[0].Name}" : EntityType.Name;
+      TypeName = EntityType.IsGenericType ? $"{EntityType.Name}{EntityType.GenericTypeArguments[0].Name}" : EntityType.Name;
       Connection = connection;
       Database = connection.GetDatabase();
       var eventType = new TEvent();
-      StreamKey = $"{typeName}-{eventType.EventSuffix}";
+      StreamKey = $"{TypeName}:{eventType.EventSuffix}";
     }
   }
 }

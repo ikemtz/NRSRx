@@ -36,6 +36,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     {
       await LogStreamHealthInformationAsync();
       Logger.LogInformation("Pulling {MessageBufferCount} messages from queue.", MessageBufferCount);
+      await Subscriber.DeleteIdleConsumersAsync();
       var messages = await Subscriber.GetMessagesAsync(MessageBufferCount);
       var messageCount = messages.Count();
       Logger.LogInformation("Received {messageCount} messages from queue.", messageCount);

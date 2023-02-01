@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
-using IkeMtz.NRSRx.Events.Abstraction;
 using IkeMtz.NRSRx.Events.Abstraction.Redis;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Events.Publishers.Redis
@@ -31,9 +31,8 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
     }
     public virtual Task PublishAsync(TEntity payload)
     {
-      var base64 = Convert.ToBase64String(MessageCoder.JsonEncode(payload));
       return Database.StreamAddAsync(StreamKey,
-           new RedisValue(payload.Id.ToString()), new RedisValue(base64));
+           new RedisValue(payload.Id.ToString()), new RedisValue(JsonConvert.SerializeObject(payload)));
     }
   }
 }

@@ -27,7 +27,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     {
       var moqConnection = new Mock<IConnectionMultiplexer>();
       var moqDatabase = new Mock<IDatabase>();
-      _ = moqConnection.Setup(t => t.GetDatabase(-1, null)).Returns(moqDatabase.Object);
+      _ = moqConnection.Setup(t => t.GetDatabase(1, null)).Returns(moqDatabase.Object);
       var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent, Guid>(moqConnection.Object);
       var msg = new SampleMessage();
       await publisher.PublishAsync(msg);
