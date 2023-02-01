@@ -48,7 +48,6 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       {
         await ProcessStreamsAsync("pending", Subscriber.GetPendingMessagesAsync);
       }
-      await Subscriber.DeleteIdleConsumersAsync();
       return true;
     }
 
