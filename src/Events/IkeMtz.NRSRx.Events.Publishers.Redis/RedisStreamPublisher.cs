@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events.Abstraction.Redis;
 using Newtonsoft.Json;
@@ -32,7 +33,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
     public virtual Task PublishAsync(TEntity payload)
     {
       return Database.StreamAddAsync(StreamKey,
-           new RedisValue(payload.Id.ToString()), new RedisValue(JsonConvert.SerializeObject(payload)));
+           new RedisValue(payload.Id.ToString()), new RedisValue(JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings)));
     }
   }
 }
