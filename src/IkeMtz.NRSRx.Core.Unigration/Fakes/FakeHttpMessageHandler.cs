@@ -22,7 +22,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Fakes
     {
       var msg = new HttpResponseMessage(HttpStatusCode.OK)
       {
-        Content = new StringContent(JsonConvert.SerializeObject(responseObject), Encoding.UTF8, "application/json")
+        Content = new StringContent(JsonConvert.SerializeObject(responseObject, Constants.JsonSerializerSettings), Encoding.UTF8, "application/json")
       };
       return msg;
     }
