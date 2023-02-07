@@ -72,15 +72,10 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       foreach (var srcItem in sourceCollection.Where(src => !destIds.Any(t => t.Equals(src.Id))))
       {
         var destItem = new TDestinationEntity();
-        updateLogic(srcItem, destItem);
-        if (srcItem.Id.Equals(Guid.Empty))
-        {
-          destItem.Id = srcItem.Id;
-        }
         destinationCollection?.Add(destItem);
-
+        updateLogic(srcItem, destItem);
+        auditableContext.Add(destItem);
       }
     }
-
   }
 }
