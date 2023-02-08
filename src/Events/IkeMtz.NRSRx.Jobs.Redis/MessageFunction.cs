@@ -28,10 +28,14 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     public virtual int MessageBufferCount { get; set; } = 5;
 
     /// <summary>
-    /// Only set this to true, if you're absolutely sure that there aren't additional consumers running.
-    /// should only be used in debugging and error recovery scenarios
+    /// Setting this to true will setup subscribers to auto claim messages from Idle Consumers
     /// </summary>
     public virtual bool EnablePendingMsgProcessing { get; set; } = false;
+
+    /// <summary>
+    /// Setting this to true will auto delete Idle Consumers
+    /// </summary>
+    public virtual bool AutoDeleteIdleConsumers { get; set; } = false;
 
     protected MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber)
     {
@@ -47,6 +51,10 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       if (EnablePendingMsgProcessing)
       {
         await ProcessStreamsAsync("pending", Subscriber.GetPendingMessagesAsync);
+      }
+      if (AutoDeleteIdleConsumers)
+      {
+        await Subscriber.DeleteIdleConsumersAsync();
       }
       return true;
     }

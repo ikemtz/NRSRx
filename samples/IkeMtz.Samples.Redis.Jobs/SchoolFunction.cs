@@ -11,13 +11,14 @@ namespace IkeMtz.Samples.Redis.Jobs
     public SchoolCreatedFunction(ILogger<SchoolCreatedFunction> logger, RedisStreamSubscriber<School, CreatedEvent> subscriber)
       : base(logger, subscriber)
     {
+      this.EnablePendingMsgProcessing = true;
+      this.AutoDeleteIdleConsumers = true;
     }
 
     public override async Task HandleMessageAsync(School entity)
     {
      _= await Subscriber.GetStreamInfoAsync();
       Logger.LogInformation("Sample handled.");
-
     }
   }
 }
