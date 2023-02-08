@@ -6,8 +6,12 @@
     <members>
         <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.EnablePendingMsgProcessing">
             <summary>
-            Only set this to true, if you're absolutely sure that there aren't additional consumers running.
-            should only be used in debugging and error recovery scenarios
+            Setting this to true will setup subscribers to auto claim messages from Idle Consumers
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.AutoDeleteIdleConsumers">
+            <summary>
+            Setting this to true will auto delete Idle Consumers
             </summary>
         </member>
     </members>
