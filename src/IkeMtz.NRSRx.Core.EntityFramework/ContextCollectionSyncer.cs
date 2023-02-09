@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
 
@@ -72,9 +71,12 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       foreach (var srcItem in sourceCollection.Where(src => !destIds.Any(t => t.Equals(src.Id))))
       {
         var destItem = new TDestinationEntity();
-        destinationCollection?.Add(destItem);
         updateLogic(srcItem, destItem);
-        auditableContext.Add(destItem);
+        if (srcItem.Id.Equals(Guid.Empty))
+        {
+          destItem.Id = srcItem.Id;
+        }
+        destinationCollection?.Add(destItem);
       }
     }
   }
