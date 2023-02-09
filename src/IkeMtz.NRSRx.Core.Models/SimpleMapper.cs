@@ -7,7 +7,8 @@ namespace IkeMtz.NRSRx.Core.Models
 {
   public static class SimpleMapperHelper
   {
-    internal static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
+    // "Id" is really important to ignore because this will trigger changes in EF entity state
+    public static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
     public static readonly string[] IgnoredInterfaces = { nameof(IIdentifiable), typeof(IIdentifiable<>).Name, typeof(ICollection<>).Name };
   }
 
