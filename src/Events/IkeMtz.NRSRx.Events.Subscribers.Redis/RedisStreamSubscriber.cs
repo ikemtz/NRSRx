@@ -37,7 +37,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public RedisSubscriberOptions Options { get; }
 
     public event MessageRecievedEventHandler OnMessageReceived;
-    public RedisStreamSubscriber(IConnectionMultiplexer connection, RedisSubscriberOptions? options) : base(connection)
+    public RedisStreamSubscriber(IConnectionMultiplexer connection, RedisSubscriberOptions? options = null) : base(connection)
     {
       Options = options ?? new RedisSubscriberOptions();
     }
