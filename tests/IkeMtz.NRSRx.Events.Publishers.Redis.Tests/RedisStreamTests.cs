@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -31,7 +29,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var msg = new SampleMessage();
       await publisher.PublishAsync(msg);
       Database
-        .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.StartsWith(msg.Id.ToString())), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.Equals(nameof(SampleMessage))), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
     }
   }
 }

@@ -217,7 +217,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var msg = new SampleMessage();
       await publisher.PublishAsync(msg);
       moqConnection.Database
-        .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.StartsWith(msg.Id.ToString())), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.Equals(nameof(SampleMessage))), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
     }
 
     [TestMethod]
