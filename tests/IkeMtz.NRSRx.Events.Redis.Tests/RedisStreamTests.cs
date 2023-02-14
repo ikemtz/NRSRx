@@ -139,6 +139,31 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
 
+
+    [TestMethod]
+    [TestCategory("Integration")]
+    [TestCategory("RedisIntegration")]
+    public async Task ValidateGetPendingSingleConsumerGroupsAsync()
+    {
+      var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
+      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(connectionMultiplexer);
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(connectionMultiplexer);
+      _ = subscriber.Init();
+      var sampleMessage = new SampleMessage();
+      var original = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
+      await publisher.PublishAsync(sampleMessage);
+
+      var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
+      var subscribedMessages = await subscriber.GetMessagesAsync();
+      Assert.AreEqual(original.Length + 1, result.Length);
+      Assert.AreEqual(1, subscribedMessages.Count());
+      Thread.Sleep(10000);
+      subscribedMessages = await subscriber.GetPendingMessagesAsync();
+      Assert.AreNotEqual(0, subscribedMessages.Count());
+      subscribedMessages.ToList().ForEach(async x => await subscriber.AcknowledgeMessageAsync(x.Id));
+    }
+
+
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("RedisIntegration")]
@@ -226,13 +251,13 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     {
       var moqConnection = MockRedisStreamFactory.CreateMockConnection();
       _ = moqConnection.Database
-        .Setup(x => x.StreamReadGroupAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), 1, false, CommandFlags.None))
+        .Setup(x => x.StreamReadGroupAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), 5, false, CommandFlags.None))
         .Returns(Task.FromResult(Array.Empty<StreamEntry>()));
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Connection.Object);
       _ = subscriber.Init();
       _ = await subscriber.GetMessagesAsync();
       moqConnection.Database
-        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 1, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 5, false, CommandFlags.None), Times.Once);
     }
     class RedisStreamSubscriberMock : RedisStreamSubscriber<SampleMessage, CreateEvent>
     {
@@ -250,17 +275,17 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
 
       _ = Database
-        .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), 1, It.IsAny<RedisValue>(), null, null, CommandFlags.None))
+        .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), 5, It.IsAny<RedisValue>(), null, null, CommandFlags.None))
         .Returns(Task.FromResult(new[] { new StreamPendingMessageInfo() }));
 
       var subscriber = new RedisStreamSubscriberMock(Connection.Object);
       _ = subscriber.Init();
       _ = await subscriber.GetPendingMessagesAsync();
       Database
-         .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 1, "Unit Test", null, null, CommandFlags.None),
+         .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 5, "Unit Test", null, null, CommandFlags.None),
          Times.Once);
       Database
-         .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Once);
+         .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Exactly(2));
 
     }
 

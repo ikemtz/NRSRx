@@ -24,5 +24,13 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     /// The consumer group name for the subscriber
     /// </summary>
     public string? ConsumerGroupName { get; set; }
+    /// <summary>
+    /// The amount of messages to get per GetMessagesAsync request
+    /// </summary>
+    public int MessagesPerBatchCount { get; set; } = 5;
+    /// <summary>
+    /// The amount of pending messages to get per GetMessagesAsync request
+    /// </summary>
+    public int PendingMessagesPerBatchCount { get; set; } = 5;
   }
 }
