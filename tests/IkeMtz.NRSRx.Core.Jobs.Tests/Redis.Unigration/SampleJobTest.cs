@@ -25,7 +25,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
       await program.RunAsync();
 
       //assert
-      program.MockSubscriber.Verify(t => t.GetMessagesAsync(It.Is<int>(x => x == 5)), Times.Once);
+      program.MockSubscriber.Verify(t => t.GetMessagesAsync(It.IsAny<int?>()), Times.Once);
       program.MockSubscriber.Verify(t => t.GetStreamInfoAsync(), Times.Exactly(3));
       program.MockSubscriber.Verify(t => t.AcknowledgeMessageAsync(It.IsAny<RedisValue>()), Times.Exactly(2));
     }

@@ -59,25 +59,25 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       return true;
     }
 
-    public async Task ProcessStreamsAsync(string messageType, Func<int, Task<IEnumerable<(RedisValue Id, TEntity Entity)>>> getMessageFunction)
+    public async Task ProcessStreamsAsync(string messageType, Func<int?, Task<IEnumerable<(RedisValue Id, TEntity Entity)>>> getMessageFunction)
     {
-      Logger.LogInformation("Pulling {MessageBufferCount} " + messageType + " messages from queue.", MessageBufferCount);
+      Logger.LogInformation("Pulling {MessageBufferCount} {messageType} messages from queue.", MessageBufferCount, messageType);
       var messages = await getMessageFunction(MessageBufferCount);
       var messageCount = messages.Count();
-      Logger.LogInformation("Received {messageCount} " + messageType + " messages from queue.", messageCount);
+      Logger.LogInformation("Received {messageCount} {messageType} messages from queue.", messageCount, messageType);
       foreach (var (redisId, entity) in messages)
       {
         var id = entity.Id;
         try
         {
-          Logger.LogInformation("Handling " + messageType + " message with entity id: {id} ", id);
+          Logger.LogInformation("Handling {messageType} message with entity id: {id} ", messageType, id);
           await HandleMessageAsync(entity);
-          Logger.LogInformation("Handled " + messageType + " message with entity id: {id} ", id);
+          Logger.LogInformation("Handled {messageType} message with entity id: {id} ", messageType, id);
           await Subscriber.AcknowledgeMessageAsync(redisId);
         }
         catch (Exception x)
         {
-          Logger.LogError(x, "An error while handling " + messageType + " message with entity id: {id} ", id);
+          Logger.LogError(x, "An error while handling {messageType} message with entity id: {id} ", messageType, id);
           throw;
         }
       }

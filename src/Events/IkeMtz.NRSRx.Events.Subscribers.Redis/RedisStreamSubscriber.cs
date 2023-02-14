@@ -86,10 +86,10 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       };
     }
 
-    public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetMessagesAsync(int messageCount = 1)
+    public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetMessagesAsync(int? messageCount = null)
     {
       ValidateInit();
-      var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), count: messageCount);
+      var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), count: messageCount ?? Options.MessagesPerBatchCount);
       return data.SelectMany(t => t.Values.Select(v => (t.Id, JsonConvert.DeserializeObject<TEntity>(v.Value))));
     }
 
@@ -110,16 +110,18 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       return idleConsumers.Count;
     }
 
-    public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int messageCount = 1)
+    public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int? messageCount = null)
     {
       ValidateInit();
-      var pendingConsumers = await GetIdleConsumersWithPendingMsgsAsync();
+      messageCount = messageCount ?? Options.PendingMessagesPerBatchCount;
+      var pendingConsumerNames = new List<string> { ConsumerName.GetValueOrDefault() };
+      pendingConsumerNames.AddRange((await GetIdleConsumersWithPendingMsgsAsync()).Select(t => t.Name));
       var messageList = new List<(RedisValue Id, TEntity Entity)>();
-      foreach (var consumer in pendingConsumers)
+      foreach (var consumer in pendingConsumerNames.Distinct())
       {
         if (messageList.Count < messageCount)
         {
-          var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount, consumer.Name);
+          var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount ?? Options.PendingMessagesPerBatchCount, consumer);
           var messageIds = pendingMessages.Where(t => t.DeliveryCount <= Options.MaxMessageProcessRetry).Select(t => t.MessageId).ToArray();
           if (messageIds.Any())
           {
