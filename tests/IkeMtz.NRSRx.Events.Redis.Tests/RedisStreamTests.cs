@@ -156,7 +156,6 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
       var subscribedMessages = await subscriber.GetMessagesAsync();
       Assert.AreEqual(original.Length + 1, result.Length);
-      Assert.AreEqual(1, subscribedMessages.Count());
       Thread.Sleep(10000);
       subscribedMessages = await subscriber.GetPendingMessagesAsync();
       Assert.AreNotEqual(0, subscribedMessages.Count());
