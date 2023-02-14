@@ -33,7 +33,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
     public virtual Task PublishAsync(TEntity payload)
     {
       return Database.StreamAddAsync(StreamKey,
-           new RedisValue(payload.Id.ToString()), new RedisValue(JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings)));
+           new RedisValue(typeof(TEntity).Name), new RedisValue(JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings)));
     }
   }
 }
