@@ -16,7 +16,8 @@ namespace IkeMtz.Samples.Redis.Jobs
     {
       var prog = new Program
       {
-        RunContinously = false
+        RunContinously = false,
+        SecsBetweenRuns = 15,
       };
       await prog.RunAsync();
     }
@@ -31,8 +32,13 @@ namespace IkeMtz.Samples.Redis.Jobs
     {
       var redisConnectionString = Configuration.GetValue<string>("REDIS_CONNECTION_STRING");
       RedisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
-      return services.AddSingleton<RedisStreamSubscriber<School, CreatedEvent>>((x) =>
-        new SchoolCreatedSubscriber(RedisConnectionMultiplexer));
+      return services.AddSingleton((x) =>
+        new RedisStreamSubscriber<School, CreateEvent>(RedisConnectionMultiplexer, new RedisSubscriberOptions
+        {
+          StartPosition = StreamPosition.Beginning,
+          IdleTimeSpanInMilliseconds = 1000,
+          MaxMessageProcessRetry = 5000,
+        }));
     }
 
     [ExcludeFromCodeCoverage()]

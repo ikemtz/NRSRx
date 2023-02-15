@@ -25,10 +25,10 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
       };
       _ = program.SetupHost();
 
-      var subscriber = program.JobHost.Services.GetRequiredService<RedisStreamSubscriber<School, CreatedEvent>>();
+      var subscriber = program.JobHost.Services.GetRequiredService<RedisStreamSubscriber<School, CreateEvent>>();
       var originalStreamInfo = await subscriber.GetStreamInfoAsync(); // Need to establish a baseline
 
-      var publisher = new RedisStreamPublisher<School, CreatedEvent>(program.Program.RedisConnectionMultiplexer);
+      var publisher = new RedisStreamPublisher<School, CreateEvent>(program.Program.RedisConnectionMultiplexer);
       await publisher.PublishAsync(Factories.SchoolFactory());
       await publisher.PublishAsync(Factories.SchoolFactory());
 
