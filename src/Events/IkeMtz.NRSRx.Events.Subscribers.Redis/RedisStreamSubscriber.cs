@@ -121,7 +121,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       {
         if (messageList.Count < messageCount)
         {
-          var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, messageCount ?? Options.PendingMessagesPerBatchCount, consumer);
+          var pendingMessages = await Database.StreamPendingMessagesAsync(StreamKey, ConsumerGroupName, 1000, consumer);
           var messageIds = pendingMessages.Where(t => t.DeliveryCount <= Options.MaxMessageProcessRetry).Select(t => t.MessageId).ToArray();
           if (messageIds.Any())
           {

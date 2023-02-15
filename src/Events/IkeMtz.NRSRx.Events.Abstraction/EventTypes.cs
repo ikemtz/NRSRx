@@ -7,46 +7,46 @@ namespace IkeMtz.NRSRx.Events
 
   public class CreateEvent : EventType
   {
-    public override string EventSuffix => "create";
+    public override string EventSuffix => "Create";
   }
 
   public class DeleteEvent : EventType
   {
-    public override string EventSuffix => "delete";
+    public override string EventSuffix => "Delete";
   }
 
   public class UpdateEvent : EventType
   {
-    public override string EventSuffix => "update";
+    public override string EventSuffix => "Update";
   }
 
   public class SendEvent : EventType
   {
-    public override string EventSuffix => "send";
+    public override string EventSuffix => "Send";
   }
 
   public class CreatedEvent : EventType
   {
-    public override string EventSuffix => "created";
+    public override string EventSuffix => "Created";
   }
 
   public class DeletedEvent : EventType
   {
-    public override string EventSuffix => "deleted";
+    public override string EventSuffix => "Deleted";
   }
 
   public class UpdatedEvent : EventType
   {
-    public override string EventSuffix => "updated";
+    public override string EventSuffix => "Updated";
   }
 
   public class SentEvent : EventType
   {
-    public override string EventSuffix => "sent";
+    public override string EventSuffix => "Sent";
   }
 
   public class ReceivedEvent : EventType
   {
-    public override string EventSuffix => "received";
+    public override string EventSuffix => "Received";
   }
 }

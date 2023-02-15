@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 {
   internal class UnigrationProgram : CoreMessagingUnigrationTestJob<Program>
   {
-    public Mock<RedisStreamSubscriber<School, CreatedEvent>> MockSubscriber { get; set; }
+    public Mock<RedisStreamSubscriber<School, CreateEvent>> MockSubscriber { get; set; }
     public UnigrationProgram(Program program, TestContext testContext) : base(program, testContext)
     {
     }
@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
         Factories.SchoolFactory(),
         Factories.SchoolFactory(),
       };
-      var (Subscriber, _) = MockRedisStreamFactory<School, CreatedEvent>.CreateSubscriber(schools);
+      var (Subscriber, _) = MockRedisStreamFactory<School, CreateEvent>.CreateSubscriber(schools);
       MockSubscriber = Subscriber;
       return services.AddSingleton(x => MockSubscriber.Object);
     }

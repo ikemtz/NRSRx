@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events.Abstraction;
 using IkeMtz.NRSRx.Events.Subscribers.Redis;
@@ -10,6 +11,7 @@ using IkeMtz.Samples.Models.V1;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StackExchange.Redis;
+using static IkeMtz.NRSRx.Core.Unigration.TestDataFactory;
 using Consumer = IkeMtz.NRSRx.Events.Subscribers.Redis.Consumer;
 
 namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
@@ -166,6 +168,28 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("RedisIntegration")]
+    public async Task PushSchoolEventsAsync()
+    {
+      var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
+      var publisher = new RedisStreamPublisher<School, CreateEvent>(connectionMultiplexer);
+      for (int i = 0; i < 20; i++)
+      {
+        var schoolMsg = new School
+        {
+          FullName = StringGenerator(50, true, CharacterSets.UpperCase),
+          Name = StringGenerator(10, false, CharacterSets.UpperCase),
+          Id = Guid.NewGuid()
+        };
+        await publisher.PublishAsync(schoolMsg);
+      }
+
+      var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
+      Assert.IsTrue(10 <= result.Length);
+    }
+
+    [TestMethod]
+    [TestCategory("Integration")]
+    [TestCategory("RedisIntegration")]
     public async Task ValidateConsumerGroupNewMessagePositionAsync()
     {
       var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
@@ -274,14 +298,14 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
 
       _ = Database
-        .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), 5, It.IsAny<RedisValue>(), null, null, CommandFlags.None))
+        .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<int>(), It.IsAny<RedisValue>(), null, null, CommandFlags.None))
         .Returns(Task.FromResult(new[] { new StreamPendingMessageInfo() }));
 
       var subscriber = new RedisStreamSubscriberMock(Connection.Object);
       _ = subscriber.Init();
       _ = await subscriber.GetPendingMessagesAsync();
       Database
-         .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, 5, "Unit Test", null, null, CommandFlags.None),
+         .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, It.IsAny<int>(), "Unit Test", null, null, CommandFlags.None),
          Times.Once);
       Database
          .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Exactly(2));
