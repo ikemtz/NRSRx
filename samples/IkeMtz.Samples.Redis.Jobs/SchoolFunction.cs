@@ -12,7 +12,6 @@ namespace IkeMtz.Samples.Redis.Jobs
       : base(logger, subscriber)
     {
       this.EnablePendingMsgProcessing = true;
-      this.AutoDeleteIdleConsumers = true;
       this.MessageBufferCount = 100;
     }
 

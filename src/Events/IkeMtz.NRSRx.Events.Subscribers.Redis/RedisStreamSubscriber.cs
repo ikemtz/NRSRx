@@ -31,6 +31,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public delegate void MessageRecievedEventHandler(TEntity entity);
     public RedisValue? ConsumerName { get; set; }
     public string ConsumerGroupName { get; private set; }
+    public string DeadConsumerName { get; } = "dead-letter";
     public string ConsumerGroupCounterKey { get; set; }
     public bool Subscribed { get; private set; }
     public bool IsInitialized { get; private set; }
@@ -82,7 +83,8 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
         MessageCount = info.Length,
         AckMessageCount = ackMsgCount,
         SubscriberCount = pendingInfo.Count(),
-        DeadLetterCount = pendingInfo.Sum(t => t.PendingMsgCount),
+        PendingMsgCount = pendingInfo.Where(t => t.Name != this.DeadConsumerName).Sum(t => t.PendingMsgCount),
+        DeadLetterMsgCount = pendingInfo.FirstOrDefault(t => t.Name == this.DeadConsumerName)?.PendingMsgCount ?? 0,
       };
     }
 
@@ -101,7 +103,9 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public virtual async Task<int> DeleteIdleConsumersAsync()
     {
       var data = await Database.StreamConsumerInfoAsync(StreamKey, ConsumerGroupName);
-      var idleConsumers = data.Where(t => t.IdleTimeInMilliseconds > Options.IdleTimeSpanInMilliseconds && t.PendingMessageCount == 0).ToList();
+      var idleConsumers = data
+        .Where(t => t.Name != DeadConsumerName)
+        .Where(t => t.IdleTimeInMilliseconds > Options.IdleTimeSpanInMilliseconds && t.PendingMessageCount == 0).ToList();
       foreach (var consumer in idleConsumers)
       {
         await Database.StreamDeleteConsumerAsync(StreamKey, ConsumerGroupName, consumer.Name);
@@ -113,7 +117,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public virtual async Task<IEnumerable<(RedisValue Id, TEntity Entity)>> GetPendingMessagesAsync(int? messageCount = null)
     {
       ValidateInit();
-      messageCount = messageCount ?? Options.PendingMessagesPerBatchCount;
+      messageCount ??= Options.PendingMessagesPerBatchCount;
       var pendingConsumerNames = new List<string> { ConsumerName.GetValueOrDefault() };
       pendingConsumerNames.AddRange((await GetIdleConsumersWithPendingMsgsAsync()).Select(t => t.Name));
       var messageList = new List<(RedisValue Id, TEntity Entity)>();
@@ -127,6 +131,13 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
           {
             var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), 10000, messageIds);
             messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, JsonConvert.DeserializeObject<TEntity>(v.Value)))));
+          }
+          var deadMessageIds = pendingMessages
+            .Where(t => t.DeliveryCount > Options.MaxMessageProcessRetry)
+            .Select(t => t.MessageId).ToArray();
+          if (deadMessageIds.Any())
+          {
+            var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, DeadConsumerName, 10000, deadMessageIds);
           }
         }
         else
@@ -147,7 +158,9 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public virtual async Task<IEnumerable<Consumer>> GetIdleConsumersWithPendingMsgsAsync()
     {
       var data = await GetConsumerInfoAsync();
-      var idleConsumers = data.Where(t => t.IdleTimeInMs > Options.IdleTimeSpanInMilliseconds && t.PendingMsgCount > 0);
+      var idleConsumers = data
+        .Where(t => t.Name != this.DeadConsumerName)
+        .Where(t => t.IdleTimeInMs > Options.IdleTimeSpanInMilliseconds && t.PendingMsgCount > 0);
       return idleConsumers;
     }
 

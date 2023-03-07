@@ -7,11 +7,7 @@
         <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.EnablePendingMsgProcessing">
             <summary>
             Setting this to true will setup subscribers to auto claim messages from Idle Consumers
-            </summary>
-        </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.AutoDeleteIdleConsumers">
-            <summary>
-            Setting this to true will auto delete Idle Consumers
+            Default value = true
             </summary>
         </member>
     </members>

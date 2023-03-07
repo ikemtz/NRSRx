@@ -6,7 +6,8 @@ namespace IkeMtz.NRSRx.Events
   {
     public int? MessageCount { get; set; }
     public int? SubscriberCount { get; set; }
-    public int? DeadLetterCount { get; set; }
+    public int? PendingMsgCount { get; set; }
+    public int? DeadLetterMsgCount { get; set; }
     public int AckMessageCount { get; set; }
   }
 }
