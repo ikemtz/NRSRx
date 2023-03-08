@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public RedisValue? ConsumerName { get; set; }
     public string ConsumerGroupName { get; private set; }
     public string DeadConsumerName { get; } = "dead-letter";
-    public string ConsumerGroupCounterKey { get; set; }
+    public string ConsumerGroupAckCounterKey { get; set; }
     public bool Subscribed { get; private set; }
     public bool IsInitialized { get; private set; }
     public RedisSubscriberOptions Options { get; }
@@ -54,11 +54,11 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
         {
           ConsumerGroupName = $"{StreamKey}:{ConsumerGroupName}";
         }
-        ConsumerGroupCounterKey ??= $"{ConsumerGroupName}-AckCnt";
+        ConsumerGroupAckCounterKey ??= $"{ConsumerGroupName}-AckCnt";
 
         try
         {
-          _ = Database.StringIncrementAsync(ConsumerGroupCounterKey, 0);
+          _ = Database.StringIncrementAsync(ConsumerGroupAckCounterKey, 0);
           var result = Database.StreamCreateConsumerGroup(StreamKey, ConsumerGroupName, Options.StartPosition, true);
           IsInitialized = true;
         }
@@ -76,7 +76,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     {
       ValidateInit();
       var info = await Database.StreamInfoAsync(StreamKey);
-      var ackMsgCount = Convert.ToInt32(await Database.StringGetAsync(ConsumerGroupCounterKey));
+      var ackMsgCount = Convert.ToInt32(await Database.StringGetAsync(ConsumerGroupAckCounterKey));
       var pendingInfo = await GetConsumerInfoAsync();
       return new MessageQueueInfo
       {
@@ -109,7 +109,6 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       foreach (var consumer in idleConsumers)
       {
         await Database.StreamDeleteConsumerAsync(StreamKey, ConsumerGroupName, consumer.Name);
-        await Database.KeyDeleteAsync(ConsumerGroupCounterKey);
       }
       return idleConsumers.Count;
     }
@@ -167,7 +166,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     public virtual async Task<long> AcknowledgeMessageAsync(RedisValue redisValue)
     {
       var result = await Database.StreamAcknowledgeAsync(StreamKey, ConsumerGroupName, redisValue);
-      _ = await Database.StringIncrementAsync(ConsumerGroupCounterKey, result);
+      _ = await Database.StringIncrementAsync(ConsumerGroupAckCounterKey, result);
       return result;
     }
 
