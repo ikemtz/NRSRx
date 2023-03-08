@@ -47,7 +47,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
       Assert.AreEqual(0, currentStreamInfo.DeadLetterMsgCount);
       _ = await subscriber.DeleteIdleConsumersAsync();
       _ = await subscriber.Database.KeyDeleteAsync(subscriber.StreamKey);
-      _ = await subscriber.Database.KeyDeleteAsync(subscriber.ConsumerGroupCounterKey);
+      _ = await subscriber.Database.KeyDeleteAsync(subscriber.ConsumerGroupAckCounterKey);
     }
   }
 }

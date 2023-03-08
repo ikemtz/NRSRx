@@ -252,7 +252,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var subscribedMessages = await subscriber.GetMessagesAsync(20);
       Assert.AreEqual(10, subscribedMessages.Count());
       _ = await publisher.Database.KeyDeleteAsync(subscriber.StreamKey);
-      _ = await publisher.Database.KeyDeleteAsync(subscriber.ConsumerGroupCounterKey);
+      _ = await publisher.Database.KeyDeleteAsync(subscriber.ConsumerGroupAckCounterKey);
     }
 
 
