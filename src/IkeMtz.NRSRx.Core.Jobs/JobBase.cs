@@ -44,7 +44,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         await ScopeFunctionasync(loggerFactory, func);
       }
     }
-    public virtual IEnumerable<TFunctionType> GetFunctions(ILoggerFactory? loggerFactory)
+    public virtual IOrderedEnumerable<TFunctionType> GetFunctions(ILoggerFactory? loggerFactory)
     {
       var jobLogger = loggerFactory?.CreateLogger(GetType());
       var functions = JobHost.Services.GetServices<TFunctionType>();
@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         var functionName = functions.ElementAt(i);
         jobLogger?.LogInformation("[{i}] {functionName}", i, functionName);
       }
-      return functions;
+      return functions.OrderByDescending(t => t.SequencePriority);
     }
 
     public virtual async Task ScopeFunctionasync(ILoggerFactory loggerFactory, TFunctionType func)
@@ -110,6 +110,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
     {
       return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
     }
+
     public virtual async Task RunFunctionAsync(string functionName, TFunctionType x, ILogger logger)
     {
       logger.LogInformation("Starting {functionName} function.", functionName);

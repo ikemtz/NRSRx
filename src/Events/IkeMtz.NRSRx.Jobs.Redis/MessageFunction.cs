@@ -33,6 +33,11 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     /// </summary>
     public virtual bool EnablePendingMsgProcessing { get; set; } = true;
 
+    /// <summary>
+    /// The higher priorty functions get run first (ordered by descending). 
+    /// </summary>
+    public int? SequencePriority => null;
+
     protected MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber)
     {
       Logger = logger;
