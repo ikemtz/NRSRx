@@ -10,6 +10,9 @@ namespace IkeMtz.Samples.Jobs
   {
     public ILogger Logger { get; }
     public DatabaseContext DatabaseContext { get; }
+
+    public int? SequencePriority => null;
+
     public CourseFunction(ILogger<CourseFunction> logger, DatabaseContext databaseContext)
     {
       Logger = logger;

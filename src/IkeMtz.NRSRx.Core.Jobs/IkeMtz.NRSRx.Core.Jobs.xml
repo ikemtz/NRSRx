@@ -4,5 +4,15 @@
         <name>IkeMtz.NRSRx.Core.Jobs</name>
     </assembly>
     <members>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.IFunction.SequencePriority">
+            <summary>
+            The higher priorty functions get run first (ordered by descending). 
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.MessagingJob`1.EnableParallelFunctionProcessing">
+            <summary>
+            Flag to enable Parallel function processing
+            </summary>
+        </member>
     </members>
 </doc>

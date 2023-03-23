@@ -10,5 +10,10 @@
             Default value = true
             </summary>
         </member>
+        <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.SequencePriority">
+            <summary>
+            The higher priorty functions get run first (ordered by descending). 
+            </summary>
+        </member>
     </members>
 </doc>
