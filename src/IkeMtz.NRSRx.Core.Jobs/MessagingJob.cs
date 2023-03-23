@@ -7,7 +7,12 @@ namespace IkeMtz.NRSRx.Core.Jobs
     where TProgram : class, IJob
   {
     public virtual bool RunContinously { get; set; } = true;
+
+    /// <summary>
+    /// Flag to enable Parallel function processing
+    /// </summary>
     public virtual bool EnableParallelFunctionProcessing { get; set; } = false;
+
     public virtual int? SecsBetweenRuns { get; set; }
     public virtual TimeSpan SleepTimeSpan => new(0, 0, SecsBetweenRuns.GetValueOrDefault());
     public override async Task RunFunctions(ILoggerFactory loggerFactory)
