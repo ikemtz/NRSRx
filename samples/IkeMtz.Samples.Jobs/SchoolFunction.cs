@@ -8,6 +8,7 @@ namespace IkeMtz.Samples.Jobs
   internal class SchoolFunction : IFunction
   {
     public ILogger Logger { get; }
+    public int? SequencePriority => null;
     public DatabaseContext DatabaseContext { get; }
 
     public SchoolFunction(ILogger<SchoolFunction> logger, DatabaseContext databaseContext)

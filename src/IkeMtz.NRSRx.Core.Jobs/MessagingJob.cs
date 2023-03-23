@@ -7,6 +7,12 @@ namespace IkeMtz.NRSRx.Core.Jobs
     where TProgram : class, IJob
   {
     public virtual bool RunContinously { get; set; } = true;
+
+    /// <summary>
+    /// Flag to enable Parallel function processing
+    /// </summary>
+    public virtual bool EnableParallelFunctionProcessing { get; set; } = false;
+
     public virtual int? SecsBetweenRuns { get; set; }
     public virtual TimeSpan SleepTimeSpan => new(0, 0, SecsBetweenRuns.GetValueOrDefault());
     public override async Task RunFunctions(ILoggerFactory loggerFactory)
@@ -17,9 +23,19 @@ namespace IkeMtz.NRSRx.Core.Jobs
       var firstRun = true;
       while (RunContinously || firstRun)
       {
-        foreach (var func in functions)
+        if (EnableParallelFunctionProcessing)
         {
-          await ScopeFunctionasync(loggerFactory, func);
+          foreach (var func in functions.AsParallel())
+          {
+            await ScopeFunctionasync(loggerFactory, func);
+          }
+        }
+        else
+        {
+          foreach (var func in functions)
+          {
+            await ScopeFunctionasync(loggerFactory, func);
+          }
         }
         firstRun = false;
         logger.LogInformation("Finished running jobs, going to sleep for {SecsBetweenRuns} seconds.", SecsBetweenRuns);

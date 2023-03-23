@@ -40,6 +40,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
       {
         RunContinously = false,
         SecsBetweenRuns = 1,
+        EnableParallelFunctionProcessing = true,
       };
 
       _ = program.SetupHost(x => x.AddSingleton<SchoolCreatedFunction>());
