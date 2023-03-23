@@ -36,7 +36,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     /// <summary>
     /// The higher priorty functions get run first (ordered by descending). 
     /// </summary>
-    public int? SequencePriority => null;
+    public virtual int? SequencePriority { get; set; } = null;
 
     protected MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber)
     {
