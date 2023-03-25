@@ -44,7 +44,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       Subscriber = subscriber;
     }
 
-    public async Task<bool> RunAsync()
+    public virtual async Task<bool> RunAsync()
     {
       await LogStreamHealthInformationAsync();
       await ProcessStreamsAsync("new", Subscriber.GetMessagesAsync);
@@ -58,7 +58,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       return true;
     }
 
-    public async Task ProcessStreamsAsync(string messageType, Func<int?, Task<IEnumerable<(RedisValue Id, TEntity Entity)>>> getMessageFunction)
+    public virtual async Task ProcessStreamsAsync(string messageType, Func<int?, Task<IEnumerable<(RedisValue Id, TEntity Entity)>>> getMessageFunction)
     {
       Logger.LogInformation("Pulling {MessageBufferCount} {messageType} messages from queue.", MessageBufferCount, messageType);
       var messages = await getMessageFunction(MessageBufferCount);
@@ -85,7 +85,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
     }
 
-    public async Task LogStreamHealthInformationAsync()
+    public virtual async Task LogStreamHealthInformationAsync()
     {
       var result = await Subscriber.GetStreamInfoAsync();
       if (result != null) // This can happen in mocked scenarios

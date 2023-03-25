@@ -105,6 +105,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       var data = await Database.StreamConsumerInfoAsync(StreamKey, ConsumerGroupName);
       var idleConsumers = data
         .Where(t => t.Name != DeadConsumerName)
+        .Where(t => t.Name != ConsumerName)
         .Where(t => t.IdleTimeInMilliseconds > Options.IdleTimeSpanInMilliseconds && t.PendingMessageCount == 0).ToList();
       foreach (var consumer in idleConsumers)
       {

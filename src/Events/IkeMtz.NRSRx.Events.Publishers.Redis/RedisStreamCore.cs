@@ -8,7 +8,7 @@ namespace IkeMtz.NRSRx.Events.Abstraction.Redis
     where TIdentityType : IComparable
     where TEntity : IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
-  { 
+  {
     public Type EntityType { get; }
     protected string TypeName { get; }
     public IConnectionMultiplexer Connection { get; }
@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Events.Abstraction.Redis
     public RedisStreamCore(IConnectionMultiplexer connection)
     {
       EntityType = typeof(TEntity);
-      TypeName = EntityType.IsGenericType ? $"{EntityType.Name}{EntityType.GenericTypeArguments[0].Name}" : EntityType.Name;
+      TypeName = EntityType.IsGenericType ? $"{EntityType.Name}:{EntityType.GenericTypeArguments[0].Name}" : EntityType.Name;
       Connection = connection;
       Database = connection.GetDatabase();
       var eventType = new TEvent();
