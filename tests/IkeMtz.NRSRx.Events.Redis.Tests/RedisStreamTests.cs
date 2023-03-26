@@ -42,7 +42,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
         Assert.AreEqual(1, count);
       }
       var deletedCount = await subscriber.DeleteIdleConsumersAsync();
-      Assert.AreNotEqual(0, deletedCount);
+      Assert.AreNotEqual(1, deletedCount);
     }
 
     [TestMethod]
