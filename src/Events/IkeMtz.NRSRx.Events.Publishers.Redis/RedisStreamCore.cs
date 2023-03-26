@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
 using StackExchange.Redis;
 
@@ -17,7 +18,7 @@ namespace IkeMtz.NRSRx.Events.Abstraction.Redis
     public RedisStreamCore(IConnectionMultiplexer connection)
     {
       EntityType = typeof(TEntity);
-      TypeName = EntityType.IsGenericType ? $"{EntityType.Name}:{EntityType.GenericTypeArguments[0].Name}" : EntityType.Name;
+      TypeName = EntityType.IsGenericType ? $"{EntityType.GenericTypeArguments[0].Name}:{EntityType.Name.Split("`").First()}" : EntityType.Name;
       Connection = connection;
       Database = connection.GetDatabase();
       var eventType = new TEvent();

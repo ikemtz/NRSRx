@@ -66,7 +66,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
-      var schools = SplitMessageFactory<School>.Create(Factories.SchoolFactory);
+      var schools = SplitMessageFactory<School>.Create(Factories.SchoolFactory, 2);
       var (Subscriber, _) = MockRedisStreamFactory<SplitMessage<School>, CreatedEvent>.CreateSubscriber(schools);
       MockSubscriber = Subscriber;
       return services.AddSingleton(x => MockSubscriber.Object);

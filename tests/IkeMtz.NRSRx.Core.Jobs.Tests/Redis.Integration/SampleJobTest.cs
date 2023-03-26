@@ -1,4 +1,6 @@
+using System.Security.Cryptography.X509Certificates;
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.NRSRx.Events.Publishers.Redis;
 using IkeMtz.NRSRx.Events.Subscribers.Redis;
@@ -55,7 +57,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
     [TestMethod]
     [TestCategory("Integration")]
     [TestCategory("RedisIntegration")]
-    public void RedisStreamSplitMessagePublisherTest()
+    public async Task RedisStreamSplitMessagePublisherTest()
     {
       var program = new IntegrationProgram(new Program(), TestContext)
       {
@@ -69,6 +71,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
 
       var publisher = new RedisStreamSplitMessagePublisher<School, CreatedEvent>(connectionMultiplexer);
 
+      await publisher.PublishAsync(SplitMessageFactory<School>.Create(Factories.SchoolFactory));
       //assert
       Assert.IsNotNull(publisher);
     }
