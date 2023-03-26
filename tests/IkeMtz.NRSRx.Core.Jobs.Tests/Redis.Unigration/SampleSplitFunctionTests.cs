@@ -39,6 +39,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 
       //assert   
       program.MockSubscriber.Verify(t => t.AcknowledgeMessageAsync(It.IsAny<RedisValue>()), Times.Exactly(2));
+      Assert.IsNotNull(new SplitMessage<School>());
 
     }
   }
@@ -65,14 +66,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
-      var schools = new[] {
-        new SplitMessage<School>(Factories.SchoolFactory()){
-          TaskIndex = 1,
-          TaskCount = 2},
-        new SplitMessage<School>(Factories.SchoolFactory()){
-          TaskIndex = 1,
-          TaskCount = 2},
-      };
+      var schools = SplitMessageFactory<School>.Create(Factories.SchoolFactory);
       var (Subscriber, _) = MockRedisStreamFactory<SplitMessage<School>, CreatedEvent>.CreateSubscriber(schools);
       MockSubscriber = Subscriber;
       return services.AddSingleton(x => MockSubscriber.Object);

@@ -53,7 +53,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
           .ReturnsAsync(new MessageQueueInfo
           {
             DeadLetterMsgCount = 0,
-            AckMessageCount =0,
+            AckMessageCount = 0,
             PendingMsgCount = 0,
             MessageCount = collection.Count(),
             SubscriberCount = 1,

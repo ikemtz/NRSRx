@@ -16,6 +16,7 @@ namespace IkeMtz.NRSRx.Events.Abstraction
     public TEntity Entity { get; set; }
     public int TaskIndex { get; set; }
     public int TaskCount { get; set; }
+    public string QueuedBy { get; set; }
 
   }
 }
