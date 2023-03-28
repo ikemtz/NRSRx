@@ -15,6 +15,9 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       where TEntity : class, IIdentifiable<Guid>
       where TEvent : EventType, new()
   {
+    public bool AutoDeleteSplitProgressData { get; set; } = true;
+    public const string PASS = "Passed";
+    public const string FAIL = "Failed";
     protected SplitMessageFunction(ILogger<TSplitMessageFunction> logger, RedisStreamSubscriber<SplitMessage<TEntity>, TEvent> subscriber)
       : base(logger, subscriber)
     { }
@@ -55,14 +58,43 @@ namespace IkeMtz.NRSRx.Jobs.Redis
           await NotifySplitProgress(entity, false);
         }
       }
-
       Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
     }
 
-    public virtual Task NotifySplitProgress(SplitMessage<TEntity> entity, bool isSuccess)
+    public virtual async Task<SplitMessageProgressUpdate> NotifySplitProgress(SplitMessage<TEntity> entity, bool isSuccess)
+    {
+      var passFail = isSuccess ? PASS : FAIL;
+      var incrementKey = $"{Subscriber.StreamKey}:{entity.Id}";
+      await Subscriber.Database.HashIncrementAsync(incrementKey, passFail, 1);
+      var result = await Subscriber.Database.HashGetAllAsync(incrementKey);
+
+      var progressUpdate = ConvertHashSet(result, entity.TaskCount);
+      if (entity.TaskCount == progressUpdate.Passed + progressUpdate.Failed)
+      {
+        if (AutoDeleteSplitProgressData)
+        {
+          await Subscriber.Database.KeyDeleteAsync(incrementKey);
+        }
+        await NotifySplitCompletion(entity);
+      }
+      return progressUpdate;
+    }
+
+    public virtual SplitMessageProgressUpdate ConvertHashSet(HashEntry[] result, int totalMessages)
+    {
+      var passVal = result.FirstOrDefault(t => t.Name == PASS);
+      var failVal = result.FirstOrDefault(t => t.Name == FAIL);
+      return new SplitMessageProgressUpdate()
+      {
+        Total = totalMessages,
+        Passed = Convert.ToInt32(passVal.Value),
+        Failed = Convert.ToInt32(failVal.Value),
+      };
+    }
+
+    public virtual Task NotifySplitCompletion(SplitMessage<TEntity> entity)
     {
       return Task.CompletedTask;
     }
   }
-
 }
