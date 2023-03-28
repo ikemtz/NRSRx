@@ -26,14 +26,21 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis
     where TEntity : IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
   {
+    public string EntityName { get; set; }
 
     public RedisStreamPublisher(IConnectionMultiplexer connection) : base(connection)
     {
+      var type = typeof(TEntity);
+      if (type.IsGenericType)
+      {
+        type = type.GenericTypeArguments[0];
+      }
+      EntityName = type.Name;
     }
     public virtual Task PublishAsync(TEntity payload)
     {
       return Database.StreamAddAsync(StreamKey,
-           new RedisValue(typeof(TEntity).Name), new RedisValue(JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings)));
+           new RedisValue(EntityName), new RedisValue(JsonConvert.SerializeObject(payload, Constants.JsonSerializerSettings)));
     }
   }
 }

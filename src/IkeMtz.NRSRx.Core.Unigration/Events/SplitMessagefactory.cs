@@ -6,22 +6,12 @@ using IkeMtz.NRSRx.Events.Abstraction;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Events
 {
-  public static class SplitMessageFactory<T>
-    where T : class, IIdentifiable<Guid>
+  public static class SplitMessageFactory<TEntity>
+    where TEntity : class, IIdentifiable<Guid>
   {
-    public static IEnumerable<SplitMessage<T>> Create(Func<T> entityFactory, int messageCount)
+    public static IEnumerable<SplitMessage<TEntity>> Create(Func<TEntity> entityFactory, int messageCount = 1, string taskName = "Unigration Test Task", string userName = "NRSRx Test User")
     {
-      return Enumerable.Range(0, messageCount).Select(i => Create(entityFactory, i, messageCount));
-    }
-
-    public static SplitMessage<T> Create(Func<T> entityFactory, int index = 1, int messageCount = 1)
-    {
-      return new SplitMessage<T>(entityFactory())
-      {
-        TaskIndex = index,
-        TaskCount = messageCount,
-        QueuedBy = "NRSRx Test User",
-      };
+      return SplitMessage<TEntity>.FromCollection(Enumerable.Range(0, messageCount).Select(i => entityFactory()), taskName, userName);
     }
   }
 }

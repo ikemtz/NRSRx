@@ -70,8 +70,10 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
       var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
 
       var publisher = new RedisStreamSplitMessagePublisher<School, CreatedEvent>(connectionMultiplexer);
-
-      await publisher.PublishAsync(SplitMessageFactory<School>.Create(Factories.SchoolFactory));
+      foreach (var splitMessage in SplitMessageFactory<School>.Create(Factories.SchoolFactory))
+      {
+        await publisher.PublishAsync(splitMessage);
+      }
       //assert
       Assert.IsNotNull(publisher);
     }
