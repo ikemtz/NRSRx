@@ -17,8 +17,8 @@ namespace IkeMtz.Samples.Jobs
 
     public override IServiceCollection SetupFunctions(IServiceCollection services)
     {
-      _ = services.AddSingleton<IFunction, SchoolFunction>();
-      _ = services.AddSingleton<IFunction, CourseFunction>();
+      _ = services.AddFunction<SchoolFunction>();
+      _ = services.AddFunction<CourseFunction>();
       return services;
     }
     [ExcludeFromCodeCoverage]

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using IkeMtz.NRSRx.Core.Jobs;
 using IkeMtz.NRSRx.Events;
+using IkeMtz.NRSRx.Events.Abstraction;
 using IkeMtz.NRSRx.Events.Subscribers.Redis;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,9 @@ namespace IkeMtz.Samples.Redis.Jobs
 
     public override IServiceCollection SetupFunctions(IServiceCollection services)
     {
-      return services.AddSingleton<IMessageFunction, SchoolCreatedFunction>();
+      return services
+        .AddMessageFunction<SchoolCreatedFunction>()
+        .AddMessageFunction<SchoolUpdatedSplitFunction>();
     }
 
     [ExcludeFromCodeCoverage]
@@ -34,6 +37,13 @@ namespace IkeMtz.Samples.Redis.Jobs
       RedisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
       return services.AddSingleton((x) =>
         new RedisStreamSubscriber<School, CreateEvent>(RedisConnectionMultiplexer, new RedisSubscriberOptions
+        {
+          StartPosition = StreamPosition.Beginning,
+          IdleTimeSpanInMilliseconds = 1000,
+          MaxMessageProcessRetry = 5000,
+        }))
+        .AddSingleton((x) =>
+        new RedisStreamSubscriber<SplitMessage<School>, UpdatedEvent>(RedisConnectionMultiplexer, new RedisSubscriberOptions
         {
           StartPosition = StreamPosition.Beginning,
           IdleTimeSpanInMilliseconds = 1000,

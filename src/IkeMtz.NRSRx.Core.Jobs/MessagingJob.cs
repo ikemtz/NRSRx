@@ -27,14 +27,14 @@ namespace IkeMtz.NRSRx.Core.Jobs
         {
           foreach (var func in functions.AsParallel())
           {
-            await ScopeFunctionasync(loggerFactory, func);
+            await ScopeFunctionAsync(loggerFactory, func);
           }
         }
         else
         {
           foreach (var func in functions)
           {
-            await ScopeFunctionasync(loggerFactory, func);
+            await ScopeFunctionAsync(loggerFactory, func);
           }
         }
         firstRun = false;

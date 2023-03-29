@@ -45,21 +45,26 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
         _ = mockSubscriber
           .Setup(t => t.GetMessagesAsync(It.IsAny<int>()))
           .ReturnsAsync(ExpandWithRedisValues(collection));
-        _ = mockSubscriber
-          .Setup(t => t.AcknowledgeMessageAsync(It.IsAny<RedisValue>()))
-          .ReturnsAsync(1);
-        _ = mockSubscriber
-          .Setup(t => t.GetStreamInfoAsync())
-          .ReturnsAsync(new MessageQueueInfo
-          {
-            DeadLetterMsgCount = 0,
-            AckMessageCount = 0,
-            PendingMsgCount = 0,
-            MessageCount = collection.Count(),
-            SubscriberCount = 1,
-
-          });
+        SetupSupportMockMethods(mockSubscriber, collection);
       }
+    }
+
+    public static void SetupSupportMockMethods<TSubscriberType>(Mock<TSubscriberType> mockSubscriber, IEnumerable<TEntity>? collection)
+      where TSubscriberType : RedisStreamSubscriber<TEntity, TEvent, TIdentityType>
+    {
+      _ = mockSubscriber
+        .Setup(t => t.AcknowledgeMessageAsync(It.IsAny<RedisValue>()))
+        .ReturnsAsync(1);
+      _ = mockSubscriber
+        .Setup(t => t.GetStreamInfoAsync())
+        .ReturnsAsync(new MessageQueueInfo
+        {
+          DeadLetterMsgCount = 0,
+          AckMessageCount = 0,
+          PendingMsgCount = 0,
+          MessageCount = collection?.Count(),
+          SubscriberCount = 1,
+        });
     }
 
     public static IEnumerable<(RedisValue Id, TEntity Entity)> ExpandWithRedisValues(IEnumerable<TEntity>? collection = null)
