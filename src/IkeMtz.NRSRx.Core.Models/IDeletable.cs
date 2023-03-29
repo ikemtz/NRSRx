@@ -7,6 +7,6 @@ namespace IkeMtz.NRSRx.Core.Models
   {
     DateTimeOffset? DeletedOnUtc { get; set; }
     [MaxLength(256)]
-    string? DeleteddBy { get; set; }
+    string? DeletedBy { get; set; }
   }
 }
