@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.Samples.Redis.Jobs
 {
-  public class SchoolCreatedSplitFunction : SplitMessageFunction<SchoolCreatedSplitFunction, School, UpdatedEvent>
+  public class SchoolUpdatedSplitFunction : SplitMessageFunction<SchoolUpdatedSplitFunction, School, UpdatedEvent>
   {
-    public SchoolCreatedSplitFunction(ILogger<SchoolCreatedSplitFunction> logger, RedisStreamSubscriber<SplitMessage<School>, UpdatedEvent> subscriber)
+    public SchoolUpdatedSplitFunction(ILogger<SchoolUpdatedSplitFunction> logger, RedisStreamSubscriber<SplitMessage<School>, UpdatedEvent> subscriber)
       : base(logger, subscriber)
     {
       this.EnablePendingMsgProcessing = true;

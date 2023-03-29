@@ -27,7 +27,7 @@ namespace IkeMtz.Samples.Redis.Jobs
     {
       return services
         .AddMessageFunction<SchoolCreatedFunction>()
-        .AddMessageFunction<SchoolCreatedSplitFunction>();
+        .AddMessageFunction<SchoolUpdatedSplitFunction>();
     }
 
     [ExcludeFromCodeCoverage]

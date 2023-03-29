@@ -34,6 +34,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
       var loggerFactory = JobHost.Services.GetRequiredService<ILoggerFactory>();
       await RunFunctions(loggerFactory);
     }
+
     public virtual async Task RunFunctions(ILoggerFactory loggerFactory)
     {
       var functions = GetFunctions(loggerFactory);
@@ -42,6 +43,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         await ScopeFunctionAsync(loggerFactory, func);
       }
     }
+
     public virtual IOrderedEnumerable<FunctionMetaData> GetFunctions(ILoggerFactory? loggerFactory)
     {
       var jobLogger = loggerFactory?.CreateLogger(GetType());

@@ -18,7 +18,8 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     public bool AutoDeleteSplitProgressData { get; set; } = true;
     public const string PASS = "Passed";
     public const string FAIL = "Failed";
-    protected SplitMessageFunction(ILogger<TSplitMessageFunction> logger, RedisStreamSubscriber<SplitMessage<TEntity>, TEvent> subscriber)
+    protected SplitMessageFunction(ILogger<TSplitMessageFunction> logger,
+      RedisStreamSubscriber<SplitMessage<TEntity>, TEvent> subscriber)
       : base(logger, subscriber)
     { }
 
@@ -69,7 +70,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       var result = await Subscriber.Database.HashGetAllAsync(incrementKey);
 
       var progressUpdate = ConvertHashSet(result, entity.TaskCount);
-      if (entity.TaskCount == progressUpdate.Passed + progressUpdate.Failed)
+      if (entity.TaskCount <= progressUpdate.Passed + progressUpdate.Failed)
       {
         if (AutoDeleteSplitProgressData)
         {

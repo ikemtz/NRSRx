@@ -1,6 +1,7 @@
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events;
+using IkeMtz.NRSRx.Events.Abstraction;
 using IkeMtz.NRSRx.Events.Subscribers.Redis;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Redis.Jobs;
@@ -12,7 +13,8 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 {
   internal class UnigrationProgram : CoreMessagingUnigrationTestJob<Program>
   {
-    public Mock<RedisStreamSubscriber<School, CreateEvent>> MockSubscriber { get; set; }
+    public Mock<RedisStreamSubscriber<School, CreateEvent>> SchoolCreatedSubMock { get; set; }
+    public Mock<RedisStreamSubscriber<SplitMessage<School>, UpdatedEvent>> SchoolUpdatedSplitSubMock { get; set; }
     public UnigrationProgram(Program program, TestContext testContext) : base(program, testContext)
     {
     }
@@ -23,9 +25,26 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
         Factories.SchoolFactory(),
         Factories.SchoolFactory(),
       };
-      var (Subscriber, _) = MockRedisStreamFactory<School, CreateEvent>.CreateSubscriber(schools);
-      MockSubscriber = Subscriber;
-      return services.AddSingleton(x => MockSubscriber.Object);
+      var (createdSubscriber, _) = MockRedisStreamFactory<School, CreateEvent>.CreateSubscriber(schools);
+      SchoolCreatedSubMock = createdSubscriber;
+      var firstRun = true;
+      var (updatedSubscriber, _) = MockRedisStreamFactory<SplitMessage<School>, UpdatedEvent>.CreateSubscriber(() =>
+      {
+        if (firstRun)
+        {
+          firstRun = false;
+          return SplitMessage<School>.FromCollection(new[] { Factories.SchoolFactory() }, "unigration test", "NRSRx test user");
+        }
+        else
+        {
+          return Array.Empty<SplitMessage<School>>();
+        }
+      });
+      SchoolUpdatedSplitSubMock = updatedSubscriber;
+
+      return services
+         .AddSingleton(x => SchoolCreatedSubMock.Object)
+         .AddSingleton(x => SchoolUpdatedSplitSubMock.Object);
     }
   }
 }
