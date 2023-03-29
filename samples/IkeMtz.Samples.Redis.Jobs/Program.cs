@@ -25,8 +25,9 @@ namespace IkeMtz.Samples.Redis.Jobs
 
     public override IServiceCollection SetupFunctions(IServiceCollection services)
     {
-      return services.AddSingleton<IMessageFunction, SchoolCreatedFunction>()
-        .AddSingleton<IMessageFunction, SchoolCreatedSplitFunction>();
+      return services
+        .AddMessageFunction<SchoolCreatedFunction>()
+        .AddMessageFunction<SchoolCreatedSplitFunction>();
     }
 
     [ExcludeFromCodeCoverage]

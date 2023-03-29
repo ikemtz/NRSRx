@@ -11,10 +11,8 @@ namespace IkeMtz.NRSRx.Core.Jobs
     where TProgram : class, IJob
     where TFunctionType : IFunction
   {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public virtual IHost JobHost { get; set; }
     public virtual IConfiguration Configuration { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     public virtual IConfiguration GetConfig()
     {
@@ -41,10 +39,10 @@ namespace IkeMtz.NRSRx.Core.Jobs
       var functions = GetFunctions(loggerFactory);
       foreach (var func in functions)
       {
-        await ScopeFunctionasync(loggerFactory, func);
+        await ScopeFunctionAsync(loggerFactory, func);
       }
     }
-    public virtual IOrderedEnumerable<TFunctionType> GetFunctions(ILoggerFactory? loggerFactory)
+    public virtual IOrderedEnumerable<FunctionMetaData> GetFunctions(ILoggerFactory? loggerFactory)
     {
       var jobLogger = loggerFactory?.CreateLogger(GetType());
       var functions = JobHost.Services.GetServices<TFunctionType>();
@@ -56,29 +54,38 @@ namespace IkeMtz.NRSRx.Core.Jobs
         var functionName = functions.ElementAt(i);
         jobLogger?.LogInformation("[{i}] {functionName}", i, functionName);
       }
-      return functions.OrderByDescending(t => t.SequencePriority);
+      return functions
+        .Select(t =>
+        {
+          var type = t.GetType();
+          return new FunctionMetaData
+          {
+            Type = type,
+            Name = type.Name,
+            SequencePriority = t.SequencePriority ?? 0
+          };
+        }).OrderByDescending(t => t.SequencePriority);
     }
 
-    public virtual async Task ScopeFunctionasync(ILoggerFactory loggerFactory, TFunctionType func)
+    public virtual async Task ScopeFunctionAsync(ILoggerFactory loggerFactory, FunctionMetaData func)
     {
-      var functionName = func.GetType().Name;
       var logger = loggerFactory.CreateLogger(func.GetType());
       var startTime = DateTime.UtcNow;
-      using (logger.BeginScope("Function {functionName}", functionName))
+      using (logger.BeginScope("Function {functionName}", func.Name))
       {
-        logger.LogInformation("Function {functionName} start time: {startTime} UTC", functionName, startTime);
+        logger.LogInformation("Function {functionName} start time: {startTime} UTC", func.Name, startTime);
         try
         {
-          await RunFunctionAsync(functionName, func, logger);
+          await RunFunctionAsync(func, logger);
         }
         catch (Exception x)
         {
-          logger.LogError(x, "An unhandled exception has occured while executing function: {functionName}", functionName);
+          logger.LogError(x, "An unhandled exception has occured while executing function: {functionName}", func.Name);
         }
         var endTime = DateTime.UtcNow;
         var durationInSecs = endTime.Subtract(startTime).TotalSeconds;
-        logger.LogInformation("Function {functionName} completed time: {endTime} UTC", functionName, endTime);
-        logger.LogInformation("Function {functionName} completed in {durationInSecs} secs", functionName, durationInSecs);
+        logger.LogInformation("Function {functionName} completed time: {endTime} UTC", func.Name, endTime);
+        logger.LogInformation("Function {functionName} completed in {durationInSecs} secs", func.Name, durationInSecs);
       }
     }
 
@@ -111,15 +118,19 @@ namespace IkeMtz.NRSRx.Core.Jobs
       return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
     }
 
-    public virtual async Task RunFunctionAsync(string functionName, TFunctionType x, ILogger logger)
+    public virtual async Task RunFunctionAsync(FunctionMetaData func, ILogger logger)
     {
-      logger.LogInformation("Starting {functionName} function.", functionName);
-      var result = await x.RunAsync();
-      if (!result)
+      logger.LogInformation("Starting {functionName} function.", func.Name);
+      using (var functionScope = JobHost.Services.CreateScope())
       {
-        logger.LogError("An error occurred in {functionName}.", functionName);
+        var function = JobHost.Services.GetService(func.Type) as IFunction;
+        var result = await function.RunAsync();
+        if (!result)
+        {
+          logger.LogError("An error occurred in {functionName}.", func.Name);
+        }
       }
-      logger.LogInformation("Ending {functionName} function.", functionName);
+      logger.LogInformation("Ending {functionName} function.", func.Name);
     }
   }
 }

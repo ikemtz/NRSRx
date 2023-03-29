@@ -36,13 +36,13 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var subscribedMessages = await subscriber.GetMessagesAsync(10);
       var ids = subscribedMessages.Select(t => t.Entity.Id).ToArray();
       Assert.IsTrue(ids.Any(a => a.Equals(sampleMessage.Id)));
-      foreach (var msg in subscribedMessages)
+      foreach (var (Id, Entity) in subscribedMessages)
       {
-        var count = await subscriber.AcknowledgeMessageAsync(msg.Id);
+        var count = await subscriber.AcknowledgeMessageAsync(Id);
         Assert.AreEqual(1, count);
       }
       var deletedCount = await subscriber.DeleteIdleConsumersAsync();
-      
+
     }
 
     [TestMethod]
@@ -260,11 +260,11 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     [TestCategory("Unit")]
     public async Task ValidateRedisMoqPublishAsync()
     {
-      var moqConnection = MockRedisStreamFactory.CreateMockConnection();
-      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(moqConnection.Connection.Object);
+      var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
+      var publisher = new RedisStreamPublisher<SampleMessage, CreateEvent>(Connection.Object);
       var msg = new SampleMessage();
       await publisher.PublishAsync(msg);
-      moqConnection.Database
+      Database
         .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.Equals(nameof(SampleMessage))), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
     }
 
@@ -272,14 +272,14 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     [TestCategory("Unit")]
     public async Task ValidateRedisMoqSubscriberGetMessagesAsync()
     {
-      var moqConnection = MockRedisStreamFactory.CreateMockConnection();
-      _ = moqConnection.Database
+      var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
+      _ = Database
         .Setup(x => x.StreamReadGroupAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), 5, false, CommandFlags.None))
         .Returns(Task.FromResult(Array.Empty<StreamEntry>()));
-      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Connection.Object);
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(Connection.Object);
       _ = subscriber.Init();
       _ = await subscriber.GetMessagesAsync();
-      moqConnection.Database
+      Database
         .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 5, false, CommandFlags.None), Times.Once);
     }
     class RedisStreamSubscriberMock : RedisStreamSubscriber<SampleMessage, CreateEvent>
@@ -316,11 +316,11 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     [TestCategory("Unit")]
     public async Task ValidateGetConsumersWithPendingMessagesTest()
     {
-      var moqConnection = MockRedisStreamFactory.CreateMockConnection();
-      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(moqConnection.Connection.Object);
+      var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(Connection.Object);
       var result = await subscriber.GetIdleConsumersWithPendingMsgsAsync();
       Assert.AreEqual(0, result.Count());
-      moqConnection.Database
+      Database
         .Verify(t => t.StreamConsumerInfoAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, CommandFlags.None), Times.Once);
     }
 
@@ -367,8 +367,8 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     [TestCategory("Unit")]
     public async Task ValidateSubscriberMessageRecieved()
     {
-      var mockConnection = MockRedisStreamFactory.CreateMockConnection();
-      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(mockConnection.Connection.Object);
+      var (Connection, _) = MockRedisStreamFactory.CreateMockConnection();
+      var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(Connection.Object);
       var messages = await subscriber.GetMessagesAsync(1);
       Assert.IsFalse(messages.Any());
     }
