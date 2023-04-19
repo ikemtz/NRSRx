@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Web;
@@ -47,12 +48,15 @@ namespace IkeMtz.NRSRx.Core.SignalR
 
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
       _ = builder
           .AddJwtBearer(options =>
           {
             options.Authority = Configuration.GetValue<string>("IdentityProvider");
             options.TokenValidationParameters = new TokenValidationParameters()
             {
+              ValidateIssuer = true,
+              ValidateIssuerSigningKey = true,
               NameClaimType = JwtNameClaimMapping,
               ValidAudiences = GetIdentityAudiences(),
             };
