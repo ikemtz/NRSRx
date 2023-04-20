@@ -47,7 +47,8 @@ namespace IkeMtz.NRSRx.Core.Jobs
     public virtual IOrderedEnumerable<FunctionMetaData> GetFunctions(ILoggerFactory? loggerFactory)
     {
       var jobLogger = loggerFactory?.CreateLogger(GetType());
-      var functions = JobHost.Services.GetServices<TFunctionType>();
+      using var functionScope = JobHost.Services.CreateScope();
+      var functions = functionScope.ServiceProvider.GetServices<TFunctionType>();
       var functionTypeName = typeof(TFunctionType).Name;
       var functionCount = functions.Count();
       jobLogger?.LogInformation("Found {functionCount} executable {functionTypeName} functions", functionCount, functionTypeName);
@@ -123,14 +124,12 @@ namespace IkeMtz.NRSRx.Core.Jobs
     public virtual async Task RunFunctionAsync(FunctionMetaData func, ILogger logger)
     {
       logger.LogInformation("Starting {functionName} function.", func.Name);
-      using (var functionScope = JobHost.Services.CreateScope())
+      using var functionScope = JobHost.Services.CreateScope();
+      var function = functionScope.ServiceProvider.GetService(func.Type) as IFunction;
+      var result = await function.RunAsync();
+      if (!result)
       {
-        var function = JobHost.Services.GetService(func.Type) as IFunction;
-        var result = await function.RunAsync();
-        if (!result)
-        {
-          logger.LogError("An error occurred in {functionName}.", func.Name);
-        }
+        logger.LogError("An error occurred in {functionName}.", func.Name);
       }
       logger.LogInformation("Ending {functionName} function.", func.Name);
     }
