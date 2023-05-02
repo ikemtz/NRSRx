@@ -21,7 +21,7 @@ SET @TableName = 'Examples'
 DECLARE @property AS NVARCHAR(2000),
 	@HasId AS BIT,
 	@HasAuditable AS BIT,
-	@IdDataType AS VARCHAR(5)
+	@IdDataType AS VARCHAR(10)
 
 SELECT @HasId = 1, @IdDataType =
 	CASE
