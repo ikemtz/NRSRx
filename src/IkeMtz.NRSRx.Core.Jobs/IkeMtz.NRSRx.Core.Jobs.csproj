@@ -41,6 +41,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />
+    <ProjectReference Include="..\IkeMtz.NRSRx.Core.Web\IkeMtz.NRSRx.Core.Web.csproj" />
   </ItemGroup>
 
 </Project>

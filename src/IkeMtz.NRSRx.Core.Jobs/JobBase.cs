@@ -16,16 +16,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
 
     public virtual IConfiguration GetConfig()
     {
-      var configBuilder = new ConfigurationBuilder();
-      if (File.Exists("appsettings.json"))
-      {
-        _ = configBuilder.AddJsonFile("appsettings.json");
-      }
-      var config = configBuilder
-         .AddUserSecrets(typeof(TProgram).Assembly)
-         .AddEnvironmentVariables()
-         .Build();
-      return config;
+      return ConfigurationFactory<TProgram>.Create();
     }
 
     public async Task RunAsync()
