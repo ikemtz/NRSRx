@@ -134,11 +134,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return new WebHostBuilder()
           .ConfigureAppConfiguration((hostingContext, config) =>
           {
-            var appAssembly = typeof(TSiteStartup).Assembly;
-            _ = config
-             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-             .AddUserSecrets(appAssembly, optional: true)
-             .AddEnvironmentVariables();
+            _ = ConfigurationFactory<TSiteStartup>.Configure(config);
           })
            .ConfigureLogging(logging =>
            {
