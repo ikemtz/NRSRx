@@ -8,7 +8,7 @@ COPY . /src
 USER root
 
 RUN /opt/mssql/bin/sqlservr & sleep 60 \
-    && sqlpackage /Action:Publish /TargetServerName:localhost /TargetUser:SA /TargetPassword:$SA_PASSWORD /SourceFile:/dacpac/IkeMtz.Samples.Db.dacpac /TargetDatabaseName:SamplesDb /p:BlockOnPossibleDataLoss=false \
+    && sqlpackage /Action:Publish /TargetServerName:localhost /TargetUser:SA /TargetPassword:$SA_PASSWORD /SourceFile:/dacpac/IkeMtz.Samples.Db.dacpac /TargetDatabaseName:SamplesDb /TargetTrustServerCertificate:True /p:BlockOnPossibleDataLoss=false \
     && sleep 20 \
     && cd /src \
     && dotnet test samples/IkeMtz.Samples.OData.Tests --filter TestCategory=SqlIntegration --logger trx --configuration Debug --collect "XPlat Code Coverage" --results-directory /test-results \
