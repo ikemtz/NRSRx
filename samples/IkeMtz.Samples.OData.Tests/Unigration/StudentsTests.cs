@@ -69,6 +69,31 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
 
     [TestMethod]
     [TestCategory("Unigration")]
+    public async Task GetStudentsExceedLimitTest()
+    {
+      var objA = Factories.StudentFactory();
+      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+          .ConfigureTestServices(x =>
+          {
+            ExecuteOnContext<DatabaseContext>(x, db =>
+            {
+              _ = db.Students.Add(objA);
+            });
+          })
+       );
+      var client = srv.CreateClient(TestContext);
+      GenerateAuthHeader(client, GenerateTestToken());
+
+      var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s?$count=true&$top=300");
+      var content = await resp.Content.ReadAsStringAsync();
+      //Validate OData Result
+      TestContext.WriteLine($"Server Reponse: {content}");
+      Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
+      StringAssert.Contains(content, "The limit of '100' for Top query has been exceeded. The value from the incoming request is '300'.");
+    }
+
+    [TestMethod]
+    [TestCategory("Unigration")]
     public async Task DeleteStudentTest()
     {
       using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>());
