@@ -2,7 +2,7 @@ FROM ikemtz/sql_dacpac:latest
 ENV SA_PASSWORD=SqlDockerRocks123! \
     ACCEPT_EULA=Y
 ENV ASPNETCORE_ENVIRONMENT=development
-ENV DbConnectionString="Server=localhost;Database=SamplesDb;User ID=sa;Password=SqlDockerRocks123!;"
+ENV DbConnectionString="Server=localhost;Database=SamplesDb;User ID=sa;Password=SqlDockerRocks123!;TrustServerCertificate=True;"
 COPY samples/IkeMtz.Samples.Db/bin/Debug/*.dacpac /dacpac/
 COPY . /src
 USER root
