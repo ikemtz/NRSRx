@@ -7,7 +7,7 @@ COPY samples/IkeMtz.Samples.Db/bin/Debug/*.dacpac /dacpac/
 COPY . /src
 USER root
 
-RUN /opt/mssql/bin/sqlservr & sleep 30 \
+RUN /opt/mssql/bin/sqlservr & sleep 60 \
     && sqlpackage /Action:Publish /TargetServerName:localhost /TargetUser:SA /TargetPassword:$SA_PASSWORD /SourceFile:/dacpac/IkeMtz.Samples.Db.dacpac /TargetDatabaseName:SamplesDb /p:BlockOnPossibleDataLoss=false \
     && sleep 20 \
     && cd /src \
