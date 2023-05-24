@@ -2,13 +2,13 @@ FROM ikemtz/sql_dacpac:latest
 ENV SA_PASSWORD=SqlDockerRocks123! \
     ACCEPT_EULA=Y
 ENV ASPNETCORE_ENVIRONMENT=development
-ENV DbConnectionString="Server=localhost;Database=SamplesDb;User ID=sa;Password=SqlDockerRocks123!;"
+ENV DbConnectionString="Server=localhost;Database=SamplesDb;User ID=sa;Password=SqlDockerRocks123!;TrustServerCertificate=True;"
 COPY samples/IkeMtz.Samples.Db/bin/Debug/*.dacpac /dacpac/
 COPY . /src
 USER root
 
-RUN /opt/mssql/bin/sqlservr & sleep 30 \
-    && sqlpackage /Action:Publish /TargetServerName:localhost /TargetUser:SA /TargetPassword:$SA_PASSWORD /SourceFile:/dacpac/IkeMtz.Samples.Db.dacpac /TargetDatabaseName:SamplesDb /p:BlockOnPossibleDataLoss=false \
+RUN /opt/mssql/bin/sqlservr & sleep 60 \
+    && sqlpackage /Action:Publish /TargetServerName:localhost /TargetUser:SA /TargetPassword:$SA_PASSWORD /SourceFile:/dacpac/IkeMtz.Samples.Db.dacpac /TargetDatabaseName:SamplesDb /TargetTrustServerCertificate:True /p:BlockOnPossibleDataLoss=false \
     && sleep 20 \
     && cd /src \
     && dotnet test samples/IkeMtz.Samples.OData.Tests --filter TestCategory=SqlIntegration --logger trx --configuration Debug --collect "XPlat Code Coverage" --results-directory /test-results \

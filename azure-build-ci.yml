@@ -1,4 +1,4 @@
-name: 6.1.$(DayOfYear)$(Rev:.rr)
+name: 7.0.$(DayOfYear)$(Rev:.rr)
 pool:
   vmImage: "windows-latest"
 
@@ -43,9 +43,9 @@ jobs:
         persistCredentials: true
 
       - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 6.0.x"
+        displayName: "Use .NET Core sdk 7.0.x"
         inputs:
-          version: 6.0.x
+          version: 7.0.x
 
       - task: Bash@3
         displayName: "Setting development environment variables"

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ProjectGuid>E0E7F924-19FE-4EE5-8FCD-A065CBB13831</ProjectGuid>
     
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
