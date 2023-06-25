@@ -12,6 +12,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
     where TFunctionType : IFunction
   {
     public virtual IHost JobHost { get; set; }
+    public virtual string? HealthFileLocation { get; }
     public virtual IConfiguration Configuration { get; set; }
 
     public virtual IConfiguration GetConfig()
@@ -29,9 +30,14 @@ namespace IkeMtz.NRSRx.Core.Jobs
     public virtual async Task RunFunctions(ILoggerFactory loggerFactory)
     {
       var functions = GetFunctions(loggerFactory);
+      var successResult = true;
       foreach (var func in functions)
       {
-        await ScopeFunctionAsync(loggerFactory, func);
+        successResult &= await ScopeFunctionAsync(loggerFactory, func);
+      }
+      if (successResult && !string.IsNullOrWhiteSpace(HealthFileLocation))
+      {
+        File.WriteAllText(HealthFileLocation, DateTime.UtcNow.ToString());
       }
     }
 
@@ -61,7 +67,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         }).OrderByDescending(t => t.SequencePriority);
     }
 
-    public virtual async Task ScopeFunctionAsync(ILoggerFactory loggerFactory, FunctionMetaData func)
+    public virtual async Task<Boolean> ScopeFunctionAsync(ILoggerFactory loggerFactory, FunctionMetaData func)
     {
       var logger = loggerFactory.CreateLogger(func.GetType());
       var startTime = DateTime.UtcNow;
@@ -75,11 +81,13 @@ namespace IkeMtz.NRSRx.Core.Jobs
         catch (Exception x)
         {
           logger.LogError(x, "An unhandled exception has occured while executing function: {functionName}", func.Name);
+          return false;
         }
         var endTime = DateTime.UtcNow;
         var durationInSecs = endTime.Subtract(startTime).TotalSeconds;
         logger.LogInformation("Function {functionName} completed time: {endTime} UTC", func.Name, endTime);
         logger.LogInformation("Function {functionName} completed in {durationInSecs} secs", func.Name, durationInSecs);
+        return true;
       }
     }
 

@@ -13,6 +13,7 @@ namespace IkeMtz.Samples.Redis.Jobs
   public class Program : MessagingJob<Program>
   {
     public ConnectionMultiplexer RedisConnectionMultiplexer { get; private set; }
+    public override string? HealthFileLocation => "health.txt";
     public static async Task Main()
     {
       var prog = new Program
