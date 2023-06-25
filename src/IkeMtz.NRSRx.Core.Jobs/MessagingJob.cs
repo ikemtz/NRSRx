@@ -21,22 +21,29 @@ namespace IkeMtz.NRSRx.Core.Jobs
       var logger = loggerFactory.CreateLogger<MessagingJob<TProgram>>();
       var functions = GetFunctions(loggerFactory);
       var firstRun = true;
+      var successResult = true;
       while (RunContinously || firstRun)
       {
         if (EnableParallelFunctionProcessing)
         {
           foreach (var func in functions.AsParallel())
           {
-            await ScopeFunctionAsync(loggerFactory, func);
+            successResult &= await ScopeFunctionAsync(loggerFactory, func);
           }
         }
         else
         {
           foreach (var func in functions)
           {
-            await ScopeFunctionAsync(loggerFactory, func);
+            successResult &= await ScopeFunctionAsync(loggerFactory, func);
           }
         }
+
+        if (successResult && !string.IsNullOrWhiteSpace(HealthFileLocation))
+        {
+          File.WriteAllText(HealthFileLocation, DateTime.UtcNow.ToString());
+        }
+
         firstRun = false;
         logger.LogInformation("Finished running jobs, going to sleep for {SecsBetweenRuns} seconds.", SecsBetweenRuns);
 
