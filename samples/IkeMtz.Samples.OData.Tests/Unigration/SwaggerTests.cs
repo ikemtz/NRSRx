@@ -27,7 +27,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task GetSwaggerJsonTest()
     {
-      var myConfiguration = new Dictionary<string, string>
+      var myConfiguration = new Dictionary<string, string?>
       {
         {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };
