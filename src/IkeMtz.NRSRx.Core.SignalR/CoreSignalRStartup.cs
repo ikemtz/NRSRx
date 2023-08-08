@@ -59,6 +59,7 @@ namespace IkeMtz.NRSRx.Core.SignalR
               ValidateIssuerSigningKey = true,
               NameClaimType = JwtNameClaimMapping,
               ValidAudiences = GetIdentityAudiences(),
+              RoleClaimType = JwtRoleClaimMapping,
             };
             options.Events = new JwtBearerEvents()
             {
