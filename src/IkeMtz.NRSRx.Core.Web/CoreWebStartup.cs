@@ -28,6 +28,7 @@ namespace IkeMtz.NRSRx.Core.Web
     public abstract Assembly? StartupAssembly { get; }
     public virtual string SwaggerUiRoutePrefix { get; } = string.Empty;
     public virtual string JwtNameClaimMapping { get; } = JwtRegisteredClaimNames.Sub;
+    public virtual string JwtRoleClaimMapping { get; } = "role";
     public virtual bool DisableSwagger { get; }
 
     public virtual bool IncludeXmlCommentsInSwaggerDocs { get; }
@@ -82,6 +83,7 @@ namespace IkeMtz.NRSRx.Core.Web
               ValidateIssuerSigningKey = true,
               NameClaimType = JwtNameClaimMapping,
               ValidAudiences = GetIdentityAudiences(),
+              RoleClaimType = JwtRoleClaimMapping,
             };
           });
     }
