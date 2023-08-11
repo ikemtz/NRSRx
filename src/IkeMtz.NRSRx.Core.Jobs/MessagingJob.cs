@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
 
     public virtual int? SecsBetweenRuns { get; set; }
     public virtual TimeSpan SleepTimeSpan => new(0, 0, SecsBetweenRuns.GetValueOrDefault());
-    public override async Task RunFunctions(ILoggerFactory loggerFactory)
+    public override async Task<bool> RunFunctions(ILoggerFactory loggerFactory)
     {
       SecsBetweenRuns ??= Configuration.GetValue("SecsBetweenRuns", 60);
       var logger = loggerFactory.CreateLogger<MessagingJob<TProgram>>();
@@ -48,7 +48,9 @@ namespace IkeMtz.NRSRx.Core.Jobs
         logger.LogInformation("Finished running jobs, going to sleep for {SecsBetweenRuns} seconds.", SecsBetweenRuns);
 
         if (RunContinously) Thread.Sleep(SleepTimeSpan);
+
       }
+      return successResult;
     }
   }
 }

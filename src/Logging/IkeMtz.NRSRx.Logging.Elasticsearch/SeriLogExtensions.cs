@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       _ = (app?.UseSerilog());
       return GetLogger(() => new LoggerConfiguration()
-           .MinimumLevel.Debug()
+           .MinimumLevel.Warning()
            .Enrich.FromLogContext()
            .WriteTo.Console(theme: AnsiConsoleTheme.Code)
            .CreateLogger());

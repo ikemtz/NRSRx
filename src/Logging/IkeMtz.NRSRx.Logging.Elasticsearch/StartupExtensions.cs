@@ -69,7 +69,7 @@ namespace IkeMtz.NRSRx.Core.Web
           elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
         }
         return new LoggerConfiguration() { }
-          .MinimumLevel.Information()
+          .MinimumLevel.Warning()
           .Enrich.FromLogContext()
           .Enrich.WithMachineName()
           .WriteTo.Console(theme: AnsiConsoleTheme.Code)

@@ -12,7 +12,7 @@ namespace IkeMtz.Samples.Jobs
     public static async Task Main()
     {
       var prog = new Program();
-      await prog.RunAsync();
+      _ = await prog.RunAsync();
     }
 
     public override IServiceCollection SetupFunctions(IServiceCollection services)
