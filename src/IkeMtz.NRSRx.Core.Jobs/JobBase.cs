@@ -20,14 +20,14 @@ namespace IkeMtz.NRSRx.Core.Jobs
       return ConfigurationFactory<TProgram>.Create();
     }
 
-    public async Task RunAsync()
+    public Task<bool> RunAsync()
     {
       _ = this.SetupHost();
       var loggerFactory = JobHost.Services.GetRequiredService<ILoggerFactory>();
-      await RunFunctions(loggerFactory);
+      return RunFunctions(loggerFactory);
     }
 
-    public virtual async Task RunFunctions(ILoggerFactory loggerFactory)
+    public virtual async Task<bool> RunFunctions(ILoggerFactory loggerFactory)
     {
       var functions = GetFunctions(loggerFactory);
       var successResult = true;
@@ -39,6 +39,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
       {
         File.WriteAllText(HealthFileLocation, DateTime.UtcNow.ToString());
       }
+      return successResult;
     }
 
     public virtual IOrderedEnumerable<FunctionMetaData> GetFunctions(ILoggerFactory? loggerFactory)
