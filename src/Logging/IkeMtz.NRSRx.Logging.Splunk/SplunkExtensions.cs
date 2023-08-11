@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk
       var splunkSourceType = configuration.GetValue("SPLUNK_SOURCE_TYPE", "");
       var host = configuration.GetValue("ENVIRONMENT_NAME", "");
       var config = new LoggerConfiguration()
-            .MinimumLevel.Debug()
+            .MinimumLevel.Warning()
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .WriteTo.Console(theme: AnsiConsoleTheme.Code);
