@@ -75,9 +75,10 @@ namespace IkeMtz.NRSRx.Core.Jobs
       using (logger.BeginScope("Function {functionName}", func.Name))
       {
         logger.LogInformation("Function {functionName} start time: {startTime} UTC", func.Name, startTime);
+        bool result;
         try
         {
-          await RunFunctionAsync(func, logger);
+          result = await RunFunctionAsync(func, logger);
         }
         catch (Exception x)
         {
@@ -88,7 +89,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         var durationInSecs = endTime.Subtract(startTime).TotalSeconds;
         logger.LogInformation("Function {functionName} completed time: {endTime} UTC", func.Name, endTime);
         logger.LogInformation("Function {functionName} completed in {durationInSecs} secs", func.Name, durationInSecs);
-        return true;
+        return result;
       }
     }
 
@@ -121,7 +122,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
       return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
     }
 
-    public virtual async Task RunFunctionAsync(FunctionMetaData func, ILogger logger)
+    public virtual async Task<bool> RunFunctionAsync(FunctionMetaData func, ILogger logger)
     {
       logger.LogInformation("Starting {functionName} function.", func.Name);
       using var functionScope = JobHost.Services.CreateScope();
@@ -132,6 +133,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         logger.LogError("An error occurred in {functionName}.", func.Name);
       }
       logger.LogInformation("Ending {functionName} function.", func.Name);
+      return result;
     }
   }
 }
