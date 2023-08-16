@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Configuration;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace IkeMtz.NRSRx.Core.Web
@@ -28,11 +29,12 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder? app)
+    /// <param name="minimumLogLevel">Use this callback to configure your preferred level of logging (default: Information)</param>
+    public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder? app, Func<LoggerMinimumLevelConfiguration, LoggerConfiguration>? minimumLogLevelConfig = null)
     {
+      minimumLogLevelConfig ??= X => X.Information();
       _ = (app?.UseSerilog());
-      return GetLogger(() => new LoggerConfiguration()
-           .MinimumLevel.Warning()
+      return GetLogger(() => minimumLogLevelConfig(new LoggerConfiguration().MinimumLevel)
            .Enrich.FromLogContext()
            .WriteTo.Console(theme: AnsiConsoleTheme.Code)
            .CreateLogger());

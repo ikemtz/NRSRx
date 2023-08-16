@@ -20,12 +20,13 @@
             <param name="startup"></param>
             <param name="app"></param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Func{Serilog.Configuration.LoggerMinimumLevelConfiguration,Serilog.LoggerConfiguration})">
             <summary>
             Sets up Console Logging only, leverages SeriLog sinks
             </summary>
             <param name="startup"></param>
             <param name="app"></param>
+            <param name="minimumLogLevel"></param>
         </member>
     </members>
 </doc>
