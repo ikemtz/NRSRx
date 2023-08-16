@@ -3,6 +3,7 @@ using Elasticsearch.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Configuration;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.SystemConsole.Themes;
 
@@ -31,9 +32,11 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder? app)
+    /// <param name="minimumLogLevel">Use this callback to configure your preferred level of logging (default: Information)</param>
+    public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder? app, Func<LoggerMinimumLevelConfiguration, LoggerConfiguration>? minimumLogLevelConfig = null)
     {
       _ = (app?.UseSerilog());
+      minimumLogLevelConfig ??= X => X.Information();
 
       return SeriLogExtensions.GetLogger(() =>
       {
@@ -68,8 +71,7 @@ namespace IkeMtz.NRSRx.Core.Web
         {
           elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
         }
-        return new LoggerConfiguration() { }
-          .MinimumLevel.Warning()
+        return minimumLogLevelConfig(new LoggerConfiguration().MinimumLevel)
           .Enrich.FromLogContext()
           .Enrich.WithMachineName()
           .WriteTo.Console(theme: AnsiConsoleTheme.Code)

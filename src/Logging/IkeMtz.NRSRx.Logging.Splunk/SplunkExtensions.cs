@@ -1,6 +1,8 @@
+using System;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Configuration;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace IkeMtz.NRSRx.Logging.Splunk
@@ -18,8 +20,9 @@ namespace IkeMtz.NRSRx.Logging.Splunk
         return _clientHandler;
       }
     }
-    public static ILogger ConfigureSplunkLogger(IConfiguration configuration)
+    public static ILogger ConfigureSplunkLogger(IConfiguration configuration, Func<LoggerMinimumLevelConfiguration, LoggerConfiguration>? minimumLogLevelConfig = null)
     {
+      minimumLogLevelConfig ??= X => X.Information();
       var splunkHost = configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = configuration.GetValue<string>("SPLUNK_TOKEN");
       var splunkDisableSslValidation = configuration.GetValue("SPLUNK_DISABLE_SSL_VALIDATION", false);
@@ -27,8 +30,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk
       var splunkIndex = configuration.GetValue("SPLUNK_INDEX", "");
       var splunkSourceType = configuration.GetValue("SPLUNK_SOURCE_TYPE", "");
       var host = configuration.GetValue("ENVIRONMENT_NAME", "");
-      var config = new LoggerConfiguration()
-            .MinimumLevel.Warning()
+      var config = minimumLogLevelConfig(new LoggerConfiguration().MinimumLevel)
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .WriteTo.Console(theme: AnsiConsoleTheme.Code);
@@ -40,7 +42,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk
           index: splunkIndex,
           sourceType: splunkSourceType,
           host: host,
-            messageHandler: splunkDisableSslValidation ? ClientHandler : null);
+          messageHandler: splunkDisableSslValidation ? ClientHandler : null);
       }
       return Log.Logger = config.CreateLogger();
     }
