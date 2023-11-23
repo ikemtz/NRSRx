@@ -14,6 +14,7 @@ namespace IkeMtz.Samples.OData.Configuration
         _ = builder.EntitySet<V1.Course>($"{nameof(V1.Course)}s");
         _ = builder.EntitySet<V1.School>($"{nameof(V1.School)}s");
         _ = builder.EntitySet<V1.Student>($"{nameof(V1.Student)}s");
+        _ = builder.EntitySet<V1.SchoolCourse>($"{nameof(V1.SchoolCourse)}s");
         _ = builder.EntityType<V1.Student>()
           .Collection
           .Function("nolimit")
