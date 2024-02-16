@@ -4,6 +4,7 @@
     <IsPackable>false</IsPackable>
     <ProjectGuid>D760D847-DA47-4939-87A5-25CEBE04E727</ProjectGuid>
     <Nullable>enable</Nullable>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
@@ -29,8 +30,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.2.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\samples\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />

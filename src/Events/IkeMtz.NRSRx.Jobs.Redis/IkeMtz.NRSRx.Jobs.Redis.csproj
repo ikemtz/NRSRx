@@ -28,6 +28,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <Nullable>enable</Nullable>
     <UserSecretsId>3B47F350AF26459DAD0DB68D9C20D0A3</UserSecretsId>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

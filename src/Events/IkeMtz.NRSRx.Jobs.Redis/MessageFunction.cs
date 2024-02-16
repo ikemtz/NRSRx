@@ -93,7 +93,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
         Logger.LogInformation("Consumer Group Message Count: {MessageCount}.", result.MessageCount);
         Logger.LogInformation("Consumer Group Acknowledged Message Count: {AckMessageCount}.", result.AckMessageCount);
         Logger.LogInformation("Consumer Group Consumer Count: {SubscriberCount}.", result.SubscriberCount);
-        Logger.LogInformation("Consumer Group Pending Count: {DeadLetterCount}.", result.DeadLetterMsgCount);
+        Logger.LogInformation("Consumer Group Pending Count: {PendingMsgCount}.", result.PendingMsgCount);
         Logger.LogInformation("Consumer Group Dead Letter Message Count: {DeadLetterCount}.", result.DeadLetterMsgCount);
       }
       else
