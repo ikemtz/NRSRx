@@ -9,5 +9,6 @@ namespace IkeMtz.NRSRx.Events
     public int? PendingMsgCount { get; set; }
     public int? DeadLetterMsgCount { get; set; }
     public int AckMessageCount { get; set; }
+    public string StreamKey { get; set; }
   }
 }

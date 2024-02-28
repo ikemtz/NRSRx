@@ -9,6 +9,12 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Jobs.Redis
 {
+  /// <summary>
+  /// This message function is geared towards supporting the Fanout pattern
+  /// </summary>
+  /// <typeparam name="TSplitMessageFunction"></typeparam>
+  /// <typeparam name="TEntity"></typeparam>
+  /// <typeparam name="TEvent"></typeparam>
   public abstract class SplitMessageFunction<TSplitMessageFunction, TEntity, TEvent>
     : MessageFunction<TSplitMessageFunction, SplitMessage<TEntity>, TEvent, Guid>
       where TSplitMessageFunction : IMessageFunction
