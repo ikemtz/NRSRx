@@ -4,7 +4,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +44,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
 
     public string GenerateTestToken(Action<ICollection<Claim>> testClaimsEditor)
     {
-      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("I Love Integration Testing!!!!"));
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("I Love NRSRx Integration Testing!!!!"));
       var credentials = new SigningCredentials
                     (key, SecurityAlgorithms.HmacSha256Signature);
       var header = new JwtHeader(credentials);

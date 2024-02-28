@@ -4,9 +4,9 @@
     "net7.0": {
       "coverlet.collector": {
         "type": "Direct",
-        "requested": "[6.0.0, )",
-        "resolved": "6.0.0",
-        "contentHash": "tW3lsNS+dAEII6YGUX/VMoJjBS1QvsxqJeqLaJXub08y1FSjasFPtQ4UBUsudE9PNrzLjooClMsPtY2cZLdXpQ=="
+        "requested": "[6.0.1, )",
+        "resolved": "6.0.1",
+        "contentHash": "q/8r0muHlF7TbhMUTBAk43KteZYG2ECV96pbzkToQwgjp3BvbS766svUcO6va+cohWOkigeBWmHs0Vu5vQnESA=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
@@ -20,20 +20,20 @@
       },
       "MSTest.TestAdapter": {
         "type": "Direct",
-        "requested": "[3.2.1, )",
-        "resolved": "3.2.1",
-        "contentHash": "wEMrxnWMxqnzxp18zOhWZGaqxe6S9uTvX7OiVpGzhqjMySO98iK+dPaPG9P7TvSCGygsYrJvijC7nd1mxRLZZw==",
+        "requested": "[3.2.2, )",
+        "resolved": "3.2.2",
+        "contentHash": "E3dnR9KTNCP61O4yIRBPV0KFXQszW2IJv3O+LqNIK6rUrXNSsXc9QeZBnFYBYwA21uTv3e27xDyreddqe9eUHg==",
         "dependencies": {
-          "Microsoft.Testing.Extensions.Telemetry": "1.0.1",
-          "Microsoft.Testing.Extensions.VSTestBridge": "1.0.1",
-          "Microsoft.Testing.Platform.MSBuild": "1.0.1"
+          "Microsoft.Testing.Extensions.Telemetry": "1.0.2",
+          "Microsoft.Testing.Extensions.VSTestBridge": "1.0.2",
+          "Microsoft.Testing.Platform.MSBuild": "1.0.2"
         }
       },
       "MSTest.TestFramework": {
         "type": "Direct",
-        "requested": "[3.2.1, )",
-        "resolved": "3.2.1",
-        "contentHash": "KA6VJTKX+nE/6FWvScdEhrKR37zHENPhvucGYTMV+7uJ1i3KItGquv3U0pslgEl+EKaJovUn7UJ79UQgEaZzog=="
+        "requested": "[3.2.2, )",
+        "resolved": "3.2.2",
+        "contentHash": "t3o8wfuMvjq1ETxsX6qBIOJMpnNpRoBjf2+0ZEKURSH+xHnpLM7yojNkLgJbir7vQGzQh7JaAUBO1MkszBvVrw=="
       },
       "AspNetCore.HealthChecks.Redis": {
         "type": "Transitive",
@@ -234,18 +234,18 @@
       },
       "Microsoft.EntityFrameworkCore.InMemory": {
         "type": "Transitive",
-        "resolved": "7.0.14",
-        "contentHash": "AkslBuDeD46shtKsM1uLChYXtLAib9/7QI7s3LXNLxY9qh0KHfmz5dQsV+pJqXknZNu6+10v/7t7o2o/dKTOvQ==",
+        "resolved": "7.0.16",
+        "contentHash": "bOTD3rtZVF0zbVYFqqV2Ne9822tJdyPjO98ebRFl8v48+0u0xZ8fLV1cIcJmhv46ikarT5nDVchTzdhfg3wlZw==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "7.0.14"
+          "Microsoft.EntityFrameworkCore": "7.0.16"
         }
       },
       "Microsoft.EntityFrameworkCore.Relational": {
         "type": "Transitive",
-        "resolved": "7.0.14",
-        "contentHash": "MrVBnWOFYwfLMGQfrcIuqEM9Xvokv1vJeYxqNH3K3xOtAdHwHQTrKnpDP97tU+LBlvcnyXAtAtryYcpLXWtRNA==",
+        "resolved": "7.0.16",
+        "contentHash": "g5G9SDhhxi9jUvUIrWl8r5Xi3cxY1W549ijLjO6y/2xTQv5ZF83u9MOrO9LYVi1wmm7Dih37U46rh9ZNcWBl0g==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "7.0.14",
+          "Microsoft.EntityFrameworkCore": "7.0.16",
           "Microsoft.Extensions.Configuration.Abstractions": "7.0.0"
         }
       },
@@ -367,10 +367,10 @@
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks": {
         "type": "Transitive",
-        "resolved": "7.0.14",
-        "contentHash": "zHy57CEi6RXezom9TeQYXF9g6Zi7I6v7FhCoGt+381AqbcaH4nBHp3xkMQBqF3Zc6JC6MKf2yxR/aVi6OQxzqw==",
+        "resolved": "7.0.16",
+        "contentHash": "knT1gfU3G4PUZ6TxuUx+x8lWok+bmpXumKqyMA7WLZ1fWyQgXdYJSHsibwh0iqAgkB/YX7x88BMb9Imv9aT3SA==",
         "dependencies": {
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.14",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.16",
           "Microsoft.Extensions.Hosting.Abstractions": "7.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.1",
           "Microsoft.Extensions.Options": "7.0.1"
@@ -378,17 +378,17 @@
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": {
         "type": "Transitive",
-        "resolved": "7.0.14",
-        "contentHash": "Fq7gs2r1I74hYEBPPhAlGSmJ7SeFkqzMtxs0w658m7IuYTaT9n5CuP2LL0+lbJNRcwXW/AUfvvSWPEWJycbQcA=="
+        "resolved": "7.0.16",
+        "contentHash": "8e6VR5Nx67uo5NXdBW4wLhi+p/oiDnihNIfI/iTPZmwp6coHYQAOUwjaK9ZvGsOfVITDaAHFqk1eM5bN6E77Lw=="
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
         "type": "Transitive",
-        "resolved": "7.0.14",
-        "contentHash": "EA2/hHsSGiWeEz9gzFthmpxRR6VGmUM3ITgKFQJUqklMd1etOO4JEJ5fM991S/MAq9Dli0RWrF5DBNF1GXN1eQ==",
+        "resolved": "7.0.16",
+        "contentHash": "0dKng5nKgQnw9fxQMOVi6+TXE1UCYgsmKGC8J95/ZSZhPkSWo0yLV0ycl2Sb3y1/NAVoQyXQdgtPTMNJgsTbyw==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "7.0.14",
-          "Microsoft.Extensions.Diagnostics.HealthChecks": "7.0.14",
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.14"
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.16",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "7.0.16",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.16"
         }
       },
       "Microsoft.Extensions.Features": {
@@ -667,42 +667,42 @@
       },
       "Microsoft.Testing.Extensions.Telemetry": {
         "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "3Ed6TvDExF/efQzToLaPK6HT0PEfQ5UpiGS2PrGO5/1VoNQ25qyj3MISwqLjDAXztvN7rbN/SFyrC2YG/g0JWQ==",
+        "resolved": "1.0.2",
+        "contentHash": "32YnySeewFl0IAgI27bTbFZdfA+Tvmg5p7kxgPcFAPKLjW1HTNKlKMrEYFgCIIT1Onak2Iod0tvsHYqXzV3a+w==",
         "dependencies": {
           "Microsoft.ApplicationInsights": "2.21.0",
-          "Microsoft.Testing.Platform": "1.0.1"
+          "Microsoft.Testing.Platform": "1.0.2"
         }
       },
       "Microsoft.Testing.Extensions.TrxReport.Abstractions": {
         "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "dsuCR5wFsehiU4Zlqb6bHg76oI33UadiNaLqXokt/XG8eQ8QXBU5GzsdpYaYkzfFF9XNN9pXhCUgC6DFFFbLlQ==",
+        "resolved": "1.0.2",
+        "contentHash": "MPHXtnoaf3lESF7eXbYSzvb12K1SZslEpQ1evf3GZAvtfXXyBeFwpcSMd+l3jW8z+zhmniC2gAc6jq/GEgFW2Q==",
         "dependencies": {
-          "Microsoft.Testing.Platform": "1.0.1"
+          "Microsoft.Testing.Platform": "1.0.2"
         }
       },
       "Microsoft.Testing.Extensions.VSTestBridge": {
         "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "DYUIm8xOdouA38LKn0ZAxrk9Gm5PI96KW+trt2S0rMdzVUTRqv2hEsBCas3Ug1nj8/AGm20isg0ZNppm9LdHrQ==",
+        "resolved": "1.0.2",
+        "contentHash": "68/CZ2mmtdNx8QrMenQ90HVb0gYGpFP54GLRwvMyaDgnhwYgN55TDU+ypBS3X5xThJda42mckfFhBqpjjeYz+A==",
         "dependencies": {
           "Microsoft.TestPlatform.ObjectModel": "17.5.0",
-          "Microsoft.Testing.Extensions.TrxReport.Abstractions": "1.0.1",
-          "Microsoft.Testing.Platform": "1.0.1"
+          "Microsoft.Testing.Extensions.TrxReport.Abstractions": "1.0.2",
+          "Microsoft.Testing.Platform": "1.0.2"
         }
       },
       "Microsoft.Testing.Platform": {
         "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "m++nLV2L40Iktdp18nTrxTn6FUtazPAARngsghXK2cAQa8pM6YgFZChRjT6/wuRilBAip9T5kH0jU7ML0sxaQw=="
+        "resolved": "1.0.2",
+        "contentHash": "pVZqxU3LsZLF7Cle0GH+j1+uz5FhmcxEe9sS5sZvONeqgv/EP/p7aI3bIaeoVs0YAVH3UmlqDAsWP5oXcT294A=="
       },
       "Microsoft.Testing.Platform.MSBuild": {
         "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "gWJdficmzT2TtKKzoWooI5q7E7V34OrmYC0LWHKUSP34Fn1je31QgOK3q7HyGTxNpl9mFGIMCOnHGtRlj+0LsA==",
+        "resolved": "1.0.2",
+        "contentHash": "9f5JiIEEEkI/MvCi9zCxbX8k9D4xtyqJkaWKtDIt4R/CAJEYN5op3LcUyfbMAKhsFUTn1D+DGTfu5XPoh6fwJw==",
         "dependencies": {
-          "Microsoft.Testing.Platform": "1.0.1"
+          "Microsoft.Testing.Platform": "1.0.2"
         }
       },
       "Microsoft.TestPlatform.ObjectModel": {
@@ -921,8 +921,8 @@
       },
       "StackExchange.Redis": {
         "type": "Transitive",
-        "resolved": "2.7.17",
-        "contentHash": "PduekHww3CrCBr1ebIPX4k4zdah9wjJ4AQZXfp+JfGJQfwf8s1SHSY7kthDi9MP0ULcYrNw4xnbRXFMbCryIig==",
+        "resolved": "2.7.23",
+        "contentHash": "w3ZHMjSasZf2KVBfWePZI93kE4uB6b2Rkm0HIDvsdpffeivXJNFRFEeb9Ewy20Ny+SsFCh7xq8g8Y+CRw7Am1w==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
           "Pipelines.Sockets.Unofficial": "2.2.8"
@@ -1722,7 +1722,7 @@
         "dependencies": {
           "IkeMtz.NRSRx.Core.Models": "[1.0.0, )",
           "Microsoft.EntityFrameworkCore": "[7.0.16, )",
-          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "[7.0.14, )",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "[7.0.16, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Text.Encodings.Web": "[7.0.0, )",
           "System.Text.RegularExpressions": "[4.3.1, )"
@@ -1757,7 +1757,7 @@
           "IkeMtz.NRSRx.Core.Web": "[1.0.0, )",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "[7.0.16, )",
           "Microsoft.AspNetCore.OData": "[8.2.4, )",
-          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "[7.0.14, )",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "[7.0.16, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Text.Encodings.Web": "[7.0.0, )",
           "System.Text.RegularExpressions": "[4.3.1, )"
@@ -1780,13 +1780,13 @@
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
           "IkeMtz.NRSRx.Events.Publishers.Redis": "[1.0.0, )",
           "IkeMtz.NRSRx.Events.Subscribers.Redis": "[1.0.0, )",
-          "MSTest.TestAdapter": "[3.2.1, )",
-          "MSTest.TestFramework": "[3.2.1, )",
+          "MSTest.TestAdapter": "[3.2.2, )",
+          "MSTest.TestFramework": "[3.2.2, )",
           "Microsoft.AspNet.WebApi.Client": "[6.0.0, )",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[7.0.16, )",
           "Microsoft.AspNetCore.SignalR.Client": "[7.0.16, )",
           "Microsoft.AspNetCore.TestHost": "[7.0.16, )",
-          "Microsoft.EntityFrameworkCore.InMemory": "[7.0.14, )",
+          "Microsoft.EntityFrameworkCore.InMemory": "[7.0.16, )",
           "Microsoft.Extensions.Configuration.UserSecrets": "[7.0.0, )",
           "Moq": "[4.18.4, )",
           "Newtonsoft.Json": "[13.0.3, )",
@@ -1831,14 +1831,14 @@
         "dependencies": {
           "AspNetCore.HealthChecks.Redis": "[7.0.1, )",
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
-          "StackExchange.Redis": "[2.7.17, )"
+          "StackExchange.Redis": "[2.7.23, )"
         }
       },
       "ikemtz.nrsrx.events.subscribers.redis": {
         "type": "Project",
         "dependencies": {
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
-          "StackExchange.Redis": "[2.7.17, )"
+          "StackExchange.Redis": "[2.7.23, )"
         }
       }
     }

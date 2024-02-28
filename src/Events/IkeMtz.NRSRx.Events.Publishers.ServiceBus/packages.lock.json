@@ -4,9 +4,9 @@
     ".NETStandard,Version=v2.1": {
       "Azure.Messaging.ServiceBus": {
         "type": "Direct",
-        "requested": "[7.17.2, )",
-        "resolved": "7.17.2",
-        "contentHash": "TvmQ+qBchdxl/e5H5dtocqe/x4dsddK6vL98YYP/Ip/t5T7twBMsDV2TUbR4fP/VWOo/XU+niArIv4vRjchkgQ==",
+        "requested": "[7.17.3, )",
+        "resolved": "7.17.3",
+        "contentHash": "CPPwjzIcn+SA2lFqgaH85FwekUyyJAE0O5+w3eNUdpm6+2OrEFeKzv0xTiMItmL6pv6l5zA6KDADI6BCtNlDPA==",
         "dependencies": {
           "Azure.Core": "1.37.0",
           "Azure.Core.Amqp": "1.3.0",
