@@ -80,6 +80,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       var pendingInfo = await GetConsumerInfoAsync();
       return new MessageQueueInfo
       {
+        StreamKey = StreamKey,
         MessageCount = info.Length,
         AckMessageCount = ackMsgCount,
         SubscriberCount = pendingInfo.Count(),

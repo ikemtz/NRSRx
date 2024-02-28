@@ -90,11 +90,11 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       var result = await Subscriber.GetStreamInfoAsync();
       if (result != null) // This can happen in mocked scenarios
       {
-        Logger.LogInformation("Consumer Group Message Count: {MessageCount}.", result.MessageCount);
-        Logger.LogInformation("Consumer Group Acknowledged Message Count: {AckMessageCount}.", result.AckMessageCount);
-        Logger.LogInformation("Consumer Group Consumer Count: {SubscriberCount}.", result.SubscriberCount);
-        Logger.LogInformation("Consumer Group Pending Count: {PendingMsgCount}.", result.PendingMsgCount);
-        Logger.LogInformation("Consumer Group Dead Letter Message Count: {DeadLetterCount}.", result.DeadLetterMsgCount);
+        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Message Count: {MessageCount}.", result.StreamKey, result.MessageCount);
+        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Acknowledged Message Count: {AckMessageCount}.", result.StreamKey, result.AckMessageCount);
+        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Consumer Count: {SubscriberCount}.", result.StreamKey, result.SubscriberCount);
+        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Pending Count: {PendingMsgCount}.", result.StreamKey, result.PendingMsgCount);
+        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Dead Letter Message Count: {DeadLetterCount}.", result.StreamKey, result.DeadLetterMsgCount);
       }
       else
       {
