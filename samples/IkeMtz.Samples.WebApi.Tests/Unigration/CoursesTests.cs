@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
@@ -26,6 +25,8 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
       _ = resp.EnsureSuccessStatusCode();
+      var content = await resp.Content.ReadAsStringAsync();
+      StringAssert.Contains(content, "PendingCertification");
       var httpCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpCourse);
       Assert.AreEqual("IntegrationTester@email.com", httpCourse.CreatedBy);
@@ -58,6 +59,8 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
 
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
       _ = resp.EnsureSuccessStatusCode();
+      var content = await resp.Content.ReadAsStringAsync();
+      StringAssert.Contains(content, "PendingCertification");
       var httpUpdatedCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpUpdatedCourse);
       Assert.AreEqual("IntegrationTester@email.com", httpUpdatedCourse.UpdatedBy);

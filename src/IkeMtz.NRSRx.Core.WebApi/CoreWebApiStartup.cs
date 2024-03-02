@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -57,7 +58,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseRouting()
        .UseAuthentication()
        .UseAuthorization();
-       
+
       if (!DisableSwagger && Configuration?.GetValue("DisableSwagger", false) != true)
       {
         _ = app
