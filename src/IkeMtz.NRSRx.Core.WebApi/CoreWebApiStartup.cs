@@ -97,7 +97,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
              options
              .UseCamelCasing(true)
              .SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-
+             options.SerializerSettings.Converters.Add(new StringEnumConverter());
              options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
            })
            .AddXmlSerializerFormatters();
