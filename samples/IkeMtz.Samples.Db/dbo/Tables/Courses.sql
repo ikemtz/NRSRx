@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[Courses] (
     [Description]  VARCHAR (500)      NULL,
     [PassRate]     FLOAT (53)         NOT NULL,
     [AvgScore]     FLOAT (53)         NOT NULL,
+    [Status]       INT                NOT NULL DEFAULT 0,
     [CreatedBy]    VARCHAR (250)      NOT NULL,
     [CreatedOnUtc] DATETIMEOFFSET (7) CONSTRAINT [DF_Courses_CreatedOnUtc] DEFAULT (getutcdate()) NOT NULL,
     [UpdateCount]  INT NULL,

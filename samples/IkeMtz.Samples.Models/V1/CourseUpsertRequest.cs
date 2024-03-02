@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +9,7 @@ namespace IkeMtz.Samples.Models.V1
 
     [Required]
     public Guid Id { get; set; }
+    public CourseStatus Status { get; set; }
     [Required]
     [MaxLength(150)]
     public string Department { get; set; }
