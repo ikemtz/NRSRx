@@ -4,12 +4,12 @@
     "net7.0": {
       "Microsoft.EntityFrameworkCore": {
         "type": "Direct",
-        "requested": "[7.0.16, )",
-        "resolved": "7.0.16",
-        "contentHash": "SbMHFQG7iXgBTUFv5XxVMwpRqDKah4qTraDAGUv4gkaudFAOSuNfNRfCXY282hij79P1oxg/M9Wni+8GXavxQQ==",
+        "requested": "[7.0.20, )",
+        "resolved": "7.0.20",
+        "contentHash": "Wvmktob+dBPvMZdTj2yRrfDi3ERL/RRcE8EWjr3DuIjWn+6giqD81+oNM/09IthwZ3IsSMHgpiVVmTwAW92gEQ==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Abstractions": "7.0.16",
-          "Microsoft.EntityFrameworkCore.Analyzers": "7.0.16",
+          "Microsoft.EntityFrameworkCore.Abstractions": "7.0.20",
+          "Microsoft.EntityFrameworkCore.Analyzers": "7.0.20",
           "Microsoft.Extensions.Caching.Memory": "7.0.0",
           "Microsoft.Extensions.DependencyInjection": "7.0.0",
           "Microsoft.Extensions.Logging": "7.0.0"
@@ -17,13 +17,13 @@
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
         "type": "Direct",
-        "requested": "[7.0.16, )",
-        "resolved": "7.0.16",
-        "contentHash": "0dKng5nKgQnw9fxQMOVi6+TXE1UCYgsmKGC8J95/ZSZhPkSWo0yLV0ycl2Sb3y1/NAVoQyXQdgtPTMNJgsTbyw==",
+        "requested": "[7.0.20, )",
+        "resolved": "7.0.20",
+        "contentHash": "bLBSyXirdIGtFF1B+9LvGnwT3odVS2/yVU78FKM/nSkzCetI1zCcHSs6NE7GAUg3zXrFsbWiw8XYeEoBUFF4YQ==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "7.0.16",
-          "Microsoft.Extensions.Diagnostics.HealthChecks": "7.0.16",
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.16"
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.20",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "7.0.20",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.20"
         }
       },
       "Microsoft.SourceLink.GitHub": {
@@ -92,20 +92,20 @@
       },
       "Microsoft.EntityFrameworkCore.Abstractions": {
         "type": "Transitive",
-        "resolved": "7.0.16",
-        "contentHash": "emuQo430RBfwZSxwTYKu0/+ohRixXaRNi3njEbzcnaFqc94oU6afcx5KYtk5/lrBQn58Oo0CUmDRhMeFQI4Kgg=="
+        "resolved": "7.0.20",
+        "contentHash": "ds6XFVrh34AWYAedlMo8tVkmxsxyXnwP0N6FTjlq4p1oR6TQktIabUDkSMKgStVYt4c4b4Rus3H/Oad9I4uSlQ=="
       },
       "Microsoft.EntityFrameworkCore.Analyzers": {
         "type": "Transitive",
-        "resolved": "7.0.16",
-        "contentHash": "DO8M/90nqgq7fFoR4SIty9thhK22RBIwxoJxPIwrATy9FV1QKGPUeG9iMnz1yHv5/NxZWr8xF44oFAsrgcHgXg=="
+        "resolved": "7.0.20",
+        "contentHash": "doouHLWFcYcd08QUh9+4aZu3sk4WySp/aSOHeIzNhMJ58ESQXUAGDvB1sjJ4HmE0tmCea51NGzgtHE5IBmFLGg=="
       },
       "Microsoft.EntityFrameworkCore.Relational": {
         "type": "Transitive",
-        "resolved": "7.0.16",
-        "contentHash": "g5G9SDhhxi9jUvUIrWl8r5Xi3cxY1W549ijLjO6y/2xTQv5ZF83u9MOrO9LYVi1wmm7Dih37U46rh9ZNcWBl0g==",
+        "resolved": "7.0.20",
+        "contentHash": "25GWyYLMm4T+iuxJLhXR/GTzeYR7tIhYUOCIaWkSFTI4FB39yQz8wg5EfyhPUL4Jfhjk94X+yFsff/HoNaCVIA==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "7.0.16",
+          "Microsoft.EntityFrameworkCore": "7.0.20",
           "Microsoft.Extensions.Configuration.Abstractions": "7.0.0"
         }
       },
@@ -152,10 +152,10 @@
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks": {
         "type": "Transitive",
-        "resolved": "7.0.16",
-        "contentHash": "knT1gfU3G4PUZ6TxuUx+x8lWok+bmpXumKqyMA7WLZ1fWyQgXdYJSHsibwh0iqAgkB/YX7x88BMb9Imv9aT3SA==",
+        "resolved": "7.0.20",
+        "contentHash": "ZzAWpLzPZIM9l0C0pJCihh/+lZJzLxoddFti0ZddrDXAlRXw9/h8bAdqinTR6SPx2LFiZNhRBH6qoJcZ7lMpAw==",
         "dependencies": {
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.16",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "7.0.20",
           "Microsoft.Extensions.Hosting.Abstractions": "7.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.1",
           "Microsoft.Extensions.Options": "7.0.1"
@@ -163,8 +163,8 @@
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": {
         "type": "Transitive",
-        "resolved": "7.0.16",
-        "contentHash": "8e6VR5Nx67uo5NXdBW4wLhi+p/oiDnihNIfI/iTPZmwp6coHYQAOUwjaK9ZvGsOfVITDaAHFqk1eM5bN6E77Lw=="
+        "resolved": "7.0.20",
+        "contentHash": "6H9PxoOrVzhygyBs30gvKw16IQioDkNUHLGJfpilBDl+jWpsyoWkWDNhNxixODC60onoi33jOLo5N+VXwIJXfw=="
       },
       "Microsoft.Extensions.FileProviders.Abstractions": {
         "type": "Transitive",
