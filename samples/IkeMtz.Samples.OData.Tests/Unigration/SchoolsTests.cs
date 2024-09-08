@@ -21,7 +21,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetSchoolsTest()
     {
       var objA = Factories.SchoolFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -47,7 +47,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     {
       var dbSchool = Factories.SchoolFactory();
       dbSchool.SchoolCourses.Add(Factories.SchoolCourseFactory(dbSchool, Factories.CourseFactory()));
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -72,7 +72,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task DeleteSchoolTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 

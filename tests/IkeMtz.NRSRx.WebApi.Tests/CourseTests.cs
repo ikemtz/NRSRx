@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
@@ -25,7 +24,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task GetCourseTestAsync()
     {
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>
@@ -48,7 +47,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task SaveCourseTest()
     {
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -73,7 +72,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task SaveCourseJsonReaderExceptionsTest()
     {
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -87,7 +86,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task UpdateCourseTest()
     {
       var originalCourse = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>
@@ -126,7 +125,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task DeleteCourseTest()
     {
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>

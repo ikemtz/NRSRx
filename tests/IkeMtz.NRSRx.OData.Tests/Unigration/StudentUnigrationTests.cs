@@ -22,7 +22,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetStudentsTest()
     {
       var item = Factories.StudentFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -47,7 +47,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetGroupByStudentsTest()
     {
       var item = Factories.StudentFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -71,7 +71,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetStudentsWithExpansionTest()
     {
       var item = Factories.StudentCourseFactory(Factories.StudentFactory(), Factories.CourseFactory(), Factories.SchoolFactory());
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -98,7 +98,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task GetMaxErrorStudentsTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -114,7 +114,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task GetMaxStudentsTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -128,7 +128,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task DeleteStudentsTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -141,7 +141,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [Ignore("waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task GetODataDebugPage()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       var resp = await client.GetAsync($"$odata");
       var data = await resp.Content.ReadAsStringAsync();

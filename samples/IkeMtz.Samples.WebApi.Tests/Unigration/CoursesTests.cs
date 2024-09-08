@@ -19,7 +19,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     public async Task SaveCoursesTest()
     {
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationWebApiTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -43,7 +43,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     public async Task UpdateCourseTest()
     {
       var originalCourse = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationWebApiTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>

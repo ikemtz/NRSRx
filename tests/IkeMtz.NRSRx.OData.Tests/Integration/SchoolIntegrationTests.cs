@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     public async Task GetSchoolsTest()
     {
       var item = Factories.SchoolFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var course = Factories.CourseFactory();
       _ = Factories.SchoolCourseFactory(item, course);
       _ = Factories.StudentSchoolFactory(student, item);
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>

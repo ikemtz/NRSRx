@@ -14,10 +14,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
@@ -49,14 +51,14 @@ namespace IkeMtz.NRSRx.Core.Unigration
                     (key, SecurityAlgorithms.HmacSha256Signature);
       var header = new JwtHeader(credentials);
 
-      var claims = new List<Claim>(new[]
-      {
+      var claims = new List<Claim>(
+      [
           new Claim(JwtRegisteredClaimNames.UniqueName, "Integration Tester"),
           new Claim(JwtRegisteredClaimNames.Email, "IntegrationTester@email.com"),
           new Claim(JwtRegisteredClaimNames.Sub, "IntegrationTester@subject.com"),
           new Claim(JwtRegisteredClaimNames.Aud, CoreTestServerExtensions.JwtTokenAud) ,
           new Claim(JwtRegisteredClaimNames.Iss, TestServerConfiguration.GetValue<string>("IdentityProvider") ?? CoreTestServerExtensions.JwtTokenIssuer)
-      });
+      ]);
       testClaimsEditor(claims);
       var payload = new JwtPayload(claims);
       var token = new JwtSecurityToken(header, payload);
@@ -125,7 +127,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
     }
 
-    public IWebHostBuilder TestHostBuilder<TSiteStartup, TTestStartup>()
+
+    public IWebHostBuilder TestWebHostBuilder<TSiteStartup, TTestStartup>()
         where TTestStartup : class
     {
       Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", "Development");
@@ -144,9 +147,11 @@ namespace IkeMtz.NRSRx.Core.Unigration
            {
              _ = serviceCollection
              .AddSingleton(TestContext)
-             .AddScoped(x => TestContext);
+             .AddScoped(x => TestContext)
+             .AddSerilog();
              TestServerConfiguration = webHostBuilderContext.Configuration;
-           });
+           })
+           ;
     }
 
     public T JsonClone<T>(T source)

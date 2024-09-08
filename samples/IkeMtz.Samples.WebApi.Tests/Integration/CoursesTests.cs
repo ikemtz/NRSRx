@@ -19,7 +19,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Integration
     public async Task SaveCoursesTest()
     {
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationWebApiTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationWebApiTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -44,7 +44,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Integration
       var originalCourse = Factories.CourseFactory();
       originalCourse.CreatedBy = "blah";
       originalCourse.CreatedOnUtc = DateTime.UtcNow;
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationWebApiTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationWebApiTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>

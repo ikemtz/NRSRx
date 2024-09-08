@@ -57,9 +57,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     [TestCategory("Unit")]
     public async Task GetSwaggerUI()
     {
-      using var srv = new TestServer(TestHostBuilder<StartUp_Splunk, StartUp_Splunk>()
-        .UseLogging()
-     );
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_Splunk, StartUp_Splunk>());
       var client = srv.CreateClient(TestContext);
       var resp = await client.GetAsync("index.html");
       Assert.AreEqual(HttpStatusCode.OK, resp.EnsureSuccessStatusCode().StatusCode);

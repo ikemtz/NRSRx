@@ -3,7 +3,6 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.NRSRx.Events;
-using IkeMtz.Samples.Events.Redis;
 using IkeMtz.Samples.Events.Tests.Integration;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
@@ -12,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace IkeMtz.Samples.Events.Tests.Unigration
+namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
 {
   [TestClass]
   public partial class CoursesTests : BaseUnigrationTests
@@ -23,8 +22,8 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<Course, CreatedEvent>.CreatePublisher();
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>()
-        .ConfigureTestServices(x => x.AddSingleton<IPublisher<Course, CreatedEvent>>(x => mockPublisher.Object)));
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationEventsTestStartup>()
+        .ConfigureTestServices(x => x.AddSingleton(x => mockPublisher.Object)));
 
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
@@ -41,10 +40,10 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<Course, UpdatedEvent>.CreatePublisher();
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationEventsTestStartup>()
         .ConfigureTestServices(x =>
       {
-        _ = x.AddSingleton<IPublisher<Course, UpdatedEvent>>(mockPublisher.Object);
+        _ = x.AddSingleton(mockPublisher.Object);
       }));
 
       var client = srv.CreateClient(TestContext);
@@ -62,9 +61,9 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<Course, DeletedEvent>.CreatePublisher();
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {
-        _ = x.AddSingleton<IPublisher<Course, DeletedEvent>>(mockPublisher.Object);
+        _ = x.AddSingleton(mockPublisher.Object);
       }));
 
       var client = srv.CreateClient(TestContext);

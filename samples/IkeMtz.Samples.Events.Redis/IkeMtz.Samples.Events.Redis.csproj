@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>IkeMtz.Samples.Events.Redis</AssemblyName>
     <UserSecretsId>ff327954-e2d8-43dd-8594-a0305d93a6b1</UserSecretsId>
     <ProjectGuid>0047AB8C-B49D-42C0-B9C6-5DC850AC2F45</ProjectGuid>

@@ -3,8 +3,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using IkeMtz.NRSRx.Core;
-using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
@@ -12,9 +10,7 @@ using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace IkeMtz.NRSRx.WebApi.Tests
 {
@@ -26,7 +22,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     public async Task SaveCourseCausesAuditInvalidUserExTest()
     {
       var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken(x =>
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
@@ -42,7 +38,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var originalCourse = Factories.CourseFactory();
       originalCourse.CreatedBy = "xyz";
       originalCourse.CreatedOnUtc = DateTime.UtcNow.AddMonths(-500);
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>

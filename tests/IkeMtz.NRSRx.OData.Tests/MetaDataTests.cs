@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [Ignore] //NOSONAR
     public async Task GetMetaDataTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, Startup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, Startup>());
       var resp = await srv.CreateClient().GetAsync("odata/v1");
       var content = await resp.Content.ReadAsStringAsync();
       TestContext.Write($"Server Response: {content}");

@@ -21,7 +21,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var item = Factories.SchoolFactory();
       item.TenantId = "a-b-c";
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>
@@ -43,7 +43,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     [TestCategory("Unigration")]
     public async Task NoTenantsTestAsync()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
@@ -60,7 +60,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var item = Factories.SchoolFactory();
       item.TenantId = "a-b-c";
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureTestServices(x =>
         {
           ExecuteOnContext<DatabaseContext>(x, db =>
@@ -82,7 +82,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     [TestCategory("Unigration")]
     public async Task NoTenantParameterTestAsync()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 

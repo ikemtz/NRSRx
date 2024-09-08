@@ -1,6 +1,5 @@
 using System;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Configuration;
@@ -14,13 +13,6 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       return hostBuilder.UseSerilog();
     }
-    public static IWebHostBuilder UseLogging(this IWebHostBuilder webHostBuilder)
-    {
-#pragma warning disable CS0618 // Type or member is obsolete
-      return webHostBuilder.UseSerilog();
-#pragma warning restore CS0618 // Type or member is obsolete
-    }
-
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     internal static ILogger Logger { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

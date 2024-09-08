@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     [TestCategory("Unigration")]
     public async Task NotificationHubTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
 
       var connection = srv.BuildSignalrConnection("notificationHub", GenerateTestToken());
       var message = "Hello World";
@@ -61,7 +61,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     [ExpectedException(typeof(HttpRequestException))]
     public async Task NotificationHub401Test()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, Startup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, Startup>());
 
       var connection = srv.BuildSignalrConnection("notificationHub", GenerateTestToken());
       await connection.StartAsync().ConfigureAwait(false);
