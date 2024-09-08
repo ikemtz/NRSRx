@@ -21,7 +21,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     [TestCategory("SqlIntegration")]
     public async Task GetStudentsTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationODataTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
@@ -42,7 +42,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     public async Task GetGroupByStudentsTest()
     {
       var Student = Factories.StudentFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -70,7 +70,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var school = Factories.SchoolFactory();
       school.SchoolCourses.Add(Factories.SchoolCourseFactory(school, course));
       student.StudentCourses.Add(Factories.StudentCourseFactory(student, school.SchoolCourses.First()));
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -102,7 +102,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     public async Task GetGroupByStudentsTestWithAggregations()
     {
       var Student = Factories.StudentFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, IntegrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, IntegrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>

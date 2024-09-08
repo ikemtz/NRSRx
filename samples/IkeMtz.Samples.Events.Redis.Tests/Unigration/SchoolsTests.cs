@@ -23,7 +23,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<School, CreatedEvent>.CreatePublisher();
       var item = Factories.SchoolFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {
         _ = x.AddSingleton(mockPublisher.Object);
       }));
@@ -43,7 +43,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<School, UpdatedEvent>.CreatePublisher();
       var item = Factories.SchoolFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {
         _ = x.AddSingleton(mockPublisher.Object);
       }));
@@ -63,7 +63,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     {
       var mockPublisher = MockRedisStreamFactory<School, DeletedEvent>.CreatePublisher();
       var item = Factories.SchoolFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationEventsTestStartup>().ConfigureServices(x =>
       {
         _ = x.AddSingleton(mockPublisher.Object);
       }));

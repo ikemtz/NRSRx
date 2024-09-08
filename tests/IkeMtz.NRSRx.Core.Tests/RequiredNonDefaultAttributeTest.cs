@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task ValidateNoGuidFailure()
     {
-      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var client = srv.CreateClient(TestContext);
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel());
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task ValidateEmptyGuidFailure()
     {
-      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var client = srv.CreateClient(TestContext);
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.Empty });
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
@@ -61,9 +61,10 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task ValidateSuccess()
     {
-      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var client = srv.CreateClient(TestContext);
-      var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.NewGuid(), strings = new[] { "Hello World" } });
+      var payload = new TestModel { TestGuid = Guid.NewGuid(), strings = ["Hello World"] };
+      var resp = await client.PostAsJsonAsync("api/v1/Test.json", payload);
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine(s);
@@ -74,9 +75,10 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task ValidateEmptyArrayFailure()
     {
-      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var client = srv.CreateClient(TestContext);
-      var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.NewGuid(), strings = Array.Empty<string>() });
+      var payload = new TestModel { TestGuid = Guid.NewGuid(), strings = [] };
+      var resp = await client.PostAsJsonAsync("api/v1/Test.json", payload);
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
       StringAssert.Contains(s, "The strings field requires a non-empty value.");

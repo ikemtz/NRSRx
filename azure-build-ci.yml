@@ -1,4 +1,4 @@
-name: 7.2.$(DayOfYear)$(Rev:.rr)
+name: 8.0.$(DayOfYear)$(Rev:.rr)
 pool:
   vmImage: "windows-latest"
 
@@ -43,9 +43,9 @@ jobs:
         persistCredentials: true
 
       - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 7.0.x"
+        displayName: "Use .NET Core sdk 8.0.x"
         inputs:
-          version: 7.0.x
+          version: 8.x
 
       - task: Bash@3
         displayName: "Setting development environment variables"
@@ -71,7 +71,7 @@ jobs:
           InformationalVersion: "$(Build.BuildNumber)"
           PackageVersion: "$(Build.BuildNumber)"
 
-      - task: SonarCloudPrepare@1
+      - task: SonarCloudPrepare@2
         displayName: "Prepare analysis on SonarCloud"
         inputs:
           SonarCloud: "SonarCloud IkeMtz"
@@ -108,10 +108,10 @@ jobs:
           custom: "test"
           arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
-      - task: SonarCloudAnalyze@1
+      - task: SonarCloudAnalyze@2
         displayName: "Run Code Analysis"
 
-      - task: SonarCloudPublish@1
+      - task: SonarCloudPublish@2
         displayName: "Publish Quality Gate Result"
 
       - task: sonarcloud-buildbreaker@2
@@ -239,9 +239,8 @@ jobs:
           mergeTestResults: true
           failTaskOnFailedTests: true
 
-      - task: PublishCodeCoverageResults@1
+      - task: PublishCodeCoverageResults@2
         inputs:
-          codeCoverageTool: "Cobertura"
           summaryFileLocation: "**/coverage.cobertura.xml"
           failIfCoverageEmpty: false #https://github.com/coverlet-coverage/coverlet/issues/1390
 
@@ -278,9 +277,8 @@ jobs:
           mergeTestResults: true
           failTaskOnFailedTests: true
 
-      - task: PublishCodeCoverageResults@1
+      - task: PublishCodeCoverageResults@2
         inputs:
-          codeCoverageTool: "Cobertura"
           summaryFileLocation: "**/coverage.cobertura.xml"
           failIfCoverageEmpty: true
 

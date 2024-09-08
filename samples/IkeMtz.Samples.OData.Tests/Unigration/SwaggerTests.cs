@@ -18,7 +18,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task GetSwaggerIndexPageTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
       var html = await SwaggerUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(html);
     }
@@ -31,7 +31,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       {
         {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
         .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
           configurationBuilder.AddInMemoryCollection(myConfiguration)
         ));

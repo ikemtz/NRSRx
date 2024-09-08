@@ -21,7 +21,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       {
         {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
           configurationBuilder.AddInMemoryCollection(myConfiguration)
         ));

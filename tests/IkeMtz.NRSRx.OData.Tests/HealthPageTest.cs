@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task GetHealthPageTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var cli = srv.CreateClient();
       var resp = await cli.GetStringAsync("/healthz");
       Assert.AreEqual("Healthy", resp);

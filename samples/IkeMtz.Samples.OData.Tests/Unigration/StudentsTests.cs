@@ -4,8 +4,8 @@ using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Data;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,7 +21,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetStudentsTest()
     {
       var objA = Factories.StudentFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -46,7 +46,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetStudentsWNoLimitTest()
     {
       var objA = Factories.StudentFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -72,7 +72,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetStudentsExceedLimitTest()
     {
       var objA = Factories.StudentFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>
@@ -96,7 +96,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     [TestCategory("Unigration")]
     public async Task DeleteStudentTest()
     {
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 

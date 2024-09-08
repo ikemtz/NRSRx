@@ -18,7 +18,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetCoursesTest()
     {
       var objA = Factories.CourseFactory();
-      using var srv = new TestServer(TestHostBuilder<Startup, UnigrationODataTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
           .ConfigureTestServices(x =>
           {
             ExecuteOnContext<DatabaseContext>(x, db =>

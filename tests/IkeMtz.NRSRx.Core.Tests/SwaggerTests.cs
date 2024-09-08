@@ -22,7 +22,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };
-      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>()
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>()
         .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
           configurationBuilder.AddInMemoryCollection(myConfiguration)
         ));
@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task TestHtmlPageAsync()
     {
-      using var srv = new TestServer(TestHostBuilder<StartUp_AppInsights, UnitTestStartup>());
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
       var html = await SwaggerUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(html);
     }

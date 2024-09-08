@@ -37,18 +37,12 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     where TDestinationEntity : class, IIdentifiable<TKey>, new()
     where TKey : IComparable
     {
-      if (sourceCollection == null)
-      {
-        sourceCollection = new List<TSourceEntity>();
-      }
-      else if (destinationCollection == null)
+      sourceCollection ??= [];
+      if (destinationCollection == null)
       {
         throw new ArgumentNullException(nameof(destinationCollection));
       }
-      else if (auditableContext == null)
-      {
-        throw new ArgumentNullException(nameof(auditableContext));
-      }
+      else ArgumentNullException.ThrowIfNull(auditableContext);
       var sourceIds = sourceCollection.Select(t => t.Id).ToArray();
       var destIds = destinationCollection.Select(t => t.Id).ToArray();
 

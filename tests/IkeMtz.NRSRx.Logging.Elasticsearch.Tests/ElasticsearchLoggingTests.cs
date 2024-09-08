@@ -65,9 +65,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     [TestCategory("Unit")]
     public async Task GetSwaggerUI()
     {
-      using var srv = new TestServer(TestHostBuilder<StartUp_Elastic, StartUp_Elastic>()
-        .UseLogging()
-     );
+      using var srv = new TestServer(TestWebHostBuilder<StartUp_Elastic, StartUp_Elastic>());
       var client = srv.CreateClient(TestContext);
       var resp = await client.GetAsync("index.html");
       Assert.AreEqual(HttpStatusCode.OK, resp.EnsureSuccessStatusCode().StatusCode);
