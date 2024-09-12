@@ -41,7 +41,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.5.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.6.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\samples\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />

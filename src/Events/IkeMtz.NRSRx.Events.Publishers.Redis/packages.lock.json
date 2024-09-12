@@ -24,9 +24,9 @@
       },
       "StackExchange.Redis": {
         "type": "Direct",
-        "requested": "[2.8.12, )",
-        "resolved": "2.8.12",
-        "contentHash": "uUI5cgV1huCKcfTG4kh1NpLj+K7U9HWEfb0Bxs4qy9pFtc2kxQzRyr4RbVCm6zmWO9zufcs7zd9XVIE8+i0YMg==",
+        "requested": "[2.8.16, )",
+        "resolved": "2.8.16",
+        "contentHash": "WaoulkOqOC9jHepca3JZKFTqndCWab5uYS7qCzmiQDlrTkFaDN7eLSlEfHycBxipRnQY9ppZM7QSsWAwUEGblw==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "5.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
