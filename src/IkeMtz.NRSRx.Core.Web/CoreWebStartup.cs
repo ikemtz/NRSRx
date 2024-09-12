@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -15,10 +14,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using jwt = System.IdentityModel.Tokens.Jwt;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
@@ -72,7 +73,8 @@ namespace IkeMtz.NRSRx.Core.Web
 
     public virtual void SetupAuthentication(AuthenticationBuilder builder)
     {
-      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      jwt.JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
       _ = builder
           .AddJwtBearer(options =>
           {
