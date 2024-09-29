@@ -20,7 +20,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591;CS8602;</NoWarn>
+    <NoWarn>1701;1702;CS8602;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Core.SignalR.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

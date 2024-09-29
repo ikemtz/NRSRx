@@ -8,7 +8,7 @@ namespace IkeMtz.NRSRx.Events
     /// <summary>
     /// Gets or sets the total number of messages in the queue.
     /// </summary>
-    public int? MessageCount { get; set; }
+    public int? MsgCount { get; set; }
 
     /// <summary>
     /// Gets or sets the number of subscribers to the queue.
@@ -28,7 +28,7 @@ namespace IkeMtz.NRSRx.Events
     /// <summary>
     /// Gets or sets the number of acknowledged messages in the queue.
     /// </summary>
-    public int AckMessageCount { get; set; }
+    public int AcknowledgedMsgCount { get; set; }
 
     /// <summary>
     /// Gets or sets the stream key associated with the queue.

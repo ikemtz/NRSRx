@@ -1,12 +1,19 @@
 namespace IkeMtz.NRSRx.Core.Jobs
 {
+  /// <summary>
+  /// Represents a function that can be executed within the NRSRx framework.
+  /// </summary>
   public interface IFunction
   {
     /// <summary>
-    /// The higher priorty functions get run first (ordered by descending). 
+    /// Gets the sequence priority of the function. Higher priority functions are run first (ordered by descending).
     /// </summary>
     int? SequencePriority { get; }
-    // Should return true if successful
+
+    /// <summary>
+    /// Executes the function asynchronously.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating whether the function was successful.</returns>
     Task<bool> RunAsync();
   }
 }

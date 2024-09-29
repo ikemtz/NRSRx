@@ -46,6 +46,35 @@
             <remarks>This allows API versioning to define a Swagger document per API version after the
             <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.#ctor(System.IServiceProvider,Microsoft.Extensions.Configuration.IConfiguration,IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="serviceProvider">The service provider.</param>
+            <param name="configuration">The application configuration.</param>
+            <param name="startup">The CoreWebStartup instance.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the startup parameter is null.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <summary>
+            Configures the Swagger generation options.
+            </summary>
+            <param name="options">The Swagger generation options.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.GetSwaggerScopeDictionary(System.Collections.Generic.IEnumerable{IkeMtz.NRSRx.Core.Web.OAuthScope})">
+            <summary>
+            Creates a dictionary of Swagger scopes.
+            </summary>
+            <param name="swaggerScopes">The collection of OAuth scopes.</param>
+            <returns>A dictionary of Swagger scopes.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.CreateInfoForApiVersion(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription)">
+            <summary>
+            Creates the OpenAPI information for a specific API version.
+            </summary>
+            <param name="description">The API version description.</param>
+            <returns>The OpenAPI information.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.CoreTenantFilterAttribute">
             <summary>
             An abstract attribute that provides tenant-based authorization filtering.  For use in multi tenant Apis.
@@ -333,12 +362,66 @@
             </summary>
             <returns>The token endpoint URI.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter">
+            <summary>
+            Operation filter to add authorization responses and security requirements to Swagger operations.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation.
+            </summary>
+            <param name="operation">The OpenAPI operation.</param>
+            <param name="context">The operation filter context.</param>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter">
             <summary>
             Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
             </summary>
             <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
             Once they are fixed and published, this class can be removed.</remarks>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation.
+            </summary>
+            <param name="operation">The OpenAPI operation.</param>
+            <param name="context">The operation filter context.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter">
+            <summary>
+            Document filter to modify Swagger paths for reverse proxy scenarios.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter"/> class.
+            </remarks>
+            <param name="config">The application configuration.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Document filter to modify Swagger paths for reverse proxy scenarios.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter"/> class.
+            </remarks>
+            <param name="config">The application configuration.</param>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath">
+            <summary>
+            The configuration key for the Swagger reverse proxy base path.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Configuration">
+            <summary>
+            Gets the application configuration.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            Applies the filter to the specified Swagger document.
+            </summary>
+            <param name="swaggerDoc">The OpenAPI document.</param>
+            <param name="context">The document filter context.</param>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.ConfigurationFactory`1">
             <summary>

@@ -4,6 +4,36 @@
         <name>IkeMtz.NRSRx.Logging.Splunk</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Logging.Splunk.SplunkExtensions">
+            <summary>
+            Extension methods to setup logging to Splunk in the NRSRx framework.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Logging.Splunk.SplunkExtensions.ClientHandler">
+            <summary>
+            Gets the HTTP client handler with SSL validation disabled.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Logging.Splunk.SplunkExtensions.ConfigureSplunkLogger(Microsoft.Extensions.Configuration.IConfiguration,System.Func{Serilog.Configuration.LoggerMinimumLevelConfiguration,Serilog.LoggerConfiguration})">
+            <summary>
+            Configures the logger to log to a Splunk instance.
+            </summary>
+            <param name="configuration">The application configuration.</param>
+            <param name="minimumLogLevelConfig">Callback to configure the minimum log level (default: Information).</param>
+            <returns>The configured logger.</returns>
+            <remarks>
+            The following configuration variables are required:
+            - SPLUNK_HOST: The URL of the Splunk HTTP Event Collector (HEC) endpoint.
+            - SPLUNK_TOKEN: The authentication token for the Splunk HEC.
+            
+            The following configuration values are optional:
+            - SPLUNK_DISABLE_SSL_VALIDATION: Set to "true" to disable SSL validation (default: false).
+            - SPLUNK_URI_PATH: The URI path for the Splunk HEC (default: "services/collector/event").
+            - SPLUNK_INDEX: The index to send events to (default: empty).
+            - SPLUNK_SOURCE_TYPE: The source type for the events (default: empty).
+            - ENVIRONMENT_NAME: The environment name to include in the logs (default: empty).
+            </remarks>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.StartupExtensions">
             <summary>
             Extension methods to setup logging on NRSRx framework
@@ -20,13 +50,40 @@
             <param name="startup"></param>
             <param name="app"></param>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.SeriLogExtensions">
+            <summary>
+            Extension methods to setup Serilog logging in the NRSRx framework.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.UseLogging(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Configures the host builder to use Serilog for logging.
+            </summary>
+            <param name="hostBuilder">The host builder.</param>
+            <returns>The configured host builder.</returns>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Func{Serilog.Configuration.LoggerMinimumLevelConfiguration,Serilog.LoggerConfiguration})">
             <summary>
-            Sets up Console Logging only, leverages SeriLog sinks
+            Sets up console logging using Serilog sinks.
             </summary>
-            <param name="startup"></param>
-            <param name="app"></param>
-            <param name="minimumLogLevelConfig">Use this callback to configure your preferred level of logging (default: Information)</param>
+            <param name="startup">The CoreWebStartup instance.</param>
+            <param name="app">The application builder.</param>
+            <param name="minimumLogLevelConfig">Callback to configure the minimum log level (default: Information).</param>
+            <returns>The configured logger.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.GetLogger(System.Func{Serilog.ILogger})">
+            <summary>
+            Gets or creates the logger instance.
+            </summary>
+            <param name="loggerFactory">The factory function to create the logger.</param>
+            <returns>The logger instance.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.UseSerilog(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the application to use Serilog request logging.
+            </summary>
+            <param name="app">The application builder.</param>
+            <returns>The application builder.</returns>
         </member>
     </members>
 </doc>

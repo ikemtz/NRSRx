@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StackExchange.Redis;
 using static IkeMtz.NRSRx.Core.Unigration.TestDataFactory;
-using Consumer = IkeMtz.NRSRx.Events.Subscribers.Redis.Consumer;
+using RedisStreamConsumerMetadata = IkeMtz.NRSRx.Events.Subscribers.Redis.RedisStreamConsumerMetadata;
 
 namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 {
@@ -125,13 +125,13 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       Assert.AreNotEqual(0, count);
 
       var currentStreamInfoA = await subscriberA.GetStreamInfoAsync();
-      Assert.AreNotEqual(0, currentStreamInfoA.MessageCount);
-      Assert.AreNotEqual(0, currentStreamInfoA.AckMessageCount);
+      Assert.AreNotEqual(0, currentStreamInfoA.MsgCount);
+      Assert.AreNotEqual(0, currentStreamInfoA.AcknowledgedMsgCount);
 
 
       var currentStreamInfoB = await subscriberB.GetStreamInfoAsync();
-      Assert.AreNotEqual(0, currentStreamInfoB.MessageCount);
-      Assert.AreNotEqual(0, currentStreamInfoB.AckMessageCount);
+      Assert.AreNotEqual(0, currentStreamInfoB.MsgCount);
+      Assert.AreNotEqual(0, currentStreamInfoB.AcknowledgedMsgCount);
 
       _ = await subscriberA.DeleteIdleConsumersAsync();
       _ = await subscriberA.Database.StreamDeleteConsumerGroupAsync(subscriberA.StreamKey, subscriberA.ConsumerGroupName);
@@ -282,13 +282,10 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       Database
         .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 5, false, CommandFlags.None), Times.Once);
     }
-    class RedisStreamSubscriberMock : RedisStreamSubscriber<SampleMessage, CreateEvent>
+    class RedisStreamSubscriberMock(IConnectionMultiplexer connection) : RedisStreamSubscriber<SampleMessage, CreateEvent>(connection)
     {
-      public RedisStreamSubscriberMock(IConnectionMultiplexer connection) : base(connection)
-      {
-      }
-      public override Task<IEnumerable<Consumer>> GetIdleConsumersWithPendingMsgsAsync() =>
-        Task.FromResult<IEnumerable<Consumer>>(new Consumer[] { new Consumer { Name = "Unit Test" } });
+      public override Task<IEnumerable<RedisStreamConsumerMetadata>> GetIdleConsumersWithPendingMsgsAsync() =>
+        Task.FromResult<IEnumerable<RedisStreamConsumerMetadata>>([new RedisStreamConsumerMetadata { Name = "Unit Test" }]);
     }
 
     [TestMethod]
@@ -358,7 +355,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     public async Task ValidateMockMessageRecieved()
     {
       var message = new SampleMessage();
-      var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateSubscriber(new[] { message });
+      var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateSubscriber([message]);
       var messages = await Subscriber.Object.GetMessagesAsync(1);
       Assert.AreEqual(message.Name, messages.First().Entity.Name);
     }

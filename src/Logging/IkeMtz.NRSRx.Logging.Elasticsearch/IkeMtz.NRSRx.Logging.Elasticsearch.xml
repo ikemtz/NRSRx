@@ -4,39 +4,72 @@
         <name>IkeMtz.NRSRx.Logging.Elasticsearch</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Web.SeriLogExtensions">
+            <summary>
+            Extension methods to setup Serilog logging in the NRSRx framework.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.UseLogging(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Configures the host builder to use Serilog for logging.
+            </summary>
+            <param name="hostBuilder">The host builder.</param>
+            <returns>The configured host builder.</returns>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Func{Serilog.Configuration.LoggerMinimumLevelConfiguration,Serilog.LoggerConfiguration})">
             <summary>
-            Sets up Console Logging only, leverages SeriLog sinks
+            Sets up console logging using Serilog sinks.
             </summary>
-            <param name="startup"></param>
-            <param name="app"></param>
-            <param name="minimumLogLevelConfig">Use this callback to configure your preferred level of logging (default: Information)</param>
+            <param name="startup">The CoreWebStartup instance.</param>
+            <param name="app">The application builder.</param>
+            <param name="minimumLogLevelConfig">Callback to configure the minimum log level (default: Information).</param>
+            <returns>The configured logger.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.GetLogger(System.Func{Serilog.ILogger})">
+            <summary>
+            Gets or creates the logger instance.
+            </summary>
+            <param name="loggerFactory">The factory function to create the logger.</param>
+            <returns>The logger instance.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.UseSerilog(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the application to use Serilog request logging.
+            </summary>
+            <param name="app">The application builder.</param>
+            <returns>The application builder.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.StartupExtensions">
             <summary>
-            Extension methods to setup logging on NRSRx framework
+            Extension methods to setup logging on NRSRx framework.
             </summary>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupElasticsearch(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Func{Serilog.Configuration.LoggerMinimumLevelConfiguration,Serilog.LoggerConfiguration})">
             <summary>
-            Sets up the asp.net core application to log to a Elasticsearch instance.
-            Refernce: https://github.com/serilog/serilog-sinks-elasticsearch/wiki/basic-setup
-            Note: The following configuration variables are required:
-            ELASTICSEARCH_HOST => The url of the Elasticsearch endpoint (ie: http(s)://{Elasticsearch Host}/9200)
-            Note: The following configuration values should be set for Elasticsearch basic authentication
-            ELASTICSEARCH_USERNAME
-            ELASTICSEARCH_PASSWORD
-            Note: The following configuration values should be set for Elasticsearch api key authentication
-            ELASTICSEARCH_USERNAME => This should be the "id" of your token
-            ELASTICSEARCH_APIKEY => This should be the "api_key" of your token
-            Note: If your Elasticsearch instance is using an invalid SSL cert
-            ELASTICSEARCH_DISABLE_SSL_VALIDATION => set this value to "true"
-            Note: This library only has support for v6.x and v7.x versions of Elasticsearch, to use 6.x provide the following:
-            ELASTICSEARCH_VERSION => set this value to 6.x
+            Sets up the ASP.NET Core application to log to an Elasticsearch instance.
             </summary>
-            <param name="startup"></param>
-            <param name="app"></param>
-            <param name="minimumLogLevelConfig">Use this callback to configure your preferred level of logging (default: Information)</param>
+            <param name="startup">The CoreWebStartup instance.</param>
+            <param name="app">The application builder.</param>
+            <param name="minimumLogLevelConfig">Callback to configure the minimum log level (default: Information).</param>
+            <returns>The configured logger.</returns>
+            <remarks>
+            The following configuration variables are required:
+            - ELASTICSEARCH_HOST: The URL of the Elasticsearch endpoint (e.g., http(s)://{Elasticsearch Host}/9200)
+            
+            The following configuration values should be set for Elasticsearch basic authentication:
+            - ELASTICSEARCH_USERNAME
+            - ELASTICSEARCH_PASSWORD
+            
+            The following configuration values should be set for Elasticsearch API key authentication:
+            - ELASTICSEARCH_USERNAME: This should be the "id" of your token
+            - ELASTICSEARCH_APIKEY: This should be the "api_key" of your token
+            
+            If your Elasticsearch instance is using an invalid SSL certificate:
+            - ELASTICSEARCH_DISABLE_SSL_VALIDATION: Set this value to "true"
+            
+            This library only supports v6.x and v7.x versions of Elasticsearch. To use 6.x, provide the following:
+            - ELASTICSEARCH_VERSION: Set this value to 6.x
+            </remarks>
         </member>
     </members>
 </doc>

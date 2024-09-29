@@ -225,7 +225,7 @@
             Represents information about the current status of a message queue.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.MessageCount">
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.MsgCount">
             <summary>
             Gets or sets the total number of messages in the queue.
             </summary>
@@ -245,7 +245,7 @@
             Gets or sets the number of dead-letter messages in the queue.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.AckMessageCount">
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.AcknowledgedMsgCount">
             <summary>
             Gets or sets the number of acknowledged messages in the queue.
             </summary>

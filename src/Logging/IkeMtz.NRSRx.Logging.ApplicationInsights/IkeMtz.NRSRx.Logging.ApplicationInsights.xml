@@ -4,6 +4,18 @@
         <name>IkeMtz.NRSRx.Logging.ApplicationInsights</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Web.HostBuilderExtensions">
+            <summary>
+            Provides extension methods for configuring logging on the host builder.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.HostBuilderExtensions.UseLogging(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Configures the host builder to use logging.
+            </summary>
+            <param name="hostBuilder">The host builder to configure.</param>
+            <returns>The configured host builder.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.StartupExtensions">
             <summary>
             Extension methods to setup logging on NRSRx framework

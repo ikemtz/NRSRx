@@ -10,25 +10,38 @@ using StackExchange.Redis;
 namespace IkeMtz.NRSRx.Jobs.Redis
 {
   /// <summary>
-  /// This message function is geared towards supporting the Fanout pattern
+  /// This message function is geared towards supporting the Fanout pattern.
   /// </summary>
-  /// <typeparam name="TSplitMessageFunction"></typeparam>
-  /// <typeparam name="TEntity"></typeparam>
-  /// <typeparam name="TEvent"></typeparam>
-  public abstract class SplitMessageFunction<TSplitMessageFunction, TEntity, TEvent>
-    : MessageFunction<TSplitMessageFunction, SplitMessage<TEntity>, TEvent, Guid>
-      where TSplitMessageFunction : IMessageFunction
-      where TEntity : class, IIdentifiable<Guid>
-      where TEvent : EventType, new()
-  {
-    public bool AutoDeleteSplitProgressData { get; set; } = true;
-    public const string PASS = "Passed";
-    public const string FAIL = "Failed";
-    protected SplitMessageFunction(ILogger<TSplitMessageFunction> logger,
+  /// <typeparam name="TSplitMessageFunction">The type of the split message function.</typeparam>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
+  /// <typeparam name="TEvent">The type of the event.</typeparam>
+  public abstract class SplitMessageFunction<TSplitMessageFunction, TEntity, TEvent>(ILogger<TSplitMessageFunction> logger,
       RedisStreamSubscriber<SplitMessage<TEntity>, TEvent> subscriber)
-      : base(logger, subscriber)
-    { }
+      : MessageFunction<TSplitMessageFunction, SplitMessage<TEntity>, TEvent, Guid>(logger, subscriber)
+        where TSplitMessageFunction : IMessageFunction
+        where TEntity : class, IIdentifiable<Guid>
+        where TEvent : EventType, new()
+  {
+    /// <summary>
+    /// Gets or sets a value indicating whether to automatically delete split progress data.
+    /// </summary>
+    public bool AutoDeleteSplitProgressData { get; set; } = true;
 
+    /// <summary>
+    /// Constant for passed messages.
+    /// </summary>
+    public const string PASS = "Passed";
+
+    /// <summary>
+    /// Constant for failed messages.
+    /// </summary>
+    public const string FAIL = "Failed";
+
+    /// <summary>
+    /// Processes the streams asynchronously.
+    /// </summary>
+    /// <param name="messageType">The type of the message.</param>
+    /// <param name="getMessageFunction">The function to get messages.</param>
     [ExcludeFromCodeCoverage]
     public override async Task ProcessStreamsAsync(string messageType, Func<int?,
       Task<IEnumerable<(RedisValue Id, SplitMessage<TEntity> Entity)>>> getMessageFunction)
@@ -42,6 +55,11 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       while (messages.Any());
     }
 
+    /// <summary>
+    /// Processes a batch of split messages asynchronously.
+    /// </summary>
+    /// <param name="messageType">The type of the message.</param>
+    /// <param name="messages">The messages to process.</param>
     public virtual async Task ProcessStreamSplitBatchAsync(string messageType, IEnumerable<(RedisValue Id, SplitMessage<TEntity> Entity)> messages)
     {
       Logger.LogInformation("Pulling {MessageBufferCount} {messageType} messages from queue.", MessageBufferCount, messageType);
@@ -61,13 +79,19 @@ namespace IkeMtz.NRSRx.Jobs.Redis
         }
         catch (Exception x)
         {
-          Logger.LogError(x, "An error while handling {messageType} message with entity id: {id} ", messageType, id);
+          Logger.LogError(x, "An error occurred while handling {messageType} message with entity id: {id} ", messageType, id);
           await NotifySplitProgress(entity, false);
         }
       }
       Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
     }
 
+    /// <summary>
+    /// Notifies the progress of split messages.
+    /// </summary>
+    /// <param name="entity">The split message entity.</param>
+    /// <param name="isSuccess">Indicates whether the message was processed successfully.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the progress update.</returns>
     public virtual async Task<SplitMessageProgressUpdate> NotifySplitProgress(SplitMessage<TEntity> entity, bool isSuccess)
     {
       var passFail = isSuccess ? PASS : FAIL;
@@ -87,6 +111,12 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       return progressUpdate;
     }
 
+    /// <summary>
+    /// Converts a hash set to a split message progress update.
+    /// </summary>
+    /// <param name="result">The hash set result.</param>
+    /// <param name="totalMessages">The total number of messages.</param>
+    /// <returns>The split message progress update.</returns>
     public virtual SplitMessageProgressUpdate ConvertHashSet(HashEntry[] result, int totalMessages)
     {
       var passVal = result.FirstOrDefault(t => t.Name == PASS);
@@ -99,6 +129,11 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       };
     }
 
+    /// <summary>
+    /// Notifies the completion of split messages.
+    /// </summary>
+    /// <param name="entity">The split message entity.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public virtual Task NotifySplitCompletion(SplitMessage<TEntity> entity)
     {
       return Task.CompletedTask;

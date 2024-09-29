@@ -10,33 +10,39 @@ using Serilog.Sinks.SystemConsole.Themes;
 namespace IkeMtz.NRSRx.Core.Web
 {
   /// <summary>
-  /// Extension methods to setup logging on NRSRx framework
+  /// Extension methods to setup logging on NRSRx framework.
   /// </summary>
   public static class StartupExtensions
   {
     /// <summary>
-    /// Sets up the asp.net core application to log to a Elasticsearch instance.
-    /// Refernce: https://github.com/serilog/serilog-sinks-elasticsearch/wiki/basic-setup
-    /// Note: The following configuration variables are required:
-    /// ELASTICSEARCH_HOST => The url of the Elasticsearch endpoint (ie: http(s)://{Elasticsearch Host}/9200)
-    /// Note: The following configuration values should be set for Elasticsearch basic authentication
-    /// ELASTICSEARCH_USERNAME
-    /// ELASTICSEARCH_PASSWORD
-    /// Note: The following configuration values should be set for Elasticsearch api key authentication
-    /// ELASTICSEARCH_USERNAME => This should be the "id" of your token
-    /// ELASTICSEARCH_APIKEY => This should be the "api_key" of your token
-    /// Note: If your Elasticsearch instance is using an invalid SSL cert
-    /// ELASTICSEARCH_DISABLE_SSL_VALIDATION => set this value to "true"
-    /// Note: This library only has support for v6.x and v7.x versions of Elasticsearch, to use 6.x provide the following:
-    /// ELASTICSEARCH_VERSION => set this value to 6.x
+    /// Sets up the ASP.NET Core application to log to an Elasticsearch instance.
     /// </summary>
-    /// <param name="startup"></param>
-    /// <param name="app"></param>
-    /// <param name="minimumLogLevelConfig">Use this callback to configure your preferred level of logging (default: Information)</param>
+    /// <param name="startup">The CoreWebStartup instance.</param>
+    /// <param name="app">The application builder.</param>
+    /// <param name="minimumLogLevelConfig">Callback to configure the minimum log level (default: Information).</param>
+    /// <returns>The configured logger.</returns>
+    /// <remarks>
+    /// The following configuration variables are required:
+    /// - ELASTICSEARCH_HOST: The URL of the Elasticsearch endpoint (e.g., http(s)://{Elasticsearch Host}/9200)
+    /// 
+    /// The following configuration values should be set for Elasticsearch basic authentication:
+    /// - ELASTICSEARCH_USERNAME
+    /// - ELASTICSEARCH_PASSWORD
+    /// 
+    /// The following configuration values should be set for Elasticsearch API key authentication:
+    /// - ELASTICSEARCH_USERNAME: This should be the "id" of your token
+    /// - ELASTICSEARCH_APIKEY: This should be the "api_key" of your token
+    /// 
+    /// If your Elasticsearch instance is using an invalid SSL certificate:
+    /// - ELASTICSEARCH_DISABLE_SSL_VALIDATION: Set this value to "true"
+    /// 
+    /// This library only supports v6.x and v7.x versions of Elasticsearch. To use 6.x, provide the following:
+    /// - ELASTICSEARCH_VERSION: Set this value to 6.x
+    /// </remarks>
     public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder? app, Func<LoggerMinimumLevelConfiguration, LoggerConfiguration>? minimumLogLevelConfig = null)
     {
-      _ = (app?.UseSerilog());
-      minimumLogLevelConfig ??= X => X.Information();
+      _ = app?.UseSerilog();
+      minimumLogLevelConfig ??= x => x.Information();
 
       return SeriLogExtensions.GetLogger(() =>
       {
@@ -51,11 +57,11 @@ namespace IkeMtz.NRSRx.Core.Web
           IndexFormat = $"{startup.StartupAssembly?.GetName().Name?.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
           AutoRegisterTemplate = true,
           AutoRegisterTemplateVersion =
-          startup.Configuration.GetValue("ELASTICSEARCH_VERSION", "7x").StartsWith('6') ? AutoRegisterTemplateVersion.ESv6
-          : AutoRegisterTemplateVersion.ESv7,
+              startup.Configuration.GetValue("ELASTICSEARCH_VERSION", "7x").StartsWith('6') ? AutoRegisterTemplateVersion.ESv6
+              : AutoRegisterTemplateVersion.ESv7,
         };
         var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>
-        {
+            {
           var config = authFunc();
           if (startup.Configuration.GetValue<bool>("ELASTICSEARCH_DISABLE_SSL_VALIDATION"))
           {
@@ -72,12 +78,12 @@ namespace IkeMtz.NRSRx.Core.Web
           elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
         }
         return minimumLogLevelConfig(new LoggerConfiguration().MinimumLevel)
-          .Enrich.FromLogContext()
-          .Enrich.WithMachineName()
-          .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-          .WriteTo.Elasticsearch(elastiOptions)
-          .Enrich.WithProperty("Environment", environment)
-          .CreateLogger();
+              .Enrich.FromLogContext()
+              .Enrich.WithMachineName()
+              .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+              .WriteTo.Elasticsearch(elastiOptions)
+              .Enrich.WithProperty("Environment", environment)
+              .CreateLogger();
       });
     }
   }

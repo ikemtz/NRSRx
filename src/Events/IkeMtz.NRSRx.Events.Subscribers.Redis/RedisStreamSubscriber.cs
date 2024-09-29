@@ -146,8 +146,8 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
       return new MessageQueueInfo
       {
         StreamKey = StreamKey,
-        MessageCount = info.Length,
-        AckMessageCount = ackMsgCount,
+        MsgCount = info.Length,
+        AcknowledgedMsgCount = ackMsgCount,
         SubscriberCount = pendingInfo.Count(),
         PendingMsgCount = pendingInfo.Where(t => t.Name != this.DeadConsumerName).Sum(t => t.PendingMsgCount),
         DeadLetterMsgCount = pendingInfo.FirstOrDefault(t => t.Name == this.DeadConsumerName)?.PendingMsgCount ?? 0,
@@ -227,18 +227,18 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     /// Gets the consumer information asynchronously.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains the consumer information.</returns>
-    public virtual async Task<IEnumerable<Consumer>> GetConsumerInfoAsync()
+    public virtual async Task<IEnumerable<RedisStreamConsumerMetadata>> GetConsumerInfoAsync()
     {
       ValidateInit();
       var data = await Database.StreamConsumerInfoAsync(StreamKey, ConsumerGroupName);
-      return data.Select(t => new Consumer { Name = t.Name, IdleTimeInMs = t.IdleTimeInMilliseconds, PendingMsgCount = t.PendingMessageCount });
+      return data.Select(t => new RedisStreamConsumerMetadata { Name = t.Name, IdleTimeInMs = t.IdleTimeInMilliseconds, PendingMsgCount = t.PendingMessageCount });
     }
 
     /// <summary>
     /// Gets the idle consumers with pending messages asynchronously.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains the idle consumers with pending messages.</returns>
-    public virtual async Task<IEnumerable<Consumer>> GetIdleConsumersWithPendingMsgsAsync()
+    public virtual async Task<IEnumerable<RedisStreamConsumerMetadata>> GetIdleConsumersWithPendingMsgsAsync()
     {
       var data = await GetConsumerInfoAsync();
       var idleConsumers = data
