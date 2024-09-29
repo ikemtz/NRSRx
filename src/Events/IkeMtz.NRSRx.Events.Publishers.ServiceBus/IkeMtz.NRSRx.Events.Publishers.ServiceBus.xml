@@ -4,5 +4,105 @@
         <name>IkeMtz.NRSRx.Events.Publishers.ServiceBus</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException">
+            <summary>
+            Exception thrown when a required connection string is missing.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException.ConnectionStringName">
+            <summary>
+            Gets or sets the name of the missing connection string.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException"/> class with a specified error message.
+            </summary>
+            <param name="connectionStringName">The name of the missing connection string.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ConnectionStringMissingException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="connectionStringName">The name of the missing connection string.</param>
+            <param name="innerException">The exception that is the cause of the current exception.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`2">
+            <summary>
+            Service Bus queue publisher for entities with a <see cref="T:System.Guid"/> identifier.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`2.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`2"/> class with the specified configuration.
+            </summary>
+            <param name="configuration">The configuration to use.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`2.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`2"/> class with the specified connection string.
+            </summary>
+            <param name="connectionString">The connection string to use.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`3">
+            <summary>
+            Service Bus queue publisher for entities.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+            <typeparam name="TIdentityType">The type of the entity identifier.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`3.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`3"/> class with the specified configuration.
+            </summary>
+            <param name="configuration">The configuration to use.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`3.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`3"/> class with the specified connection string.
+            </summary>
+            <param name="queueConnectionString">The connection string to use.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`3.PublishAsync(`0)">
+            <summary>
+            Publishes an event asynchronously.
+            </summary>
+            <param name="payload">The entity payload.</param>
+            <returns>A task that represents the asynchronous publish operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Publishers.ServiceBus.ServiceBusQueuePublisher`3.GetQueueName">
+            <summary>
+            Gets the name of the queue.
+            </summary>
+            <returns>The name of the queue.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceBusQueueDependencyRegistration">
+            <summary>
+            Provides extension methods for registering Service Bus queue publishers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceBusQueueDependencyRegistration.AddServiceBusQueuePublishers``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds Service Bus queue publishers for the specified entity type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <param name="services">The service collection to add the publishers to.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceBusQueueDependencyRegistration.AddServiceBusQueuePublishers``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds Service Bus queue publishers for the specified entity type and identifier type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TIdentityType">The type of the entity identifier.</typeparam>
+            <param name="services">The service collection to add the publishers to.</param>
+        </member>
     </members>
 </doc>

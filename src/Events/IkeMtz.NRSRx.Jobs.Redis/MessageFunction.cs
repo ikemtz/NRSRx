@@ -7,43 +7,73 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Jobs.Redis
 {
-  public abstract class MessageFunction<TMessageFunction, TEntity, TEvent> : MessageFunction<TMessageFunction, TEntity, TEvent, Guid>
-    where TMessageFunction : IMessageFunction
-    where TEntity : class, IIdentifiable<Guid>
-    where TEvent : EventType, new()
+  /// <summary>
+  /// Abstract base class for message functions handling entities with a <see cref="Guid"/> identifier.
+  /// </summary>
+  /// <typeparam name="TMessageFunction">The type of the message function.</typeparam>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
+  /// <typeparam name="TEvent">The type of the event.</typeparam>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="MessageFunction{TMessageFunction, TEntity, TEvent}"/> class.
+  /// </remarks>
+  /// <param name="logger">The logger instance.</param>
+  /// <param name="subscriber">The Redis stream subscriber.</param>
+  public abstract class MessageFunction<TMessageFunction, TEntity, TEvent>(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, Guid> subscriber) : MessageFunction<TMessageFunction, TEntity, TEvent, Guid>(logger, subscriber)
+      where TMessageFunction : IMessageFunction
+      where TEntity : class, IIdentifiable<Guid>
+      where TEvent : EventType, new()
   {
-    protected MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, Guid> subscriber) : base(logger, subscriber)
-    {
-    }
   }
 
-  public abstract class MessageFunction<TMessageFunction, TEntity, TEvent, TIdentityType> : IMessageFunction
+  /// <summary>
+  /// Abstract base class for message functions handling entities.
+  /// </summary>
+  /// <typeparam name="TMessageFunction">The type of the message function.</typeparam>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
+  /// <typeparam name="TEvent">The type of the event.</typeparam>
+  /// <typeparam name="TIdentityType">The type of the entity identifier.</typeparam>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="MessageFunction{TMessageFunction, TEntity, TEvent, TIdentityType}"/> class.
+  /// </remarks>
+  /// <param name="logger">The logger instance.</param>
+  /// <param name="subscriber">The Redis stream subscriber.</param>
+  public abstract class MessageFunction<TMessageFunction, TEntity, TEvent, TIdentityType>(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber) : IMessageFunction
     where TMessageFunction : IMessageFunction
     where TIdentityType : IComparable
     where TEntity : class, IIdentifiable<TIdentityType>
     where TEvent : EventType, new()
   {
-    public ILogger<TMessageFunction> Logger { get; }
-    public virtual RedisStreamSubscriber<TEntity, TEvent, TIdentityType> Subscriber { get; set; }
+    /// <summary>
+    /// Gets the logger instance.
+    /// </summary>
+    public ILogger<TMessageFunction> Logger { get; } = logger;
+
+    /// <summary>
+    /// Gets or sets the Redis stream subscriber.
+    /// </summary>
+    public virtual RedisStreamSubscriber<TEntity, TEvent, TIdentityType> Subscriber { get; set; } = subscriber;
+
+    /// <summary>
+    /// Gets or sets the message buffer count.
+    /// </summary>
     public virtual int MessageBufferCount { get; set; } = 5;
 
     /// <summary>
-    /// Setting this to true will setup subscribers to auto claim messages from Idle Consumers
-    /// Default value = true
+    /// Gets or sets a value indicating whether to enable pending message processing.
+    /// Default value is true.
     /// </summary>
     public virtual bool EnablePendingMsgProcessing { get; set; } = true;
 
     /// <summary>
-    /// The higher priorty functions get run first (ordered by descending). 
+    /// Gets or sets the sequence priority.
+    /// Higher priority functions get run first (ordered by descending).
     /// </summary>
     public virtual int? SequencePriority { get; set; } = null;
 
-    protected MessageFunction(ILogger<TMessageFunction> logger, RedisStreamSubscriber<TEntity, TEvent, TIdentityType> subscriber)
-    {
-      Logger = logger;
-      Subscriber = subscriber;
-    }
-
+    /// <summary>
+    /// Runs the message function asynchronously.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous run operation. The task result contains a boolean indicating success.</returns>
     public virtual async Task<bool> RunAsync()
     {
       await LogStreamHealthInformationAsync();
@@ -58,6 +88,12 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       return true;
     }
 
+    /// <summary>
+    /// Processes the streams asynchronously.
+    /// </summary>
+    /// <param name="messageType">The type of the message.</param>
+    /// <param name="getMessageFunction">The function to get messages.</param>
+    /// <returns>A task that represents the asynchronous process operation.</returns>
     public virtual async Task ProcessStreamsAsync(string messageType, Func<int?, Task<IEnumerable<(RedisValue Id, TEntity Entity)>>> getMessageFunction)
     {
       Logger.LogInformation("Pulling {MessageBufferCount} {messageType} messages from queue.", MessageBufferCount, messageType);
@@ -78,23 +114,23 @@ namespace IkeMtz.NRSRx.Jobs.Redis
         }
         catch (Exception x)
         {
-          Logger.LogError(x, "An error while handling {messageType} message with entity id: {id} ", messageType, id);
-
+          Logger.LogError(x, "An error occurred while handling {messageType} message with entity id: {id} ", messageType, id);
         }
       }
       Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
     }
 
+    /// <summary>
+    /// Logs the stream health information asynchronously.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous log operation.</returns>
     public virtual async Task LogStreamHealthInformationAsync()
     {
       var result = await Subscriber.GetStreamInfoAsync();
       if (result != null) // This can happen in mocked scenarios
       {
-        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Message Count: {MessageCount}.", result.StreamKey, result.MessageCount);
-        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Acknowledged Message Count: {AckMessageCount}.", result.StreamKey, result.AckMessageCount);
-        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Consumer Count: {SubscriberCount}.", result.StreamKey, result.SubscriberCount);
-        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Pending Count: {PendingMsgCount}.", result.StreamKey, result.PendingMsgCount);
-        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Dead Letter Message Count: {DeadLetterCount}.", result.StreamKey, result.DeadLetterMsgCount);
+        Logger.LogInformation("Consumer Group {ConsumerGroupName}, Msg Count: {MsgCount}, Acknowledged Msg Count: {AcknowledgedMsgCount}, Consumer Count: {SubscriberCount}, Pending Count: {PendingMsgCount}, Dead Letter Msg Count: {DeadLetterMsgCount}",
+          result.StreamKey, result.MsgCount, result.AcknowledgedMsgCount, result.SubscriberCount, result.PendingMsgCount, result.DeadLetterMsgCount);
       }
       else
       {
@@ -102,6 +138,11 @@ namespace IkeMtz.NRSRx.Jobs.Redis
       }
     }
 
+    /// <summary>
+    /// Handles the message asynchronously.
+    /// </summary>
+    /// <param name="entity">The entity to handle.</param>
+    /// <returns>A task that represents the asynchronous handle operation.</returns>
     public abstract Task HandleMessageAsync(TEntity entity);
   }
 }

@@ -4,24 +4,181 @@
         <name>IkeMtz.NRSRx.Jobs.Redis</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`3">
+            <summary>
+            Abstract base class for message functions handling entities with a <see cref="T:System.Guid"/> identifier.
+            </summary>
+            <typeparam name="TMessageFunction">The type of the message function.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`3"/> class.
+            </remarks>
+            <param name="logger">The logger instance.</param>
+            <param name="subscriber">The Redis stream subscriber.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`3.#ctor(Microsoft.Extensions.Logging.ILogger{`0},IkeMtz.NRSRx.Events.Subscribers.Redis.RedisStreamSubscriber{`1,`2,System.Guid})">
+            <summary>
+            Abstract base class for message functions handling entities with a <see cref="T:System.Guid"/> identifier.
+            </summary>
+            <typeparam name="TMessageFunction">The type of the message function.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`3"/> class.
+            </remarks>
+            <param name="logger">The logger instance.</param>
+            <param name="subscriber">The Redis stream subscriber.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4">
+            <summary>
+            Abstract base class for message functions handling entities.
+            </summary>
+            <typeparam name="TMessageFunction">The type of the message function.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+            <typeparam name="TIdentityType">The type of the entity identifier.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4"/> class.
+            </remarks>
+            <param name="logger">The logger instance.</param>
+            <param name="subscriber">The Redis stream subscriber.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.#ctor(Microsoft.Extensions.Logging.ILogger{`0},IkeMtz.NRSRx.Events.Subscribers.Redis.RedisStreamSubscriber{`1,`2,`3})">
+            <summary>
+            Abstract base class for message functions handling entities.
+            </summary>
+            <typeparam name="TMessageFunction">The type of the message function.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+            <typeparam name="TIdentityType">The type of the entity identifier.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4"/> class.
+            </remarks>
+            <param name="logger">The logger instance.</param>
+            <param name="subscriber">The Redis stream subscriber.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.Logger">
+            <summary>
+            Gets the logger instance.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.Subscriber">
+            <summary>
+            Gets or sets the Redis stream subscriber.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.MessageBufferCount">
+            <summary>
+            Gets or sets the message buffer count.
+            </summary>
+        </member>
         <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.EnablePendingMsgProcessing">
             <summary>
-            Setting this to true will setup subscribers to auto claim messages from Idle Consumers
-            Default value = true
+            Gets or sets a value indicating whether to enable pending message processing.
+            Default value is true.
             </summary>
         </member>
         <member name="P:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.SequencePriority">
             <summary>
-            The higher priorty functions get run first (ordered by descending). 
+            Gets or sets the sequence priority.
+            Higher priority functions get run first (ordered by descending).
             </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.RunAsync">
+            <summary>
+            Runs the message function asynchronously.
+            </summary>
+            <returns>A task that represents the asynchronous run operation. The task result contains a boolean indicating success.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.ProcessStreamsAsync(System.String,System.Func{System.Nullable{System.Int32},System.Threading.Tasks.Task{System.Collections.Generic.IEnumerable{System.ValueTuple{StackExchange.Redis.RedisValue,`1}}}})">
+            <summary>
+            Processes the streams asynchronously.
+            </summary>
+            <param name="messageType">The type of the message.</param>
+            <param name="getMessageFunction">The function to get messages.</param>
+            <returns>A task that represents the asynchronous process operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.LogStreamHealthInformationAsync">
+            <summary>
+            Logs the stream health information asynchronously.
+            </summary>
+            <returns>A task that represents the asynchronous log operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.MessageFunction`4.HandleMessageAsync(`1)">
+            <summary>
+            Handles the message asynchronously.
+            </summary>
+            <param name="entity">The entity to handle.</param>
+            <returns>A task that represents the asynchronous handle operation.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3">
             <summary>
-            This message function is geared towards supporting the Fanout pattern
+            This message function is geared towards supporting the Fanout pattern.
             </summary>
-            <typeparam name="TSplitMessageFunction"></typeparam>
-            <typeparam name="TEntity"></typeparam>
-            <typeparam name="TEvent"></typeparam>
+            <typeparam name="TSplitMessageFunction">The type of the split message function.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.#ctor(Microsoft.Extensions.Logging.ILogger{`0},IkeMtz.NRSRx.Events.Subscribers.Redis.RedisStreamSubscriber{IkeMtz.NRSRx.Events.Abstraction.SplitMessage{`1},`2})">
+            <summary>
+            This message function is geared towards supporting the Fanout pattern.
+            </summary>
+            <typeparam name="TSplitMessageFunction">The type of the split message function.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.AutoDeleteSplitProgressData">
+            <summary>
+            Gets or sets a value indicating whether to automatically delete split progress data.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.PASS">
+            <summary>
+            Constant for passed messages.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.FAIL">
+            <summary>
+            Constant for failed messages.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.ProcessStreamsAsync(System.String,System.Func{System.Nullable{System.Int32},System.Threading.Tasks.Task{System.Collections.Generic.IEnumerable{System.ValueTuple{StackExchange.Redis.RedisValue,IkeMtz.NRSRx.Events.Abstraction.SplitMessage{`1}}}}})">
+            <summary>
+            Processes the streams asynchronously.
+            </summary>
+            <param name="messageType">The type of the message.</param>
+            <param name="getMessageFunction">The function to get messages.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.ProcessStreamSplitBatchAsync(System.String,System.Collections.Generic.IEnumerable{System.ValueTuple{StackExchange.Redis.RedisValue,IkeMtz.NRSRx.Events.Abstraction.SplitMessage{`1}}})">
+            <summary>
+            Processes a batch of split messages asynchronously.
+            </summary>
+            <param name="messageType">The type of the message.</param>
+            <param name="messages">The messages to process.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.NotifySplitProgress(IkeMtz.NRSRx.Events.Abstraction.SplitMessage{`1},System.Boolean)">
+            <summary>
+            Notifies the progress of split messages.
+            </summary>
+            <param name="entity">The split message entity.</param>
+            <param name="isSuccess">Indicates whether the message was processed successfully.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the progress update.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.ConvertHashSet(StackExchange.Redis.HashEntry[],System.Int32)">
+            <summary>
+            Converts a hash set to a split message progress update.
+            </summary>
+            <param name="result">The hash set result.</param>
+            <param name="totalMessages">The total number of messages.</param>
+            <returns>The split message progress update.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Redis.SplitMessageFunction`3.NotifySplitCompletion(IkeMtz.NRSRx.Events.Abstraction.SplitMessage{`1})">
+            <summary>
+            Notifies the completion of split messages.
+            </summary>
+            <param name="entity">The split message entity.</param>
+            <returns>A task that represents the asynchronous operation.</returns>
         </member>
     </members>
 </doc>

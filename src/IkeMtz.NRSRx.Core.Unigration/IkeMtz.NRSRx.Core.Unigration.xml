@@ -4,35 +4,1600 @@
         <name>IkeMtz.NRSRx.Core.Unigration</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests">
+            <summary>
+            Base class for integration tests, providing common functionality for setting up and running tests.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.TestContext">
+            <summary>
+            Gets or sets the test context.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.TestServerConfiguration">
+            <summary>
+            Gets or sets the test server configuration.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GenerateAuthHeader(System.Net.Http.HttpClient,System.String)">
+            <summary>
+            Generates an authentication header for the specified HTTP client using the provided token.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+            <param name="token">The token.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GenerateTestToken(System.Collections.Generic.IEnumerable{System.Security.Claims.Claim})">
+            <summary>
+            Generates a test JWT token with the specified claims.
+            </summary>
+            <param name="testClaims">The test claims.</param>
+            <returns>The generated JWT token.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GenerateTestToken(System.Action{System.Collections.Generic.ICollection{System.Security.Claims.Claim}})">
+            <summary>
+            Generates a test JWT token using the specified claims editor action.
+            </summary>
+            <param name="testClaimsEditor">The claims editor action.</param>
+            <returns>The generated JWT token.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GenerateTokenAsync">
+            <summary>
+            Generates a token asynchronously by making a request to the identity server.
+            </summary>
+            <returns>The generated token.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.ExecuteOnContext``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{``0})">
+            <summary>
+            Executes the specified callback on the provided DbContext.
+            </summary>
+            <typeparam name="TDbContext">The type of the DbContext.</typeparam>
+            <param name="services">The service collection.</param>
+            <param name="callback">The callback action.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.DeserializeResponseAsync``1(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Deserializes the response content to the specified type.
+            </summary>
+            <typeparam name="T">The type to deserialize to.</typeparam>
+            <param name="httpResponseMessage">The HTTP response message.</param>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.TestWebHostBuilder``2">
+            <summary>
+            Creates a test web host builder with the specified startup classes.
+            </summary>
+            <typeparam name="TSiteStartup">The type of the site startup class.</typeparam>
+            <typeparam name="TTestStartup">The type of the test startup class.</typeparam>
+            <returns>The web host builder.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.JsonClone``1(``0)">
+            <summary>
+            Creates a deep copy of the specified object using JSON serialization.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+            <param name="source">The source object.</param>
+            <returns>The deep copy of the object.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CharacterSets">
+            <summary>
+            Provides predefined sets of characters for various use cases.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CharacterSets.UpperCase">
+            <summary>
+            Uppercase alphabetic characters (A-Z).
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CharacterSets.LowerCase">
+            <summary>
+            Lowercase alphabetic characters (a-z).
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CharacterSets.Numeric">
+            <summary>
+            Numeric characters (0-9).
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CharacterSets.Special">
+            <summary>
+            Special characters.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CharacterSets.AlphaChars">
+            <summary>
+            Alphabetic characters (uppercase and lowercase).
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CharacterSets.AlphaNumericChars">
+            <summary>
+            Alphanumeric characters (alphabetic and numeric).
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CharacterSets.AllChars">
+            <summary>
+            All characters (alphanumeric and special).
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions">
+            <summary>
+            Provides extension methods for setting up test servers and services in integration tests.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions.JwtTokenIssuer">
+            <summary>
+            The issuer for JWT tokens used in integration tests.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions.JwtTokenAud">
+            <summary>
+            The audience for JWT tokens used in integration tests.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions.SetupTestAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Sets up test authentication using JWT bearer tokens.
+            </summary>
+            <param name="builder">The authentication builder.</param>
+            <param name="Configuration">The configuration.</param>
+            <param name="testContext">The test context.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions.SetupTestDbContext``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the test database context.
+            </summary>
+            <typeparam name="TDbContext">The type of the database context.</typeparam>
+            <param name="services">The service collection.</param>
+            <returns>The updated service collection.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions.BuildSignalrConnection(Microsoft.AspNetCore.TestHost.TestServer,System.String,System.String)">
+            <summary>
+            Builds a SignalR connection for the specified hub endpoint.
+            </summary>
+            <param name="srv">The test server.</param>
+            <param name="hubEndpoint">The hub endpoint.</param>
+            <param name="accessToken">The access token.</param>
+            <returns>The SignalR connection.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions.GetXmlCommentsFile(System.Reflection.Assembly)">
+            <summary>
+            Gets the XML comments file path for the specified startup assembly.
+            </summary>
+            <param name="startupAssembly">The startup assembly.</param>
+            <returns>The XML comments file path.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreTestServerExtensions.CreateClient(Microsoft.AspNetCore.TestHost.TestServer,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Creates an HTTP client for the specified test server.
+            </summary>
+            <param name="testServer">The test server.</param>
+            <param name="testContext">The test context.</param>
+            <returns>The HTTP client.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor">
+            <summary>
+            Interceptor for handling auditable entities during save changes operations in the DbContext.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor"/> class.
+            </remarks>
+            <param name="currentUserProvider">The current user provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.#ctor(IkeMtz.NRSRx.Core.ICurrentUserProvider)">
+            <summary>
+            Interceptor for handling auditable entities during save changes operations in the DbContext.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor"/> class.
+            </remarks>
+            <param name="currentUserProvider">The current user provider.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.CurrentUserProvider">
+            <summary>
+            Gets the current user provider.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.SaveChangesFailed(Microsoft.EntityFrameworkCore.Diagnostics.DbContextErrorEventData)">
+            <summary>
+            Called when save changes operation fails.
+            </summary>
+            <param name="eventData">The event data.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.SaveChangesFailedAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextErrorEventData,System.Threading.CancellationToken)">
+            <summary>
+            Called asynchronously when save changes operation fails.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A completed task.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.SavedChanges(Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesCompletedEventData,System.Int32)">
+            <summary>
+            Called after save changes operation completes.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The result of the save changes operation.</param>
+            <returns>The result of the save changes operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.SavedChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesCompletedEventData,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Called asynchronously after save changes operation completes.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The result of the save changes operation.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result of the save changes operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32})">
+            <summary>
+            Called before save changes operation.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The interception result.</param>
+            <returns>The interception result.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Called asynchronously before save changes operation.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The interception result.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The interception result.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.AuditableTestInterceptor.SetAuditables(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData)">
+            <summary>
+            Sets the audit fields for auditable entities.
+            </summary>
+            <param name="eventData">The event data.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor">
+            <summary>
+            Interceptor for handling calculatable entities during save changes operations in the DbContext.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.SaveChangesFailed(Microsoft.EntityFrameworkCore.Diagnostics.DbContextErrorEventData)">
+            <summary>
+            Called when save changes operation fails.
+            </summary>
+            <param name="eventData">The event data.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.SaveChangesFailedAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextErrorEventData,System.Threading.CancellationToken)">
+            <summary>
+            Called asynchronously when save changes operation fails.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A completed task.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.SavedChanges(Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesCompletedEventData,System.Int32)">
+            <summary>
+            Called after save changes operation completes.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The result of the save changes operation.</param>
+            <returns>The result of the save changes operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.SavedChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesCompletedEventData,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Called asynchronously after save changes operation completes.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The result of the save changes operation.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result of the save changes operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32})">
+            <summary>
+            Called before save changes operation.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The interception result.</param>
+            <returns>The interception result.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Called asynchronously before save changes operation.
+            </summary>
+            <param name="eventData">The event data.</param>
+            <param name="result">The interception result.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The interception result.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.CalculatableTestInterceptor.SetCalculatables(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData)">
+            <summary>
+            Sets the calculatable fields for calculatable entities.
+            </summary>
+            <param name="eventData">The event data.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Data.DbContextFactory">
+            <summary>
+            Factory for creating in-memory DbContext instances for testing purposes.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.DbContextFactory.CreateInMemoryAuditableDbContext``1(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Creates an in-memory auditable DbContext instance.
+            </summary>
+            <typeparam name="TAuditableDbContext">The type of the auditable DbContext.</typeparam>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+            <returns>An instance of <typeparamref name="TAuditableDbContext"/>.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.DbContextFactory.CreateInMemoryDbContext``1(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Creates an in-memory DbContext instance.
+            </summary>
+            <typeparam name="TDbContext">The type of the DbContext.</typeparam>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+            <returns>An instance of <typeparamref name="TDbContext"/>.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.DbContextFactory.CreateDbContextOptions``1(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Creates DbContext options for in-memory testing.
+            </summary>
+            <typeparam name="TDbContext">The type of the DbContext.</typeparam>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+            <returns>The DbContext options.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Data.DbContextFactory.ConfigureTestDbContextOptions(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Configures the DbContext options for in-memory testing.
+            </summary>
+            <param name="optionsBuilder">The options builder.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+            <returns>The configured options builder.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory">
+            <summary>
+            Factory for creating mock Redis stream connections and subscribers for testing purposes.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory.CreateMockConnection">
+            <summary>
+            Creates a mock Redis connection and database.
+            </summary>
+            <returns>A tuple containing the mock connection and database.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`3">
+            <summary>
+            Factory for creating mock Redis stream publishers and subscribers for testing purposes.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+            <typeparam name="TIdentityType">The type of the identity.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`3.CreatePublisher">
+            <summary>
+            Creates a mock publisher.
+            </summary>
+            <returns>A mock publisher.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`3.CreateSubscriber(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates a mock subscriber and database.
+            </summary>
+            <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
+            <returns>A tuple containing the mock subscriber and database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`3.SetupMockSubscriberCollection``1(Moq.Mock{``0},System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Sets up the mock subscriber with a collection of entities.
+            </summary>
+            <typeparam name="TSubscriberType">The type of the subscriber.</typeparam>
+            <param name="mockSubscriber">The mock subscriber.</param>
+            <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`3.SetupSupportMockMethods``1(Moq.Mock{``0},System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Sets up support methods for the mock subscriber.
+            </summary>
+            <typeparam name="TSubscriberType">The type of the subscriber.</typeparam>
+            <param name="mockSubscriber">The mock subscriber.</param>
+            <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`3.ExpandWithRedisValues(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Expands a collection of entities with Redis values.
+            </summary>
+            <param name="collection">The collection of entities.</param>
+            <returns>A collection of tuples containing Redis values and entities.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`2">
+            <summary>
+            Factory for creating mock Redis stream publishers and subscribers for testing purposes.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`2.CreatePublisher">
+            <summary>
+            Creates a mock publisher.
+            </summary>
+            <returns>A mock publisher.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`2.CreateConnection">
+            <summary>
+            Creates a mock Redis connection and database.
+            </summary>
+            <returns>A tuple containing the mock connection and database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`2.CreateSubscriber(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates a mock subscriber and database.
+            </summary>
+            <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
+            <returns>A tuple containing the mock subscriber and database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`2.CreateSubscriber(System.Func{System.Collections.Generic.IEnumerable{`0}})">
+            <summary>
+            Creates a mock subscriber and database with a function to get the collection.
+            </summary>
+            <param name="getCollection">A function to get the collection of entities.</param>
+            <returns>A tuple containing the mock subscriber and database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`2.SetupMockSubscriberCollection(Moq.Mock{IkeMtz.NRSRx.Events.Subscribers.Redis.RedisStreamSubscriber{`0,`1}},System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Sets up the mock subscriber with a collection of entities.
+            </summary>
+            <param name="mockSubscriber">The mock subscriber.</param>
+            <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory`2.ExpandWithRedisValues(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Expands a collection of entities with Redis values.
+            </summary>
+            <param name="collection">The collection of entities.</param>
+            <returns>A collection of tuples containing Redis values and entities.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Events.SplitMessageFactory`1">
+            <summary>
+            Factory for creating split messages for testing purposes.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Events.SplitMessageFactory`1.Create(System.Func{`0},System.Int32,System.String,System.String)">
+            <summary>
+            Creates a collection of split messages.
+            </summary>
+            <param name="entityFactory">A function to create an entity.</param>
+            <param name="messageCount">The number of messages to create. Default is 1.</param>
+            <param name="taskName">The name of the task. Default is "Unigration Test Task".</param>
+            <param name="userName">The name of the user who queued the messages. Default is "NRSRx Test User".</param>
+            <returns>A collection of split messages.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler">
+            <summary>
+            A fake HTTP message handler for testing purposes.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler.ResponseLogic">
+            <summary>
+            Gets or sets the logic to generate a response for a given request.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler.Send(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Sends an HTTP request and returns an HTTP response.
+            </summary>
+            <param name="request">The HTTP request message.</param>
+            <returns>The HTTP response message.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Sends an HTTP request as an asynchronous operation.
+            </summary>
+            <param name="request">The HTTP request message.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler.HttpJsonResponseFactory(System.Object)">
+            <summary>
+            Creates an HTTP response message with JSON content.
+            </summary>
+            <param name="responseObject">The object to serialize as JSON.</param>
+            <returns>The HTTP response message with JSON content.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler.FakeHttpClientFactory(System.Func{System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage})">
+            <summary>
+            Creates a fake <see cref="T:System.Net.Http.HttpClient"/> with the specified response logic.
+            </summary>
+            <param name="responseLogic">The logic to generate a response for a given request.</param>
+            <returns>A fake <see cref="T:System.Net.Http.HttpClient"/> instance.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeLogger">
+            <summary>
+            A fake logger implementation for testing purposes.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeLogger.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeLogger"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeLogger.BeginScope``1(``0)">
+            <summary>
+            Begins a logical operation scope.
+            </summary>
+            <typeparam name="TState">The type of the state to begin scope for.</typeparam>
+            <param name="state">The identifier for the scope.</param>
+            <returns>An <see cref="T:System.IDisposable"/> that ends the logical operation scope on dispose.</returns>
+            <exception cref="T:System.NotImplementedException">Always thrown as this method is not implemented.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            Checks if the given log level is enabled.
+            </summary>
+            <param name="logLevel">The log level to check.</param>
+            <returns>Always returns true as all log levels are enabled.</returns>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeLogger.Logs">
+            <summary>
+            Gets the list of log entries.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            Writes a log entry.
+            </summary>
+            <typeparam name="TState">The type of the state object.</typeparam>
+            <param name="logLevel">The log level.</param>
+            <param name="eventId">The event ID.</param>
+            <param name="state">The state object.</param>
+            <param name="exception">The exception to log.</param>
+            <param name="formatter">The function to create a log message.</param>
+            <exception cref="T:System.NullReferenceException">Thrown if the state is null.</exception>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Http.HttpClientExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:System.Net.Http.HttpClient"/> class to send JSON content.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Http.HttpClientExtensions.PostAsJsonAsync``1(System.Net.Http.HttpClient,System.String,``0)">
+            <summary>
+            Sends a POST request with JSON content to the specified URI.
+            </summary>
+            <typeparam name="T">The type of the content to send.</typeparam>
+            <param name="client">The HTTP client.</param>
+            <param name="requestUri">The URI to send the request to.</param>
+            <param name="value">The content to send.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the HTTP response message.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Http.HttpClientExtensions.PutAsJsonAsync``1(System.Net.Http.HttpClient,System.String,``0)">
+            <summary>
+            Sends a PUT request with JSON content to the specified URI.
+            </summary>
+            <typeparam name="T">The type of the content to send.</typeparam>
+            <param name="client">The HTTP client.</param>
+            <param name="requestUri">The URI to send the request to.</param>
+            <param name="value">The content to send.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the HTTP response message.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreIntegrationTestJob`1">
+            <summary>
+            Represents a core integration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreIntegrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreIntegrationTestJob`1.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Represents a core integration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreIntegrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Jobs.CoreMessagingIntegrationTestJob`1">
+            <summary>
+            Represents a core messaging integration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Jobs.CoreMessagingIntegrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Jobs.CoreMessagingIntegrationTestJob`1.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Represents a core messaging integration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Jobs.CoreMessagingIntegrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Jobs.CoreMessagingIntegrationTestJob`1.SetupDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the dependencies for the job.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection with dependencies set up.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1">
+            <summary>
+            Represents a core messaging unigration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="P:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Represents a core messaging unigration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="P:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.TestContext"/> for logging.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.Program">
+            <summary>
+            Gets the program instance.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.TestContext">
+            <summary>
+            Gets the MSTest <see cref="P:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.TestContext"/> for logging.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.SetupDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the dependencies for the job.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection with dependencies set up.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.SetupFunctions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the functions for the job.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection with functions set up.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.SetupLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up logging for the job.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreMessagingUnigrationTestJob`1.ExecuteOnContext``1(System.Action{``0})">
+            <summary>
+            Executes a callback on the specified database context.
+            </summary>
+            <typeparam name="TDbContext">The type of the database context.</typeparam>
+            <param name="callback">The callback to execute.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if the callback is null.</exception>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1">
+            <summary>
+            Represents a core unigration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="P:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Represents a core unigration test job for testing purposes.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Core.Jobs.IJob"/> interface.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1"/> class.
+            </remarks>
+            <param name="program">The program instance.</param>
+            <param name="testContext">The MSTest <see cref="P:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.TestContext"/> for logging.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.Program">
+            <summary>
+            Gets the program instance.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.TestContext">
+            <summary>
+            Gets the MSTest <see cref="P:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.TestContext"/> for logging.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.SetupDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the dependencies for the job.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection with dependencies set up.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.SetupFunctions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the functions for the job.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection with functions set up.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.SetupLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up logging for the job.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreUnigrationTestJob`1.ExecuteOnContext``1(System.Action{``0})">
+            <summary>
+            Executes a callback on the specified database context.
+            </summary>
+            <typeparam name="TDbContext">The type of the database context.</typeparam>
+            <param name="callback">The callback to execute.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if the callback is null.</exception>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Logging.HttpClientLoggingHandler">
+            <summary>
+            A delegating handler that logs HTTP client requests and responses for testing purposes.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.HttpClientLoggingHandler"/> class.
+            </remarks>
+            <param name="testContext">The test context for logging.</param>
+            <param name="testingHttpMessageHandler">The inner HTTP message handler.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.HttpClientLoggingHandler.#ctor(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext,System.Net.Http.HttpMessageHandler)">
+            <summary>
+            A delegating handler that logs HTTP client requests and responses for testing purposes.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.HttpClientLoggingHandler"/> class.
+            </remarks>
+            <param name="testContext">The test context for logging.</param>
+            <param name="testingHttpMessageHandler">The inner HTTP message handler.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.Logging.HttpClientLoggingHandler.TestContext">
+            <summary>
+            Gets the test context for logging.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.HttpClientLoggingHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Sends an HTTP request to the inner handler to send to the server as an asynchronous operation.
+            </summary>
+            <param name="request">The HTTP request message to send.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger">
+            <summary>
+            A logger implementation that writes log messages to the MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/>.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> class.
+            </remarks>
+            <param name="categoryName">The category name for the logger.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger.#ctor(System.String,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            A logger implementation that writes log messages to the MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/>.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> class.
+            </remarks>
+            <param name="categoryName">The category name for the logger.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger.BeginScope``1(``0)">
+            <summary>
+            Begins a logical operation scope.
+            </summary>
+            <typeparam name="TState">The type of the state to begin scope for.</typeparam>
+            <param name="state">The identifier for the scope.</param>
+            <returns>An <see cref="T:System.IDisposable"/> that ends the logical operation scope on dispose.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            Checks if the given log level is enabled.
+            </summary>
+            <param name="logLevel">The log level to check.</param>
+            <returns>Always returns true as all log levels are enabled.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            Writes a log entry.
+            </summary>
+            <typeparam name="TState">The type of the state object.</typeparam>
+            <param name="logLevel">The log level.</param>
+            <param name="eventId">The event ID.</param>
+            <param name="state">The state object.</param>
+            <param name="exception">The exception to log.</param>
+            <param name="formatter">The function to create a log message.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerExtensions">
+            <summary>
+            Provides extension methods for adding a <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> to the logging builder.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerExtensions.AddTestContext(Microsoft.Extensions.Logging.ILoggingBuilder,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Adds a <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> to the logging builder.
+            </summary>
+            <param name="builder">The logging builder.</param>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+            <returns>The logging builder with the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> added.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerProvider">
+            <summary>
+            Provides a logger provider that creates <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> instances.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerProvider"/> class.
+            </remarks>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerProvider.#ctor(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Provides a logger provider that creates <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> instances.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerProvider"/> class.
+            </remarks>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerProvider.CreateLogger(System.String)">
+            <summary>
+            Creates a new <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> instance.
+            </summary>
+            <param name="categoryName">The category name for the logger.</param>
+            <returns>A <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLogger"/> instance.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextLoggerProvider.Dispose">
+            <summary>
+            Disposes the logger provider and clears the loggers.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextOperationScope`1">
+            <summary>
+            Represents a scope for logging operations within a test context.
+            </summary>
+            <typeparam name="TState">The type of the state object associated with the scope.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextOperationScope`1.#ctor(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext,`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextOperationScope`1"/> class.
+            </summary>
+            <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
+            <param name="state">The state object associated with the scope.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="testContext"/> is null.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Logging.TestContextOperationScope`1.Dispose">
+            <summary>
+            Disposes the scope and logs the total elapsed time.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.MockHttpContextAccessorFactory">
+            <summary>
+            Provides a factory for creating mock <see cref="T:Microsoft.AspNetCore.Http.IHttpContextAccessor"/> instances for testing purposes.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.MockHttpContextAccessorFactory.TestUser">
+            <summary>
+            Gets or sets the test user name.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.MockHttpContextAccessorFactory.CreateAccessor">
+            <summary>
+            Creates a mock <see cref="T:Microsoft.AspNetCore.Http.IHttpContextAccessor"/> with a predefined user.
+            </summary>
+            <returns>A mock <see cref="T:Microsoft.AspNetCore.Http.IHttpContextAccessor"/> instance.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreODataIntegrationTestStartup`1">
+            <summary>
+            Abstract base class for setting up an OData integration test startup.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreODataIntegrationTestStartup`1"/> class.
+            </remarks>
+            <param name="startup">The startup instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataIntegrationTestStartup`1.#ctor(`0)">
+            <summary>
+            Abstract base class for setting up an OData integration test startup.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreODataIntegrationTestStartup`1"/> class.
+            </remarks>
+            <param name="startup">The startup instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataIntegrationTestStartup`1.SetupAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder)">
+            <summary>
+            Sets up authentication.
+            </summary>
+            <param name="builder">The authentication builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataIntegrationTestStartup`1.SetupDatabase(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+            <summary>
+            Sets up the database.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="dbConnectionString">The database connection string.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1">
+            <summary>
+            Abstract base class for setting up an OData test startup.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.TestContext">
+            <summary>
+            Gets the test context.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.Startup">
+            <summary>
+            Gets the startup instance.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.ODataModelProvider">
+            <summary>
+            Gets the OData model provider.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1"/> class.
+            </summary>
+            <param name="startup">The startup instance.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.ServiceTitle">
+            <summary>
+            Gets the service title.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.StartupAssembly">
+            <summary>
+            Gets the startup assembly.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.IncludeXmlCommentsInSwaggerDocs">
+            <summary>
+            Gets a value indicating whether to include XML comments in Swagger documentation.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.AdditionalAssemblyXmlDocumentFiles">
+            <summary>
+            Gets the additional assembly XML document files.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.SetupMiscDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up miscellaneous dependencies.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.SetupHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder)">
+            <summary>
+            Sets up health checks.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="healthChecksBuilder">The health checks builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.SetupLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Sets up logging.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="app">The application builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configures the HTTP request pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="env">The web host environment.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.SetupMvcOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Mvc.MvcOptions)">
+            <summary>
+            Sets up MVC options.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="options">The MVC options.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.SetupSwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions,System.String)">
+            <summary>
+            Sets up Swagger generation options.
+            </summary>
+            <param name="options">The Swagger generation options.</param>
+            <param name="xmlPath">The XML path for comments.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreODataUnigrationTestStartup`1">
+            <summary>
+            Abstract base class for setting up an OData unigration test startup.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreODataUnigrationTestStartup`1"/> class.
+            </remarks>
+            <param name="startup">The startup instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataUnigrationTestStartup`1.#ctor(`0)">
+            <summary>
+            Abstract base class for setting up an OData unigration test startup.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.CoreODataUnigrationTestStartup`1"/> class.
+            </remarks>
+            <param name="startup">The startup instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataUnigrationTestStartup`1.SetupAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder)">
+            <summary>
+            Sets up authentication.
+            </summary>
+            <param name="builder">The authentication builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataUnigrationTestStartup`1.GetOpenIdConfiguration(System.Net.Http.IHttpClientFactory,IkeMtz.NRSRx.Core.Web.AppSettings)">
+            <summary>
+            Gets the OpenID configuration.
+            </summary>
+            <param name="clientFactory">The HTTP client factory.</param>
+            <param name="appSettings">The application settings.</param>
+            <returns>The OpenID configuration.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1">
+            <summary>
+            Abstract base class for setting up a SignalR unigration test startup.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1"/> class.
+            </remarks>
+            <param name="startup">The startup instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.#ctor(`0)">
+            <summary>
+            Abstract base class for setting up a SignalR unigration test startup.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1"/> class.
+            </remarks>
+            <param name="startup">The startup instance.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.Startup">
+            <summary>
+            Gets the startup instance.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.TestContext">
+            <summary>
+            Gets the test context.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.SetupLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Sets up logging.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="app">The application builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configures the HTTP request pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="env">The web host environment.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.SetupHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder)">
+            <summary>
+            Sets up health checks.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="healthChecksBuilder">The health checks builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.MapHubs(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            Maps SignalR hubs to endpoints.
+            </summary>
+            <param name="endpoints">The endpoint route builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1.SetupAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder)">
+            <summary>
+            Sets up authentication.
+            </summary>
+            <param name="builder">The authentication builder.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.SnapshotAsserter">
+            <summary>
+            Provides methods for asserting that snapshots of text are equal.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.SnapshotAsserter.AssertEachLineIsEqual(System.String,System.String)">
+            <summary>
+            Asserts that each line in the expected text is equal to the corresponding line in the actual text.
+            </summary>
+            <param name="expected">The expected text.</param>
+            <param name="actual">The actual text.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests">
+            <summary>
+            Provides utility methods for testing Swagger documentation in unit tests.
+            </summary>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer)">
             <summary>
-            Validates and returns the Swagger page HTML
+            Validates and returns the Swagger page HTML.
             </summary>
-            <param name="testServer"></param>
-            <returns></returns>
+            <param name="testServer">The test server instance.</param>
+            <returns>The HTML content of the Swagger page.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
             <summary>
-            Validates and returns the OpenApiDocument in JSON format
+            Validates and returns the OpenApiDocument in JSON format.
             </summary>
-            <param name="testServer"></param>
-            <param name="version"></param>
-            <returns></returns>
+            <param name="testServer">The test server instance.</param>
+            <param name="version">The version of the Swagger document.</param>
+            <returns>The OpenApiDocument object.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestReverseProxyJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.String,System.Int32)">
             <summary>
-            Validates the support for reverse proxy in the OpenApiDocument in JSON format
+            Validates the support for reverse proxy in the OpenApiDocument in JSON format.
             </summary>
-            <param name="testServer"></param>
-            <param name="swaggerReverseProxyDocumentFilter"></param>
-            <param name="version"></param>
-            <returns></returns>
+            <param name="testServer">The test server instance.</param>
+            <param name="swaggerReverseProxyDocumentFilter">The reverse proxy document filter.</param>
+            <param name="version">The version of the Swagger document.</param>
+            <returns>The OpenApiDocument object.</returns>
+            <exception cref="T:System.InvalidProgramException">Thrown when the reverse proxy document filter is empty.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.FixSwaggerDocument(System.String)">
             <summary>
-            This was required because there's a type mismatch on the OpenApi Doc spec
+            Fixes known issues in the Swagger document JSON string.
             </summary>
-            <returns></returns>
+            <param name="result">The Swagger document JSON string.</param>
+            <returns>The fixed Swagger document JSON string.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware">
+            <summary>
+            Middleware for logging HTTP requests to the <see cref="F:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware.TestContext"/>.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware"/> class.
+            </remarks>
+            <param name="next">The next middleware in the pipeline.</param>
+            <param name="testContextInstance">The test context instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Middleware for logging HTTP requests to the <see cref="F:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware.TestContext"/>.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware"/> class.
+            </remarks>
+            <param name="next">The next middleware in the pipeline.</param>
+            <param name="testContextInstance">The test context instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invokes the middleware to log the HTTP request.
+            </summary>
+            <param name="context">The HTTP context.</param>
+            <returns>A task that represents the asynchronous operation.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerExtensions">
+            <summary>
+            Extension methods for adding <see cref="T:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware"/> to the application pipeline.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerExtensions.UseTestContextRequestLogger(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Adds the <see cref="T:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware"/> to the application pipeline.
+            </summary>
+            <param name="builder">The application builder.</param>
+            <param name="testContextInstance">The test context instance.</param>
+            <returns>The application builder.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.TestContextResponseLoggerAttribute">
+            <summary>
+            A filter attribute that logs the server response to the <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/>.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.TestContextResponseLoggerAttribute"/> class.
+            </remarks>
+            <param name="testContext">The test context instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestContextResponseLoggerAttribute.#ctor(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            A filter attribute that logs the server response to the <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/>.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.TestContextResponseLoggerAttribute"/> class.
+            </remarks>
+            <param name="testContext">The test context instance.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestContextResponseLoggerAttribute.OnResultExecuted(Microsoft.AspNetCore.Mvc.Filters.ResultExecutedContext)">
+            <summary>
+            Called after the action result has been executed.
+            </summary>
+            <param name="context">The result executed context.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.TestDataFactory">
+            <summary>
+            Provides methods for generating test data.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.TestDataFactory.NumberAfterSpace">
+            <summary>
+            A regular expression to match a number after a space.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestDataFactory.CreateIdentifiable``1(``0)">
+            <summary>
+            Creates an identifiable entity with a new GUID.
+            </summary>
+            <typeparam name="TENTITY">The type of the entity.</typeparam>
+            <param name="value">An optional existing entity to update.</param>
+            <returns>The created or updated entity.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestDataFactory.CreateIdentifiable``2(``0)">
+            <summary>
+            Creates an identifiable entity with a default identity value.
+            </summary>
+            <typeparam name="TENTITY">The type of the entity.</typeparam>
+            <typeparam name="TIdentityType">The type of the identity.</typeparam>
+            <param name="value">An optional existing entity to update.</param>
+            <returns>The created or updated entity.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestDataFactory.StringGenerator(System.Int32,System.Boolean,System.String)">
+            <summary>
+            Generates a random string of the specified length.
+            </summary>
+            <param name="maxLength">The maximum length of the string.</param>
+            <param name="allowSpaces">Whether to allow spaces in the string.</param>
+            <param name="characterSet">The set of characters to use.</param>
+            <returns>The generated string.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestDataFactory.InjectSpaces(System.Int32,System.Random,System.Text.StringBuilder,System.String)">
+            <summary>
+            Injects spaces into a string at random positions.
+            </summary>
+            <param name="length">The length of the string.</param>
+            <param name="random">The random number generator.</param>
+            <param name="sb">The string builder containing the string.</param>
+            <param name="characterSet">The set of characters to use.</param>
+            <returns>The string with spaces injected.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestDataFactory.CapitalizeFirstChar(System.Text.StringBuilder,System.String)">
+            <summary>
+            Capitalizes the first character of a string if the character set contains uppercase letters.
+            </summary>
+            <param name="result">The string builder containing the string.</param>
+            <param name="characterSet">The set of characters to use.</param>
+            <returns>The string builder with the first character capitalized.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.TestServerExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:Microsoft.AspNetCore.TestHost.TestServer"/> class to retrieve services and DbContext instances.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestServerExtensions.GetDbContext``1(Microsoft.AspNetCore.TestHost.TestServer)">
+            <summary>
+            Retrieves the specified <see cref="T:Microsoft.EntityFrameworkCore.DbContext"/> from the test server's service provider.
+            </summary>
+            <typeparam name="TContext">The type of the DbContext.</typeparam>
+            <param name="testServer">The test server instance.</param>
+            <returns>The DbContext instance.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestServerExtensions.GetTestService``1(Microsoft.AspNetCore.TestHost.TestServer)">
+            <summary>
+            Retrieves the specified service from the test server's service provider.
+            </summary>
+            <typeparam name="TServiceType">The type of the service.</typeparam>
+            <param name="testServer">The test server instance.</param>
+            <returns>The service instance.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.TestServerExtensions.GetTestService``2(Microsoft.AspNetCore.TestHost.TestServer)">
+            <summary>
+            Retrieves the specified service from the test server's service provider and casts it to the specified implementation type.
+            </summary>
+            <typeparam name="TServiceType">The type of the service.</typeparam>
+            <typeparam name="TImplementationType">The type of the implementation.</typeparam>
+            <param name="testServer">The test server instance.</param>
+            <returns>The service instance cast to the specified implementation type.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.WebApi.CoreWebApiIntegrationTestStartup`1">
+            <summary>
+            Provides a startup class for integration tests of Web API projects.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.CoreWebApiIntegrationTestStartup`1.#ctor(`0)">
+            <summary>
+            Provides a startup class for integration tests of Web API projects.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.CoreWebApiIntegrationTestStartup`1.SetupAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder)">
+            <summary>
+            Sets up authentication for the integration tests.
+            </summary>
+            <param name="builder">The authentication builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.CoreWebApiIntegrationTestStartup`1.SetupDatabase(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+            <summary>
+            Sets up the database for the integration tests.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="dbConnectionString">The database connection string.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.CoreWebApiIntegrationTestStartup`1.SetupPublishers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up publishers for the integration tests.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2">
+            <summary>
+            Provides a tester for publisher unigration with a specific entity and message type, using a GUID as the identity type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TMessageType">The type of the message.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2.GuidCreatePublisher">
+            <summary>
+            Gets the mock publisher for create events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2.GuidCreatedPublisher">
+            <summary>
+            Gets the mock publisher for created events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2.GuidUpdatedPublisher">
+            <summary>
+            Gets the mock publisher for updated events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2.GuidDeletedPublisher">
+            <summary>
+            Gets the mock publisher for deleted events.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`2.RegisterDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registers the dependencies for the publishers.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3">
+            <summary>
+            Provides a tester for publisher unigration with a specific entity, message type, and identity type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TMessageType">The type of the message.</typeparam>
+            <typeparam name="TIdentityType">The type of the identity.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3.CreatePublisher">
+            <summary>
+            Gets the mock publisher for create events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3.CreatedPublisher">
+            <summary>
+            Gets the mock publisher for created events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3.UpdatedPublisher">
+            <summary>
+            Gets the mock publisher for updated events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3.DeletedPublisher">
+            <summary>
+            Gets the mock publisher for deleted events.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`3.RegisterDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registers the dependencies for the publishers.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`1">
+            <summary>
+            Provides a base class for publisher unigration testers.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`1.CreateList">
+            <summary>
+            Gets the list of entities for create events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`1.CreatedList">
+            <summary>
+            Gets the list of entities for created events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`1.UpdatedList">
+            <summary>
+            Gets the list of entities for updated events.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.PublisherUnigrationTester`1.DeletedList">
+            <summary>
+            Gets the list of entities for deleted events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.WebApi.Unit.ControllerFactory`1">
+            <summary>
+            Provides a factory for creating controller instances for unit testing.
+            </summary>
+            <typeparam name="TController">The type of the controller.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.Unit.ControllerFactory`1.Create(System.Object[])">
+            <summary>
+            Creates an instance of the specified controller type with the provided arguments.
+            </summary>
+            <param name="args">The arguments to pass to the controller's constructor.</param>
+            <returns>An instance of the specified controller type.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when no matching constructor is found for the specified arguments.</exception>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.WebApi.Unit.TestingObjectValidator">
+            <summary>
+            Provides an object validator for unit testing purposes.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.WebApi.Unit.TestingObjectValidator.Controller">
+            <summary>
+            Gets or sets the controller associated with this validator.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.WebApi.Unit.TestingObjectValidator.Validate(Microsoft.AspNetCore.Mvc.ActionContext,Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationStateDictionary,System.String,System.Object)">
+            <summary>
+            Validates the specified model and updates the model state of the associated controller.
+            </summary>
+            <param name="actionContext">The context of the action.</param>
+            <param name="validationState">The validation state dictionary.</param>
+            <param name="prefix">The prefix to use when looking up values in the model state dictionary.</param>
+            <param name="model">The model to validate.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1">
+            <summary>
+            Provides a base class for setting up a test startup for Web API projects.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.#ctor(`0)">
+            <summary>
+            Provides a base class for setting up a test startup for Web API projects.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.Startup">
+            <summary>
+            Gets the startup instance.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.ServiceTitle">
+            <summary>
+            Gets the service title.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.StartupAssembly">
+            <summary>
+            Gets the startup assembly.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.IncludeXmlCommentsInSwaggerDocs">
+            <summary>
+            Gets a value indicating whether to include XML comments in Swagger documentation.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.AdditionalAssemblyXmlDocumentFiles">
+            <summary>
+            Gets additional assembly XML document files.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.TestContext">
+            <summary>
+            Gets the test context.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.SetupHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder)">
+            <summary>
+            Sets up health checks.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="builder">The health checks builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.SetupMiscDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up miscellaneous dependencies.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.SetupLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Sets up logging.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="app">The application builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Configures the application.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="env">The web host environment.</param>
+            <param name="provider">The API version description provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.SetupMvcOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Mvc.MvcOptions)">
+            <summary>
+            Sets up MVC options.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="options">The MVC options.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.GetOpenIdConfiguration(System.Net.Http.IHttpClientFactory,IkeMtz.NRSRx.Core.Web.AppSettings)">
+            <summary>
+            Gets the OpenID configuration.
+            </summary>
+            <param name="clientFactory">The HTTP client factory.</param>
+            <param name="appSettings">The application settings.</param>
+            <returns>The OpenID configuration.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.SetupSwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions,System.String)">
+            <summary>
+            Sets up Swagger generation options.
+            </summary>
+            <param name="options">The Swagger generation options.</param>
+            <param name="xmlPath">The XML path for comments.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreWebApiUnigrationTestStartup`1">
+            <summary>
+            Provides a base class for setting up a unigration test startup for Web API projects.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiUnigrationTestStartup`1.#ctor(`0)">
+            <summary>
+            Provides a base class for setting up a unigration test startup for Web API projects.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiUnigrationTestStartup`1.SetupAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder)">
+            <summary>
+            Sets up authentication for unigration tests.
+            </summary>
+            <param name="builder">The authentication builder.</param>
         </member>
     </members>
 </doc>

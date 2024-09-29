@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Events;
@@ -38,15 +37,15 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
 
       //act
       var currentStreamInfo = await subscriber.GetStreamInfoAsync();
-      Assert.AreEqual(2, currentStreamInfo.MessageCount - originalStreamInfo.MessageCount); //Ensuring published messages worked
+      Assert.AreEqual(2, currentStreamInfo.MsgCount - originalStreamInfo.MsgCount); //Ensuring published messages worked
 
       await program.RunAsync();
 
       //assert
       currentStreamInfo = await subscriber.GetStreamInfoAsync();
-      Assert.AreNotEqual(0, currentStreamInfo.MessageCount);
-      Assert.AreNotEqual(0, currentStreamInfo.AckMessageCount);
-      Assert.AreEqual(currentStreamInfo.MessageCount, currentStreamInfo.AckMessageCount);
+      Assert.AreNotEqual(0, currentStreamInfo.MsgCount);
+      Assert.AreNotEqual(0, currentStreamInfo.AcknowledgedMsgCount);
+      Assert.AreEqual(currentStreamInfo.MsgCount, currentStreamInfo.AcknowledgedMsgCount);
       Assert.AreEqual(1, currentStreamInfo.SubscriberCount - originalStreamInfo.SubscriberCount);
       Assert.AreEqual(0, currentStreamInfo.DeadLetterMsgCount);
       _ = await subscriber.DeleteIdleConsumersAsync();

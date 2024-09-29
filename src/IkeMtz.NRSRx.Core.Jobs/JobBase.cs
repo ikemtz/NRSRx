@@ -7,19 +7,43 @@ using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.NRSRx.Core.Jobs
 {
+  /// <summary>
+  /// Base class for defining a job in the NRSRx framework.
+  /// </summary>
+  /// <typeparam name="TProgram">The type of the program.</typeparam>
+  /// <typeparam name="TFunctionType">The type of the function.</typeparam>
   public abstract class JobBase<TProgram, TFunctionType>
-    where TProgram : class, IJob
-    where TFunctionType : IFunction
+      where TProgram : class, IJob
+      where TFunctionType : IFunction
   {
+    /// <summary>
+    /// Gets or sets the job host.
+    /// </summary>
     public virtual IHost JobHost { get; set; }
+
+    /// <summary>
+    /// Gets the location of the health file.
+    /// </summary>
     public virtual string? HealthFileLocation { get; }
+
+    /// <summary>
+    /// Gets or sets the configuration.
+    /// </summary>
     public virtual IConfiguration Configuration { get; set; }
 
+    /// <summary>
+    /// Gets the configuration for the job.
+    /// </summary>
+    /// <returns>The configuration.</returns>
     public virtual IConfiguration GetConfig()
     {
       return ConfigurationFactory<TProgram>.Create();
     }
 
+    /// <summary>
+    /// Runs the job asynchronously.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
     public Task<bool> RunAsync()
     {
       _ = this.SetupHost();
@@ -27,6 +51,11 @@ namespace IkeMtz.NRSRx.Core.Jobs
       return RunFunctions(loggerFactory);
     }
 
+    /// <summary>
+    /// Runs the functions asynchronously.
+    /// </summary>
+    /// <param name="loggerFactory">The logger factory.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
     public virtual async Task<bool> RunFunctions(ILoggerFactory loggerFactory)
     {
       var functions = GetFunctions(loggerFactory);
@@ -42,7 +71,12 @@ namespace IkeMtz.NRSRx.Core.Jobs
       return successResult;
     }
 
-    public virtual IOrderedEnumerable<FunctionMetaData> GetFunctions(ILoggerFactory? loggerFactory)
+    /// <summary>
+    /// Gets the functions to run.
+    /// </summary>
+    /// <param name="loggerFactory">The logger factory.</param>
+    /// <returns>An ordered enumerable of function metadata.</returns>
+    public virtual IOrderedEnumerable<FunctionMetadata> GetFunctions(ILoggerFactory? loggerFactory)
     {
       var jobLogger = loggerFactory?.CreateLogger(GetType());
       using var functionScope = JobHost.Services.CreateScope();
@@ -59,7 +93,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         .Select(t =>
         {
           var type = t.GetType();
-          return new FunctionMetaData
+          return new FunctionMetadata
           {
             Type = type,
             Name = type.Name,
@@ -68,7 +102,13 @@ namespace IkeMtz.NRSRx.Core.Jobs
         }).OrderByDescending(t => t.SequencePriority);
     }
 
-    public virtual async Task<Boolean> ScopeFunctionAsync(ILoggerFactory loggerFactory, FunctionMetaData func)
+    /// <summary>
+    /// Scopes and runs a function asynchronously.
+    /// </summary>
+    /// <param name="loggerFactory">The logger factory.</param>
+    /// <param name="func">The function metadata.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+    public virtual async Task<bool> ScopeFunctionAsync(ILoggerFactory loggerFactory, FunctionMetadata func)
     {
       var logger = loggerFactory.CreateLogger(func.GetType());
       var startTime = DateTime.UtcNow;
@@ -82,7 +122,7 @@ namespace IkeMtz.NRSRx.Core.Jobs
         }
         catch (Exception x)
         {
-          logger.LogError(x, "An unhandled exception has occured while executing function: {functionName}", func.Name);
+          logger.LogError(x, "An unhandled exception has occurred while executing function: {functionName}", func.Name);
           return false;
         }
         var endTime = DateTime.UtcNow;
@@ -93,6 +133,11 @@ namespace IkeMtz.NRSRx.Core.Jobs
       }
     }
 
+    /// <summary>
+    /// Sets up the host.
+    /// </summary>
+    /// <param name="setupMiscDependencies">An action to set up miscellaneous dependencies.</param>
+    /// <returns>The configured host.</returns>
     public virtual IHost SetupHost(Action<IServiceCollection>? setupMiscDependencies = null)
     {
       if (Configuration == null || JobHost == null)
@@ -111,18 +156,46 @@ namespace IkeMtz.NRSRx.Core.Jobs
       }
       return JobHost;
     }
+
+    /// <summary>
+    /// Sets up logging.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     [ExcludeFromCodeCoverage]
     public virtual void SetupLogging(IServiceCollection services) { }
+
+    /// <summary>
+    /// Sets up dependencies.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The service collection.</returns>
     [ExcludeFromCodeCoverage]
     public virtual IServiceCollection SetupDependencies(IServiceCollection services) { return services; }
+
+    /// <summary>
+    /// Sets up the functions.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The service collection.</returns>
     public abstract IServiceCollection SetupFunctions(IServiceCollection services);
 
+    /// <summary>
+    /// Sets up the user provider.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The service collection.</returns>
     public virtual IServiceCollection SetupUserProvider(IServiceCollection services)
     {
       return services.AddSingleton<ICurrentUserProvider, SystemUserProvider>();
     }
 
-    public virtual async Task<bool> RunFunctionAsync(FunctionMetaData func, ILogger logger)
+    /// <summary>
+    /// Runs a function asynchronously.
+    /// </summary>
+    /// <param name="func">The function metadata.</param>
+    /// <param name="logger">The logger.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+    public virtual async Task<bool> RunFunctionAsync(FunctionMetadata func, ILogger logger)
     {
       logger.LogInformation("Starting {functionName} function.", func.Name);
       using var functionScope = JobHost.Services.CreateScope();

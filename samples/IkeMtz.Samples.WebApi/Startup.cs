@@ -14,7 +14,7 @@ namespace IkeMtz.Samples.WebApi
 {
   public class Startup : CoreWebApiStartup
   {
-    public override string MicroServiceTitle => $"{nameof(Samples)} WebApi Microservice";
+    public override string ServiceTitle => $"{nameof(Samples)} WebApi Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => true;
     public override string[] AdditionalAssemblyXmlDocumentFiles => new[] {

@@ -9,7 +9,7 @@
 [![Nuget Package](https://img.shields.io/nuget/dt/IkeMtz.NRSRx.Core.Models.svg)](https://www.nuget.org/packages?q=nrsrx)
 
 # NRSRX
-NRSRx is an opinionated extensible framework that will expedite the development of back-end services built on asp.net 6.  It does this by addressing some of the cross-cutting concerns that typically would require development effort, letting you focus on your business challenges. 
+NRSRx is an opinionated, flexible, and extensible framework that will expedite the development of back-end services built on asp.net 6 - 8.  It does this by addressing some cross-cutting concerns that typically require development effort, letting you focus on your business challenges.
 
 ## Cross cutting concerns
 

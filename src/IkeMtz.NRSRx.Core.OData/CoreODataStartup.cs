@@ -14,16 +14,30 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace IkeMtz.NRSRx.Core.OData
 {
-  public abstract class CoreODataStartup : CoreWebStartup
+  /// <summary>
+  /// Abstract base class for setting up a NRSRx OData-based application.
+  /// </summary>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="CoreODataStartup"/> class.
+  /// </remarks>
+  /// <param name="configuration">The configuration.</param>
+  public abstract class CoreODataStartup(IConfiguration configuration) : CoreWebStartup(configuration)
   {
+    /// <summary>
+    /// Gets or sets the maximum number of records that can be returned in a single OData query.
+    /// Note: This only applies if $count is set to true in the query.
+    /// </summary>
     public virtual int? MaxTop { get; set; } = 100;
 
+    /// <summary>
+    /// Gets the OData model provider.
+    /// </summary>
     public abstract BaseODataModelProvider ODataModelProvider { get; }
-    protected CoreODataStartup(IConfiguration configuration) : base(configuration)
-    {
-    }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+    /// <summary>
+    /// Configures services for the application.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public void ConfigureServices(IServiceCollection services)
     {
       if (StartupAssembly != null)
@@ -41,6 +55,11 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupHealthChecks(services, healthCheckBuilder);
     }
 
+    /// <summary>
+    /// Configures the HTTP request pipeline.
+    /// </summary>
+    /// <param name="app">The application builder.</param>
+    /// <param name="env">The web host environment.</param>
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
@@ -70,6 +89,10 @@ namespace IkeMtz.NRSRx.Core.OData
       });
     }
 
+    /// <summary>
+    /// Sets up the Swagger UI.
+    /// </summary>
+    /// <param name="options">The Swagger UI options.</param>
     public virtual void SetupSwaggerUI(SwaggerUIOptions options)
     {
       var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger/" : "./";
@@ -82,6 +105,11 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupSwaggerCommonUi(options);
     }
 
+    /// <summary>
+    /// Sets up core endpoint functionality, including MVC and OData services.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The MVC builder.</returns>
     public virtual IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
     {
       var mvcBuilder = services
@@ -93,17 +121,21 @@ namespace IkeMtz.NRSRx.Core.OData
             options.TimeZone = TimeZoneInfo.Utc;
             options.RouteOptions.EnableControllerNameCaseInsensitive = true;
             ODataModelProvider.EdmModels.ToList().ForEach(x =>
-            {
-              options.AddRouteComponents($"odata/{x.Key.GroupName}",
-                  x.Value,
-                  builder => builder.AddSingleton<IODataSerializerProvider, NrsrxODataSerializerProvider>())
-               .EnableQueryFeatures(MaxTop)
-               .EnableAttributeRouting = true;
-            });
+                {
+                  options.AddRouteComponents($"odata/{x.Key.GroupName}",
+                          x.Value,
+                          builder => builder.AddSingleton<IODataSerializerProvider, NrsrxODataSerializerProvider>())
+                       .EnableQueryFeatures(MaxTop)
+                       .EnableAttributeRouting = true;
+                });
           });
       return mvcBuilder;
     }
 
+    /// <summary>
+    /// Sets up Swagger services.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public virtual void SetupSwagger(IServiceCollection services)
     {
       _ = services

@@ -23,7 +23,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
-    <NoWarn>1701;1702;CS1591;S2436;CS8603;MSB3277;CS8618;</NoWarn>
+    <NoWarn>1701;1702;S2436;CS8603;MSB3277;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Events.Abstraction.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

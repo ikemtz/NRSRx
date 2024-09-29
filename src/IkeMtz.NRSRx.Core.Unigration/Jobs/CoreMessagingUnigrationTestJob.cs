@@ -4,39 +4,69 @@ using IkeMtz.NRSRx.Core.Jobs;
 using IkeMtz.NRSRx.Core.Unigration.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreMessagingUnigrationTestJob<TProgram> : MessagingJob<TProgram>
-        where TProgram : class, IJob
+  /// <summary>
+  /// Represents a core messaging unigration test job for testing purposes.
+  /// </summary>
+  /// <typeparam name="TProgram">The type of the program implementing the <see cref="IJob"/> interface.</typeparam>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="CoreMessagingUnigrationTestJob{TProgram}"/> class.
+  /// </remarks>
+  /// <param name="program">The program instance.</param>
+  /// <param name="testContext">The MSTest <see cref="TestContext"/> for logging.</param>
+  public class CoreMessagingUnigrationTestJob<TProgram>(TProgram program, TestContext testContext) : MessagingJob<TProgram>
+          where TProgram : class, IJob
   {
-    public TProgram Program { get; }
-    public TestContext TestContext { get; }
+    /// <summary>
+    /// Gets the program instance.
+    /// </summary>
+    public TProgram Program { get; } = program;
 
-    public CoreMessagingUnigrationTestJob(TProgram program, TestContext testContext)
-    {
-      Program = program;
-      TestContext = testContext;
-    }
+    /// <summary>
+    /// Gets the MSTest <see cref="TestContext"/> for logging.
+    /// </summary>
+    public TestContext TestContext { get; } = testContext;
+
+    /// <summary>
+    /// Sets up the dependencies for the job.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The service collection with dependencies set up.</returns>
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
       return Program.SetupDependencies(services);
     }
 
+    /// <summary>
+    /// Sets up the functions for the job.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The service collection with functions set up.</returns>
     public override IServiceCollection SetupFunctions(IServiceCollection services)
     {
       return Program.SetupFunctions(services);
     }
 
+    /// <summary>
+    /// Sets up logging for the job.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public override void SetupLogging(IServiceCollection services)
     {
       _ = services.AddSingleton(TestContext)
           .AddLogging(x => x.AddTestContext(TestContext));
     }
 
+    /// <summary>
+    /// Executes a callback on the specified database context.
+    /// </summary>
+    /// <typeparam name="TDbContext">The type of the database context.</typeparam>
+    /// <param name="callback">The callback to execute.</param>
+    /// <exception cref="ArgumentNullException">Thrown if the callback is null.</exception>
     public void ExecuteOnContext<TDbContext>(Action<TDbContext> callback) where TDbContext : DbContext
     {
       _ = SetupHost();
@@ -57,9 +87,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
       }
       catch (Exception ex)
       {
-        TestContext.WriteLine($"DB Creation Exception Occured: {ex}");
+        TestContext.WriteLine($"DB Creation Exception Occurred: {ex}");
       }
-      TestContext.WriteLine($"Executing ${nameof(ExecuteOnContext)}<${nameof(TDbContext)}> Logic");
+      TestContext.WriteLine($"Executing {nameof(ExecuteOnContext)}<{nameof(TDbContext)}> Logic");
       callback(db);
       if (db is AuditableDbContext)
       {

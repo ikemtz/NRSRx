@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       this.SetupDevelopmentApplicationInsights(services);
 
-    public override string MicroServiceTitle => "";
+    public override string ServiceTitle => "";
 
     public override Assembly StartupAssembly => this.GetType().Assembly;
   }

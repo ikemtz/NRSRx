@@ -12,10 +12,16 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
   /// Once they are fixed and published, this class can be removed.</remarks>
   public class DefaultValueFilter : IOperationFilter
   {
+    /// <summary>
+    /// Applies the filter to the specified operation.
+    /// </summary>
+    /// <param name="operation">The OpenAPI operation.</param>
+    /// <param name="context">The operation filter context.</param>
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
       var apiDescription = context.ApiDescription;
       operation.Deprecated = apiDescription.IsDeprecated();
+
       // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/412
       // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/413
       foreach (var parameter in operation.Parameters)

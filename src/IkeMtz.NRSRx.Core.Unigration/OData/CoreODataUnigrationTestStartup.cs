@@ -5,19 +5,33 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreODataUnigrationTestStartup<TStartup>
-        : CoreODataTestStartup<TStartup>
-        where TStartup : CoreODataStartup
+  /// <summary>
+  /// Abstract base class for setting up an OData unigration test startup.
+  /// </summary>
+  /// <typeparam name="TStartup">The type of the startup class.</typeparam>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="CoreODataUnigrationTestStartup{TStartup}"/> class.
+  /// </remarks>
+  /// <param name="startup">The startup instance.</param>
+  public class CoreODataUnigrationTestStartup<TStartup>(TStartup startup) : CoreODataTestStartup<TStartup>(startup)
+          where TStartup : CoreODataStartup
   {
-    public CoreODataUnigrationTestStartup(TStartup startup) : base(startup)
-    {
-    }
 
+    /// <summary>
+    /// Sets up authentication.
+    /// </summary>
+    /// <param name="builder">The authentication builder.</param>
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
       builder.SetupTestAuthentication(Configuration, TestContext);
     }
 
+    /// <summary>
+    /// Gets the OpenID configuration.
+    /// </summary>
+    /// <param name="clientFactory">The HTTP client factory.</param>
+    /// <param name="appSettings">The application settings.</param>
+    /// <returns>The OpenID configuration.</returns>
     public override OpenIdConfiguration GetOpenIdConfiguration(IHttpClientFactory clientFactory, AppSettings appSettings)
     {
       return new OpenIdConfiguration

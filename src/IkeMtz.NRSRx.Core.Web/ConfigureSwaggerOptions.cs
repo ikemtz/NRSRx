@@ -28,29 +28,34 @@ namespace IkeMtz.NRSRx.Core.Web
     private readonly IHttpClientFactory httpClientFactory;
     private readonly AppSettings appSettings;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider.</param>
+    /// <param name="configuration">The application configuration.</param>
+    /// <param name="startup">The CoreWebStartup instance.</param>
+    /// <exception cref="ArgumentNullException">Thrown when the startup parameter is null.</exception>
     public ConfigureSwaggerOptions(
       IServiceProvider serviceProvider,
       IConfiguration configuration,
       CoreWebStartup startup)
     {
-      this.startup = startup;
-      if (startup == null)
-      {
-        throw new ArgumentNullException(nameof(startup));
-      }
+      this.startup = startup ?? throw new ArgumentNullException(nameof(startup));
       provider = serviceProvider.GetService<IApiVersionDescriptionProvider>();
       odataVersionProvider = serviceProvider.GetService<IODataVersionProvider>();
-      apiTitle = startup.MicroServiceTitle;
+      apiTitle = startup.ServiceTitle;
       buildNumber = startup.GetBuildNumber();
-
-      this.httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
-      this.appSettings = configuration.Get<AppSettings>();
+      httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+      appSettings = configuration.Get<AppSettings>();
     }
 
+    /// <summary>
+    /// Configures the Swagger generation options.
+    /// </summary>
+    /// <param name="options">The Swagger generation options.</param>
     public void Configure(SwaggerGenOptions options)
     {
-      // add a swagger document for each discovered API version
-      // note: you might choose to skip or document deprecated API versions differently
+      // Add a Swagger document for each discovered API version
       if (provider != null)
       {
         foreach (var versionDescription in provider.ApiVersionDescriptions)
@@ -67,10 +72,10 @@ namespace IkeMtz.NRSRx.Core.Web
           options.SchemaFilter<EnumSchemaFilter>();
         }
       }
-      var audiences = this.startup.GetIdentityAudiences(this.appSettings);
-      if (audiences.Any() && !string.IsNullOrWhiteSpace(this.appSettings.IdentityProvider))
+      var audiences = startup.GetIdentityAudiences(appSettings);
+      if (audiences.Any() && !string.IsNullOrWhiteSpace(appSettings.IdentityProvider))
       {
-        var discoveryDocument = startup.GetOpenIdConfiguration(this.httpClientFactory, appSettings);
+        var discoveryDocument = startup.GetOpenIdConfiguration(httpClientFactory, appSettings);
 
         options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
         {
@@ -90,6 +95,11 @@ namespace IkeMtz.NRSRx.Core.Web
       }
     }
 
+    /// <summary>
+    /// Creates a dictionary of Swagger scopes.
+    /// </summary>
+    /// <param name="swaggerScopes">The collection of OAuth scopes.</param>
+    /// <returns>A dictionary of Swagger scopes.</returns>
     public static Dictionary<string, string> GetSwaggerScopeDictionary(IEnumerable<OAuthScope> swaggerScopes)
     {
       var swaggerScopeDictionary = new Dictionary<string, string>();
@@ -98,13 +108,18 @@ namespace IkeMtz.NRSRx.Core.Web
       return swaggerScopeDictionary;
     }
 
+    /// <summary>
+    /// Creates the OpenAPI information for a specific API version.
+    /// </summary>
+    /// <param name="description">The API version description.</param>
+    /// <returns>The OpenAPI information.</returns>
     public OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
     {
-      var info = new OpenApiInfo()
+      var info = new OpenApiInfo
       {
         Title = apiTitle,
         Version = description?.ApiVersion.ToString(),
-        Description = $"<div style='color:gray;font-weight:bold'>Build #: <span style='font-weight:bolder'>{this.buildNumber}</span></div>"
+        Description = $"<div style='color:gray;font-weight:bold'>Build #: <span style='font-weight:bolder'>{buildNumber}</span></div>"
       };
 
       if ((description?.IsDeprecated).GetValueOrDefault())

@@ -4,5 +4,256 @@
         <name>IkeMtz.NRSRx.Events.Abstraction</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Events.EventType">
+            <summary>
+            Abstract base class representing an event type.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.EventType.EventSuffix">
+            <summary>
+            Gets the suffix associated with the event type.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.CreateEvent">
+            <summary>
+            Represents a create event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.CreateEvent.EventSuffix">
+            <summary>
+            Gets the suffix for create events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.DeleteEvent">
+            <summary>
+            Represents a delete event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.DeleteEvent.EventSuffix">
+            <summary>
+            Gets the suffix for delete events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.UpdateEvent">
+            <summary>
+            Represents an update event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.UpdateEvent.EventSuffix">
+            <summary>
+            Gets the suffix for update events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.SendEvent">
+            <summary>
+            Represents a send event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.SendEvent.EventSuffix">
+            <summary>
+            Gets the suffix for send events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.CreatedEvent">
+            <summary>
+            Represents a created event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.CreatedEvent.EventSuffix">
+            <summary>
+            Gets the suffix for created events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.DeletedEvent">
+            <summary>
+            Represents a deleted event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.DeletedEvent.EventSuffix">
+            <summary>
+            Gets the suffix for deleted events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.UpdatedEvent">
+            <summary>
+            Represents an updated event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.UpdatedEvent.EventSuffix">
+            <summary>
+            Gets the suffix for updated events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.SentEvent">
+            <summary>
+            Represents a sent event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.SentEvent.EventSuffix">
+            <summary>
+            Gets the suffix for sent events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.ReceivedEvent">
+            <summary>
+            Represents a received event.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.ReceivedEvent.EventSuffix">
+            <summary>
+            Gets the suffix for received events.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.IPublisher`2">
+            <summary>
+            Interface for publishing events for entities with a <see cref="T:System.Guid"/> identifier.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.IPublisher`3">
+            <summary>
+            Interface for publishing events for entities.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TEvent">The type of the event.</typeparam>
+            <typeparam name="TIdentityType">The type of the entity identifier.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.IPublisher`3.PublishAsync(`0)">
+            <summary>
+            Publishes an event asynchronously.
+            </summary>
+            <param name="payload">The entity payload.</param>
+            <returns>A task that represents the asynchronous publish operation.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.Abstraction.MessageCoder">
+            <summary>
+            Provides methods for encoding and decoding messages to and from JSON.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Abstraction.MessageCoder.JsonEncode``1(``0)">
+            <summary>
+            Encodes an entity to a JSON byte array.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <param name="entity">The entity to encode.</param>
+            <returns>A byte array representing the JSON-encoded entity.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Abstraction.MessageCoder.JsonDecode``1(System.Byte[])">
+            <summary>
+            Decodes a JSON byte array to an entity.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <param name="buffer">The byte array to decode.</param>
+            <returns>The decoded entity.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1">
+            <summary>
+            Represents a message that is from a collection of messages, generated off a single event.
+            This is used to support the Fan Out pattern.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1"/> class with the specified entity.
+            </summary>
+            <param name="entity">The entity to include in the message.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.Id">
+            <summary>
+            Gets or sets the unique identifier for the message.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.Entity">
+            <summary>
+            Gets or sets the entity included in the message.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.TaskName">
+            <summary>
+            Gets or sets the name of the task associated with the message.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.TaskCount">
+            <summary>
+            Gets or sets the total number of tasks.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.QueuedBy">
+            <summary>
+            Gets or sets the user who queued the message.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1.FromCollection(System.Collections.Generic.IEnumerable{`0},System.String,System.String)">
+            <summary>
+            Creates a collection of <see cref="T:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1"/> instances from a collection of entities.
+            </summary>
+            <param name="collection">The collection of entities.</param>
+            <param name="taskName">The name of the task.</param>
+            <param name="userName">The name of the user who queued the messages.</param>
+            <returns>A collection of <see cref="T:IkeMtz.NRSRx.Events.Abstraction.SplitMessage`1"/> instances.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.Abstraction.SplitMessageProgressUpdate">
+            <summary>
+            Represents the progress update for a collection of split messages.
+            This is useful when implementing the Fan Out pattern.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessageProgressUpdate.Passed">
+            <summary>
+            Gets or sets the number of successfully processed messages.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessageProgressUpdate.Failed">
+            <summary>
+            Gets or sets the number of failed messages.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.Abstraction.SplitMessageProgressUpdate.Total">
+            <summary>
+            Gets or sets the total number of messages.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Events.MessageQueueInfo">
+            <summary>
+            Represents information about the current status of a message queue.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.MsgCount">
+            <summary>
+            Gets or sets the total number of messages in the queue.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.SubscriberCount">
+            <summary>
+            Gets or sets the number of subscribers to the queue.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.PendingMsgCount">
+            <summary>
+            Gets or sets the number of pending messages in the queue.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.DeadLetterMsgCount">
+            <summary>
+            Gets or sets the number of dead-letter messages in the queue.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.AcknowledgedMsgCount">
+            <summary>
+            Gets or sets the number of acknowledged messages in the queue.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Events.MessageQueueInfo.StreamKey">
+            <summary>
+            Gets or sets the stream key associated with the queue.
+            </summary>
+        </member>
     </members>
 </doc>

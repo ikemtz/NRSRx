@@ -7,9 +7,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+  /// <summary>
+  /// Provides extension methods for registering Service Bus queue publishers.
+  /// </summary>
   [ExcludeFromCodeCoverage]
   public static class ServiceBusQueueDependencyRegistration
   {
+    /// <summary>
+    /// Adds Service Bus queue publishers for the specified entity type.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the entity.</typeparam>
+    /// <param name="services">The service collection to add the publishers to.</param>
     public static void AddServiceBusQueuePublishers<TEntity>(this IServiceCollection services)
     where TEntity : IIdentifiable
     {
@@ -21,6 +29,12 @@ namespace Microsoft.Extensions.DependencyInjection
           new ServiceBusQueuePublisher<TEntity, DeletedEvent>(t.GetService<IConfiguration>()));
     }
 
+    /// <summary>
+    /// Adds Service Bus queue publishers for the specified entity type and identifier type.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the entity.</typeparam>
+    /// <typeparam name="TIdentityType">The type of the entity identifier.</typeparam>
+    /// <param name="services">The service collection to add the publishers to.</param>
     public static void AddServiceBusQueuePublishers<TEntity, TIdentityType>(this IServiceCollection services)
       where TIdentityType : IComparable
       where TEntity : IIdentifiable<TIdentityType>

@@ -12,12 +12,10 @@ using StackExchange.Redis;
 
 namespace IkeMtz.Samples.Events.Redis
 {
-  public class Startup : CoreWebApiStartup
+  public class Startup(IConfiguration configuration) : CoreWebApiStartup(configuration)
   {
-    public override string MicroServiceTitle => $"{nameof(IkeMtz.Samples.Events.Redis)} WebApi Microservice";
+    public override string ServiceTitle => $"{nameof(IkeMtz.Samples.Events.Redis)} WebApi Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
-
-    public Startup(IConfiguration configuration) : base(configuration) { }
 
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) => this.SetupConsoleLogging(app);
 

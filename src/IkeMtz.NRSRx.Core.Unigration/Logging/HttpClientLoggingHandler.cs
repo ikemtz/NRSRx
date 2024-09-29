@@ -6,14 +6,27 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Logging
 {
-  public class HttpClientLoggingHandler : DelegatingHandler
+  /// <summary>
+  /// A delegating handler that logs HTTP client requests and responses for testing purposes.
+  /// </summary>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="HttpClientLoggingHandler"/> class.
+  /// </remarks>
+  /// <param name="testContext">The test context for logging.</param>
+  /// <param name="testingHttpMessageHandler">The inner HTTP message handler.</param>
+  public class HttpClientLoggingHandler(TestContext testContext, HttpMessageHandler testingHttpMessageHandler) : DelegatingHandler(testingHttpMessageHandler)
   {
-    public TestContext TestContext { get; }
-    public HttpClientLoggingHandler(TestContext testContext, HttpMessageHandler testingHttpMessageHandler) : base(testingHttpMessageHandler)
-    {
-      TestContext = testContext;
-    }
+    /// <summary>
+    /// Gets the test context for logging.
+    /// </summary>
+    public TestContext TestContext { get; } = testContext;
 
+    /// <summary>
+    /// Sends an HTTP request to the inner handler to send to the server as an asynchronous operation.
+    /// </summary>
+    /// <param name="request">The HTTP request message to send.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>The task object representing the asynchronous operation.</returns>
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
       TestContext.WriteLine("Http Client Message Request:");

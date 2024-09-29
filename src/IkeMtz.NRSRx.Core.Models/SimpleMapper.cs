@@ -5,13 +5,27 @@ using System.Reflection;
 
 namespace IkeMtz.NRSRx.Core.Models
 {
+  /// <summary>
+  /// Provides helper methods and constants for the SimpleMapper.
+  /// </summary>
   public static class SimpleMapperHelper
   {
-    // "Id" is really important to ignore because this will trigger changes in EF entity state
+    /// <summary>
+    /// Properties to ignore during mapping.
+    /// </summary>
     public static readonly string[] IgnoredProperties = { "Id", "CreatedBy", "CreatedOnUtc", "UpdatedBy", "UpdatedOnUtc" };
+
+    /// <summary>
+    /// Interfaces to ignore during mapping.
+    /// </summary>
     public static readonly string[] IgnoredInterfaces = { nameof(IIdentifiable), typeof(IIdentifiable<>).Name, typeof(ICollection<>).Name };
   }
 
+  /// <summary>
+  /// Provides a simple mapper for mapping properties between source and destination entities with a <see cref="Guid"/> identifier.
+  /// </summary>
+  /// <typeparam name="TSourceEntity">The type of the source entity.</typeparam>
+  /// <typeparam name="TDestinationEntity">The type of the destination entity.</typeparam>
   public class SimpleMapper<TSourceEntity, TDestinationEntity> :
     SimpleMapper<TSourceEntity, TDestinationEntity, Guid>
     where TSourceEntity : class
@@ -19,12 +33,21 @@ namespace IkeMtz.NRSRx.Core.Models
   {
   }
 
+  /// <summary>
+  /// Provides a simple mapper for mapping properties within the same entity type with a <see cref="Guid"/> identifier.
+  /// </summary>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
   public class SimpleMapper<TEntity> : SimpleMapper<TEntity, TEntity, Guid>
     where TEntity : class, IIdentifiable<Guid>, new()
   {
     internal SimpleMapper()
     {
     }
+
+    /// <summary>
+    /// Populates the property mappings for the entity.
+    /// </summary>
+    /// <returns>A collection of actions to map properties.</returns>
     protected override IEnumerable<Action<TEntity, TEntity>> PopulatePropertyMappings()
     {
       return FilteredSourceProperties
@@ -34,6 +57,12 @@ namespace IkeMtz.NRSRx.Core.Models
     }
   }
 
+  /// <summary>
+  /// Provides a simple mapper for mapping properties between source and destination entities with a specified identifier type.
+  /// </summary>
+  /// <typeparam name="TSourceEntity">The type of the source entity.</typeparam>
+  /// <typeparam name="TDestinationEntity">The type of the destination entity.</typeparam>
+  /// <typeparam name="TIdentityType">The type of the identifier.</typeparam>
   public class SimpleMapper<TSourceEntity, TDestinationEntity, TIdentityType>
     where TIdentityType : IComparable
     where TSourceEntity : class
@@ -41,6 +70,10 @@ namespace IkeMtz.NRSRx.Core.Models
   {
     private IEnumerable<Action<TSourceEntity, TDestinationEntity>> _propertyMappers;
     private static SimpleMapper<TSourceEntity, TDestinationEntity, TIdentityType> _instance;
+
+    /// <summary>
+    /// Gets the singleton instance of the SimpleMapper.
+    /// </summary>
     public static SimpleMapper<TSourceEntity, TDestinationEntity, TIdentityType> Instance
     {
       get
@@ -53,14 +86,23 @@ namespace IkeMtz.NRSRx.Core.Models
         return _instance;
       }
     }
+
     internal SimpleMapper()
     {
     }
+
+    /// <summary>
+    /// Gets the filtered source properties for mapping.
+    /// </summary>
     protected virtual IEnumerable<PropertyInfo> FilteredSourceProperties => typeof(TSourceEntity).GetRuntimeProperties()
         .Where(prop => !SimpleMapperHelper.IgnoredProperties.Contains(prop.Name, StringComparer.CurrentCulture))
         .Where(prop => !prop.PropertyType.GetTypeInfo().GetInterfaces().Select(t => t.Name).Any(t =>
           SimpleMapperHelper.IgnoredInterfaces.Contains(t, StringComparer.CurrentCulture)));
 
+    /// <summary>
+    /// Populates the property mappings between source and destination entities.
+    /// </summary>
+    /// <returns>A collection of actions to map properties.</returns>
     protected virtual IEnumerable<Action<TSourceEntity, TDestinationEntity>> PopulatePropertyMappings()
     {
       var sourceProperties = FilteredSourceProperties
@@ -76,6 +118,13 @@ namespace IkeMtz.NRSRx.Core.Models
             ));
     }
 
+    /// <summary>
+    /// Sets the property value from the source entity to the destination entity.
+    /// </summary>
+    /// <param name="destPropertyInfo">The destination property info.</param>
+    /// <param name="sourceProperties">The source properties dictionary.</param>
+    /// <param name="src">The source entity.</param>
+    /// <param name="dest">The destination entity.</param>
     public static void SetPropertyValue(PropertyInfo destPropertyInfo, Dictionary<string, PropertyInfo> sourceProperties, TSourceEntity src, TDestinationEntity dest)
     {
       var sourceValue = sourceProperties[destPropertyInfo.Name].GetValue(src);
@@ -113,6 +162,12 @@ namespace IkeMtz.NRSRx.Core.Models
       }
     }
 
+    /// <summary>
+    /// Applies changes from the source entity to the destination entity.
+    /// </summary>
+    /// <param name="sourceEntity">The source entity.</param>
+    /// <param name="destinationEntity">The destination entity.</param>
+    /// <exception cref="ArgumentNullException">Thrown when sourceEntity or destinationEntity is null.</exception>
     public void ApplyChanges(TSourceEntity? sourceEntity, TDestinationEntity? destinationEntity)
     {
       if (sourceEntity == null)
@@ -132,6 +187,11 @@ namespace IkeMtz.NRSRx.Core.Models
       }
     }
 
+    /// <summary>
+    /// Converts the source entity to a new instance of the destination entity.
+    /// </summary>
+    /// <param name="source">The source entity.</param>
+    /// <returns>A new instance of the destination entity with mapped properties.</returns>
     public TDestinationEntity Convert(TSourceEntity source)
     {
       var result = new TDestinationEntity();

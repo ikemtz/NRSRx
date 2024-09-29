@@ -6,14 +6,21 @@ using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public sealed class TestContextResponseLoggerAttribute : ResultFilterAttribute
+  /// <summary>
+  /// A filter attribute that logs the server response to the <see cref="TestContext"/>.
+  /// </summary>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="TestContextResponseLoggerAttribute"/> class.
+  /// </remarks>
+  /// <param name="testContext">The test context instance.</param>
+  public sealed class TestContextResponseLoggerAttribute(TestContext testContext) : ResultFilterAttribute
   {
-    private readonly TestContext _testContext;
-    public TestContextResponseLoggerAttribute(TestContext testContext)
-    {
-      _testContext = testContext;
-    }
+    private readonly TestContext _testContext = testContext;
 
+    /// <summary>
+    /// Called after the action result has been executed.
+    /// </summary>
+    /// <param name="context">The result executed context.</param>
     [ExcludeFromCodeCoverage]
     public override void OnResultExecuted(ResultExecutedContext context)
     {

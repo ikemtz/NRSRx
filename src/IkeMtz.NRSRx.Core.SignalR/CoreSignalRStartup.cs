@@ -14,14 +14,26 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace IkeMtz.NRSRx.Core.SignalR
 {
-  public abstract class CoreSignalrStartup : CoreWebStartup
+  /// <summary>
+  /// Abstract base class for setting up a SignalR application.
+  /// </summary>
+  /// <param name="configuration">The configuration.</param>
+  public abstract class CoreSignalrStartup(IConfiguration configuration) : CoreWebStartup(configuration)
   {
-    public override string? MicroServiceTitle => null;
-    public override Assembly? StartupAssembly => null;
-    protected CoreSignalrStartup(IConfiguration configuration) : base(configuration)
-    {
-    }
+    /// <summary>
+    /// Gets the title of the microservice.
+    /// </summary>
+    public override string? ServiceTitle => null;
 
+    /// <summary>
+    /// Gets the assembly of the startup class.
+    /// </summary>
+    public override Assembly? StartupAssembly => null;
+
+    /// <summary>
+    /// Adds services to the container.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public virtual void ConfigureServices(IServiceCollection services)
     {
       SetupLogging(services);
@@ -33,6 +45,11 @@ namespace IkeMtz.NRSRx.Core.SignalR
       SetupHealthChecks(services, healthCheckBuilder);
     }
 
+    /// <summary>
+    /// Configures the HTTP request pipeline.
+    /// </summary>
+    /// <param name="app">The application builder.</param>
+    /// <param name="env">The web host environment.</param>
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       _ = app
@@ -46,6 +63,10 @@ namespace IkeMtz.NRSRx.Core.SignalR
         });
     }
 
+    /// <summary>
+    /// Sets up authentication.
+    /// </summary>
+    /// <param name="builder">The authentication builder.</param>
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
       JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -64,16 +85,21 @@ namespace IkeMtz.NRSRx.Core.SignalR
             options.Events = new JwtBearerEvents()
             {
               OnMessageReceived = messageReceivedContext =>
-              {
-                if (messageReceivedContext.Request.Query.TryGetValue("access_token", out StringValues accessToken))
-                {
-                  messageReceivedContext.Token = accessToken;
+                  {
+                  if (messageReceivedContext.Request.Query.TryGetValue("access_token", out StringValues accessToken))
+                  {
+                    messageReceivedContext.Token = accessToken;
+                  }
+                  return Task.CompletedTask;
                 }
-                return Task.CompletedTask;
-              }
             };
           });
     }
+
+    /// <summary>
+    /// Maps SignalR hubs to endpoints.
+    /// </summary>
+    /// <param name="endpoints">The endpoint route builder.</param>
     public abstract void MapHubs(IEndpointRouteBuilder endpoints);
   }
 }

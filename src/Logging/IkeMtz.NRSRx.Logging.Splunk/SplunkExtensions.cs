@@ -7,11 +7,16 @@ using Serilog.Sinks.SystemConsole.Themes;
 
 namespace IkeMtz.NRSRx.Logging.Splunk
 {
+  /// <summary>
+  /// Extension methods to setup logging to Splunk in the NRSRx framework.
+  /// </summary>
   public static partial class SplunkExtensions
   {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private static HttpClientHandler _clientHandler;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+    /// <summary>
+    /// Gets the HTTP client handler with SSL validation disabled.
+    /// </summary>
     public static HttpClientHandler ClientHandler
     {
       get
@@ -20,9 +25,28 @@ namespace IkeMtz.NRSRx.Logging.Splunk
         return _clientHandler;
       }
     }
+
+    /// <summary>
+    /// Configures the logger to log to a Splunk instance.
+    /// </summary>
+    /// <param name="configuration">The application configuration.</param>
+    /// <param name="minimumLogLevelConfig">Callback to configure the minimum log level (default: Information).</param>
+    /// <returns>The configured logger.</returns>
+    /// <remarks>
+    /// The following configuration variables are required:
+    /// - SPLUNK_HOST: The URL of the Splunk HTTP Event Collector (HEC) endpoint.
+    /// - SPLUNK_TOKEN: The authentication token for the Splunk HEC.
+    /// 
+    /// The following configuration values are optional:
+    /// - SPLUNK_DISABLE_SSL_VALIDATION: Set to "true" to disable SSL validation (default: false).
+    /// - SPLUNK_URI_PATH: The URI path for the Splunk HEC (default: "services/collector/event").
+    /// - SPLUNK_INDEX: The index to send events to (default: empty).
+    /// - SPLUNK_SOURCE_TYPE: The source type for the events (default: empty).
+    /// - ENVIRONMENT_NAME: The environment name to include in the logs (default: empty).
+    /// </remarks>
     public static ILogger ConfigureSplunkLogger(IConfiguration configuration, Func<LoggerMinimumLevelConfiguration, LoggerConfiguration>? minimumLogLevelConfig = null)
     {
-      minimumLogLevelConfig ??= X => X.Information();
+      minimumLogLevelConfig ??= x => x.Information();
       var splunkHost = configuration.GetValue<string>("SPLUNK_HOST");
       var splunkToken = configuration.GetValue<string>("SPLUNK_TOKEN");
       var splunkDisableSslValidation = configuration.GetValue("SPLUNK_DISABLE_SSL_VALIDATION", false);

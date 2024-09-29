@@ -4,5 +4,112 @@
         <name>IkeMtz.NRSRx.Core.WebApi</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.WebApi.ControllerBaseExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:Microsoft.AspNetCore.Mvc.ControllerBase"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.ControllerBaseExtensions.GetBuildNumber(Microsoft.AspNetCore.Mvc.ControllerBase)">
+            <summary>
+            Gets the build number from the assembly of the specified controller.
+            </summary>
+            <param name="controller">The controller instance.</param>
+            <returns>The build number as a string.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup">
+            <summary>
+            Abstract base class for setting up a NRSRx Web API application.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup"/> class.
+            </remarks>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Abstract base class for setting up a NRSRx Web API application.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup"/> class.
+            </remarks>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds services to the container.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Configures the HTTP request pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="env">The web host environment.</param>
+            <param name="provider">The API version description provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup.SetupSwaggerUI(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Sets up the Swagger UI options.
+            </summary>
+            <param name="options">The Swagger UI options.</param>
+            <param name="provider">The API version description provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup.SetupCoreEndpointFunctionality(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up core endpoint functionality.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The MVC builder.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup.SetupSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up Swagger services.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.CoreWebApiStartup.SetupPublishers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up publishers.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.WebApi.PingResult">
+            <summary>
+            Represents the result of a ping request.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.PingResult.#ctor(Microsoft.AspNetCore.Mvc.ApiVersion)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.WebApi.PingResult"/> class.
+            </summary>
+            <param name="apiVersion">The API version.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.WebApi.PingResult.Name">
+            <summary>
+            Gets or sets the name of the service.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.WebApi.PingResult.Version">
+            <summary>
+            Gets the version of the API.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.WebApi.PingResult.Build">
+            <summary>
+            Gets or sets the build number of the service.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.WebApi.ValidateModelAttribute">
+            <summary>
+            An action filter attribute that validates the model state before executing the action.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.WebApi.ValidateModelAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            Called before the action method is executed.
+            </summary>
+            <param name="context">The action executing context.</param>
+        </member>
     </members>
 </doc>

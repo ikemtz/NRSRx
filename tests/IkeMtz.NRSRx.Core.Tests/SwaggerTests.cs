@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unigration")]
     public async Task TestJsonDocAsync()
     {
-      var myConfiguration = new Dictionary<string, string>
+      var myConfiguration = new Dictionary<string, string?>
       {
         {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };
@@ -44,13 +44,13 @@ namespace IkeMtz.NRSRx.Core.Tests
     [TestCategory("Unit")]
     public void TestGetSwaggerScopes()
     {
-      var result = ConfigureSwaggerOptions.GetSwaggerScopeDictionary(new[] {
+      var result = ConfigureSwaggerOptions.GetSwaggerScopeDictionary([
         new OAuthScope("A", "X"),
         new OAuthScope("A", "B"),
         new OAuthScope("B", "B"),
         new OAuthScope("B", "Z"),
         new OAuthScope("C", "Y"),
-      });
+      ]);
       Assert.AreEqual(3, result.Count);
     }
   }

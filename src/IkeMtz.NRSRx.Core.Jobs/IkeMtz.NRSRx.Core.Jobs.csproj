@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <NoWarn>1701;1702;CA1000;CS1591;S2696;CS8777;CS8602;CS8618</NoWarn>
+    <NoWarn>1701;1702;CA1000;S2696;CS8777;CS8602;CS8618</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Core.Jobs.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

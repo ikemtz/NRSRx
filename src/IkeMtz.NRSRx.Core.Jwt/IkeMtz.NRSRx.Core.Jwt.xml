@@ -4,5 +4,103 @@
         <name>IkeMtz.NRSRx.Core.Jwt</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Jwt.EpochDateConverter">
+            <summary>
+            Provides methods to convert between DateTime and Unix epoch time.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Jwt.EpochDateConverter.Epoch">
+            <summary>
+            Represents the Unix epoch start time (January 1, 1970, 00:00:00 UTC).
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.EpochDateConverter.FromDouble(System.Double)">
+            <summary>
+            Converts a double value representing seconds since the Unix epoch to a DateTime.
+            </summary>
+            <param name="value">The number of seconds since the Unix epoch.</param>
+            <returns>A DateTime representing the specified number of seconds since the Unix epoch.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.EpochDateConverter.ToDouble(System.DateTime)">
+            <summary>
+            Converts a DateTime to a double value representing seconds since the Unix epoch.
+            </summary>
+            <param name="value">The DateTime to convert.</param>
+            <returns>The number of seconds since the Unix epoch.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jwt.ITokenValidator">
+            <summary>
+            Defines a contract for validating tokens.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jwt.ITokenValidator.TokenValidationParameters">
+            <summary>
+            Gets the token validation parameters.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.ITokenValidator.InitAsync(System.String,System.String)">
+            <summary>
+            Initializes the token validator with the specified metadata address and audience.
+            </summary>
+            <param name="metaDataAddress">The metadata address.</param>
+            <param name="audience">The audience.</param>
+            <returns>A task that represents the asynchronous initialization operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.ITokenValidator.InitAsync(System.String,System.String,System.String)">
+            <summary>
+            Initializes the token validator with the specified metadata address, issuer, and audience.
+            </summary>
+            <param name="metaDataAddress">The metadata address.</param>
+            <param name="issuer">The issuer.</param>
+            <param name="audience">The audience.</param>
+            <returns>A task that represents the asynchronous initialization operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.ITokenValidator.ValidateToken(System.String)">
+            <summary>
+            Validates the specified token.
+            </summary>
+            <param name="token">The token to validate.</param>
+            <returns><c>true</c> if the token is valid; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jwt.TokenValidator">
+            <summary>
+            Provides functionality to validate JWT tokens.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jwt.TokenValidator.TokenValidationParameters">
+            <summary>
+            Gets the token validation parameters.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jwt.TokenValidator.ConfigurationManager">
+            <summary>
+            Gets the configuration manager for OpenID Connect.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.TokenValidator.InitAsync(System.String,System.String)">
+            <summary>
+            Initializes the token validator with the specified metadata address and audiences.
+            </summary>
+            <param name="metaDataAddress">The metadata address.</param>
+            <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by seperating them with a comma. </param>
+            <returns>A task that represents the asynchronous operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.TokenValidator.InitAsync(System.String,System.String,System.String)">
+            <summary>
+            Initializes the token validator with the specified metadata address, issuer, and audiences.
+            </summary>
+            <param name="metaDataAddress">The metadata address of the identity server.</param>
+            <param name="issuer">The value specified in the "iss" (issuer) claim.</param>
+            <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by seperating them with a comma. </param>
+            <returns>A task that represents the asynchronous operation.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jwt.TokenValidator.ValidateToken(System.String)">
+            <summary>
+            Validates the specified JWT token.
+            </summary>
+            <param name="token">The JWT token.</param>
+            <returns>True if the token is valid; otherwise, false.</returns>
+            <exception cref="T:System.InvalidProgramException">Thrown if the token validator has not been initialized.</exception>
+        </member>
     </members>
 </doc>

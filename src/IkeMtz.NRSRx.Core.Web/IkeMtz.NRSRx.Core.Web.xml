@@ -4,6 +4,41 @@
         <name>IkeMtz.NRSRx.Core.Web</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Web.AppSettings">
+            <summary>
+            Represents the application settings.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.IdentityAudiences">
+            <summary>
+            Gets or sets the identity audiences.  Multiples can be specified by seperating them with a comma.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.IdentityProvider">
+            <summary>
+            Gets or sets the identity provider.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.DbConnectionString">
+            <summary>
+            Gets or sets the database connection string.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.SwaggerAppName">
+            <summary>
+            Gets or sets the Swagger application name.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.SwaggerClientId">
+            <summary>
+            Gets or sets the Swagger client ID.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.SwaggerClientSecret">
+            <summary>
+            Gets or sets the Swagger client secret.
+            </summary>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions">
             <summary>
             Configures the Swagger generation options.
@@ -11,12 +46,417 @@
             <remarks>This allows API versioning to define a Swagger document per API version after the
             <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.#ctor(System.IServiceProvider,Microsoft.Extensions.Configuration.IConfiguration,IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="serviceProvider">The service provider.</param>
+            <param name="configuration">The application configuration.</param>
+            <param name="startup">The CoreWebStartup instance.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the startup parameter is null.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <summary>
+            Configures the Swagger generation options.
+            </summary>
+            <param name="options">The Swagger generation options.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.GetSwaggerScopeDictionary(System.Collections.Generic.IEnumerable{IkeMtz.NRSRx.Core.Web.OAuthScope})">
+            <summary>
+            Creates a dictionary of Swagger scopes.
+            </summary>
+            <param name="swaggerScopes">The collection of OAuth scopes.</param>
+            <returns>A dictionary of Swagger scopes.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.CreateInfoForApiVersion(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription)">
+            <summary>
+            Creates the OpenAPI information for a specific API version.
+            </summary>
+            <param name="description">The API version description.</param>
+            <returns>The OpenAPI information.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.CoreTenantFilterAttribute">
+            <summary>
+            An abstract attribute that provides tenant-based authorization filtering.  For use in multi tenant Apis.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreTenantFilterAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.CoreTenantFilterAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreTenantFilterAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            Called to perform authorization.
+            </summary>
+            <param name="context">The authorization filter context.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreTenantFilterAttribute.GetUserTenants(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Gets the tenants associated with the current user.
+            </summary>
+            <param name="httpContext">The HTTP context.</param>
+            <returns>A collection of tenant identifiers.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.CoreWebStartup">
+            <summary>
+            Abstract base class for setting up a NRSRx application.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Abstract base class for setting up a NRSRx application.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.ServiceTitle">
+            <summary>
+            Gets the title of the microservice.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.StartupAssembly">
+            <summary>
+            Gets the assembly of the startup class.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SwaggerUiRoutePrefix">
+            <summary>
+            Gets the route prefix for the Swagger UI.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.JwtNameClaimMapping">
+            <summary>
+            Gets the JWT name claim mapping.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.JwtRoleClaimMapping">
+            <summary>
+            Gets the JWT role claim mapping.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.DisableSwagger">
+            <summary>
+            Gets a value indicating whether Swagger is disabled.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.IncludeXmlCommentsInSwaggerDocs">
+            <summary>
+            Gets a value indicating whether to include XML comments in Swagger documentation.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.AdditionalAssemblyXmlDocumentFiles">
+            <summary>
+            Gets additional assembly XML document files.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SwaggerScopes">
+            <summary>
+            Gets the OAuth scopes for Swagger.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.Configuration">
+            <summary>
+            Gets the configuration.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Sets up logging.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="app">The application builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupAppSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up application settings.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupCurrentUserProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the current user provider.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupJwtAuthSchema(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the JWT authentication schema.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The authentication builder.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder)">
+            <summary>
+            Sets up authentication.
+            </summary>
+            <param name="builder">The authentication builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.GetIdentityAudiences(IkeMtz.NRSRx.Core.Web.AppSettings)">
+            <summary>
+            Gets the identity audiences.
+            </summary>
+            <param name="appSettings">The application settings.</param>
+            <returns>The identity audiences.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupDatabase(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+            <summary>
+            Sets up the database.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="dbConnectionString">The database connection string.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupMvcOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Mvc.MvcOptions)">
+            <summary>
+            Sets up MVC options.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="options">The MVC options.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder)">
+            <summary>
+            Sets up health checks.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="healthChecks">The health checks builder.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupMiscDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up miscellaneous dependencies.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.CreateDefaultHostBuilder``1">
+            <summary>
+            Creates the default host builder.
+            </summary>
+            <typeparam name="TStartup">The type of the startup class.</typeparam>
+            <returns>The host builder.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupSwaggerCommonUi(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+            <summary>
+            Sets up the common UI for Swagger.
+            </summary>
+            <param name="options">The Swagger UI options.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupSwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions,System.String)">
+            <summary>
+            Sets up Swagger generation options.
+            </summary>
+            <param name="options">The Swagger generation options.</param>
+            <param name="xmlPath">The XML path for comments.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.GetOpenIdConfiguration(System.Net.Http.IHttpClientFactory,IkeMtz.NRSRx.Core.Web.AppSettings)">
+            <summary>
+            Gets the OpenID configuration.
+            </summary>
+            <param name="clientFactory">The HTTP client factory.</param>
+            <param name="appSettings">The application settings.</param>
+            <returns>The OpenID configuration.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.GetBuildNumber">
+            <summary>
+            Gets the build number.
+            </summary>
+            <returns>The build number.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.HttpUserProvider">
+            <summary>
+            Provides the current user information from the HTTP context.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.HttpUserProvider"/> class.
+            </remarks>
+            <param name="httpContextAccessor">The HTTP context accessor.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.HttpUserProvider.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Provides the current user information from the HTTP context.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.HttpUserProvider"/> class.
+            </remarks>
+            <param name="httpContextAccessor">The HTTP context accessor.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.HttpUserProvider.HttpContextAccessor">
+            <summary>
+            Gets the HttpContextAccessor.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.HttpUserProvider.GetCurrentUserId(System.String)">
+            <summary>
+            Gets the current user ID from the HTTP context.  If Http request is not authenticated, it will return null.
+            </summary>
+            <param name="anonymousValue">The value to return if the user is not authenticated.</param>
+            <returns>The current user ID, or the specified anonymous value if the user is not authenticated.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.IApiVersionDefinitions">
+            <summary>
+            Defines a contract for providing API version definitions.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.IApiVersionDefinitions.Versions">
+            <summary>
+            Gets the collection of API versions.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.OAuthScope">
+            <summary>
+            Represents an OAuth scope with a name and description.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.OAuthScope"/> class.
+            </remarks>
+            <param name="name">The name of the OAuth scope.</param>
+            <param name="description">The description of the OAuth scope.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OAuthScope.#ctor(System.String,System.String)">
+            <summary>
+            Represents an OAuth scope with a name and description.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.OAuthScope"/> class.
+            </remarks>
+            <param name="name">The name of the OAuth scope.</param>
+            <param name="description">The description of the OAuth scope.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.OAuthScope.Name">
+            <summary>
+            Gets or sets the name of the OAuth scope.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.OAuthScope.Description">
+            <summary>
+            Gets or sets the description of the OAuth scope.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.OAuthScope.OpenId">
+            <summary>
+            Gets the predefined OpenId scope.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration">
+            <summary>
+            Represents the OpenID configuration with endpoints for authorization and token.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration.AuthorizeEndpoint">
+            <summary>
+            Gets or sets the authorization endpoint.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration.TokenEndpoint">
+            <summary>
+            Gets or sets the token endpoint.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration.GetAuthorizationEndpointUri(IkeMtz.NRSRx.Core.Web.AppSettings)">
+            <summary>
+            Gets the authorization endpoint URI with the specified audience from the application settings.
+            </summary>
+            <param name="appSettings">The application settings.</param>
+            <returns>The authorization endpoint URI.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration.GetTokenEndpointUri">
+            <summary>
+            Gets the token endpoint URI.
+            </summary>
+            <returns>The token endpoint URI.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter">
+            <summary>
+            Operation filter to add authorization responses and security requirements to Swagger operations.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation.
+            </summary>
+            <param name="operation">The OpenAPI operation.</param>
+            <param name="context">The operation filter context.</param>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter">
             <summary>
             Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
             </summary>
             <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
             Once they are fixed and published, this class can be removed.</remarks>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation.
+            </summary>
+            <param name="operation">The OpenAPI operation.</param>
+            <param name="context">The operation filter context.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter">
+            <summary>
+            Document filter to modify Swagger paths for reverse proxy scenarios.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter"/> class.
+            </remarks>
+            <param name="config">The application configuration.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Document filter to modify Swagger paths for reverse proxy scenarios.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter"/> class.
+            </remarks>
+            <param name="config">The application configuration.</param>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath">
+            <summary>
+            The configuration key for the Swagger reverse proxy base path.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Configuration">
+            <summary>
+            Gets the application configuration.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            Applies the filter to the specified Swagger document.
+            </summary>
+            <param name="swaggerDoc">The OpenAPI document.</param>
+            <param name="context">The document filter context.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.ConfigurationFactory`1">
+            <summary>
+            Provides methods to create and configure application configuration.
+            </summary>
+            <typeparam name="TProgram">The type of the program.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.ConfigurationFactory`1.ConfigurationAssembly">
+            <summary>
+            Gets the assembly that defines the TProgram type.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.ConfigurationFactory`1.Create">
+            <summary>
+            Creates a new configuration instance.
+            </summary>
+            <returns>The created configuration.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.ConfigurationFactory`1.Configure(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Configures the specified configuration builder.
+            </summary>
+            <param name="builder">The configuration builder.</param>
+            <returns>The configured configuration.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.IODataVersionProvider">
+            <summary>
+            Defines a contract for providing OData version descriptions.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.IODataVersionProvider.GetODataVersions">
+            <summary>
+            Gets the collection of OData version descriptions.
+            </summary>
+            <returns>A collection of <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription"/> objects.</returns>
         </member>
     </members>
 </doc>

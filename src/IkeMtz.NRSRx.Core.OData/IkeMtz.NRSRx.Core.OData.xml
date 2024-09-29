@@ -4,5 +4,186 @@
         <name>IkeMtz.NRSRx.Core.OData</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.OData.BaseODataModelProvider">
+            <summary>
+            Abstract base class for providing OData models and version descriptions.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.OData.BaseODataModelProvider.EdmModels">
+            <summary>
+            Gets the cached OData EDM models.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.BaseODataModelProvider.GetModels">
+            <summary>
+            Gets the OData EDM models.
+            </summary>
+            <returns>A dictionary of <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription"/> and <see cref="T:Microsoft.OData.Edm.IEdmModel"/>.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.BaseODataModelProvider.ODataEntityModelFactory(System.Action{Microsoft.OData.ModelBuilder.ODataConventionModelBuilder})">
+            <summary>
+            Creates an OData EDM model using the specified action.
+            </summary>
+            <param name="action">The action to configure the <see cref="T:Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"/>.</param>
+            <returns>An instance of <see cref="T:Microsoft.OData.Edm.IEdmModel"/>.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.BaseODataModelProvider.ApiVersionFactory(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Creates an API version description.
+            </summary>
+            <param name="MajorVersion">The major version number.</param>
+            <param name="MinorVersion">The minor version number.</param>
+            <param name="IsDeprecated">Indicates whether the version is deprecated.</param>
+            <returns>An instance of <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription"/>.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.BaseODataModelProvider.GetODataVersions">
+            <summary>
+            Gets the collection of OData version descriptions.
+            </summary>
+            <returns>A collection of <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription"/> objects.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.CoreODataStartup">
+            <summary>
+            Abstract base class for setting up a NRSRx OData-based application.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.OData.CoreODataStartup"/> class.
+            </remarks>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Abstract base class for setting up a NRSRx OData-based application.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.OData.CoreODataStartup"/> class.
+            </remarks>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.OData.CoreODataStartup.MaxTop">
+            <summary>
+            Gets or sets the maximum number of records that can be returned in a single OData query.
+            Note: This only applies if $count is set to true in the query.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.OData.CoreODataStartup.ODataModelProvider">
+            <summary>
+            Gets the OData model provider.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures services for the application.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configures the HTTP request pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="env">The web host environment.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.SetupSwaggerUI(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+            <summary>
+            Sets up the Swagger UI.
+            </summary>
+            <param name="options">The Swagger UI options.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.SetupCoreEndpointFunctionality(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up core endpoint functionality, including MVC and OData services.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The MVC builder.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.SetupSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up Swagger services.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializer">
+            <summary>
+            Provides a custom OData resource serializer that omits default values for date and numeric types.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializer"/> class.
+            </remarks>
+            <param name="serializerProvider">The serializer provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializer.#ctor(Microsoft.AspNetCore.OData.Formatter.Serialization.ODataSerializerProvider)">
+            <summary>
+            Provides a custom OData resource serializer that omits default values for date and numeric types.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializer"/> class.
+            </remarks>
+            <param name="serializerProvider">The serializer provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializer.CreateStructuralProperty(Microsoft.OData.Edm.IEdmStructuralProperty,Microsoft.AspNetCore.OData.Formatter.ResourceContext)">
+            <summary>
+            Creates an OData structural property, omitting properties with default values for date and numeric types.
+            </summary>
+            <param name="structuralProperty">The EDM structural property.</param>
+            <param name="resourceContext">The resource context.</param>
+            <returns>An instance of <see cref="T:Microsoft.OData.ODataProperty"/> or null if the property should be omitted.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializerProvider">
+            <summary>
+            Provides a custom OData serializer provider that uses <see cref="T:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializer"/> for entity and complex types.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializerProvider.#ctor(System.IServiceProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializerProvider"/> class.
+            </summary>
+            <param name="rootContainer">The root service provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializerProvider.GetEdmTypeSerializer(Microsoft.OData.Edm.IEdmTypeReference)">
+            <summary>
+            Gets the appropriate serializer for the given EDM type.
+            </summary>
+            <param name="edmType">The EDM type reference.</param>
+            <returns>An instance of <see cref="T:Microsoft.AspNetCore.OData.Formatter.Serialization.IODataEdmTypeSerializer"/>.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.ODataCommonDocumentFilter">
+            <summary>
+            Filters out specific OData schema types and paths from the Swagger documentation.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.OData.ODataCommonDocumentFilter.FilteredOutSchemaTypes">
+            <summary>
+            The list of schema types to be filtered out.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            Applies the filter to the specified Swagger document.
+            </summary>
+            <param name="swaggerDoc">The Swagger document to apply the filter to.</param>
+            <param name="context">The context for the filter.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter">
+            <summary>
+            Adds common OData query parameters to Swagger documentation for GET operations.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation.
+            </summary>
+            <param name="operation">The operation to apply the filter to.</param>
+            <param name="context">The context for the filter.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.AddParameter(Microsoft.OpenApi.Models.OpenApiOperation,System.String,System.String,System.String)">
+            <summary>
+            Adds a parameter to the specified operation if it does not already exist.
+            </summary>
+            <param name="operation">The operation to add the parameter to.</param>
+            <param name="name">The name of the parameter.</param>
+            <param name="type">The type of the parameter.</param>
+            <param name="description">The description of the parameter.</param>
+        </member>
     </members>
 </doc>

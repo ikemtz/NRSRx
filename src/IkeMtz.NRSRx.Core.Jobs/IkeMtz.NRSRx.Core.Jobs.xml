@@ -4,15 +4,240 @@
         <name>IkeMtz.NRSRx.Core.Jobs</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Jobs.FunctionMetadata">
+            <summary>
+            Represents metadata for a function in the NRSRx framework.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.FunctionMetadata.Type">
+            <summary>
+            Gets or sets the type of the function.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.FunctionMetadata.Name">
+            <summary>
+            Gets or sets the name of the function.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.FunctionMetadata.SequencePriority">
+            <summary>
+            Gets or sets the sequence priority of the function.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jobs.IFunction">
+            <summary>
+            Represents a function that can be executed within the NRSRx framework.
+            </summary>
+        </member>
         <member name="P:IkeMtz.NRSRx.Core.Jobs.IFunction.SequencePriority">
             <summary>
-            The higher priorty functions get run first (ordered by descending). 
+            Gets the sequence priority of the function. Higher priority functions are run first (ordered by descending).
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.IFunction.RunAsync">
+            <summary>
+            Executes the function asynchronously.
+            </summary>
+            <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating whether the function was successful.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jobs.IJob">
+            <summary>
+            Represents a job within the NRSRx framework.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.IJob.Configuration">
+            <summary>
+            Gets or sets the application configuration.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.IJob.JobHost">
+            <summary>
+            Gets or sets the job host.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.IJob.SetupDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the dependencies required by the job.
+            </summary>
+            <param name="services">The service collection to add the dependencies to.</param>
+            <returns>The service collection with the dependencies added.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.IJob.SetupFunctions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the functions to be executed by the job.
+            </summary>
+            <param name="services">The service collection to add the functions to.</param>
+            <returns>The service collection with the functions added.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jobs.IMessageFunction">
+            <summary>
+            Represents a message function that can be executed within the NRSRx framework.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jobs.Job`1">
+            <summary>
+            Represents an abstract job within the NRSRx framework.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the job.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.Job`1.SetupDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the dependencies required by the job.
+            </summary>
+            <param name="services">The service collection to add the dependencies to.</param>
+            <returns>The service collection with the dependencies added.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jobs.JobBase`2">
+            <summary>
+            Base class for defining a job in the NRSRx framework.
+            </summary>
+            <typeparam name="TProgram">The type of the program.</typeparam>
+            <typeparam name="TFunctionType">The type of the function.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.JobBase`2.JobHost">
+            <summary>
+            Gets or sets the job host.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.JobBase`2.HealthFileLocation">
+            <summary>
+            Gets the location of the health file.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.JobBase`2.Configuration">
+            <summary>
+            Gets or sets the configuration.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.GetConfig">
+            <summary>
+            Gets the configuration for the job.
+            </summary>
+            <returns>The configuration.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.RunAsync">
+            <summary>
+            Runs the job asynchronously.
+            </summary>
+            <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.RunFunctions(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Runs the functions asynchronously.
+            </summary>
+            <param name="loggerFactory">The logger factory.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.GetFunctions(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Gets the functions to run.
+            </summary>
+            <param name="loggerFactory">The logger factory.</param>
+            <returns>An ordered enumerable of function metadata.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.ScopeFunctionAsync(Microsoft.Extensions.Logging.ILoggerFactory,IkeMtz.NRSRx.Core.Jobs.FunctionMetadata)">
+            <summary>
+            Scopes and runs a function asynchronously.
+            </summary>
+            <param name="loggerFactory">The logger factory.</param>
+            <param name="func">The function metadata.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.SetupHost(System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            Sets up the host.
+            </summary>
+            <param name="setupMiscDependencies">An action to set up miscellaneous dependencies.</param>
+            <returns>The configured host.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.SetupLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up logging.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.SetupDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up dependencies.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.SetupFunctions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the functions.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.SetupUserProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the user provider.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.JobBase`2.RunFunctionAsync(IkeMtz.NRSRx.Core.Jobs.FunctionMetadata,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Runs a function asynchronously.
+            </summary>
+            <param name="func">The function metadata.</param>
+            <param name="logger">The logger.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Jobs.MessagingJob`1">
+            <summary>
+            Represents an abstract messaging job within the NRSRx framework.
+            </summary>
+            <typeparam name="TProgram">The type of the program implementing the job.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.MessagingJob`1.RunContinously">
+            <summary>
+            Gets or sets a value indicating whether the job should run continuously.
             </summary>
         </member>
         <member name="P:IkeMtz.NRSRx.Core.Jobs.MessagingJob`1.EnableParallelFunctionProcessing">
             <summary>
-            Flag to enable Parallel function processing
+            Gets or sets a value indicating whether parallel function processing is enabled.
             </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.MessagingJob`1.SecsBetweenRuns">
+            <summary>
+            Gets or sets the number of seconds between runs.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Jobs.MessagingJob`1.SleepTimeSpan">
+            <summary>
+            Gets the sleep time span based on the number of seconds between runs.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Jobs.MessagingJob`1.RunFunctions(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Runs the functions associated with the job.
+            </summary>
+            <param name="loggerFactory">The logger factory to create loggers.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating whether the functions were successful.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions">
+            <summary>
+            Provides extension methods for adding functions to the service collection.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddFunction``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds a function to the service collection.
+            </summary>
+            <typeparam name="TFunction">The type of the function to add.</typeparam>
+            <param name="services">The service collection to add the function to.</param>
+            <returns>The service collection with the function added.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddMessageFunction``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds a message function to the service collection.
+            </summary>
+            <typeparam name="TFunction">The type of the message function to add.</typeparam>
+            <param name="services">The service collection to add the message function to.</param>
+            <returns>The service collection with the message function added.</returns>
         </member>
     </members>
 </doc>
