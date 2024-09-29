@@ -4,5 +4,337 @@
         <name>IkeMtz.NRSRx.Core.Models</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Constants">
+            <summary>
+            Provides application-wide constants.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Constants.jsonSerializerSettings">
+            <summary>
+            The default JSON serializer settings with camel case property names and reference loop handling set to ignore.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerSettings">
+            <summary>
+            Gets the default JSON serializer settings.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper">
+            <summary>
+            Provides helper methods for working with enums.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper.ToIEnumerable``2">
+            <summary>
+            Converts an enum to an enumerable of tuples containing the identifier and name.
+            </summary>
+            <typeparam name="TEnum">The type of the enum.</typeparam>
+            <typeparam name="TKeyType">The type of the identifier.</typeparam>
+            <returns>An enumerable of tuples containing the identifier and name.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper.ToIEnumerable``1">
+            <summary>
+            Converts an enum to an enumerable of tuples containing the identifier and name, with the identifier as an integer.
+            </summary>
+            <typeparam name="TEnum">The type of the enum.</typeparam>
+            <returns>An enumerable of tuples containing the identifier and name.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper.ConvertEnumValues``2">
+            <summary>
+            Converts enum values to a collection of a specified type that implements <see cref="T:IkeMtz.NRSRx.Core.Models.IEnumValue`1"/>.
+            </summary>
+            <typeparam name="TEnum">The type of the enum.</typeparam>
+            <typeparam name="TEnumValueType">The type that implements <see cref="T:IkeMtz.NRSRx.Core.Models.IEnumValue`1"/>.</typeparam>
+            <returns>A collection of the specified type containing the enum values.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper.ConvertEnumValues``3">
+            <summary>
+            Converts enum values to a collection of a specified type that implements <see cref="T:IkeMtz.NRSRx.Core.Models.IEnumValue`1"/> with a specified identifier type.
+            </summary>
+            <typeparam name="TEnum">The type of the enum.</typeparam>
+            <typeparam name="TIdentityType">The type of the identifier.</typeparam>
+            <typeparam name="TEnumValueType">The type that implements <see cref="T:IkeMtz.NRSRx.Core.Models.IEnumValue`1"/>.</typeparam>
+            <returns>A collection of the specified type containing the enum values.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IAuditable`1">
+            <summary>
+            Defines a contract for an objects that can be audited and has a primary key of date-time type.
+            When used in an IAuditable DbContext, these properties will be automatically be set when record is created or updated.
+            </summary>
+            <typeparam name="TDATETIME">The type of the date-time.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IAuditable`1.CreatedBy">
+            <summary>
+            Gets or sets the identifier of the user who created the object.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IAuditable`1.UpdatedBy">
+            <summary>
+            Gets or sets the identifier of the user who last updated the object.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IAuditable`1.UpdateCount">
+            <summary>
+            Gets or sets the number of times the object has been updated.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IAuditable`1.CreatedOnUtc">
+            <summary>
+            Gets or sets the date and time when the object was created in UTC.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IAuditable`1.UpdatedOnUtc">
+            <summary>
+            Gets or sets the date and time when the object was last updated in UTC.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IAuditable">
+            <summary>
+            Defines a contract for objects that can be audited with a DateTimeOffset type.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.ICalculateable">
+            <summary>
+            Defines a contract for objects that can calculate their own values.
+            When used within an IAuditable DbContext, this method is invoked when record is created or updated.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.ICalculateable.CalculateValues">
+            <summary>
+            Calculates the values for the object.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IDeletable">
+            <summary>
+            Defines a contract for objects that can be marked as deleted.
+            If used within an IAuditable DbContext, these properties will be automatically be set when record is deleted.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IDeletable.DeletedOnUtc">
+            <summary>
+            Gets or sets the date and time when the object was deleted in UTC.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IDeletable.DeletedBy">
+            <summary>
+            Gets or sets the identifier of the user who deleted the object.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IEnableable">
+            <summary>
+            Defines a contract for objects that can be enabled or disabled.
+            If used with an IAuditable DbContext, will be automatically be set when record is created and subsequently deleted.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IEnableable.IsEnabled">
+            <summary>
+            Gets or sets a value indicating whether the object is enabled.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IEnumValue">
+            <summary>
+            Represents an enum value with an integer identity.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IEnumValue`1">
+            <summary>
+            Represents an enum value with a specified identity type.
+            </summary>
+            <typeparam name="TIdentityType">The type of the identity.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IEnumValue`1.Name">
+            <summary>
+            Gets or sets the name of the enum value.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IIdentifiable">
+            <summary>
+            Defines a contract for objects that have a unique identifier of type <see cref="T:System.Guid"/>.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.IIdentifiable`1">
+            <summary>
+            Defines a contract for objects that have a unique identifier of a specified type.
+            </summary>
+            <typeparam name="TIdentityType">The type of the unique identifier.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.IIdentifiable`1.Id">
+            <summary>
+            Gets or sets the unique identifier for the object.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.ITentantable">
+            <summary>
+            Defines a contract for objects that are associated with a tenant.
+            Used in multi-tenant applications.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.ITentantable.TenantId">
+            <summary>
+            Gets or sets the tenant identifier.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1">
+            <summary>
+            Represents an OData envelope for entities with a <see cref="T:System.Guid"/> identifier.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2">
+            <summary>
+            Represents an OData envelope for entities with a specified identifier type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TIdentityType">The type of the identifier.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2.Value">
+            <summary>
+            Gets or sets the collection of entities.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2.Count">
+            <summary>
+            Gets or sets the count of entities.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates an OData envelope from the specified collection of entities.
+            </summary>
+            <param name="t">The collection of entities.</param>
+            <returns>An OData envelope containing the entities.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.SimpleMapperHelper">
+            <summary>
+            Provides helper methods and constants for the SimpleMapper.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Models.SimpleMapperHelper.IgnoredProperties">
+            <summary>
+            Properties to ignore during mapping.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Models.SimpleMapperHelper.IgnoredInterfaces">
+            <summary>
+            Interfaces to ignore during mapping.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.SimpleMapper`2">
+            <summary>
+            Provides a simple mapper for mapping properties between source and destination entities with a <see cref="T:System.Guid"/> identifier.
+            </summary>
+            <typeparam name="TSourceEntity">The type of the source entity.</typeparam>
+            <typeparam name="TDestinationEntity">The type of the destination entity.</typeparam>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.SimpleMapper`1">
+            <summary>
+            Provides a simple mapper for mapping properties within the same entity type with a <see cref="T:System.Guid"/> identifier.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.SimpleMapper`1.PopulatePropertyMappings">
+            <summary>
+            Populates the property mappings for the entity.
+            </summary>
+            <returns>A collection of actions to map properties.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.SimpleMapper`3">
+            <summary>
+            Provides a simple mapper for mapping properties between source and destination entities with a specified identifier type.
+            </summary>
+            <typeparam name="TSourceEntity">The type of the source entity.</typeparam>
+            <typeparam name="TDestinationEntity">The type of the destination entity.</typeparam>
+            <typeparam name="TIdentityType">The type of the identifier.</typeparam>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.SimpleMapper`3.Instance">
+            <summary>
+            Gets the singleton instance of the SimpleMapper.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.SimpleMapper`3.FilteredSourceProperties">
+            <summary>
+            Gets the filtered source properties for mapping.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.SimpleMapper`3.PopulatePropertyMappings">
+            <summary>
+            Populates the property mappings between source and destination entities.
+            </summary>
+            <returns>A collection of actions to map properties.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.SimpleMapper`3.SetPropertyValue(System.Reflection.PropertyInfo,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`0,`1)">
+            <summary>
+            Sets the property value from the source entity to the destination entity.
+            </summary>
+            <param name="destPropertyInfo">The destination property info.</param>
+            <param name="sourceProperties">The source properties dictionary.</param>
+            <param name="src">The source entity.</param>
+            <param name="dest">The destination entity.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.SimpleMapper`3.ApplyChanges(`0,`1)">
+            <summary>
+            Applies changes from the source entity to the destination entity.
+            </summary>
+            <param name="sourceEntity">The source entity.</param>
+            <param name="destinationEntity">The destination entity.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when sourceEntity or destinationEntity is null.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.SimpleMapper`3.Convert(`0)">
+            <summary>
+            Converts the source entity to a new instance of the destination entity.
+            </summary>
+            <param name="source">The source entity.</param>
+            <returns>A new instance of the destination entity with mapped properties.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonDefaultAttribute">
+            <summary>
+            Specifies that a data field value is required and must be non-default.
+            As an example a <see cref="T:System.Guid"/> must not be <see cref="F:System.Guid.Empty"/>.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonDefaultAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonDefaultAttribute"/> class with a default error message.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonDefaultAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            Validates the specified value with respect to the current validation attribute.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="validationContext">The context information about the validation operation.</param>
+            <returns>An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> class.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonEmptyAttribute">
+            <summary>
+            Specifies that a data field value is required and must be non-empty.
+            As examples a <see cref="T:System.String"/> must not be <see cref="F:System.String.Empty"/> and a <see cref="T:System.Collections.ICollection"/> must not be empty.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonEmptyAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonEmptyAttribute"/> class with a default error message.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonEmptyAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            Validates the specified value with respect to the current validation attribute.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="validationContext">The context information about the validation operation.</param>
+            <returns>An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> class.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.ICurrentUserProvider">
+            <summary>
+            Defines a contract for providing the current user ID.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.ICurrentUserProvider.GetCurrentUserId(System.String)">
+            <summary>
+            Gets the current user ID.  Returns null if the request is not authenticated.
+            </summary>
+            <param name="defaultValue">The value to return if the user ID is not available.</param>
+            <returns>The current user ID, or the specified default value if the user ID is not available.</returns>
+        </member>
     </members>
 </doc>

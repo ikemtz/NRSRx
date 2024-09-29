@@ -7,13 +7,24 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
+  /// <summary>
+  /// An abstract attribute that provides tenant-based authorization filtering.  For use in multi tenant Apis.
+  /// </summary>
   public abstract class CoreTenantFilterAttribute : Attribute, IAuthorizationFilter
   {
-    private const string TID = "tid"; 
+    private const string TID = "tid";
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CoreTenantFilterAttribute"/> class.
+    /// </summary>
     protected CoreTenantFilterAttribute()
-    { 
+    {
     }
 
+    /// <summary>
+    /// Called to perform authorization.
+    /// </summary>
+    /// <param name="context">The authorization filter context.</param>
     public void OnAuthorization(AuthorizationFilterContext context)
     {
       var httpContext = context.HttpContext;
@@ -35,6 +46,11 @@ namespace IkeMtz.NRSRx.Core.Web
       }
     }
 
+    /// <summary>
+    /// Gets the tenants associated with the current user.
+    /// </summary>
+    /// <param name="httpContext">The HTTP context.</param>
+    /// <returns>A collection of tenant identifiers.</returns>
     public abstract IEnumerable<string> GetUserTenants(HttpContext httpContext);
   }
 }

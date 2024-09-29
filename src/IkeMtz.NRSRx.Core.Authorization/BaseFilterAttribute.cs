@@ -6,25 +6,32 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace IkeMtz.NRSRx.Core.Authorization
 {
-  public abstract class BaseActionFilterAttribute : ActionFilterAttribute
+  /// <summary>
+  /// Base class for action filter attributes that handle permission checks.
+  /// </summary>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="BaseActionFilterAttribute"/> class.
+  /// </remarks>
+  /// <param name="allowedPermissions">The allowed permissions.</param>
+  /// <param name="allowScopes">Indicates whether scopes are allowed.</param>
+  /// <param name="permissionClaimType">The type of the permission claim.</param>
+  /// <param name="permissionClaimSeperator">The separator for permission claims.</param>
+  /// <param name="scopeClaimType">The type of the scope claim.</param>
+  public abstract class BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = BaseActionFilterAttribute.DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = BaseActionFilterAttribute.DefaultScopeClaimType) : ActionFilterAttribute
   {
     public const string DefaultPermissionClaimType = "permissions";
     public const string DefaultScopeClaimType = "scope";
-    public string[] AllowedPermissions { get; private set; }
-    public string PermissionClaimType { get; private set; }
-    public char PermissionClaimSeperator { get; private set; }
-    public bool AllowScopes { get; private set; }
-    public string ScopeClaimType { get; private set; }
+    public string[] AllowedPermissions { get; private set; } = allowedPermissions;
+    public string PermissionClaimType { get; private set; } = permissionClaimType;
+    public char PermissionClaimSeperator { get; private set; } = permissionClaimSeperator;
+    public bool AllowScopes { get; private set; } = allowScopes;
+    public string ScopeClaimType { get; private set; } = scopeClaimType;
 
-    protected BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
-    {
-      this.AllowedPermissions = allowedPermissions;
-      this.PermissionClaimSeperator = permissionClaimSeperator;
-      this.PermissionClaimType = permissionClaimType;
-      this.AllowScopes = allowScopes;
-      this.ScopeClaimType = scopeClaimType;
-    }
-
+    /// <summary>
+    /// Checks if the current user has the required permissions.
+    /// </summary>
+    /// <param name="actionExecutingContext">The action executing context.</param>
+    /// <returns>True if the user has the required permissions; otherwise, false.</returns>
     public bool HasPermission(ActionExecutingContext actionExecutingContext)
     {
       actionExecutingContext = actionExecutingContext ?? throw new ArgumentNullException(nameof(actionExecutingContext));
@@ -35,6 +42,13 @@ namespace IkeMtz.NRSRx.Core.Authorization
       return AllowScopes && HasMatchingPermissionClaim(ScopeClaimType, actionExecutingContext.HttpContext.User.Claims, x => x.SelectMany(t => t.Split(' ')));
     }
 
+    /// <summary>
+    /// Checks if the user has a matching permission claim.
+    /// </summary>
+    /// <param name="type">The type of the claim.</param>
+    /// <param name="claims">The user's claims.</param>
+    /// <param name="permissionsSeperator">Function to separate permissions.</param>
+    /// <returns>True if a matching permission claim is found; otherwise, false.</returns>
     public bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, Func<IEnumerable<string>, IEnumerable<string>> permissionsSeperator)
     {
       permissionsSeperator = permissionsSeperator ?? throw new ArgumentNullException(nameof(permissionsSeperator));

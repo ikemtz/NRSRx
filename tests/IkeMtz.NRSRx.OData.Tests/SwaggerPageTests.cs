@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory("Unigration")]
     public async Task GetSwaggerPageTest()
     {
-      var myConfiguration = new Dictionary<string, string>
+      var myConfiguration = new Dictionary<string, string?>
       {
         {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };

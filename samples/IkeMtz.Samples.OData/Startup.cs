@@ -16,7 +16,7 @@ namespace IkeMtz.Samples.OData
   public class Startup : CoreODataStartup
   {
     public override int? MaxTop { get; set; } = 500;
-    public override string MicroServiceTitle => $"{nameof(Samples)} OData Microservice";
+    public override string ServiceTitle => $"{nameof(Samples)} OData Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => true;
     public override string[] AdditionalAssemblyXmlDocumentFiles => new[] {

@@ -4,5 +4,90 @@
         <name>IkeMtz.NRSRx.Core.Authorization</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute">
+            <summary>
+            Base class for action filter attributes that handle permission checks.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute"/> class.
+            </remarks>
+            <param name="allowedPermissions">The allowed permissions.</param>
+            <param name="allowScopes">Indicates whether scopes are allowed.</param>
+            <param name="permissionClaimType">The type of the permission claim.</param>
+            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="scopeClaimType">The type of the scope claim.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute.#ctor(System.String[],System.Boolean,System.String,System.Char,System.String)">
+            <summary>
+            Base class for action filter attributes that handle permission checks.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute"/> class.
+            </remarks>
+            <param name="allowedPermissions">The allowed permissions.</param>
+            <param name="allowScopes">Indicates whether scopes are allowed.</param>
+            <param name="permissionClaimType">The type of the permission claim.</param>
+            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="scopeClaimType">The type of the scope claim.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute.HasPermission(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            Checks if the current user has the required permissions.
+            </summary>
+            <param name="actionExecutingContext">The action executing context.</param>
+            <returns>True if the user has the required permissions; otherwise, false.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute.HasMatchingPermissionClaim(System.String,System.Collections.Generic.IEnumerable{System.Security.Claims.Claim},System.Func{System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String}})">
+            <summary>
+            Checks if the user has a matching permission claim.
+            </summary>
+            <param name="type">The type of the claim.</param>
+            <param name="claims">The user's claims.</param>
+            <param name="permissionsSeperator">Function to separate permissions.</param>
+            <returns>True if a matching permission claim is found; otherwise, false.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Authorization.ExpandPermissionsFilterAttribute">
+            <summary>
+            Attribute to filter actions based on required permissions and modify the expand clause in the query string if permissions are not met.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Authorization.ExpandPermissionsFilterAttribute.#ctor(System.String[],System.String,System.Boolean,System.String,System.Char,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Authorization.ExpandPermissionsFilterAttribute"/> class.
+            </summary>
+            <param name="allowedPermissions">The allowed permissions.</param>
+            <param name="expandClause">The expand clause to be modified if permissions are not met.</param>
+            <param name="allowScopes">Indicates whether scopes are allowed.</param>
+            <param name="permissionClaimType">The type of the permission claim.</param>
+            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="scopeClaimType">The type of the scope claim.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Authorization.ExpandPermissionsFilterAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            Called before the action method is executed.
+            </summary>
+            <param name="context">The action executing context.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Authorization.PermissionsFilterAttribute">
+            <summary>
+            Attribute to filter actions based on required permissions.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Authorization.PermissionsFilterAttribute.#ctor(System.String[],System.Boolean,System.String,System.Char,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Authorization.PermissionsFilterAttribute"/> class.
+            </summary>
+            <param name="allowedPermissions">The allowed permissions.</param>
+            <param name="allowScopes">Indicates whether scopes are allowed.</param>
+            <param name="permissionClaimType">The type of the permission claim.</param>
+            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="scopeClaimType">The type of the scope claim.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Authorization.PermissionsFilterAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            Called before the action method is executed.
+            </summary>
+            <param name="context">The action executing context.</param>
+        </member>
     </members>
 </doc>

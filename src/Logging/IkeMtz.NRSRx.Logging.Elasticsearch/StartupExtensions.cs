@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    /// <param name="minimumLogLevel">Use this callback to configure your preferred level of logging (default: Information)</param>
+    /// <param name="minimumLogLevelConfig">Use this callback to configure your preferred level of logging (default: Information)</param>
     public static ILogger SetupElasticsearch(this CoreWebStartup startup, IApplicationBuilder? app, Func<LoggerMinimumLevelConfiguration, LoggerConfiguration>? minimumLogLevelConfig = null)
     {
       _ = (app?.UseSerilog());
@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.Core.Web
           IndexFormat = $"{startup.StartupAssembly?.GetName().Name?.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
           AutoRegisterTemplate = true,
           AutoRegisterTemplateVersion =
-          startup.Configuration.GetValue("ELASTICSEARCH_VERSION", "7x").StartsWith("6") ? AutoRegisterTemplateVersion.ESv6
+          startup.Configuration.GetValue("ELASTICSEARCH_VERSION", "7x").StartsWith('6') ? AutoRegisterTemplateVersion.ESv6
           : AutoRegisterTemplateVersion.ESv7,
         };
         var modifyConfigSettings = new Func<Func<ConnectionConfiguration>, ConnectionConfiguration>((authFunc) =>

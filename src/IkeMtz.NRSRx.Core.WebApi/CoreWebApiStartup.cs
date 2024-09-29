@@ -16,13 +16,20 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace IkeMtz.NRSRx.Core.WebApi
 {
-  public abstract class CoreWebApiStartup : CoreWebStartup
+  /// <summary>
+  /// Abstract base class for setting up a NRSRx Web API application.
+  /// </summary>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="CoreWebApiStartup"/> class.
+  /// </remarks>
+  /// <param name="configuration">The configuration.</param>
+  public abstract class CoreWebApiStartup(IConfiguration configuration) : CoreWebStartup(configuration)
   {
-    protected CoreWebApiStartup(IConfiguration configuration) : base(configuration)
-    {
-    }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+    /// <summary>
+    /// Adds services to the container.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public void ConfigureServices(IServiceCollection services)
     {
       SetupAppSettings(services);
@@ -43,6 +50,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
       _ = services.AddControllers();
     }
 
+    /// <summary>
+    /// Configures the HTTP request pipeline.
+    /// </summary>
+    /// <param name="app">The application builder.</param>
+    /// <param name="env">The web host environment.</param>
+    /// <param name="provider">The API version description provider.</param>
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
       if (env.IsDevelopment())
@@ -73,6 +86,11 @@ namespace IkeMtz.NRSRx.Core.WebApi
      });
     }
 
+    /// <summary>
+    /// Sets up the Swagger UI options.
+    /// </summary>
+    /// <param name="options">The Swagger UI options.</param>
+    /// <param name="provider">The API version description provider.</param>
     public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
     {
       var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger/" : "./";
@@ -84,6 +102,11 @@ namespace IkeMtz.NRSRx.Core.WebApi
       SetupSwaggerCommonUi(options);
     }
 
+    /// <summary>
+    /// Sets up core endpoint functionality.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The MVC builder.</returns>
     public IMvcBuilder SetupCoreEndpointFunctionality(IServiceCollection services)
     {
       var builder = services
@@ -96,8 +119,8 @@ namespace IkeMtz.NRSRx.Core.WebApi
            .AddNewtonsoftJson(options =>
            {
              options
-             .UseCamelCasing(true)
-             .SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                 .UseCamelCasing(true)
+                 .SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
              options.SerializerSettings.Converters.Add(new StringEnumConverter());
              options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
            })
@@ -122,6 +145,10 @@ namespace IkeMtz.NRSRx.Core.WebApi
       return builder;
     }
 
+    /// <summary>
+    /// Sets up Swagger services.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public virtual void SetupSwagger(IServiceCollection services)
     {
       _ = services
@@ -133,6 +160,10 @@ namespace IkeMtz.NRSRx.Core.WebApi
         });
     }
 
+    /// <summary>
+    /// Sets up publishers.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public virtual void SetupPublishers(IServiceCollection services) { }
   }
 }

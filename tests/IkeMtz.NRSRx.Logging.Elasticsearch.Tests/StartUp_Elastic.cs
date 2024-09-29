@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
       this.SetupElasticsearch(app);
 
 
-    public override string MicroServiceTitle => "";
+    public override string ServiceTitle => "";
 
     public override Assembly StartupAssembly => this.GetType().Assembly;
   }

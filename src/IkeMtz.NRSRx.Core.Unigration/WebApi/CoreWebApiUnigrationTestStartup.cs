@@ -3,13 +3,17 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
-  public class CoreWebApiUnigrationTestStartup<TStartup> : CoreWebApiTestStartup<TStartup>
+  /// <summary>
+  /// Provides a base class for setting up a unigration test startup for Web API projects.
+  /// </summary>
+  /// <typeparam name="TStartup">The type of the startup class.</typeparam>
+  public class CoreWebApiUnigrationTestStartup<TStartup>(TStartup startup) : CoreWebApiTestStartup<TStartup>(startup)
         where TStartup : CoreWebApiStartup
   {
-    public CoreWebApiUnigrationTestStartup(TStartup startup) : base(startup)
-    {
-    }
-
+    /// <summary>
+    /// Sets up authentication for unigration tests.
+    /// </summary>
+    /// <param name="builder">The authentication builder.</param>
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
       builder.SetupTestAuthentication(Configuration, TestContext);

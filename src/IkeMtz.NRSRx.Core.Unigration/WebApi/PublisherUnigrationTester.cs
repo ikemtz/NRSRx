@@ -8,15 +8,38 @@ using Moq;
 
 namespace IkeMtz.NRSRx.Core.Unigration.WebApi
 {
+  /// <summary>
+  /// Provides a tester for publisher unigration with a specific entity and message type, using a GUID as the identity type.
+  /// </summary>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
+  /// <typeparam name="TMessageType">The type of the message.</typeparam>
   public class PublisherUnigrationTester<TEntity, TMessageType> :
-    PublisherUnigrationTester<TEntity, TMessageType, Guid>
-       where TEntity : IIdentifiable
+      PublisherUnigrationTester<TEntity, TMessageType, Guid>
+         where TEntity : IIdentifiable
   {
+    /// <summary>
+    /// Gets the mock publisher for create events.
+    /// </summary>
     public Mock<IPublisher<TEntity, CreateEvent>> GuidCreatePublisher { get; }
+
+    /// <summary>
+    /// Gets the mock publisher for created events.
+    /// </summary>
     public Mock<IPublisher<TEntity, CreatedEvent>> GuidCreatedPublisher { get; }
+
+    /// <summary>
+    /// Gets the mock publisher for updated events.
+    /// </summary>
     public Mock<IPublisher<TEntity, UpdatedEvent>> GuidUpdatedPublisher { get; }
+
+    /// <summary>
+    /// Gets the mock publisher for deleted events.
+    /// </summary>
     public Mock<IPublisher<TEntity, DeletedEvent>> GuidDeletedPublisher { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PublisherUnigrationTester{TEntity, TMessageType}"/> class.
+    /// </summary>
     public PublisherUnigrationTester() : base()
     {
       GuidCreatePublisher = new Mock<IPublisher<TEntity, CreateEvent>>();
@@ -38,6 +61,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
           .Returns(Task.FromResult(true));
     }
 
+    /// <summary>
+    /// Registers the dependencies for the publishers.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public override void RegisterDependencies(IServiceCollection services)
     {
       base.RegisterDependencies(services);
@@ -49,15 +76,39 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     }
   }
 
+  /// <summary>
+  /// Provides a tester for publisher unigration with a specific entity, message type, and identity type.
+  /// </summary>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
+  /// <typeparam name="TMessageType">The type of the message.</typeparam>
+  /// <typeparam name="TIdentityType">The type of the identity.</typeparam>
   public class PublisherUnigrationTester<TEntity, TMessageType, TIdentityType> : PublisherUnigrationTester<TEntity>
     where TIdentityType : IComparable
     where TEntity : IIdentifiable<TIdentityType>
   {
+    /// <summary>
+    /// Gets the mock publisher for create events.
+    /// </summary>
     public Mock<IPublisher<TEntity, CreateEvent, TIdentityType>> CreatePublisher { get; }
+
+    /// <summary>
+    /// Gets the mock publisher for created events.
+    /// </summary>
     public Mock<IPublisher<TEntity, CreatedEvent, TIdentityType>> CreatedPublisher { get; }
+
+    /// <summary>
+    /// Gets the mock publisher for updated events.
+    /// </summary>
     public Mock<IPublisher<TEntity, UpdatedEvent, TIdentityType>> UpdatedPublisher { get; }
+
+    /// <summary>
+    /// Gets the mock publisher for deleted events.
+    /// </summary>
     public Mock<IPublisher<TEntity, DeletedEvent, TIdentityType>> DeletedPublisher { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PublisherUnigrationTester{TEntity, TMessageType, TIdentityType}"/> class.
+    /// </summary>
     public PublisherUnigrationTester()
     {
       CreatePublisher = new Mock<IPublisher<TEntity, CreateEvent, TIdentityType>>();
@@ -79,6 +130,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
           .Returns(Task.FromResult(true));
     }
 
+    /// <summary>
+    /// Registers the dependencies for the publishers.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public virtual void RegisterDependencies(IServiceCollection services)
     {
       _ = services.AddSingleton(CreatePublisher.Object)
@@ -88,11 +143,30 @@ namespace IkeMtz.NRSRx.Core.Unigration.WebApi
     }
   }
 
+  /// <summary>
+  /// Provides a base class for publisher unigration testers.
+  /// </summary>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
   public abstract class PublisherUnigrationTester<TEntity>
   {
-    public List<TEntity> CreateList { get; } = new List<TEntity>();
-    public List<TEntity> CreatedList { get; } = new List<TEntity>();
-    public List<TEntity> UpdatedList { get; } = new List<TEntity>();
-    public List<TEntity> DeletedList { get; } = new List<TEntity>();
+    /// <summary>
+    /// Gets the list of entities for create events.
+    /// </summary>
+    public List<TEntity> CreateList { get; } = new();
+
+    /// <summary>
+    /// Gets the list of entities for created events.
+    /// </summary>
+    public List<TEntity> CreatedList { get; } = new();
+
+    /// <summary>
+    /// Gets the list of entities for updated events.
+    /// </summary>
+    public List<TEntity> UpdatedList { get; } = new();
+
+    /// <summary>
+    /// Gets the list of entities for deleted events.
+    /// </summary>
+    public List<TEntity> DeletedList { get; } = new();
   }
 }

@@ -4,8 +4,15 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace IkeMtz.NRSRx.Core.WebApi
 {
+  /// <summary>
+  /// An action filter attribute that validates the model state before executing the action.
+  /// </summary>
   public sealed class ValidateModelAttribute : ActionFilterAttribute
   {
+    /// <summary>
+    /// Called before the action method is executed.
+    /// </summary>
+    /// <param name="context">The action executing context.</param>
     public override void OnActionExecuting(ActionExecutingContext context)
     {
       var controller = (ControllerBase)context.Controller;

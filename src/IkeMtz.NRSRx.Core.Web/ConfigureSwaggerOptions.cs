@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.Core.Web
       }
       provider = serviceProvider.GetService<IApiVersionDescriptionProvider>();
       odataVersionProvider = serviceProvider.GetService<IODataVersionProvider>();
-      apiTitle = startup.MicroServiceTitle;
+      apiTitle = startup.ServiceTitle;
       buildNumber = startup.GetBuildNumber();
 
       this.httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();

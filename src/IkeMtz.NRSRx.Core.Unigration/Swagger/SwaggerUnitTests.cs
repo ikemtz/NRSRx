@@ -10,18 +10,22 @@ using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 {
+  /// <summary>
+  /// Provides utility methods for testing Swagger documentation in unit tests.
+  /// </summary>
   public static class SwaggerUnitTests
   {
     /// <summary>
-    /// Validates and returns the Swagger page HTML
+    /// Validates and returns the Swagger page HTML.
     /// </summary>
-    /// <param name="testServer"></param>
-    /// <returns></returns>
+    /// <param name="testServer">The test server instance.</param>
+    /// <returns>The HTML content of the Swagger page.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the test server is null.</exception>
     public static async Task<string> TestHtmlPageAsync(TestServer testServer)
     {
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
-      //Get 
+      // Get the Swagger HTML page
       var resp = await client.GetAsync($"index.html").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
@@ -34,16 +38,17 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
     }
 
     /// <summary>
-    /// Validates and returns the OpenApiDocument in JSON format
+    /// Validates and returns the OpenApiDocument in JSON format.
     /// </summary>
-    /// <param name="testServer"></param>
-    /// <param name="version"></param>
-    /// <returns></returns>
+    /// <param name="testServer">The test server instance.</param>
+    /// <param name="version">The version of the Swagger document.</param>
+    /// <returns>The OpenApiDocument object.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the test server is null.</exception>
     public static async Task<OpenApiDocument> TestJsonDocAsync(TestServer testServer, int version = 1)
     {
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
-      //Get 
+      // Get the Swagger JSON document
       var resp = await client.GetAsync($"/swagger/v{version}/swagger.json").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
@@ -56,14 +61,15 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       return doc;
     }
 
-
     /// <summary>
-    /// Validates the support for reverse proxy in the OpenApiDocument in JSON format
+    /// Validates the support for reverse proxy in the OpenApiDocument in JSON format.
     /// </summary>
-    /// <param name="testServer"></param>
-    /// <param name="swaggerReverseProxyDocumentFilter"></param>
-    /// <param name="version"></param>
-    /// <returns></returns>
+    /// <param name="testServer">The test server instance.</param>
+    /// <param name="swaggerReverseProxyDocumentFilter">The reverse proxy document filter.</param>
+    /// <param name="version">The version of the Swagger document.</param>
+    /// <returns>The OpenApiDocument object.</returns>
+    /// <exception cref="InvalidProgramException">Thrown when the reverse proxy document filter is empty.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when the test server is null.</exception>
     public static async Task<OpenApiDocument> TestReverseProxyJsonDocAsync(TestServer testServer, string swaggerReverseProxyDocumentFilter = "", int version = 1)
     {
       if (string.IsNullOrWhiteSpace(swaggerReverseProxyDocumentFilter))
@@ -72,7 +78,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       }
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
-      //Get 
+      // Get the Swagger JSON document
       var resp = await client.GetAsync($"/swagger/v{version}/swagger.json").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
@@ -88,9 +94,10 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
     }
 
     /// <summary>
-    /// This was required because there's a type mismatch on the OpenApi Doc spec
+    /// Fixes known issues in the Swagger document JSON string.
     /// </summary>
-    /// <returns></returns>
+    /// <param name="result">The Swagger document JSON string.</param>
+    /// <returns>The fixed Swagger document JSON string.</returns>
     public static string FixSwaggerDocument(string result)
     {
       var additionPropertiesPattern = @",\s*\""additionalProperties\""\: false";

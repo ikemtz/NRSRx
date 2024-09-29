@@ -63,7 +63,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
   }
 
-  public class MyIntModel : IIdentifiable<int>, IAuditable, ICalculateable, IAggregratedByParents
+  public class MyIntModel : IIdentifiable<int>, IAuditable, ICalculateable
   {
     public int Id { get; set; }
     public int? CalculatedValue { get; set; }
@@ -72,7 +72,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public DateTimeOffset CreatedOnUtc { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
 
-    public IEnumerable<ICalculateable> Parents => new[] { new MyIntModel() };
+    public IEnumerable<ICalculateable> Parents => [new MyIntModel()];
 
     public int? UpdateCount { get; set; }
 
@@ -82,7 +82,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
   }
 
-  public class MyGuidModel : IIdentifiable, IAuditable, ICalculateable, IAggregratedByParents
+  public class MyGuidModel : IIdentifiable, IAuditable, ICalculateable
   {
     public Guid Id { get; set; }
     public int? CalculatedValue { get; set; }
@@ -91,19 +91,15 @@ namespace IkeMtz.NRSRx.Core.Tests
     public DateTimeOffset CreatedOnUtc { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
     public int? UpdateCount { get; set; }
-    public IEnumerable<ICalculateable> Parents => new[] { new MyIntModel() };
+    public IEnumerable<ICalculateable> Parents => [new MyIntModel()];
 
     void ICalculateable.CalculateValues()
     {
       CalculatedValue ??= new Random().Next();
     }
   }
-  public class TestAuditableContext : AuditableDbContext
+  public class TestAuditableContext(DbContextOptions options, ICurrentUserProvider currentUserProvider) : AuditableDbContext(options, currentUserProvider)
   {
-    public TestAuditableContext(DbContextOptions options, ICurrentUserProvider currentUserProvider)
-      : base(options, currentUserProvider)
-    {
-    }
     public DbSet<MyIntModel> MyModel { get; set; }
   }
 

@@ -4,5 +4,214 @@
         <name>IkeMtz.NRSRx.Core.EntityFramework</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext">
+            <summary>
+            Represents a DbContext that supports auditing of entities.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions,IkeMtz.NRSRx.Core.ICurrentUserProvider)">
+            <summary>
+            Represents a DbContext that supports auditing of entities.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.CurrentUserProvider">
+            <summary>
+            Gets or sets the current user provider.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.AddAsync``1(``0,System.Threading.CancellationToken)">
+            <summary>
+            Adds an entity to the context asynchronously.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <param name="entity">The entity to add.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the entity entry.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.OnIAuditableCreate(IkeMtz.NRSRx.Core.Models.IAuditable)">
+            <summary>
+            Called when an auditable entity is created.
+            </summary>
+            <param name="auditable">The auditable entity.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.OnIAuditableUpdate(IkeMtz.NRSRx.Core.Models.IAuditable)">
+            <summary>
+            Called when an auditable entity is updated.
+            </summary>
+            <param name="auditable">The auditable entity.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChanges(System.Boolean)">
+            <summary>
+            Saves all changes made in this context to the database.
+            </summary>
+            <param name="acceptAllChangesOnSuccess">Indicates whether to accept all changes on success.</param>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChanges(System.Boolean,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Saves all changes made in this context to the database and logs the result.
+            </summary>
+            <param name="acceptAllChangesOnSuccess">Indicates whether to accept all changes on success.</param>
+            <param name="logger">The logger to use.</param>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChanges(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Saves all changes made in this context to the database and logs the result.
+            </summary>
+            <param name="logger">The logger to use.</param>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChanges">
+            <summary>
+            Saves all changes made in this context to the database.
+            </summary>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously saves all changes made in this context to the database.
+            </summary>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChangesAsync(System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously saves all changes made in this context to the database.
+            </summary>
+            <param name="acceptAllChangesOnSuccess">Indicates whether to accept all changes on success.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChangesAsync(System.Boolean,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Asynchronously saves all changes made in this context to the database and logs the result.
+            </summary>
+            <param name="acceptAllChangesOnSuccess">Indicates whether to accept all changes on success.</param>
+            <param name="logger">The logger to use.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChangesAsync(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Asynchronously saves all changes made in this context to the database and logs the result.
+            </summary>
+            <param name="logger">The logger to use.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.CalculateValues">
+            <summary>
+            Calculates values for entities that implement <see cref="T:IkeMtz.NRSRx.Core.Models.ICalculateable"/>.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.AddAuditables">
+            <summary>
+            Adds audit information for entities that implement <see cref="T:IkeMtz.NRSRx.Core.Models.IAuditable"/> and are in the Added state.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.UpdateAuditables">
+            <summary>
+            Updates audit information for entities that implement <see cref="T:IkeMtz.NRSRx.Core.Models.IAuditable"/> and are in the Modified state.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.EntityFramework.AuditableInvalidUserException">
+            <summary>
+            Exception thrown when the current user does not have a valid username.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableInvalidUserException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.EntityFramework.AuditableInvalidUserException"/> class.
+            </summary>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.EntityFramework.ContextCollectionSyncer">
+            <summary>
+            Provides methods to synchronize collections within an auditable context.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.ContextCollectionSyncer.SyncGuidCollections``2(IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext,System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``1},System.Action{``0,``1})">
+            <summary>
+            Synchronizes collections of entities identified by GUIDs.
+            </summary>
+            <typeparam name="TSourceEntity">The type of the source entity.</typeparam>
+            <typeparam name="TDestinationEntity">The type of the destination entity.</typeparam>
+            <param name="auditableContext">The auditable context.</param>
+            <param name="sourceCollection">The source collection.</param>
+            <param name="destinationCollection">The destination collection.</param>
+            <param name="updateLogic">The update logic to apply to existing entities.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.ContextCollectionSyncer.SyncIntCollections``2(IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext,System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``1},System.Action{``0,``1})">
+            <summary>
+            Synchronizes collections of entities identified by integers.
+            </summary>
+            <typeparam name="TSourceEntity">The type of the source entity.</typeparam>
+            <typeparam name="TDestinationEntity">The type of the destination entity.</typeparam>
+            <param name="auditableContext">The auditable context.</param>
+            <param name="sourceCollection">The source collection.</param>
+            <param name="destinationCollection">The destination collection.</param>
+            <param name="updateLogic">The update logic to apply to existing entities.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.ContextCollectionSyncer.SyncCollections``3(IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext,System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``1},System.Action{``0,``1})">
+            <summary>
+            Synchronizes collections of entities identified by a specified key type.
+            </summary>
+            <typeparam name="TSourceEntity">The type of the source entity.</typeparam>
+            <typeparam name="TDestinationEntity">The type of the destination entity.</typeparam>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <param name="auditableContext">The auditable context.</param>
+            <param name="sourceCollection">The source collection.</param>
+            <param name="destinationCollection">The destination collection.</param>
+            <param name="updateLogic">The update logic to apply to existing entities.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext">
+            <summary>
+            Interface for an auditable database context.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves all changes made in this context to the database asynchronously.
+            </summary>
+            <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext.SaveChangesAsync(System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Saves all changes made in this context to the database asynchronously.
+            </summary>
+            <param name="acceptAllChangesOnSuccess">Indicates whether <see cref="M:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges"/> is called after the changes have been sent successfully to the database.</param>
+            <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
+            <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext.Remove(System.Object)">
+            <summary>
+            Marks the given entity as <see cref="F:Microsoft.EntityFrameworkCore.EntityState.Deleted"/> such that it will be deleted from the database when <see cref="M:Microsoft.EntityFrameworkCore.DbContext.SaveChanges"/> is called.
+            </summary>
+            <param name="entity">The entity to remove.</param>
+            <returns>The <see cref="T:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry"/> for the entity. The entry provides access to change tracking information and operations for the entity.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.IAuditableDbContext.Add(System.Object)">
+            <summary>
+            Marks the given entity as <see cref="F:Microsoft.EntityFrameworkCore.EntityState.Added"/> such that it will be inserted into the database when <see cref="M:Microsoft.EntityFrameworkCore.DbContext.SaveChanges"/> is called.
+            </summary>
+            <param name="entity">The entity to add.</param>
+            <returns>The <see cref="T:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry"/> for the entity. The entry provides access to change tracking information and operations for the entity.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.EntityFramework.SystemUserProvider">
+            <summary>
+            Provides the system user ID as the current user ID.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.EntityFramework.SystemUserProvider.SystemUserId">
+            <summary>
+            Gets or sets the system user ID.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.SystemUserProvider.GetCurrentUserId(System.String)">
+            <summary>
+            Gets the current user ID. Returns the system user ID if no default value is provided.
+            </summary>
+            <param name="defaultValue">The value to return if the user ID is not available.</param>
+            <returns>The current user ID, or the specified default value if the user ID is not available.</returns>
+        </member>
     </members>
 </doc>

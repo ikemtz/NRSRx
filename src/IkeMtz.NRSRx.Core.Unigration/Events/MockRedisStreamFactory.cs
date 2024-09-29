@@ -9,8 +9,15 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Events
 {
+  /// <summary>
+  /// Factory for creating mock Redis stream connections and subscribers for testing purposes.
+  /// </summary>
   public static class MockRedisStreamFactory
   {
+    /// <summary>
+    /// Creates a mock Redis connection and database.
+    /// </summary>
+    /// <returns>A tuple containing the mock connection and database.</returns>
     public static (Mock<IConnectionMultiplexer> Connection, Mock<IDatabase> Database) CreateMockConnection()
     {
       var connection = new Mock<IConnectionMultiplexer>();
@@ -19,24 +26,46 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
       return (connection, database);
     }
   }
+
+  /// <summary>
+  /// Factory for creating mock Redis stream publishers and subscribers for testing purposes.
+  /// </summary>
+  /// <typeparam name="TEntity">The type of the entity.</typeparam>
+  /// <typeparam name="TEvent">The type of the event.</typeparam>
+  /// <typeparam name="TIdentityType">The type of the identity.</typeparam>
   public static class MockRedisStreamFactory<TEntity, TEvent, TIdentityType>
     where TIdentityType : IComparable
-   where TEntity : class, IIdentifiable<TIdentityType>
-   where TEvent : EventType, new()
+    where TEntity : class, IIdentifiable<TIdentityType>
+    where TEvent : EventType, new()
   {
+    /// <summary>
+    /// Creates a mock publisher.
+    /// </summary>
+    /// <returns>A mock publisher.</returns>
     public static Mock<IPublisher<TEntity, TEvent, TIdentityType>> CreatePublisher()
     {
       return new Mock<IPublisher<TEntity, TEvent, TIdentityType>>();
     }
 
+    /// <summary>
+    /// Creates a mock subscriber and database.
+    /// </summary>
+    /// <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
+    /// <returns>A tuple containing the mock subscriber and database.</returns>
     public static (Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>> Subscriber, Mock<IDatabase> Database) CreateSubscriber(IEnumerable<TEntity>? collection = null)
     {
       var (connection, database) = MockRedisStreamFactory.CreateMockConnection();
-      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>>(new object[] { connection.Object, new RedisSubscriberOptions() });
+      var mockSubscriber = new Mock<RedisStreamSubscriber<TEntity, TEvent, TIdentityType>>(connection.Object, new RedisSubscriberOptions());
       SetupMockSubscriberCollection(mockSubscriber, collection);
       return (mockSubscriber, database);
     }
 
+    /// <summary>
+    /// Sets up the mock subscriber with a collection of entities.
+    /// </summary>
+    /// <typeparam name="TSubscriberType">The type of the subscriber.</typeparam>
+    /// <param name="mockSubscriber">The mock subscriber.</param>
+    /// <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
     public static void SetupMockSubscriberCollection<TSubscriberType>(Mock<TSubscriberType> mockSubscriber, IEnumerable<TEntity>? collection = null)
       where TSubscriberType : RedisStreamSubscriber<TEntity, TEvent, TIdentityType>
     {
@@ -49,6 +78,12 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
       }
     }
 
+    /// <summary>
+    /// Sets up support methods for the mock subscriber.
+    /// </summary>
+    /// <typeparam name="TSubscriberType">The type of the subscriber.</typeparam>
+    /// <param name="mockSubscriber">The mock subscriber.</param>
+    /// <param name="collection">An optional collection of entities to initialize the subscriber with.</param>
     public static void SetupSupportMockMethods<TSubscriberType>(Mock<TSubscriberType> mockSubscriber, IEnumerable<TEntity>? collection)
       where TSubscriberType : RedisStreamSubscriber<TEntity, TEvent, TIdentityType>
     {
@@ -67,10 +102,14 @@ namespace IkeMtz.NRSRx.Core.Unigration.Events
         });
     }
 
+    /// <summary>
+    /// Expands a collection of entities with Redis values.
+    /// </summary>
+    /// <param name="collection">The collection of entities.</param>
+    /// <returns>A collection of tuples containing Redis values and entities.</returns>
     public static IEnumerable<(RedisValue Id, TEntity Entity)> ExpandWithRedisValues(IEnumerable<TEntity>? collection = null)
     {
       return collection?.Select(t => (new RedisValue(t.Id.ToString()), t));
     }
-
   }
 }

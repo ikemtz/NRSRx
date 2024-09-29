@@ -21,7 +21,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="app"></param>
-    /// <param name="minimumLogLevel">Use this callback to configure your preferred level of logging (default: Information)</param>
+    /// <param name="minimumLogLevelConfig">Use this callback to configure your preferred level of logging (default: Information)</param>
     public static ILogger SetupConsoleLogging(this CoreWebStartup startup, IApplicationBuilder? app, Func<LoggerMinimumLevelConfiguration, LoggerConfiguration>? minimumLogLevelConfig = null)
     {
       minimumLogLevelConfig ??= X => X.Information();
