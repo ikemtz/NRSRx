@@ -29,6 +29,7 @@
     <Nullable>enable</Nullable>
     <UserSecretsId>3B47F350AF26459DAD0DB68D9C20D0A3</UserSecretsId>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
