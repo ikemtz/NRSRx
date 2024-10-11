@@ -13,7 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MSTest.TestFramework" Version="3.6.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.6.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\samples\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />

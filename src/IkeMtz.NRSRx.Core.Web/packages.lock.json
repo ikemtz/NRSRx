@@ -4,9 +4,9 @@
     "net8.0": {
       "Microsoft.AspNetCore.Authentication.JwtBearer": {
         "type": "Direct",
-        "requested": "[8.0.8, )",
-        "resolved": "8.0.8",
-        "contentHash": "J145j2LgD4kkkNkrf5DW/pKzithZRKN5EFY+KAO3SqweMyDfv4cgKgtOIsv2bhrOLGqPJixuZkZte7LfK1seYQ==",
+        "requested": "[8.0.10, )",
+        "resolved": "8.0.10",
+        "contentHash": "rcPXghZCc82IB9U2Px1Ln5Zn3vjV4p83H/Few5T/904hBddjSz03COQ2zOGWBBvdTBY+GciAUJwgBFNWaxLfqw==",
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "7.1.2"
         }
@@ -31,9 +31,9 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Direct",
-        "requested": "[8.0.1, )",
-        "resolved": "8.0.1",
-        "contentHash": "fGLiCRLMYd00JYpClraLjJTNKLmMJPnqxMaiRzEBIIvevlzxz33mXy39Lkd48hu1G+N21S7QpaO5ZzKsI6FRuA=="
+        "requested": "[8.0.2, )",
+        "resolved": "8.0.2",
+        "contentHash": "3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
@@ -53,14 +53,14 @@
       },
       "Swashbuckle.AspNetCore": {
         "type": "Direct",
-        "requested": "[6.8.0, )",
-        "resolved": "6.8.0",
-        "contentHash": "0Mk8/31efsxFNVeFzLjUVYDFTjYKtEi2UCSaI9+HIkSQ/duu++28gfq1+gwWDRLHkRMOkUgoWMLe0UoayAZySA==",
+        "requested": "[6.8.1, )",
+        "resolved": "6.8.1",
+        "contentHash": "JN6ccH37QKtNOwBrvSxc+jBYIB+cw6RlZie2IKoJhjjf6HzBH+2kPJCpxmJ5EHIqmxvq6aQG+0A8XklGx9rAxA==",
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
-          "Swashbuckle.AspNetCore.Swagger": "6.8.0",
-          "Swashbuckle.AspNetCore.SwaggerGen": "6.8.0",
-          "Swashbuckle.AspNetCore.SwaggerUI": "6.8.0"
+          "Swashbuckle.AspNetCore.Swagger": "6.8.1",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.8.1",
+          "Swashbuckle.AspNetCore.SwaggerUI": "6.8.1"
         }
       },
       "System.Net.Http": {
@@ -105,12 +105,9 @@
       },
       "System.Text.Json": {
         "type": "Direct",
-        "requested": "[8.0.4, )",
-        "resolved": "8.0.4",
-        "contentHash": "bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
-        "dependencies": {
-          "System.Text.Encodings.Web": "8.0.0"
-        }
+        "requested": "[8.0.5, )",
+        "resolved": "8.0.5",
+        "contentHash": "0f1B50Ss7rqxXiaBJyzUu9bWFOO2/zSlifZ/UNMdiIpDYe4cY4LQQicP4nirK1OS31I43rn062UIJ1Q9bpmHpg=="
       },
       "System.Text.RegularExpressions": {
         "type": "Direct",
@@ -386,24 +383,24 @@
       },
       "Swashbuckle.AspNetCore.Swagger": {
         "type": "Transitive",
-        "resolved": "6.8.0",
-        "contentHash": "f6Utk5eLFWRJbDFIqHGeb9Kb+w/9b+z0WIJUIAPY4hP263MPXI8ZbejdOktS10gvCLaQ3YCFl6fAVlCIUFKsRQ==",
+        "resolved": "6.8.1",
+        "contentHash": "eOkdM4bsWBU5Ty3kWbyq5O9L+05kZT0vOdGh4a92vIb/LLQGQTPLRHXuJdnUBNIPNC8XfKWfSbtRfqzI6nnbqw==",
         "dependencies": {
           "Microsoft.OpenApi": "1.6.14"
         }
       },
       "Swashbuckle.AspNetCore.SwaggerGen": {
         "type": "Transitive",
-        "resolved": "6.8.0",
-        "contentHash": "bmWglb1jeKD+tUE56wL2zE6lnlpJZbgDLXMlEOgl8xTqEs9g8C6eNNKGuMcnfxFt0CgZaBClaDqad2JDjZW5Fw==",
+        "resolved": "6.8.1",
+        "contentHash": "TjBPxsN0HeJzxEXZYeDXBNNMSyhg+TYXtkbwX+Cn8GH/y5ZeoB/chw0p71kRo5tR2sNshbKwL24T6f9pTF9PHg==",
         "dependencies": {
-          "Swashbuckle.AspNetCore.Swagger": "6.8.0"
+          "Swashbuckle.AspNetCore.Swagger": "6.8.1"
         }
       },
       "Swashbuckle.AspNetCore.SwaggerUI": {
         "type": "Transitive",
-        "resolved": "6.8.0",
-        "contentHash": "tG1FL+aFmmuqZ3eKVHgvSFvrzJoKbDzOmvK8YACucfbIBYfHQd45uQ18MhMF3xDaR46qdggdaHGqmfYo+nxwrw=="
+        "resolved": "6.8.1",
+        "contentHash": "lpEszYJ7vZaTTE5Dp8MrsbSHrgDfjhDMjzW1qOA1Xs1Dnj3ZRBJAcPZUTsa5Bva+nLaw91JJ8OI8FkSg8hhIyA=="
       },
       "System.AppContext": {
         "type": "Transitive",

@@ -4,12 +4,12 @@
     ".NETStandard,Version=v2.1": {
       "Microsoft.IdentityModel.Protocols.OpenIdConnect": {
         "type": "Direct",
-        "requested": "[8.1.0, )",
-        "resolved": "8.1.0",
-        "contentHash": "icaMilsB5B9TQKGY8tUv2rdqylJmwRdW4xTgYiMPAGAzHYgYlZgK5d1GMTkIMD/bK6WQr425qbDbTvDQvvjU0A==",
+        "requested": "[8.1.2, )",
+        "resolved": "8.1.2",
+        "contentHash": "eEtnzZiYymJYaguYeIXyviUocltBQzeYI0bEtot1Nrnl+qklCZARgk+SAaeYfdmc9CYo7aqP5UJ78rTTSTpQGQ==",
         "dependencies": {
-          "Microsoft.IdentityModel.Protocols": "8.1.0",
-          "System.IdentityModel.Tokens.Jwt": "8.1.0",
+          "Microsoft.IdentityModel.Protocols": "8.1.2",
+          "System.IdentityModel.Tokens.Jwt": "8.1.2",
           "System.Text.Json": "8.0.4"
         }
       },
@@ -59,42 +59,42 @@
       },
       "Microsoft.IdentityModel.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.1.0",
-        "contentHash": "jZ7UKZNu2tDS2Ft9PxxOdJYUWo6nBEQnv+yz69GpCr4Fs677aq/LP82gp/NOgI5hPIlxIYP1ynLCH1ruGfw2rw=="
+        "resolved": "8.1.2",
+        "contentHash": "QSSDer3kvyTdNq6BefgX4EYi1lsia2zJUh5CfIMZFQUh6BhrXK1WE4i2C9ltUmmuUjoeVVX6AaSo9NZfpTGNdw=="
       },
       "Microsoft.IdentityModel.JsonWebTokens": {
         "type": "Transitive",
-        "resolved": "8.1.0",
-        "contentHash": "p77XmuOb6Vt9Zi0jowBK5zk8YoIQs8kK2CSKaV0ofkNLKSraKXlndJ9gBT0ojP7BOQP7vAWTgVVgB8Kg5pmXpg==",
+        "resolved": "8.1.2",
+        "contentHash": "AWQINMvtamdYBqtG8q8muyYTfA9i5xRBEsMKQdzOn5xRzhVVDSzsNGYof1docfF3pX4hNRUpHlzs61RP0reZMw==",
         "dependencies": {
           "Microsoft.Bcl.TimeProvider": "8.0.1",
-          "Microsoft.IdentityModel.Tokens": "8.1.0"
+          "Microsoft.IdentityModel.Tokens": "8.1.2"
         }
       },
       "Microsoft.IdentityModel.Logging": {
         "type": "Transitive",
-        "resolved": "8.1.0",
-        "contentHash": "Qrm6jLmzeNnWwKc+KoJT8DQgnVXsNR3LBSU2LXnA9RDs8eflBNrQOifxJn9r4k5+rdRq3mUu3GJNGKlWIQzguA==",
+        "resolved": "8.1.2",
+        "contentHash": "pEn//qKJcEXDsLHLzACFrT3a2kkpIGOXLEYkcuxjqWoeDnbeotu0LY9fF8+Ds9WWpVE9ZGlxXamT0VR8rxaQeA==",
         "dependencies": {
-          "Microsoft.IdentityModel.Abstractions": "8.1.0"
+          "Microsoft.IdentityModel.Abstractions": "8.1.2"
         }
       },
       "Microsoft.IdentityModel.Protocols": {
         "type": "Transitive",
-        "resolved": "8.1.0",
-        "contentHash": "2Udr1XoHm/1NQATa8lI2pi0jPwXlTINBwI8E1afW7+mMDnH1WPTIuiOOm0xIR+onxl02GCOARAJsd/VHLoejOA==",
+        "resolved": "8.1.2",
+        "contentHash": "Yu3UJWIFX2/5m2MZskECqByr62L8A0uTtTblWIxy0wJNUg0OJGhIK6oRdpcZ8xbSJYD/SOE8psjo5IXRqC3Bsw==",
         "dependencies": {
-          "Microsoft.IdentityModel.Tokens": "8.1.0"
+          "Microsoft.IdentityModel.Tokens": "8.1.2"
         }
       },
       "Microsoft.IdentityModel.Tokens": {
         "type": "Transitive",
-        "resolved": "8.1.0",
-        "contentHash": "tQ21tUUKjG5Hzv/Rxmgg4f2LZo+nas1OJJdhHmLaU9c7l72lgQgP7luXlBnJOS2Lotd4DIj3ZE+lFVaVmkniag==",
+        "resolved": "8.1.2",
+        "contentHash": "ZSzGsAA3BY20XHnsp8OjrHFtpd+pQtiu4UJDjPtXwCtEzcE5CjWP/8iZEJXy5AxVEFB0z6EwLSN+T1Fsdpjifw==",
         "dependencies": {
           "Microsoft.Bcl.TimeProvider": "8.0.1",
           "Microsoft.CSharp": "4.5.0",
-          "Microsoft.IdentityModel.Logging": "8.1.0",
+          "Microsoft.IdentityModel.Logging": "8.1.2",
           "System.Security.Cryptography.Cng": "4.5.0",
           "System.Text.Json": "8.0.4"
         }
@@ -111,11 +111,11 @@
       },
       "System.IdentityModel.Tokens.Jwt": {
         "type": "Transitive",
-        "resolved": "8.1.0",
-        "contentHash": "2Na5IOk7Tr7gmBDyPOSpFPi8DXVHfJofbmp6A0L3NSuJz6n3n5kx3CgBD1WRvSaSLu0QHjvrzv6rpghiqmFgSg==",
+        "resolved": "8.1.2",
+        "contentHash": "UoidlNYjML1ZbV5s8bLP84VpxDzv8uhHzyt5YkZwqLmFTmtOQheNuTKpR/5UWmO5Ka4JT3kVmhUNq5Li733wTg==",
         "dependencies": {
-          "Microsoft.IdentityModel.JsonWebTokens": "8.1.0",
-          "Microsoft.IdentityModel.Tokens": "8.1.0"
+          "Microsoft.IdentityModel.JsonWebTokens": "8.1.2",
+          "Microsoft.IdentityModel.Tokens": "8.1.2"
         }
       },
       "System.Memory": {
