@@ -5,12 +5,26 @@
     </assembly>
     <members>
         <member name="T:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext">
+            <summary>  
+            Provides batch operation extension methods for <see cref="T:Microsoft.EntityFrameworkCore.DbContext"/>.  
+            </summary>  
             <summary>
             Represents a DbContext that supports auditing of entities <see cref="T:IkeMtz.NRSRx.Core.Models.IAuditable"/>.
             </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChangesInBatchAsync``1(System.Collections.Generic.IEnumerable{``0},Microsoft.Extensions.Logging.ILogger,System.Int32,System.Boolean)">
             <summary>  
-            Provides extension methods for <see cref="T:Microsoft.EntityFrameworkCore.DbContext"/>.  
+            Extension method that saves changes to the database in batches asynchronously without read back.  
+            Warning: This this method will not set IAuditable properties.
+            Warning: For performance reasons, be sure to use DbContext Pooling <see href="https://learn.microsoft.com/en-us/ef/core/performance/advanced-performance-topics?tabs=with-di%2Cexpression-api-with-constant#dbcontext-pooling"/>.
             </summary>  
+            <typeparam name="TEntity">The type of the entity.</typeparam>  
+            <param name="dbContext">The database context.</param>  
+            <param name="entities">The collection of entities to save.</param>  
+            <param name="batchSize">The size of each batch (default=200).</param>  
+            <param name="logger">The logger to use for logging information.</param>
+            <param name="efAcceptAllChangesOnSuccess">Indicates whether <see cref="!:DbContext.ChangeTracker.AcceptAllChanges"/> is called after the changes are saved to the database.  Setting this value to true has a performance cost, but may be necessary if not using UniqueIdentier ids</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the total number of records saved.</returns>  
         </member>
         <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions,IkeMtz.NRSRx.Core.ICurrentUserProvider)">
             <summary>
@@ -115,20 +129,6 @@
             <summary>
             Updates audit information for entities that implement <see cref="T:IkeMtz.NRSRx.Core.Models.IAuditable"/> and are in the Modified state.
             </summary>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext.SaveChangesInBatchAsync``1(System.Collections.Generic.IEnumerable{``0},Microsoft.Extensions.Logging.ILogger,System.Int32,System.Boolean)">
-            <summary>  
-            Extension method that saves changes to the database in batches asynchronously without read back.  
-            Warning: This this method will not set IAuditable properties.
-            Warning: For performance reasons, be sure to use DbContext Pooling <see href="https://learn.microsoft.com/en-us/ef/core/performance/advanced-performance-topics?tabs=with-di%2Cexpression-api-with-constant#dbcontext-pooling"/>.
-            </summary>  
-            <typeparam name="TEntity">The type of the entity.</typeparam>  
-            <param name="dbContext">The database context.</param>  
-            <param name="entities">The collection of entities to save.</param>  
-            <param name="batchSize">The size of each batch (default=200).</param>  
-            <param name="logger">The logger to use for logging information.</param>
-            <param name="efAcceptAllChangesOnSuccess">Indicates whether <see cref="!:DbContext.ChangeTracker.AcceptAllChanges"/> is called after the changes are saved to the database.  Setting this value to true has a performance cost, but may be necessary if not using UniqueIdentier ids</param>
-            <returns>A task that represents the asynchronous operation. The task result contains the total number of records saved.</returns>  
         </member>
         <member name="T:IkeMtz.NRSRx.Core.EntityFramework.AuditableInvalidUserException">
             <summary>
