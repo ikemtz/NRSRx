@@ -10,9 +10,9 @@ using Microsoft.Extensions.Logging;
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   /// <summary>
-  /// Represents a DbContext that supports auditing of entities.
+  /// Represents a DbContext that supports auditing of entities <see cref="IAuditable"/>.
   /// </summary>
-  public class AuditableDbContext(DbContextOptions options, ICurrentUserProvider currentUserProvider) : DbContext(options), IAuditableDbContext
+  public partial class AuditableDbContext(DbContextOptions options, ICurrentUserProvider currentUserProvider) : DbContext(options), IAuditableDbContext
   {
     /// <summary>
     /// Gets or sets the current user provider.

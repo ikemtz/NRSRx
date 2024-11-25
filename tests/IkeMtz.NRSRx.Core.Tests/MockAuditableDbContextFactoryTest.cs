@@ -20,10 +20,10 @@ namespace IkeMtz.NRSRx.Core.Tests
       var modelA = new MyIntModel();
       var modelB = new MyIntModel();
       using var ctx = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableContext>(TestContext);
-      _ = ctx.MyModel.Add(modelA);
-      _ = ctx.MyModel.Add(modelB);
+      _ = ctx.MyModels.Add(modelA);
+      _ = ctx.MyModels.Add(modelB);
       _ = await ctx.SaveChangesAsync();
-      Assert.AreEqual(2, await ctx.MyModel.CountAsync());
+      Assert.AreEqual(2, await ctx.MyModels.CountAsync());
       modelA.UpdatedBy = "Not Me";
       _ = await ctx.SaveChangesAsync();
       Assert.AreEqual(SystemUserProvider.SystemUserId, modelA.UpdatedBy);
@@ -100,7 +100,9 @@ namespace IkeMtz.NRSRx.Core.Tests
   }
   public class TestAuditableContext(DbContextOptions options, ICurrentUserProvider currentUserProvider) : AuditableDbContext(options, currentUserProvider)
   {
-    public DbSet<MyIntModel> MyModel { get; set; }
+    public DbSet<MyIntModel> MyModels { get; set; }
+    public DbSet<CollectionIntModel> CollectionIntModels { get; set; }
+    public DbSet<CollectionGuidModel> CollectionGuidModels { get; set; }
   }
 
 }
