@@ -19,8 +19,7 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
     /// Warning: This this method will not set IAuditable properties.
     /// Warning: For performance reasons, be sure to use DbContext Pooling <see href="https://learn.microsoft.com/en-us/ef/core/performance/advanced-performance-topics?tabs=with-di%2Cexpression-api-with-constant#dbcontext-pooling"/>.
     /// </summary>  
-    /// <typeparam name="TEntity">The type of the entity.</typeparam>  
-    /// <param name="dbContext">The database context.</param>  
+    /// <typeparam name="TEntity">The type of the entity.</typeparam>
     /// <param name="entities">The collection of entities to save.</param>  
     /// <param name="batchSize">The size of each batch (default=200).</param>  
     /// <param name="logger">The logger to use for logging information.</param>

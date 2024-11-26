@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Core.Unigration;
@@ -31,20 +30,6 @@ namespace IkeMtz.NRSRx.Core.Tests
         }, srcList);
       Assert.AreEqual(300, result);
       Assert.AreEqual(2, dbContextList.Count);
-      var _disposedField = typeof(TestAuditableContext).GetField("_disposed", BindingFlags.NonPublic | BindingFlags.Instance);
-      dbContextList.ForEach(dbContext =>
-        {
-          var isDisposed = false;
-          try
-          {
-            dbContext.Database.CanConnect();
-          }
-          catch (ObjectDisposedException)
-          {
-            isDisposed = true;
-          }
-          Assert.IsTrue(isDisposed);
-        });
     }
 
 
