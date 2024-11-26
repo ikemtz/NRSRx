@@ -41,10 +41,10 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
           var batch = entities.Skip(currentRecorIndex).Take(batchSize);
           totalActualRecordsSaved += await ProcessEntityBatchAsync<TDbContext, TEntity>(dbContext, batch);
 
-          logger?.LogInformation("Saved batch of {entityName} records in {elapsedTimeInMs}ms, approximate remaining items {pendingRecordCount}",
+          logger?.LogInformation("Saved batch of {entityName} records in {elapsedTimeInMs} ms, approximate remaining items {pendingRecordCount}",
                 entityName,
-                DateTime.UtcNow.Subtract(batchStartTime).TotalMilliseconds,
-                Math.Abs(totalEstimatedRecords - currentRecorIndex));
+                Math.Ceiling(DateTime.UtcNow.Subtract(batchStartTime).TotalMilliseconds),
+             Math.Abs(totalEstimatedRecords - (currentRecorIndex + batch.Count())));
         }
         return totalActualRecordsSaved;
       }, entities, logger, batchSize);
@@ -66,9 +66,9 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 
       var totalActualRecordsSaved = await batchLogicAsync(entityName, totalEstimatedRecords);
 
-      logger?.LogInformation("Saved {totalActualRecords} records via SaveChangesInBatchAsync in {elapstedTimeInMs}ms",
+      logger?.LogInformation("Saved {totalActualRecords} records via SaveChangesInBatchAsync in {elapstedTimeInMs} ms",
         totalActualRecordsSaved,
-        DateTime.UtcNow.Subtract(overallStarttime).TotalMilliseconds);
+        Math.Ceiling(DateTime.UtcNow.Subtract(overallStarttime).TotalMilliseconds));
 
       return totalActualRecordsSaved;
     }
