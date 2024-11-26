@@ -41,9 +41,9 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
            var batchStartTime = DateTime.UtcNow;
            var batch = entities.Skip(currentRecorIndex).Take(batchSize);
            affectedRecordCount += await BatchDataSaver.ProcessEntityBatchAsync(this, batch, efAcceptAllChangesOnSuccess);
-           logger?.LogInformation("Saved batch of {entityName} records in {elapsedTimeInSecs}, approximate remaining items {pendingRecordCount}",
+           logger?.LogInformation("Saved batch of {entityName} records in {elapsedTimeInMs}ms, approximate remaining items {pendingRecordCount}",
              entityName,
-             DateTime.UtcNow.Subtract(batchStartTime).Seconds,
+             DateTime.UtcNow.Subtract(batchStartTime).TotalMilliseconds,
              Math.Abs(totalEstimatedRecords - currentRecorIndex));
          }
          return affectedRecordCount;
