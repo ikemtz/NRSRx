@@ -163,6 +163,11 @@
             Validates the initialization of the subscriber.
             </summary>
         </member>
+        <member name="T:IkeMtz.NRSRx.Events.Subscribers.Redis.RedisSubscriberOptions">
+            <summary>
+            Options for configuring the Redis subscriber.
+            </summary>
+        </member>
         <member name="P:IkeMtz.NRSRx.Events.Subscribers.Redis.RedisSubscriberOptions.StartPosition">
             <summary>
             This should be set to either StreamPosition.Beginning or StreamConstants.NewMessages

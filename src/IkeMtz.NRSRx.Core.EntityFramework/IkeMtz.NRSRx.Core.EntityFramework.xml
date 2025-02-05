@@ -223,6 +223,23 @@
             <param name="entity">The entity to add.</param>
             <returns>The <see cref="T:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry"/> for the entity. The entry provides access to change tracking information and operations for the entity.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.EntityFramework.IBatchDataSaver`2">
+            <summary>
+            Interface for saving entities in batches to the database.
+            </summary>
+            <typeparam name="TDbContext">The type of the database context.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.EntityFramework.IBatchDataSaver`2.SaveChangesInBatchAsync(System.Func{`0},System.Collections.Generic.IEnumerable{`1},Microsoft.Extensions.Logging.ILogger,System.Int32)">
+            <summary>
+            Saves the changes in batches asynchronously.
+            </summary>
+            <param name="dbContextFactory">The factory function to create the database context.</param>
+            <param name="entities">The collection of entities to be saved.</param>
+            <param name="logger">The logger instance for logging.</param>
+            <param name="batchSize">The size of each batch.</param>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.EntityFramework.SystemUserProvider">
             <summary>
             Provides the system user ID as the current user ID.

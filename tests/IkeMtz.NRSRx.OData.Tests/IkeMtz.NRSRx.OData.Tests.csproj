@@ -5,10 +5,11 @@
     <ProjectGuid>E1915E14-26AC-409C-AD74-D3E877E64B80</ProjectGuid>
     <Nullable>enable</Nullable>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup >
     <DocumentationFile>./IkeMtz.NRSRx.OData.Tests.xml</DocumentationFile>
-    <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
+    <NoWarn>1701;1702;CS1591;CS8618;CS8892;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="SampleWeb\Models\**" />
