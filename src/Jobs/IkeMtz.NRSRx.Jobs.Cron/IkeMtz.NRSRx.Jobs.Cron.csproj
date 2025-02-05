@@ -4,9 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <PackageIcon>ProfilePic.jpg</PackageIcon>
     <RepositoryUrl>https://github.com/ikemtz/NRSRx</RepositoryUrl>
@@ -35,12 +32,12 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <NoWarn>1701;1702;S2436;MSB3277;CS8604;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Jobs.Cron.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
+    <None Include="..\..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
       <PackagePath></PackagePath>
       <Pack>True</Pack>
     </None>

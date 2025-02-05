@@ -20,7 +20,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <NoWarn>1701;1702;IDE0060;S4792</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Logging.Elasticsearch.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>

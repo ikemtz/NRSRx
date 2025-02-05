@@ -126,6 +126,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Core.Unigratio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IkeMtz.NRSRx.Unigration.Logging", "src\Logging\IkeMtz.NRSRx.Unigration.Logging\IkeMtz.NRSRx.Unigration.Logging.csproj", "{5783A5FC-B885-45C3-B90A-43D30641BFB2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{4E3C4AFF-D838-460B-BAF9-2B7CA001A574}"
+	ProjectSection(SolutionItems) = preProject
+		build\ProfilePic.jpg = build\ProfilePic.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
