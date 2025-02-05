@@ -71,7 +71,7 @@ jobs:
           InformationalVersion: "$(Build.BuildNumber)"
           PackageVersion: "$(Build.BuildNumber)"
 
-      - task: SonarCloudPrepare@2
+      - task: SonarCloudPrepare@3
         displayName: "Prepare analysis on SonarCloud"
         inputs:
           SonarCloud: "SonarCloud IkeMtz"
@@ -108,10 +108,10 @@ jobs:
           custom: "test"
           arguments: '--logger trx --configuration $(BuildConfiguration) --collect "Code coverage" --results-directory $(Common.TestResultsDirectory) --no-build --no-restore --settings $(Build.SourcesDirectory)/test.RunSettings --filter TestCategory!~Integration'
 
-      - task: SonarCloudAnalyze@2
+      - task: SonarCloudAnalyze@3
         displayName: "Run Code Analysis"
 
-      - task: SonarCloudPublish@2
+      - task: SonarCloudPublish@3
         displayName: "Publish Quality Gate Result"
 
       - task: sonarcloud-buildbreaker@2
