@@ -7,7 +7,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
+    <NoWarn>1701;1702;CS1591;CS8618;CS8892;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.WebApi.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

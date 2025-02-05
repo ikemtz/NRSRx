@@ -11,7 +11,7 @@ namespace IkeMtz.NRSRx.Jobs.Core
   /// Base class for defining a job in the NRSRx framework.
   /// </summary>
   /// <typeparam name="TProgram">The type of the program.</typeparam>
-  public abstract class JobBase<TProgram>
+  public abstract class JobBase<TProgram> : IJob
       where TProgram : class
   {
 

@@ -2,6 +2,9 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Events.Subscribers.Redis
 {
+  /// <summary>
+  /// Options for configuring the Redis subscriber.
+  /// </summary>
   public class RedisSubscriberOptions
   {
     /// <summary>

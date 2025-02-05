@@ -54,19 +54,6 @@
           "Swashbuckle.AspNetCore.SwaggerUI": "7.2.0"
         }
       },
-      "Microsoft.AspNetCore.Mvc.Versioning": {
-        "type": "Transitive",
-        "resolved": "5.1.0",
-        "contentHash": "UX8w9BlCiZpr6Ox4YAve1w0CkI1CAovukGNzKd7v0+5pZc8lzuG5tRovucr1RWIKHs0E/Yx8563CN7KzaB3bpw=="
-      },
-      "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": {
-        "type": "Transitive",
-        "resolved": "5.1.0",
-        "contentHash": "p45pSXCJPbx+p9gFNNQPUC547KpqP5cRJke6aygq/M7UzCrJNmJNqD+65pIpY4muYbINqlgrC47h1oc0WbuP1g==",
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Versioning": "5.1.0"
-        }
-      },
       "Microsoft.EntityFrameworkCore.Abstractions": {
         "type": "Transitive",
         "resolved": "8.0.12",
@@ -76,15 +63,6 @@
         "type": "Transitive",
         "resolved": "8.0.12",
         "contentHash": "irXnlkKHepepje6+ICaKpe/G4QnWi1G9Em9CmfqAEKb7OUTYaDQ2ieGps2Tl7/rblj5CKB0tDNI421f64x/Tqw=="
-      },
-      "Microsoft.EntityFrameworkCore.Relational": {
-        "type": "Transitive",
-        "resolved": "8.0.12",
-        "contentHash": "HqW1fvgb4hbzY7/06k047eXG0YnoB3j8A5hU9nyL5b7sW7sNsPhn0yw63tV0QrSpWD9fCkaFGEy+tYkuLIPJyw==",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "8.0.12",
-          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0"
-        }
       },
       "Microsoft.Extensions.ApiDescription.Server": {
         "type": "Transitive",
@@ -218,32 +196,6 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
           "Microsoft.Extensions.Options": "8.0.2"
-        }
-      },
-      "Microsoft.Extensions.Diagnostics.HealthChecks": {
-        "type": "Transitive",
-        "resolved": "8.0.12",
-        "contentHash": "Wu/SUwZAJb7ShmJ0a5cX1HAuzzSuO/rxpyeBTxMEY1fxbxU21UClNqLZ+8KuDTbzDePdllW2Wkxu4v/u/TqsWA==",
-        "dependencies": {
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "8.0.12",
-          "Microsoft.Extensions.Hosting.Abstractions": "8.0.1",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
-          "Microsoft.Extensions.Options": "8.0.2"
-        }
-      },
-      "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": {
-        "type": "Transitive",
-        "resolved": "8.0.12",
-        "contentHash": "lRipQandbkC7u8jrRucRkrzfZPho9mi0Qy6s4qQXgD2bEoHADjJYIwo67Z5VW2hvVujh9Fy+Q/AgkWzDCA9nMA=="
-      },
-      "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
-        "type": "Transitive",
-        "resolved": "8.0.12",
-        "contentHash": "qy23jbJgYkqwhHUdsaDxlHLqzuQ0JUbZ2LehYNhCrGhNP7YUjUvV52SGH6NbXNkAgcKfroruzQvsWzMRftHsqg==",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "8.0.12",
-          "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.12",
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "8.0.12"
         }
       },
       "Microsoft.Extensions.FileProviders.Abstractions": {
@@ -1340,16 +1292,6 @@
           "System.Text.Encoding": "4.3.0"
         }
       },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
-      },
-      "System.Text.Json": {
-        "type": "Transitive",
-        "resolved": "8.0.5",
-        "contentHash": "0f1B50Ss7rqxXiaBJyzUu9bWFOO2/zSlifZ/UNMdiIpDYe4cY4LQQicP4nirK1OS31I43rn062UIJ1Q9bpmHpg=="
-      },
       "System.Text.RegularExpressions": {
         "type": "Transitive",
         "resolved": "4.3.1",
@@ -1443,31 +1385,6 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "ikemtz.nrsrx.core.entityframework": {
-        "type": "Project",
-        "dependencies": {
-          "IkeMtz.NRSRx.Core.Models": "[1.0.0, )",
-          "Microsoft.EntityFrameworkCore": "[8.0.12, )",
-          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "[8.0.12, )",
-          "System.Net.Http": "[4.3.4, )",
-          "System.Text.Encodings.Web": "[8.0.0, )",
-          "System.Text.RegularExpressions": "[4.3.1, )"
-        }
-      },
-      "ikemtz.nrsrx.core.jobs": {
-        "type": "Project",
-        "dependencies": {
-          "IkeMtz.NRSRx.Core.EntityFramework": "[1.0.0, )",
-          "IkeMtz.NRSRx.Core.Models": "[1.0.0, )",
-          "IkeMtz.NRSRx.Core.Web": "[1.0.0, )",
-          "MSTest.TestFramework": "[3.7.3, )",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "[8.0.12, )",
-          "Microsoft.EntityFrameworkCore": "[8.0.12, )",
-          "Microsoft.Extensions.Configuration.UserSecrets": "[8.0.1, )",
-          "Microsoft.Extensions.Hosting": "[8.0.1, )",
-          "Swashbuckle.AspNetCore": "[7.2.0, )"
-        }
-      },
       "ikemtz.nrsrx.core.models": {
         "type": "Project",
         "dependencies": {
@@ -1478,22 +1395,6 @@
           "System.Reflection": "[4.3.0, )",
           "System.Text.RegularExpressions": "[4.3.1, )",
           "System.ValueTuple": "[4.5.0, )"
-        }
-      },
-      "ikemtz.nrsrx.core.web": {
-        "type": "Project",
-        "dependencies": {
-          "IkeMtz.NRSRx.Core.Models": "[1.0.0, )",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "[8.0.12, )",
-          "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": "[5.1.0, )",
-          "Microsoft.Extensions.Configuration.Binder": "[8.0.2, )",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.0.2, )",
-          "Newtonsoft.Json": "[13.0.3, )",
-          "Swashbuckle.AspNetCore": "[7.2.0, )",
-          "System.Net.Http": "[4.3.4, )",
-          "System.Text.Encodings.Web": "[8.0.0, )",
-          "System.Text.Json": "[8.0.5, )",
-          "System.Text.RegularExpressions": "[4.3.1, )"
         }
       },
       "ikemtz.nrsrx.events.abstraction": {
@@ -1508,6 +1409,18 @@
         "dependencies": {
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
           "StackExchange.Redis": "[2.8.24, )"
+        }
+      },
+      "ikemtz.nrsrx.jobs.core": {
+        "type": "Project",
+        "dependencies": {
+          "IkeMtz.NRSRx.Core.Models": "[1.0.0, )",
+          "MSTest.TestFramework": "[3.7.3, )",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "[8.0.12, )",
+          "Microsoft.EntityFrameworkCore": "[8.0.12, )",
+          "Microsoft.Extensions.Configuration.UserSecrets": "[8.0.1, )",
+          "Microsoft.Extensions.Hosting": "[8.0.1, )",
+          "Swashbuckle.AspNetCore": "[7.2.0, )"
         }
       }
     }
