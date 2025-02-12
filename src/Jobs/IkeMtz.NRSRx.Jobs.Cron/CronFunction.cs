@@ -55,7 +55,8 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     public TimeProvider TimeProvider { get; }
 
     /// <summary>
-    /// Executes the function asynchronously.
+    /// Framework function to control CRON job execution.
+    /// WARNING: ** It's not recommended that you override this function. **
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains a boolean value indicating whether the function executed successfully.</returns>
     public virtual async Task<bool> RunAsync()

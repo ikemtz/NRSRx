@@ -14,11 +14,14 @@ namespace IkeMtz.NRSRx.Jobs.Unigration
   /// <remarks>
   /// Initializes a new instance of the <see cref="CoreUnigrationTestJob{TProgram}"/> class.
   /// </remarks>
-  /// <param name="program">The program instance.</param>
-  /// <param name="testContext">The MSTest <see cref="TestContext"/> for logging.</param>
   public class CoreUnigrationTestJob<TProgram> : JobBase<TProgram>
           where TProgram : class, IJob
   {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CoreUnigrationTestJob{TProgram}"/> class.
+    /// </summary>
+    /// <param name="program">The program instance.</param>
+    /// <param name="testContext">The MSTest <see cref="TestContext"/> for logging.</param>
     public CoreUnigrationTestJob(TProgram program, TestContext testContext)
     {
       Program = program;
