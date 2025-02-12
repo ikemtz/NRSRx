@@ -16,18 +16,25 @@ namespace IkeMtz.NRSRx.Jobs.Unigration
   /// </remarks>
   /// <param name="program">The program instance.</param>
   /// <param name="testContext">The MSTest <see cref="TestContext"/> for logging.</param>
-  public class CoreUnigrationTestJob<TProgram>(TProgram program, TestContext testContext) : JobBase<TProgram>
+  public class CoreUnigrationTestJob<TProgram> : JobBase<TProgram>
           where TProgram : class, IJob
   {
+    public CoreUnigrationTestJob(TProgram program, TestContext testContext)
+    {
+      Program = program;
+      TestContext = testContext;
+      RunContinously = false;
+      SecsBetweenRuns = 1;
+    }
     /// <summary>
     /// Gets the program instance.
     /// </summary>
-    public TProgram Program { get; } = program;
+    public TProgram Program { get; }
 
     /// <summary>
     /// Gets the MSTest <see cref="TestContext"/> for logging.
     /// </summary>
-    public TestContext TestContext { get; } = testContext;
+    public TestContext TestContext { get; }
 
     /// <summary>
     /// Sets up the dependencies for the job.
@@ -36,7 +43,7 @@ namespace IkeMtz.NRSRx.Jobs.Unigration
     /// <returns>The service collection with dependencies set up.</returns>
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
-      return Program.SetupDependencies(services);
+      return SetupDependencies(services);
     }
 
     /// <summary>

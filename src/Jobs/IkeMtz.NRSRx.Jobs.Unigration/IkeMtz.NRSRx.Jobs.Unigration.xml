@@ -126,17 +126,6 @@
             <param name="program">The program instance.</param>
             <param name="testContext">The MSTest <see cref="P:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1.TestContext"/> for logging.</param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
-            <summary>
-            Represents a core unigration test job for testing purposes.
-            </summary>
-            <typeparam name="TProgram">The type of the program implementing the <see cref="T:IkeMtz.NRSRx.Jobs.Core.IJob"/> interface.</typeparam>
-            <remarks>
-            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1"/> class.
-            </remarks>
-            <param name="program">The program instance.</param>
-            <param name="testContext">The MSTest <see cref="P:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1.TestContext"/> for logging.</param>
-        </member>
         <member name="P:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1.Program">
             <summary>
             Gets the program instance.

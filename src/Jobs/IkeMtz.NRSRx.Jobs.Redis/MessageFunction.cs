@@ -107,10 +107,16 @@ namespace IkeMtz.NRSRx.Jobs.Redis
         try
         {
           Logger.LogInformation("Handling {messageType} message with entity id: {id} ", messageType, id);
-          await HandleMessageAsync(entity);
-          Logger.LogInformation("Handled {messageType} message with entity id: {id} ", messageType, id);
-          await Subscriber.AcknowledgeMessageAsync(redisId);
-          processedMessageCount++;
+          if (await HandleMessageAsync(entity))
+          {
+            Logger.LogInformation("Handled {messageType} message with entity id: {id} ", messageType, id);
+            await Subscriber.AcknowledgeMessageAsync(redisId);
+            processedMessageCount++;
+          }
+          else
+          {
+            Logger.LogWarning("Failed to handle {messageType} message with entity id: {id} ", messageType, id);
+          }
         }
         catch (Exception x)
         {
@@ -143,6 +149,6 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     /// </summary>
     /// <param name="entity">The entity to handle.</param>
     /// <returns>A task that represents the asynchronous handle operation.</returns>
-    public abstract Task HandleMessageAsync(TEntity entity);
+    public abstract Task<bool> HandleMessageAsync(TEntity entity);
   }
 }

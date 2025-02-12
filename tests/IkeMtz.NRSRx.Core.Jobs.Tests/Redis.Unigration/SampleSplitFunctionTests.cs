@@ -53,9 +53,9 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
     {
       this.MessageBufferCount = 1;
     }
-    public override Task HandleMessageAsync(SplitMessage<School> entity)
+    public override Task<bool> HandleMessageAsync(SplitMessage<School> entity)
     {
-      return Task.CompletedTask;
+      return Task.FromResult(true);
     }
   }
 
