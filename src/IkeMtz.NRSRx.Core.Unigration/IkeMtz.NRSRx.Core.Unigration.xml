@@ -551,6 +551,28 @@
             <param name="formatter">The function to create a log message.</param>
             <exception cref="T:System.NullReferenceException">Thrown if the state is null.</exception>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeTimeProvider">
+            <summary>
+            Provides a fake implementation of the TimeProvider for testing purposes.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeTimeProvider.DateTimeOffset">
+            <summary>
+            Gets the DateTimeOffset value.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeTimeProvider.#ctor(System.DateTimeOffset)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeTimeProvider"/> class with the specified DateTimeOffset.
+            </summary>
+            <param name="dateTimeOffset">The DateTimeOffset value to be used by the fake time provider.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeTimeProvider.GetUtcNow">
+            <summary>
+            Gets the current UTC date and time.
+            </summary>
+            <returns>The UTC date and time specified in the constructor.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.Http.HttpClientExtensions">
             <summary>
             Provides extension methods for the <see cref="T:System.Net.Http.HttpClient"/> class to send JSON content.

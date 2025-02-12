@@ -15,10 +15,10 @@ namespace IkeMtz.Samples.Redis.Jobs
       this.MessageBufferCount = 100;
     }
 
-    public override Task HandleMessageAsync(School entity)
+    public override Task<bool> HandleMessageAsync(School entity)
     {
       Logger.LogInformation("Sample handled.");
-      return Task.CompletedTask;
+      return Task.FromResult(true);
     }
   }
 }
