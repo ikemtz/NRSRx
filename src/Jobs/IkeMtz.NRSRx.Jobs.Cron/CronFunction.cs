@@ -14,32 +14,35 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     /// </summary>
     /// <param name="logger">The logger instance.</param> 
     /// <param name="timeProvider">The time provider instance.</param>
-    public CronFunction(ILogger<CronFunction> logger, TimeProvider timeProvider)
+    /// <param name="cronJobStateProvider">The cron job state provider instance.</param>
+    public CronFunction(ILogger<CronFunction> logger, TimeProvider timeProvider, ICronJobStateProvider cronJobStateProvider)
     {
       Logger = logger;
       TimeProvider = timeProvider;
+      CronJobStateProvider = cronJobStateProvider;
+      CronJobState = cronJobStateProvider.GetCronJobStateAsync(this).Result;
     }
 
     /// <summary>
-    /// Gets or sets the last run date and time in UTC.
+    /// Gets or sets the state of the cron job.
     /// </summary>
-    public static DateTimeOffset? LastRunDateTimeUtc { get; set; }
-
-    /// <summary>
-    /// Gets or sets the next run date and time in UTC.
-    /// </summary>
-    public static DateTimeOffset? NextRunDateTimeUtc { get; set; }
+    public CronJobState CronJobState { get; set; }
 
     /// <summary>
     /// Gets or sets the schedule for the cron function.
     /// </summary>
-    public static CrontabSchedule? Schedule { get; set; }
+    public CrontabSchedule? Schedule { get; set; }
 
     /// <summary>
     /// Gets or sets the cron expression for the function.
     /// For guidance visit: https://crontab.guru/
     /// </summary>
     public abstract string CronExpression { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the function should execute on startup.
+    /// </summary>
+    public bool ExecuteOnStartup { get; set; }
 
     /// <inheritdoc/>
     public virtual int? SequencePriority { get; } = 100;
@@ -55,6 +58,11 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     public TimeProvider TimeProvider { get; }
 
     /// <summary>
+    /// Gets or sets the cron job state provider.
+    /// </summary>
+    public ICronJobStateProvider CronJobStateProvider { get; set; }
+
+    /// <summary>
     /// Framework function to control CRON job execution.
     /// WARNING: ** It's not recommended that you override this function. **
     /// </summary>
@@ -62,17 +70,18 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     public virtual async Task<bool> RunAsync()
     {
       Schedule ??= CrontabSchedule.Parse(CronExpression);
-      NextRunDateTimeUtc ??= Schedule.GetNextOccurrence(LastRunDateTimeUtc.GetValueOrDefault(TimeProvider.GetUtcNow()).UtcDateTime);
-      if (NextRunDateTimeUtc <= TimeProvider.GetUtcNow())
+      CronJobState.NextRunDateTimeUtc ??= Schedule.GetNextOccurrence(CronJobState.LastRunDateTimeUtc.GetValueOrDefault(TimeProvider.GetUtcNow()).UtcDateTime);
+      if (ExecuteOnStartup || CronJobState.NextRunDateTimeUtc <= TimeProvider.GetUtcNow())
       {
-        LastRunDateTimeUtc = TimeProvider.GetUtcNow();
-        NextRunDateTimeUtc = Schedule.GetNextOccurrence(LastRunDateTimeUtc.Value.DateTime);
-        Logger.LogInformation("Executing {FunctionName} function, at {LastRunTime}.  Next run time is: {NextRuntime}", GetType().Name, LastRunDateTimeUtc, NextRunDateTimeUtc);
+        var nextOccurence = Schedule.GetNextOccurrence(CronJobState.LastRunDateTimeUtc.Value.DateTime);
+        CronJobState = await CronJobStateProvider.UpdateCronJobStateAsync(this, nextOccurence);
+        ExecuteOnStartup = false;
+        Logger.LogInformation("Executing {FunctionName} function, at {LastRunTime}.  Next run time is: {NextRuntime}", GetType().Name, CronJobState.LastRunDateTimeUtc, CronJobState.NextRunDateTimeUtc);
         return await ExecuteAsync();
       }
       else
       {
-        Logger.LogInformation("Skipping execution of {FunctionName} function, at {LastRunTime}.  Next run time is: {NextRuntime}", GetType().Name, LastRunDateTimeUtc, NextRunDateTimeUtc);
+        Logger.LogInformation("Skipping execution of {FunctionName} function, at {LastRunTime}.  Next run time is: {NextRuntime}", GetType().Name, CronJobState.LastRunDateTimeUtc, CronJobState.NextRunDateTimeUtc);
         return true;
       }
     }

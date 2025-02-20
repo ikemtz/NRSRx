@@ -1,23 +1,12 @@
+using IkeMtz.NRSRx.Core.Models;
+
 namespace IkeMtz.NRSRx.Core.EntityFramework
 {
   /// <summary>
-  /// Provides the system user ID as the current user ID.
+  /// Provides a ICurrentUserProvider that is hard coded to provide "NRSRx System User".
   /// </summary>
-  public class SystemUserProvider : ICurrentUserProvider
+  public class SystemUserProvider() : UserProvider(SystemUserId)
   {
-    /// <summary>
-    /// Gets or sets the system user ID.
-    /// </summary>
-    public static string SystemUserId { get; set; } = "NRSRx System User";
-
-    /// <summary>
-    /// Gets the current user ID. Returns the system user ID if no default value is provided.
-    /// </summary>
-    /// <param name="defaultValue">The value to return if the user ID is not available.</param>
-    /// <returns>The current user ID, or the specified default value if the user ID is not available.</returns>
-    public string? GetCurrentUserId(string? defaultValue = null)
-    {
-      return defaultValue ?? SystemUserId;
-    }
+    public static string? SystemUserId { get; } = "NRSRx System User";
   }
 }

@@ -191,15 +191,6 @@
             <param name="logger">The logger.</param>
             <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
         </member>
-        <member name="T:IkeMtz.NRSRx.Jobs.Core.JobUserProvider`1">
-            <summary>
-            Provides the current job name as the current user id, useful for working with <see cref="T:IkeMtz.NRSRx.Core.EntityFramework.AuditableDbContext"/>.
-            </summary>
-            <typeparam name="Job">The type of job.</typeparam>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Core.JobUserProvider`1.GetCurrentUserId(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="T:IkeMtz.NRSRx.Core.ConfigurationFactory`1">
             <summary>
             Provides methods to create and configure application configuration.

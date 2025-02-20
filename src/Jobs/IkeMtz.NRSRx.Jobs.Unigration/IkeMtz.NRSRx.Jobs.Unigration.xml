@@ -123,6 +123,11 @@
             <remarks>
             Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1"/> class.
             </remarks>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1"/> class.
+            </summary>
             <param name="program">The program instance.</param>
             <param name="testContext">The MSTest <see cref="P:IkeMtz.NRSRx.Jobs.Unigration.CoreUnigrationTestJob`1.TestContext"/> for logging.</param>
         </member>
