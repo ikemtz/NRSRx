@@ -61,5 +61,6 @@
     <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
     <ProjectReference Include="..\..\Logging\IkeMtz.NRSRx.Unigration.Logging\IkeMtz.NRSRx.Unigration.Logging.csproj" />
     <ProjectReference Include="..\IkeMtz.NRSRx.Jobs.Core\IkeMtz.NRSRx.Jobs.Core.csproj" />
+    <ProjectReference Include="..\IkeMtz.NRSRx.Jobs.Cron\IkeMtz.NRSRx.Jobs.Cron.csproj" />
   </ItemGroup>
 </Project>

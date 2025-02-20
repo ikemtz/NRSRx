@@ -1,4 +1,3 @@
-
 namespace IkeMtz.NRSRx.Jobs.Cron
 {
   /// <summary>
@@ -9,16 +8,14 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     /// <summary>
     /// Gets the state of the specified cron job.
     /// </summary>
-    /// <param name="cronFunction">The cron function whose state is to be retrieved.</param>
     /// <returns>The state of the specified cron job.</returns>
-    Task<CronJobState> GetCronJobStateAsync(CronFunction cronFunction);
+    Task<CronJobState> GetCronJobStateAsync<TCronFunction>() where TCronFunction : class;
 
     /// <summary>
     /// Updates the state of the cron job with the next execution date and time.
-    /// </summary>
-    /// <param name="cronFunction">The cron function whose state is to be updated.</param>
+    /// </summary> 
     /// <param name="nextExecutionDateTimeUtc">The next execution date and time in UTC.</param>
     /// <returns>The updated state of the cron job.</returns>
-    Task<CronJobState> UpdateCronJobStateAsync(CronFunction cronFunction, DateTimeOffset nextExecutionDateTimeUtc);
+    Task<CronJobState> UpdateCronJobStateAsync<TCronFunction>(DateTimeOffset nextExecutionDateTimeUtc) where TCronFunction : class;
   }
 }

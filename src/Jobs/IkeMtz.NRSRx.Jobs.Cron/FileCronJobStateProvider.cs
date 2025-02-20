@@ -35,11 +35,11 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     /// <summary>
     /// Gets the state of the specified cron job.
     /// </summary>
-    /// <param name="cronFunction">The cron function whose state is to be retrieved.</param>
+    /// <typeparam name="TCronFunction">The type of the cron function.</typeparam>
     /// <returns>A task that represents the asynchronous operation. The task result contains the state of the cron job.</returns>
-    public async Task<CronJobState> GetCronJobStateAsync(CronFunction cronFunction)
+    public async Task<CronJobState> GetCronJobStateAsync<TCronFunction>() where TCronFunction : class
     {
-      var filePath = GetStateFilePath(cronFunction);
+      var filePath = GetStateFilePath<TCronFunction>();
       if (File.Exists(filePath))
       {
         var json = await File.ReadAllTextAsync(filePath);
@@ -51,12 +51,12 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     /// <summary>
     /// Updates the state of the specified cron job.
     /// </summary>
-    /// <param name="cronFunction">The cron function whose state is to be updated.</param>
+    /// <typeparam name="TCronFunction">The type of the cron function.</typeparam>
     /// <param name="nextExecutionDateTimeUtc">The next execution date and time in UTC.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated state of the cron job.</returns>
-    public async Task<CronJobState> UpdateCronJobStateAsync(CronFunction cronFunction, DateTimeOffset nextExecutionDateTimeUtc)
+    public async Task<CronJobState> UpdateCronJobStateAsync<TCronFunction>(DateTimeOffset nextExecutionDateTimeUtc) where TCronFunction : class
     {
-      var filePath = GetStateFilePath(cronFunction);
+      var filePath = GetStateFilePath<TCronFunction>();
       var cronJobState = new CronJobState
       {
         LastRunDateTimeUtc = TimeProvider.GetUtcNow(),
@@ -66,9 +66,14 @@ namespace IkeMtz.NRSRx.Jobs.Cron
       return cronJobState;
     }
 
-    private string GetStateFilePath(CronFunction cronFunction)
+    /// <summary>
+    /// Gets the file path for the state of the specified cron job.
+    /// </summary>
+    /// <typeparam name="TCronFunction">The type of the cron function.</typeparam>
+    /// <returns>The file path for the state of the specified cron job.</returns>
+    private string GetStateFilePath<TCronFunction>() where TCronFunction : class
     {
-      return $"{StateDirectory.FullName}/{cronFunction.GetType().Name}.state.json";
+      return $"{StateDirectory.FullName}/{typeof(TCronFunction).Name}.state.json";
     }
   }
 }

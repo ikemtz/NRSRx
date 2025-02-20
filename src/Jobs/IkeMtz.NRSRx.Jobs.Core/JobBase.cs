@@ -166,10 +166,10 @@ namespace IkeMtz.NRSRx.Jobs.Core
           logger.LogError(x, "An unhandled exception has occurred while executing function: {functionName}", func.Name);
           return false;
         }
-        var endTime = DateTime.UtcNow;
-        var durationInSecs = endTime.Subtract(startTime).TotalSeconds;
-        logger.LogInformation("Function {functionName} completed time: {endTime} UTC", func.Name, endTime);
-        logger.LogInformation("Function {functionName} completed in {durationInSecs} secs", func.Name, durationInSecs);
+        var completionTime = DateTime.UtcNow;
+        var elapsedTimeInSecs = completionTime.Subtract(startTime).TotalSeconds;
+        logger.LogInformation("Function {functionName} completion time: {completionTime} UTC, elapsedTime: {elapsedTimeInSecs}", func.Name, completionTime, elapsedTimeInSecs);
+
         return result;
       }
     }

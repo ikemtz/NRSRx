@@ -7,20 +7,21 @@ namespace IkeMtz.NRSRx.Jobs.Cron
   /// <summary>
   /// Represents a scheduled function that can be executed based on a condition.
   /// </summary>
-  public abstract class CronFunction : IFunction
+  public abstract class CronFunction<TFunction> : IFunction
+      where TFunction : class, IFunction
   {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CronFunction"/> class.
+    /// Initializes a new instance of the <see cref="CronFunction{TFunction}"/> class.
     /// </summary>
-    /// <param name="logger">The logger instance.</param> 
-    /// <param name="timeProvider">The time provider instance.</param>
-    /// <param name="cronJobStateProvider">The cron job state provider instance.</param>
-    public CronFunction(ILogger<CronFunction> logger, TimeProvider timeProvider, ICronJobStateProvider cronJobStateProvider)
+    /// <param name="logger">The logger for the cron function.</param>
+    /// <param name="timeProvider">The time provider for the cron function.</param>
+    /// <param name="cronJobStateProvider">The cron job state provider.</param>
+    public CronFunction(ILogger<CronFunction<TFunction>> logger, TimeProvider timeProvider, ICronJobStateProvider cronJobStateProvider)
     {
       Logger = logger;
       TimeProvider = timeProvider;
       CronJobStateProvider = cronJobStateProvider;
-      CronJobState = cronJobStateProvider.GetCronJobStateAsync(this).Result;
+      CronJobState = cronJobStateProvider.GetCronJobStateAsync<TFunction>().Result;
     }
 
     /// <summary>
@@ -50,7 +51,7 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     /// <summary>
     /// Gets the logger for the cron function.
     /// </summary>
-    public ILogger<CronFunction> Logger { get; }
+    public ILogger<CronFunction<TFunction>> Logger { get; }
 
     /// <summary>
     /// Gets the time provider for the cron function.
@@ -70,11 +71,16 @@ namespace IkeMtz.NRSRx.Jobs.Cron
     public virtual async Task<bool> RunAsync()
     {
       Schedule ??= CrontabSchedule.Parse(CronExpression);
-      CronJobState.NextRunDateTimeUtc ??= Schedule.GetNextOccurrence(CronJobState.LastRunDateTimeUtc.GetValueOrDefault(TimeProvider.GetUtcNow()).UtcDateTime);
+      var nextRunTime = Schedule.GetNextOccurrence(CronJobState.LastRunDateTimeUtc.GetValueOrDefault(TimeProvider.GetUtcNow()).UtcDateTime);
+      if (!CronJobState.NextRunDateTimeUtc.HasValue)
+      {
+        await CronJobStateProvider.UpdateCronJobStateAsync<TFunction>(nextRunTime);
+      }
+      CronJobState.NextRunDateTimeUtc ??= nextRunTime;
       if (ExecuteOnStartup || CronJobState.NextRunDateTimeUtc <= TimeProvider.GetUtcNow())
       {
         var nextOccurence = Schedule.GetNextOccurrence(CronJobState.LastRunDateTimeUtc.Value.DateTime);
-        CronJobState = await CronJobStateProvider.UpdateCronJobStateAsync(this, nextOccurence);
+        CronJobState = await CronJobStateProvider.UpdateCronJobStateAsync<TFunction>(nextOccurence);
         ExecuteOnStartup = false;
         Logger.LogInformation("Executing {FunctionName} function, at {LastRunTime}.  Next run time is: {NextRuntime}", GetType().Name, CronJobState.LastRunDateTimeUtc, CronJobState.NextRunDateTimeUtc);
         return await ExecuteAsync();
