@@ -286,6 +286,30 @@
             <param name="source">The source entity.</param>
             <returns>A new instance of the destination entity with mapped properties.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.UserProvider">
+            <summary>
+            Provides the specified string as the UserId.
+            Should only be used in Unit Tests and situations where anonymous authentication is required.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.UserProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Models.UserProvider"/> class with the specified user ID.
+            </summary>
+            <param name="userId">The user ID.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.UserProvider.UserId">
+            <summary>
+            Gets or sets the user ID.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.UserProvider.GetCurrentUserId(System.String)">
+            <summary>
+            Gets the current user ID.
+            </summary>
+            <param name="defaultValue">The default value to return if the user ID is not set.</param>
+            <returns>The current user ID or the default value if the user ID is not set.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.Validation.RequiredNonDefaultAttribute">
             <summary>
             Specifies that a data field value is required and must be non-default.

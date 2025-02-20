@@ -38,15 +38,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.13" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.5.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MSTest.TestFramework" Version="3.7.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" /> 
   </ItemGroup>
   <ItemGroup>
