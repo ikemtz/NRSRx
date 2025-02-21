@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Jwt;
+using IkeMtz.NRSRx.Core.Unigration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Tests

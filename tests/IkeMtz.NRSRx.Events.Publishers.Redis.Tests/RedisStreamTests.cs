@@ -1,3 +1,4 @@
+using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
