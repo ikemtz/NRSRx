@@ -169,5 +169,36 @@
             <param name="callback">The callback to execute.</param>
             <exception cref="T:System.ArgumentNullException">Thrown if the callback is null.</exception>
         </member>
+        <member name="T:IkeMtz.NRSRx.Jobs.Unigration.MockCronJobStateProvider">
+            <summary>
+            Provides a mock implementation of the ICronJobStateProvider interface for testing purposes.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Unigration.MockCronJobStateProvider.#ctor(System.TimeProvider)">
+            <summary>
+            Initializes a new instance of the MockCronJobStateProvider class.
+            </summary>
+            <param name="timeProvider">The time provider to use for setting initial cron job state.</param>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Jobs.Unigration.MockCronJobStateProvider.Mock">
+            <summary>
+            Gets or sets the mock object for the ICronJobStateProvider interface.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Unigration.MockCronJobStateProvider.GetCronJobStateAsync``1">
+            <summary>
+            Gets the cron job state asynchronously.
+            </summary>
+            <typeparam name="TCronFunction">The type of the cron function.</typeparam>
+            <returns>A task that represents the asynchronous operation. The task result contains the cron job state.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Unigration.MockCronJobStateProvider.UpdateCronJobStateAsync``1(System.DateTimeOffset)">
+            <summary>
+            Updates the cron job state asynchronously.
+            </summary>
+            <typeparam name="TCronFunction">The type of the cron function.</typeparam>
+            <param name="nextExecutionDateTimeUtc">The next execution date and time in UTC.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the updated cron job state.</returns>
+        </member>
     </members>
 </doc>

@@ -1,4 +1,5 @@
 using IkeMtz.NRSRx.Core.Unigration;
+using IkeMtz.NRSRx.Jobs.Cron;
 using IkeMtz.NRSRx.Jobs.Unigration;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Jobs;
@@ -14,6 +15,10 @@ namespace IkeMtz.NRSRx.Jobs.Tests.Unigration
     }
 
     public override IServiceCollection SetupDependencies(IServiceCollection services) =>
-        services.SetupTestDbContext<DatabaseContext>();
+        services
+          .AddSingleton((_) => TimeProvider.System)
+          .AddSingleton<ICronJobStateProvider, MockCronJobStateProvider>()
+          .SetupTestDbContext<DatabaseContext>()
+      ;
   }
 }

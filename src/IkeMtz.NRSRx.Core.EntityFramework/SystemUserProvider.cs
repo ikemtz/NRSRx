@@ -7,6 +7,9 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
   /// </summary>
   public class SystemUserProvider() : UserProvider(SystemUserId)
   {
-    public static string? SystemUserId { get; } = "NRSRx System User";
+    /// <summary>
+    /// Gets or sets the system user ID.
+    /// </summary>
+    public static string? SystemUserId { get; set; } = "NRSRx System User";
   }
 }

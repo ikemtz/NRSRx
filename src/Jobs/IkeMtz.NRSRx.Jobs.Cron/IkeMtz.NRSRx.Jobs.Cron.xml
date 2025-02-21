@@ -4,66 +4,66 @@
         <name>IkeMtz.NRSRx.Jobs.Cron</name>
     </assembly>
     <members>
-        <member name="T:IkeMtz.NRSRx.Jobs.Cron.CronFunction">
+        <member name="T:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1">
             <summary>
             Represents a scheduled function that can be executed based on a condition.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Cron.CronFunction.#ctor(Microsoft.Extensions.Logging.ILogger{IkeMtz.NRSRx.Jobs.Cron.CronFunction},System.TimeProvider,IkeMtz.NRSRx.Jobs.Cron.ICronJobStateProvider)">
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.#ctor(Microsoft.Extensions.Logging.ILogger{IkeMtz.NRSRx.Jobs.Cron.CronFunction{`0}},System.TimeProvider,IkeMtz.NRSRx.Jobs.Cron.ICronJobStateProvider)">
             <summary>
-            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Cron.CronFunction"/> class.
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1"/> class.
             </summary>
-            <param name="logger">The logger instance.</param> 
-            <param name="timeProvider">The time provider instance.</param>
-            <param name="cronJobStateProvider">The cron job state provider instance.</param>
+            <param name="logger">The logger for the cron function.</param>
+            <param name="timeProvider">The time provider for the cron function.</param>
+            <param name="cronJobStateProvider">The cron job state provider.</param>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.CronJobState">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.CronJobState">
             <summary>
             Gets or sets the state of the cron job.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.Schedule">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.Schedule">
             <summary>
             Gets or sets the schedule for the cron function.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.CronExpression">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.CronExpression">
             <summary>
             Gets or sets the cron expression for the function.
             For guidance visit: https://crontab.guru/
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.ExecuteOnStartup">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.ExecuteOnStartup">
             <summary>
             Gets or sets a value indicating whether the function should execute on startup.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.SequencePriority">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.SequencePriority">
             <inheritdoc/>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.Logger">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.Logger">
             <summary>
             Gets the logger for the cron function.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.TimeProvider">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.TimeProvider">
             <summary>
             Gets the time provider for the cron function.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction.CronJobStateProvider">
+        <member name="P:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.CronJobStateProvider">
             <summary>
             Gets or sets the cron job state provider.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Cron.CronFunction.RunAsync">
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.RunAsync">
             <summary>
             Framework function to control CRON job execution.
             WARNING: ** It's not recommended that you override this function. **
             </summary>
             <returns>A task that represents the asynchronous operation. The task result contains a boolean value indicating whether the function executed successfully.</returns>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Cron.CronFunction.ExecuteAsync">
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.CronFunction`1.ExecuteAsync">
             <summary>
             Executes the function logic asynchronously.
             </summary>
@@ -106,38 +106,43 @@
             Gets or sets the time provider to use for getting the current UTC time.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Cron.FileCronJobStateProvider.GetCronJobStateAsync(IkeMtz.NRSRx.Jobs.Cron.CronFunction)">
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.FileCronJobStateProvider.GetCronJobStateAsync``1">
             <summary>
             Gets the state of the specified cron job.
             </summary>
-            <param name="cronFunction">The cron function whose state is to be retrieved.</param>
+            <typeparam name="TCronFunction">The type of the cron function.</typeparam>
             <returns>A task that represents the asynchronous operation. The task result contains the state of the cron job.</returns>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Cron.FileCronJobStateProvider.UpdateCronJobStateAsync(IkeMtz.NRSRx.Jobs.Cron.CronFunction,System.DateTimeOffset)">
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.FileCronJobStateProvider.UpdateCronJobStateAsync``1(System.DateTimeOffset)">
             <summary>
             Updates the state of the specified cron job.
             </summary>
-            <param name="cronFunction">The cron function whose state is to be updated.</param>
+            <typeparam name="TCronFunction">The type of the cron function.</typeparam>
             <param name="nextExecutionDateTimeUtc">The next execution date and time in UTC.</param>
             <returns>A task that represents the asynchronous operation. The task result contains the updated state of the cron job.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.FileCronJobStateProvider.GetStateFilePath``1">
+            <summary>
+            Gets the file path for the state of the specified cron job.
+            </summary>
+            <typeparam name="TCronFunction">The type of the cron function.</typeparam>
+            <returns>The file path for the state of the specified cron job.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Jobs.Cron.ICronJobStateProvider">
             <summary>
             Common interface to get and update the state of a cron job.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Cron.ICronJobStateProvider.GetCronJobStateAsync(IkeMtz.NRSRx.Jobs.Cron.CronFunction)">
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.ICronJobStateProvider.GetCronJobStateAsync``1">
             <summary>
             Gets the state of the specified cron job.
             </summary>
-            <param name="cronFunction">The cron function whose state is to be retrieved.</param>
             <returns>The state of the specified cron job.</returns>
         </member>
-        <member name="M:IkeMtz.NRSRx.Jobs.Cron.ICronJobStateProvider.UpdateCronJobStateAsync(IkeMtz.NRSRx.Jobs.Cron.CronFunction,System.DateTimeOffset)">
+        <member name="M:IkeMtz.NRSRx.Jobs.Cron.ICronJobStateProvider.UpdateCronJobStateAsync``1(System.DateTimeOffset)">
             <summary>
             Updates the state of the cron job with the next execution date and time.
-            </summary>
-            <param name="cronFunction">The cron function whose state is to be updated.</param>
+            </summary> 
             <param name="nextExecutionDateTimeUtc">The next execution date and time in UTC.</param>
             <returns>The updated state of the cron job.</returns>
         </member>

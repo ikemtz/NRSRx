@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Jobs\IkeMtz.NRSRx.Jobs.Cron\IkeMtz.NRSRx.Jobs.Cron.csproj" />
     <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Jobs.Logging.Splunk\IkeMtz.NRSRx.Jobs.Logging.Splunk.csproj" />
     <ProjectReference Include="..\IkeMtz.Samples.WebApi\IkeMtz.Samples.WebApi.csproj" />
   </ItemGroup>

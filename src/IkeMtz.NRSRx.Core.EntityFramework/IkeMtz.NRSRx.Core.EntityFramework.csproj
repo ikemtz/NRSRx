@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ProjectGuid>00E643EF-9E58-48FA-9FB9-4736B272DA4B</ProjectGuid>
-
     <Authors>IkeMtz</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

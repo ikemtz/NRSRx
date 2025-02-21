@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using IkeMtz.NRSRx.Jobs.Core;
+using IkeMtz.NRSRx.Jobs.Cron;
 using IkeMtz.Samples.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,8 @@ namespace IkeMtz.Samples.Jobs
     public override IServiceCollection SetupDependencies(IServiceCollection services)
     {
       return services
+        .AddSingleton((_) => TimeProvider.System)
+        .AddSingleton<ICronJobStateProvider>((_) => new FileCronJobStateProvider(new DirectoryInfo("cron"), TimeProvider.System))
        .AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetValue<string>("DbConnectionString")));
     }
 

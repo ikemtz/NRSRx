@@ -250,5 +250,10 @@
             Provides a ICurrentUserProvider that is hard coded to provide "NRSRx System User".
             </summary>
         </member>
+        <member name="P:IkeMtz.NRSRx.Core.EntityFramework.SystemUserProvider.SystemUserId">
+            <summary>
+            Gets or sets the system user ID.
+            </summary>
+        </member>
     </members>
 </doc>

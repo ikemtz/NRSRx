@@ -944,6 +944,11 @@
         "resolved": "3.8.2",
         "contentHash": "ODWteXvnMEgCoZl1vAi2lOFIFFJSZkyQoQB9AFwBEUrzgJpy5J4ml3jLye4n85TA7gd+Qg2eWtqkvyEunB7B0g=="
       },
+      "NCrontab.Signed": {
+        "type": "Transitive",
+        "resolved": "3.3.3",
+        "contentHash": "YzLZyFiovVnAvvsTDnQygC82KhQyJIMsBspTYvHaK4Fp73UgUCni05mIQgOMZIZDlnO8Mg9fcNi5fpDArgQO4A=="
+      },
       "NETStandard.Library": {
         "type": "Transitive",
         "resolved": "1.6.1",
@@ -2247,6 +2252,21 @@
           "Swashbuckle.AspNetCore": "[7.2.0, )"
         }
       },
+      "ikemtz.nrsrx.jobs.cron": {
+        "type": "Project",
+        "dependencies": {
+          "IkeMtz.NRSRx.Jobs.Core": "[1.0.0, )",
+          "MSTest.TestFramework": "[3.8.2, )",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "[8.0.13, )",
+          "Microsoft.EntityFrameworkCore": "[8.0.13, )",
+          "Microsoft.Extensions.Configuration.UserSecrets": "[8.0.1, )",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.0.2, )",
+          "Microsoft.Extensions.Hosting": "[8.0.1, )",
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "[8.5.0, )",
+          "NCrontab.Signed": "[3.3.3, )",
+          "Swashbuckle.AspNetCore": "[7.2.0, )"
+        }
+      },
       "ikemtz.nrsrx.jobs.logging.splunk": {
         "type": "Project",
         "dependencies": {
@@ -2283,6 +2303,7 @@
         "dependencies": {
           "IkeMtz.NRSRx.Core.EntityFramework": "[1.0.0, )",
           "IkeMtz.NRSRx.Jobs.Core": "[1.0.0, )",
+          "IkeMtz.NRSRx.Jobs.Cron": "[1.0.0, )",
           "IkeMtz.NRSRx.Unigration.Logging": "[1.0.0, )",
           "MSTest.TestAdapter": "[3.8.2, )",
           "MSTest.TestFramework": "[3.8.2, )",
@@ -2334,6 +2355,7 @@
         "type": "Project",
         "dependencies": {
           "IkeMtz.NRSRx.Core.WebApi": "[1.0.0, )",
+          "IkeMtz.NRSRx.Jobs.Cron": "[1.0.0, )",
           "IkeMtz.NRSRx.Jobs.Logging.Splunk": "[1.0.0, )",
           "IkeMtz.Samples.WebApi": "[1.0.0, )",
           "MSTest.TestFramework": "[3.8.2, )",

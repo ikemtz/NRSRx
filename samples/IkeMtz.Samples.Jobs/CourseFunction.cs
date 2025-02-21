@@ -1,4 +1,4 @@
-using IkeMtz.NRSRx.Jobs.Core;
+using IkeMtz.NRSRx.Jobs.Cron;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.EntityFrameworkCore;
@@ -6,19 +6,26 @@ using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.Samples.Jobs
 {
-  internal class CourseFunction : IFunction
+  internal class CourseFunction : CronFunction<CourseFunction>
   {
     public ILogger Logger { get; }
     public DatabaseContext DatabaseContext { get; }
 
-    public int? SequencePriority => null;
+    public override int? SequencePriority { get; } = 100;
 
-    public CourseFunction(ILogger<CourseFunction> logger, DatabaseContext databaseContext)
+    public override string CronExpression { get; set; } = "*/5 * * * *";
+
+    public CourseFunction(
+      ILogger<CourseFunction> logger,
+      TimeProvider timeProvider,
+      ICronJobStateProvider cronJobStateProvider,
+      DatabaseContext databaseContext)
+      : base(logger, timeProvider, cronJobStateProvider)
     {
       Logger = logger;
       DatabaseContext = databaseContext;
     }
-    public async Task<bool> RunAsync()
+    public override async Task<bool> ExecuteAsync()
     {
       _ = DatabaseContext.Courses.Add(
         new Course
