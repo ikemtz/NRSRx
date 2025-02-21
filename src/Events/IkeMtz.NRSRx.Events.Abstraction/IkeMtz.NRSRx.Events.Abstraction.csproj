@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
     <ProjectGuid>9D63F8C6-E3AF-407D-B4C7-DDCE78F51499</ProjectGuid>
-
     <LangVersion>8.0</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -39,7 +38,6 @@
   <ItemGroup>
     <None Include="..\..\..\build\ProfilePic.jpg">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 </Project>

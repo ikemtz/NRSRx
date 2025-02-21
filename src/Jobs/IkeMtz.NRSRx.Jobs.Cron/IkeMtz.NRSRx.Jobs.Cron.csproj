@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -31,14 +30,12 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup>
     <NoWarn>1701;1702;S2436;MSB3277;CS8604;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Jobs.Cron.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
-      <PackagePath></PackagePath>
       <Pack>True</Pack>
     </None>
   </ItemGroup>
@@ -60,5 +57,4 @@
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Jobs.Core\IkeMtz.NRSRx.Jobs.Core.csproj" />
   </ItemGroup>
-
 </Project>

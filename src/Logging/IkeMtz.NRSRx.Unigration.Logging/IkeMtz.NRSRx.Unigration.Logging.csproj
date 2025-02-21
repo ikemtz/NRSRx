@@ -1,10 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ProjectGuid>67CF33561CC7472A98EFB73C85F89F13</ProjectGuid> 
+    <ProjectGuid>67CF33561CC7472A98EFB73C85F89F13</ProjectGuid>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryType>Git</RepositoryType>
     <Company>IkeMtz</Company>
@@ -27,7 +26,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
-      <PackagePath></PackagePath>
       <Pack>True</Pack>
     </None>
   </ItemGroup>
@@ -35,13 +33,13 @@
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference> 
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" /> 
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>  
+    </PackageReference>
     <PackageReference Include="MSTest.TestAdapter" Version="3.8.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -51,5 +49,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />
   </ItemGroup>
-
 </Project>
