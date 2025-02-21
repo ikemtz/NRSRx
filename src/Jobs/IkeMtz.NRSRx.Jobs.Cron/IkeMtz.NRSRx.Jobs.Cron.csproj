@@ -35,8 +35,9 @@
     <DocumentationFile>./IkeMtz.NRSRx.Jobs.Cron.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
+    <None Include="..\..\..\build\ProfilePic.jpg">
       <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>

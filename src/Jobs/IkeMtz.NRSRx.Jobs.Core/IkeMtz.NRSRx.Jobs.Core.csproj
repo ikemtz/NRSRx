@@ -28,8 +28,9 @@
     <Compile Include="..\..\IkeMtz.NRSRx.Core.Web\ConfigurationFactory.cs" Link="ConfigurationFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\build\ProfilePic.jpg" Link="ProfilePic.jpg">
+    <None Include="..\..\..\build\ProfilePic.jpg">
       <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>

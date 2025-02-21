@@ -31,6 +31,7 @@
     <None Remove="pub\**" />
     <None Include="..\..\build\ProfilePic.jpg">
       <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>
