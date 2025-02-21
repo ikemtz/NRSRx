@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public class SchoolUnigrationTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSchoolsTest()
     {
       var School = Factories.SchoolFactory();
@@ -43,7 +43,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetGroupBySchoolsTest()
     {
       var School = Factories.SchoolFactory();
@@ -67,7 +67,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSchoolsWithExpansionTest()
     {
       var schoolCourse = Factories.SchoolCourseFactory(Factories.SchoolFactory(), Factories.CourseFactory());
@@ -95,7 +95,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetMaxErrorSchoolsTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
@@ -112,7 +112,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [Ignore("Waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task ComputeMinSchoolTest()
     {
@@ -144,7 +144,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [Ignore("waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task GetMaxSchoolsTest()
     {
@@ -159,7 +159,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteSchoolsTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());

@@ -18,7 +18,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
   public partial class SchoolsTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task CreateSchoolsTest()
     {
       var mockPublisher = MockRedisStreamFactory<School, CreatedEvent>.CreatePublisher();
@@ -38,7 +38,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task UpdateSchoolsTest()
     {
       var mockPublisher = MockRedisStreamFactory<School, UpdatedEvent>.CreatePublisher();
@@ -58,7 +58,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteSchoolsTest()
     {
       var mockPublisher = MockRedisStreamFactory<School, DeletedEvent>.CreatePublisher();

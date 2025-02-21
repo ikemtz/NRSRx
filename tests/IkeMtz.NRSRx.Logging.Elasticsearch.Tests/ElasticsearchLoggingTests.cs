@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
   public class ElasticsearchLoggingTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ConsoleLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
@@ -25,7 +25,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
       Assert.IsNotNull(result);
     }
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ElasticLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
       Assert.IsNotNull(result);
     }
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void UseLoggingTest()
     {
       var moq = new Mock<IHostBuilder>();
@@ -44,7 +44,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task CreateDefaultHostBuilderWithElasticTest()
     {
       var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Elastic>().UseLogging();
@@ -62,7 +62,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task GetSwaggerUI()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_Elastic, StartUp_Elastic>());

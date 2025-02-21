@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class OpenIdConfigurationTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GetOpenIdConfigurationTest()
     {
       var appSettings = new AppSettings

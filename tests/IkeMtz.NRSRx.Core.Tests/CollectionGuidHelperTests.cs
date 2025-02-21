@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   {
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     [ExpectedException(typeof(ArgumentNullException))]
     public void NullRefOnNullDestinationCollectionTest()
     {
@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     [ExpectedException(typeof(ArgumentNullException))]
     public void Conversion_NullRefOnNullDestinationCollectionTest()
     {
@@ -33,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     [ExpectedException(typeof(ArgumentNullException))]
     public void NullRefOnNullContextTest()
     {
@@ -44,7 +44,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     [ExpectedException(typeof(ArgumentNullException))]
     public void Conversion_NullRefOnNullContextTest()
     {
@@ -55,7 +55,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void RemoveItemsFromCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -73,7 +73,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Conversion_RemoveItemsFromCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -91,7 +91,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void RemoveItemsFromCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -106,7 +106,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Conversion_RemoveItemsFromCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -121,7 +121,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void SourceCollectionNullTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -139,7 +139,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Conversion_SourceCollectionNullTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -157,7 +157,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void AddItemsToCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -171,7 +171,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Converstion_AddItemsToCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -186,7 +186,7 @@ namespace IkeMtz.NRSRx.Core.Tests
 
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void AddItemsToCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
@@ -197,7 +197,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Converstion_AddItemsToCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);

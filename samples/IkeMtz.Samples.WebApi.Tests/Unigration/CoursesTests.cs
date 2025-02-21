@@ -15,7 +15,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
   public partial class CoursesTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task SaveCoursesTest()
     {
       var item = Factories.CourseFactory();
@@ -39,7 +39,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task UpdateCourseTest()
     {
       var originalCourse = Factories.CourseFactory();

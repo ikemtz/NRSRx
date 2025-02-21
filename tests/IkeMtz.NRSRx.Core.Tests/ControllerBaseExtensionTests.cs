@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class ControllerBaseExtensionTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void TestBuildNumberOutput()
     {
       var controller = new TestController();
@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void TestGetPingResult()
     {
       var controller = ControllerFactory<TestController>.Create();
@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void TestGetNullPingResult()
     {
       var controller = ControllerFactory<TestController>.Create();

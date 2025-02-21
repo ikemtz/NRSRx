@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   public class MultiTenantTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetMultiTenantSchoolTestAsync()
     {
       var item = Factories.SchoolFactory();
@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task NoTenantsTestAsync()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
@@ -55,7 +55,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task NoAccessToTenantTestAsync()
     {
       var item = Factories.SchoolFactory();
@@ -79,7 +79,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task NoTenantParameterTestAsync()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());

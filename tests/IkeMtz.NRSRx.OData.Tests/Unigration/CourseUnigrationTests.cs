@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public class CourseUnigrationTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetCoursesTest()
     {
       var item = Factories.CourseFactory();
@@ -41,7 +41,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
     }
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetCoursesWithInterceptorTest()
     {
       var item = Factories.CourseFactory();
@@ -66,7 +66,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetGroupByCoursesTest()
     {
       var item = Factories.CourseFactory();
@@ -91,7 +91,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetCoursesWithExpansionTest()
     {
       var item = Factories.SchoolCourseFactory(Factories.SchoolFactory(), Factories.CourseFactory());
@@ -119,7 +119,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetMaxErrorCoursesTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());

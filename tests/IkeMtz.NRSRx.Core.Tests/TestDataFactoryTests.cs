@@ -9,7 +9,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class TestDataFactoryTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GenerateAllChars()
     {
       var result = TestDataFactory.StringGenerator(50, true, CharacterSets.AlphaNumericChars);
@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GenerateAlphaChars()
     {
       var result = TestDataFactory.StringGenerator(50);
@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GenerateAlphaCharsWithSpaces()
     {
       var result = TestDataFactory.StringGenerator(50, true);
@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.IsTrue(char.IsUpper(result.First()));
     }
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GenerateLowerChars()
     {
       var result = TestDataFactory.StringGenerator(50, true, CharacterSets.LowerCase);
@@ -50,7 +50,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GenerateNumbers()
     {
       var result = TestDataFactory.StringGenerator(6, false, characterSet: CharacterSets.Numeric);

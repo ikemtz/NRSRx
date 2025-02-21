@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class PublisherUnigrationTesterTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidatePublisherUnigrationTypedIdTester()
     {
       var tester = new PublisherUnigrationTester<MyIntModel, Message, int>();
@@ -33,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidatePublisherUnigrationGuidIdTester()
     {
       var tester = new PublisherUnigrationTester<MyGuidModel, Message>();
@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ValidateDependencyRegistration()
     {
       var serviceCollection = new ServiceCollection();

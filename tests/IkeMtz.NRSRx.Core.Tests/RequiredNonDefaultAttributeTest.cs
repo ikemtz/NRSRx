@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class RequiredNonDefaultAttributeTest : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task ValidateNoGuidFailure()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
@@ -27,7 +27,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task ValidateEmptyGuidFailure()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
@@ -40,7 +40,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ValidateEmptyGuidFailureUnitTest()
     {
       var controller = ControllerFactory<TestController>.Create();
@@ -49,7 +49,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ValidateNonEmptyGuidSuccess()
     {
       var controller = ControllerFactory<TestController>.Create();
@@ -58,7 +58,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task ValidateSuccess()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
@@ -72,7 +72,7 @@ namespace IkeMtz.NRSRx.Core.Tests
 
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task ValidateEmptyArrayFailure()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());

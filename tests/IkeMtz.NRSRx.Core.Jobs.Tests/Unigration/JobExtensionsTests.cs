@@ -1,3 +1,4 @@
+using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Logging.Splunk;
 using IkeMtz.Samples.Jobs;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,10 +7,10 @@ using Microsoft.Extensions.Logging;
 namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
 {
   [TestClass]
-  public class JobExtensionsTests
+  public class JobExtensionsTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public void SetupSplunkTest()
     {
       var job = new Program();

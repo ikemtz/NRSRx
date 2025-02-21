@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
   public partial class HubTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [Timeout(4000)]
     public void ValidateSignalRStartup()
     {
@@ -25,7 +25,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task NotificationHubTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
@@ -57,7 +57,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [ExpectedException(typeof(HttpRequestException))]
     public async Task NotificationHub401Test()
     {

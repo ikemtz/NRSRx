@@ -13,7 +13,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class BatchProcessingEntityFrameworkTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task HandleBatchSaveChangesAsyncMultipleDbContext()
     {
       var logger = new TestContextLogger(nameof(TestAuditableDbContext), TestContext);

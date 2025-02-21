@@ -14,7 +14,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
   public class SwaggerTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerIndexPageTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>());
@@ -23,7 +23,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerJsonTest()
     {
       var myConfiguration = new Dictionary<string, string?>

@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class PermissionsTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ScopedPermission_Fail_Test()
     {
       var claims = new[] {
@@ -27,7 +27,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Scoped_Permissions_Pass_Many2Many_Test()
     {
       var claims = new[] {
@@ -39,7 +39,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Permissions_Fail_Test()
     {
       var claims = new[] {
@@ -52,7 +52,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Permissions_Fail_NoPerms_Test()
     {
       var claims = Array.Empty<Claim>();
@@ -63,7 +63,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Permissions_Pass_Many2Many_Test()
     {
       var claims = new[] {
@@ -76,7 +76,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Permissions_Pass_OneOfMany_Test()
     {
       var claims = new[] {
@@ -90,7 +90,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void Permissions_Pass_Single_Test()
     {
       var claims = new[] {

@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Logging.ApplicationInsights.Tests
   public class AppInsightsLoggingTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void TestUseLogging()
     {
       var moq = new Mock<IHostBuilder>();

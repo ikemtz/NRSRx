@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   public class AuditableSecurityTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task SaveCourseCausesAuditInvalidUserExTest()
     {
       var item = Factories.CourseFactory();
@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task UpdateCourseCausesAuditInvalidUserExTest()
     {
       var originalCourse = Factories.CourseFactory();

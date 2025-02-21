@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
   {
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task SampleSplitSchoolCreatedEventTest()
     {
       //arange

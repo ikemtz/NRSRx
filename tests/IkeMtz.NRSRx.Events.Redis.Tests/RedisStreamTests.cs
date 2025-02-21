@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
   public class RedisStreamTests
   {
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task ValidateRedisPublishAsync()
     {
@@ -46,7 +46,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task ValidateMultipleConsumersWithPendingAsync()
     {
@@ -83,7 +83,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task ValidateMultipleConsumerGroupsAsync()
     {
@@ -143,7 +143,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task ValidateGetPendingSingleConsumerGroupsAsync()
     {
@@ -166,7 +166,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task PushSchoolEventsAsync()
     {
@@ -188,7 +188,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task ValidateConsumerGroupNewMessagePositionAsync()
     {
@@ -223,7 +223,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task ValidateConsumerGroupBeginningPositionAsync()
     {
@@ -257,7 +257,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateRedisMoqPublishAsync()
     {
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
@@ -269,7 +269,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateRedisMoqSubscriberGetMessagesAsync()
     {
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
@@ -289,7 +289,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateRedisMoqSubscriberGetPendingMessagesAsync()
     {
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
@@ -310,7 +310,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateGetConsumersWithPendingMessagesTest()
     {
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
@@ -322,7 +322,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     [ExpectedException(typeof(InvalidProgramException))]
     public async Task ValidateSubscriptionState()
     {
@@ -331,7 +331,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     [ExpectedException(typeof(InvalidProgramException))]
     public async Task ValidateSubscriptionIdentityTypeState()
     {
@@ -340,7 +340,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateMessageAcknowledgement()
     {
       var (Connection, Database) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateConnection();
@@ -351,7 +351,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateMockMessageRecieved()
     {
       var message = new SampleMessage();
@@ -361,7 +361,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateSubscriberMessageRecieved()
     {
       var (Connection, _) = MockRedisStreamFactory.CreateMockConnection();
@@ -371,7 +371,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ValidateMessageCoderJsonDecode()
     {
       var json = "eyJpZCI6IjA5MDhlOGM0LWJhOGEtNDQyNy1hNjJmLTkxOTEyZWU3NmUyNiIsIm5hbWUiOiI1MWM5ZTRkYy00ZDc1LTQxNGQtOWFmOS00NDJjNGViNTM2YzIifQ==";

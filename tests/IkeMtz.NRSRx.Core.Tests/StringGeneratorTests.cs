@@ -9,7 +9,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class StringGeneratorTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GenerateStringWithSpacesTest()
     {
       string? lastString = null;
@@ -23,7 +23,7 @@ namespace IkeMtz.NRSRx.Core.Tests
        });
     }
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void GenerateStringsTest()
     {
       string? lastString = null;

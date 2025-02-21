@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
   public class SampleJobSplitFunctionTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task SampleJobSplitFunctionTest()
     {
