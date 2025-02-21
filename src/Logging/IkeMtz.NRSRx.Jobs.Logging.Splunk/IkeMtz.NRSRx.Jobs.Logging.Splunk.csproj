@@ -19,7 +19,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <NoWarn>1701;1702;IDE0060;S4792</NoWarn>
+    <NoWarn>1701;1702;IDE0060;S4792;CS8618;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Jobs.Logging.Splunk.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
