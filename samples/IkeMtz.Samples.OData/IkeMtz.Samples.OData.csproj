@@ -8,8 +8,8 @@
     <Nullable>enable</Nullable>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CA1707;CS1591;CS8618;</NoWarn>
+  <PropertyGroup>
+    <NoWarn>1701;1702;CA1707;CS1591;CS8618;S6967;S6934;</NoWarn>
     <DocumentationFile>./IkeMtz.Samples.OData.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
