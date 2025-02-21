@@ -1,12 +1,15 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace IkeMtz.NRSRx.Core
+namespace IkeMtz.NRSRx.Core.Web
 {
   /// <summary>
   /// An action filter attribute that validates the model state before executing the action.
   /// </summary>
+  [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+
   public sealed class ValidateModelAttribute : ActionFilterAttribute
   {
     /// <summary>
