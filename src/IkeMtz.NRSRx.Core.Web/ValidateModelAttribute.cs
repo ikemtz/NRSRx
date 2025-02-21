@@ -2,7 +2,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace IkeMtz.NRSRx.Core.WebApi
+namespace IkeMtz.NRSRx.Core
 {
   /// <summary>
   /// An action filter attribute that validates the model state before executing the action.

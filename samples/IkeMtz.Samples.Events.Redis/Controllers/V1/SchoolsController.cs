@@ -1,10 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
-using IkeMtz.NRSRx.Core.WebApi;
 using IkeMtz.NRSRx.Events;
-using IkeMtz.NRSRx.Events.Publishers.Redis;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.Mvc;
 using static Microsoft.AspNetCore.Http.StatusCodes;
