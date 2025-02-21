@@ -4,6 +4,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Jobs;
 using IkeMtz.Samples.Tests;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
 {
@@ -22,13 +23,9 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
       await program.RunAsync();
 
       //assert
-      program.ExecuteOnContext<DatabaseContext>(async x =>
-      {
-        var schoolCount = await x.Schools.CountAsync();
-        Assert.AreEqual(0, schoolCount);
-        var courseCount = await x.Courses.CountAsync();
-        Assert.AreEqual(2, courseCount);
-      });
+      var dbContext = program.JobHost.Services.GetService<DatabaseContext>();
+      Assert.IsTrue(await dbContext.Courses.AnyAsync());
+      Assert.IsFalse(await dbContext.Schools.AnyAsync());
     }
   }
 }

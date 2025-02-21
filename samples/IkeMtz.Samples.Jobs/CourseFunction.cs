@@ -6,25 +6,18 @@ using Microsoft.Extensions.Logging;
 
 namespace IkeMtz.Samples.Jobs
 {
-  internal class CourseFunction : CronFunction<CourseFunction>
+  internal class CourseFunction(
+    ILogger<CourseFunction> logger,
+    TimeProvider timeProvider,
+    ICronJobStateProvider cronJobStateProvider,
+    DatabaseContext databaseContext) : CronFunction<CourseFunction>(logger, timeProvider, cronJobStateProvider)
   {
-    public ILogger Logger { get; }
-    public DatabaseContext DatabaseContext { get; }
+    public DatabaseContext DatabaseContext { get; } = databaseContext;
 
     public override int? SequencePriority { get; } = 100;
 
     public override string CronExpression { get; set; } = "*/5 * * * *";
 
-    public CourseFunction(
-      ILogger<CourseFunction> logger,
-      TimeProvider timeProvider,
-      ICronJobStateProvider cronJobStateProvider,
-      DatabaseContext databaseContext)
-      : base(logger, timeProvider, cronJobStateProvider)
-    {
-      Logger = logger;
-      DatabaseContext = databaseContext;
-    }
     public override async Task<bool> ExecuteAsync()
     {
       _ = DatabaseContext.Courses.Add(
