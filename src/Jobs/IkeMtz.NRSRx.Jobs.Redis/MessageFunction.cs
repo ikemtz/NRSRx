@@ -96,10 +96,9 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     /// <returns>A task that represents the asynchronous process operation.</returns>
     public virtual async Task ProcessStreamsAsync(string messageType, Func<int?, Task<IEnumerable<(RedisValue Id, TEntity Entity)>>> getMessageFunction)
     {
-      Logger.LogInformation("Pulling {MessageBufferCount} {messageType} messages from queue.", MessageBufferCount, messageType);
       var messages = await getMessageFunction(MessageBufferCount);
       var messageCount = messages.Count();
-      Logger.LogInformation("Received {messageCount} {messageType} messages from queue.", messageCount, messageType);
+      Logger.LogInformation("Pulling {messageBufferCount} and received {messageCount} {messageType} messages from queue.", MessageBufferCount, messageCount, messageType);
       var processedMessageCount = 0;
       foreach (var (redisId, entity) in messages)
       {
@@ -123,7 +122,10 @@ namespace IkeMtz.NRSRx.Jobs.Redis
           Logger.LogError(x, "An error occurred while handling {messageType} message with entity id: {id} ", messageType, id);
         }
       }
-      Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
+      if (messageCount > 0)
+      {
+        Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
+      }
     }
 
     /// <summary>
