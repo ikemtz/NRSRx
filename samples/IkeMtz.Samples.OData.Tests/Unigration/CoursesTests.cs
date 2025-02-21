@@ -14,7 +14,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
   public partial class CoursesTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetCoursesTest()
     {
       var objA = Factories.CourseFactory();

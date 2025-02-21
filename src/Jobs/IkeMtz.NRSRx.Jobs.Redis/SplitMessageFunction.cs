@@ -62,8 +62,7 @@ namespace IkeMtz.NRSRx.Jobs.Redis
     /// <param name="messages">The messages to process.</param>
     public virtual async Task ProcessStreamSplitBatchAsync(string messageType, IEnumerable<(RedisValue Id, SplitMessage<TEntity> Entity)> messages)
     {
-      Logger.LogInformation("Pulling {MessageBufferCount} {messageType} messages from queue.", MessageBufferCount, messageType);
-      Logger.LogInformation("Received {messageCount} {messageType} messages from queue.", messages.Count(), messageType);
+      Logger.LogInformation("Pulling {MessageBufferCount} and received {messageCount} {messageType} messages from queue.", MessageBufferCount, messages.Count(), messageType);
       int processedMessageCount = 0;
       foreach (var (redisId, entity) in messages)
       {
@@ -83,7 +82,11 @@ namespace IkeMtz.NRSRx.Jobs.Redis
           await NotifySplitProgress(entity, false);
         }
       }
-      Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
+      if (messages.Any())
+      {
+
+        Logger.LogInformation("Processed {processedMessageCount} {messageType} messages from queue.", processedMessageCount, messageType);
+      }
     }
 
     /// <summary>

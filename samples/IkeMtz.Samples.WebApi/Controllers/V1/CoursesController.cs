@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
-using IkeMtz.NRSRx.Core.WebApi;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.Authorization;
@@ -16,16 +16,10 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
-  public class CoursesController : ControllerBase
+  public class CoursesController(DatabaseContext databaseContext, ILogger<CoursesController> logger) : ControllerBase
   {
-    private readonly DatabaseContext _databaseContext;
-    private readonly ILogger<CoursesController> logger;
-
-    public CoursesController(DatabaseContext databaseContext, ILogger<CoursesController> logger)
-    {
-      _databaseContext = databaseContext;
-      this.logger = logger;
-    }
+    private readonly DatabaseContext _databaseContext = databaseContext;
+    private readonly ILogger<CoursesController> logger = logger;
 
     // Get api/Courses
     [HttpGet]

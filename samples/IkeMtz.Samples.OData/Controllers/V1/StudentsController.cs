@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using IkeMtz.NRSRx.Core.Models;
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,7 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     }
 
     [HttpDelete]
+    [ValidateModel]
     public ActionResult Delete([FromODataUri] Guid key)
     {
       return key != Guid.Empty ? Ok() : NotFound();

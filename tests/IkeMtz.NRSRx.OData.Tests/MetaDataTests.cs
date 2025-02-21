@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public class MetaDataTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [Ignore] //NOSONAR
     public async Task GetMetaDataTest()
     {

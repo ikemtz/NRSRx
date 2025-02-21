@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
   public class SplunkLoggingTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ConsoleLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
       Assert.IsNotNull(result);
     }
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void SplunkLoggingTest()
     {
       var moqConfiguration = new Mock<IConfiguration>();
@@ -37,7 +37,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task CreateDefaultHostBuilderWithSplunkTest()
     {
       var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_Splunk>().UseLogging();
@@ -54,7 +54,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task GetSwaggerUI()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_Splunk, StartUp_Splunk>());

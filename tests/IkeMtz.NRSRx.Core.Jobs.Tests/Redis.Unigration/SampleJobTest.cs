@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
   public class SampleJobTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task SampleJobTest()
     {
       //arange
@@ -38,7 +38,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
 
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task SampleSchoolCreatedEventTest()
     {
       //arange

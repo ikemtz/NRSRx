@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class CoreWebStartupTest : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task CreateDefaultHostBuilderWithAppInsightsTest()
     {
       var builder = CoreWebStartup.CreateDefaultHostBuilder<StartUp_AppInsights>().UseLogging();

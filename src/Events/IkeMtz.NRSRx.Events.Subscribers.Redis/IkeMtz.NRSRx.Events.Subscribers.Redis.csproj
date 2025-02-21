@@ -30,7 +30,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <NoWarn>1701;1702;S2436;MSB3277;CS8618;CS8603;</NoWarn>
+    <NoWarn>1701;1702;S2436;MSB3277;CS8618;CS8603;CS8601;CS8604;CS8619;CS8620;CS8633;CS8767;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Events.Subscribers.Redis.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

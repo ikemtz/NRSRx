@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
@@ -16,7 +17,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public class SchoolIntegrationTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     public async Task GetSchoolsTest()
     {
       var item = Factories.SchoolFactory();
@@ -34,14 +35,14 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$filter=id eq {item.Id}");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.AreEqual(item.Name, envelope?.Value.First().Name);
     }
 
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     public async Task GetItemsWithExpansionTest()
     {
       var item = Factories.SchoolFactory();
@@ -65,7 +66,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}&$filter=id eq {item.Id}");
 
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Name, envelope.Value.First().Name);

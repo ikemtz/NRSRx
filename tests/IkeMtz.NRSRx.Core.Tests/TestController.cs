@@ -1,3 +1,4 @@
+using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
 

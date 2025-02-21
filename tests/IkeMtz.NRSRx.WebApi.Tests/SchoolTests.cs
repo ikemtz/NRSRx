@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   public class SchoolTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSchoolTestAsync()
     {
       var item = Factories.SchoolFactory();
@@ -43,7 +43,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task SaveSchoolTest()
     {
       var item = Factories.SchoolFactory();
@@ -67,7 +67,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [ExpectedException(typeof(JsonReaderException))]
     public async Task SaveSchoolJsonReaderExceptionsTest()
     {
@@ -82,7 +82,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task UpdateSchoolTest()
     {
       var originalSchool = Factories.SchoolFactory();
@@ -120,7 +120,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteSchoolTest()
     {
       var item = Factories.SchoolFactory();

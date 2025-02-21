@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   public class StudentUnigrationTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetStudentsTest()
     {
       var item = Factories.StudentFactory();
@@ -43,7 +43,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetGroupByStudentsTest()
     {
       var item = Factories.StudentFactory();
@@ -67,7 +67,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetStudentsWithExpansionTest()
     {
       var item = Factories.StudentCourseFactory(Factories.StudentFactory(), Factories.CourseFactory(), Factories.SchoolFactory());
@@ -95,7 +95,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetMaxErrorStudentsTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
@@ -111,7 +111,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetMaxStudentsTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
@@ -125,7 +125,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteStudentsTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
@@ -137,7 +137,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [Ignore("waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task GetODataDebugPage()
     {

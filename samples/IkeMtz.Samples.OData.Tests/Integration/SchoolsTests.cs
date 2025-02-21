@@ -17,7 +17,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
   public partial class SchoolsTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("SqlIntegration")]
     public async Task GetSchoolsTest()
     {
@@ -37,7 +37,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     }
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("SqlIntegration")]
     public async Task GetGroupBySchoolsTest()
     {
@@ -61,7 +61,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     }
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("SqlIntegration")]
     public async Task GetSchoolsWithExpansionsTest()
     {
@@ -93,7 +93,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
     }
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("SqlIntegration")]
     public async Task GetGroupBySchoolsTestWithAggregations()
     {

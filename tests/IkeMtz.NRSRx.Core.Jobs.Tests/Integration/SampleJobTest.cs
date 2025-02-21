@@ -3,6 +3,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Jobs;
 using IkeMtz.Samples.Tests;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.Core.Jobs.Tests.Integration
 {
@@ -21,13 +22,9 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Integration
       await program.RunAsync();
 
       //assert
-      program.ExecuteOnContext<DatabaseContext>(async x =>
-      {
-        var schoolCount = await x.Schools.CountAsync();
-        Assert.IsTrue(1 <= schoolCount);
-        var courseCount = await x.Courses.CountAsync();
-        Assert.IsTrue(1 <= courseCount);
-      });
+      var dbContext = program.JobHost.Services.GetRequiredService<DatabaseContext>();
+      Assert.IsTrue(await dbContext.Courses.AnyAsync());
+      Assert.IsTrue(await dbContext.Schools.AnyAsync());
     }
   }
 }

@@ -10,14 +10,14 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class EnumHelperTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void TestConvertCharEnumValues()
     {
       var result = EnumHelper.ConvertEnumValues<CharEnum, char, CharEnumValue>();
       Assert.AreEqual(2, result.Count());
     }
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void TestConvertIntEnumValues()
     {
       var result = EnumHelper.ConvertEnumValues<IntEnum, IntEnumValue>();

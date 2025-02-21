@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
   public class SampleJobTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task SampleJobTest()
     {
@@ -54,7 +54,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
     }
 
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     [TestCategory("RedisIntegration")]
     public async Task RedisStreamSplitMessagePublisherTest()
     {

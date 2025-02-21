@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   public class HealthPageTest : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetHealthPageTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());

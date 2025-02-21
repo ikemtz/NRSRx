@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class EventsTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void ValidateEvents()
     {
       var assembly = typeof(CreatedEvent).Assembly;

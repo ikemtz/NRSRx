@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   {
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task TestJsonDocAsync()
     {
       var myConfiguration = new Dictionary<string, string?>
@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task TestHtmlPageAsync()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
@@ -41,7 +41,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public void TestGetSwaggerScopes()
     {
       var result = ConfigureSwaggerOptions.GetSwaggerScopeDictionary([

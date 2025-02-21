@@ -17,7 +17,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
   public partial class SchoolsTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSchoolsTest()
     {
       var objA = Factories.SchoolFactory();
@@ -42,7 +42,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSchoolsWithCourseCountTest()
     {
       var dbSchool = Factories.SchoolFactory();
@@ -69,7 +69,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteSchoolTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());

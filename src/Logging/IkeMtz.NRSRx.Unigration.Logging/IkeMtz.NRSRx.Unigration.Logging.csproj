@@ -21,7 +21,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <NoWarn>1701;1702;S2436;MSB3277;CS8604;CS8618;</NoWarn>
+    <NoWarn>1701;1702;S2436;MSB3277;CS8604;CS8618;CS8633;CS8767;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Unigration.Logging.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

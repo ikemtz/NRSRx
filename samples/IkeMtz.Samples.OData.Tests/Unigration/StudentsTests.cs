@@ -17,7 +17,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
   public partial class StudentsTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetStudentsTest()
     {
       var objA = Factories.StudentFactory();
@@ -42,7 +42,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetStudentsWNoLimitTest()
     {
       var objA = Factories.StudentFactory();
@@ -68,7 +68,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetStudentsExceedLimitTest()
     {
       var objA = Factories.StudentFactory();
@@ -93,7 +93,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteStudentTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());

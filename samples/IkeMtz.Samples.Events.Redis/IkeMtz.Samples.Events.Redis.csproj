@@ -6,13 +6,9 @@
     <ProjectGuid>0047AB8C-B49D-42C0-B9C6-5DC850AC2F45</ProjectGuid>
     <Nullable>enable</Nullable>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>
-    </OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CA1707</NoWarn>
+  </PropertyGroup> 
+  <PropertyGroup>
+    <NoWarn>1701;1702;CA1707;CS8604;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />

@@ -884,6 +884,31 @@
             <param name="result">The Swagger document JSON string.</param>
             <returns>The fixed Swagger document JSON string.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.TestCategories">
+            <summary>
+            Contains constants for different test categories.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.TestCategories.Unit">
+            <summary>
+            Represents unit tests.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.TestCategories.Integration">
+            <summary>
+            Represents integration tests.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.TestCategories.Functional">
+            <summary>
+            Represents functional tests.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.TestCategories.Unigration">
+            <summary>
+            Represents unigration tests.
+            </summary>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware">
             <summary>
             Middleware for logging HTTP requests to the <see cref="F:IkeMtz.NRSRx.Core.Unigration.TestContextRequestLoggerMiddleware.TestContext"/>.

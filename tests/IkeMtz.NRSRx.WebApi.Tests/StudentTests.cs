@@ -20,7 +20,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   public class StudentTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetStudentTestAsync()
     {
       var item = Factories.StudentFactory();
@@ -44,7 +44,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task SaveStudentTest()
     {
       var item = Factories.StudentFactory();
@@ -68,7 +68,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     [ExpectedException(typeof(JsonReaderException))]
     public async Task SaveStudentJsonReaderExceptionsTest()
     {
@@ -83,7 +83,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task UpdateStudentTest()
     {
       var originalStudent = Factories.StudentFactory();
@@ -121,7 +121,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteStudentTest()
     {
       var item = Factories.StudentFactory();

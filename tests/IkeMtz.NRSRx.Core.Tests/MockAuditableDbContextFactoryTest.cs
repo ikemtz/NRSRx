@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class MockAuditableDbContextFactoryTests : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task MockAuditableContextFactoryTest()
     {
       var modelA = new MyIntModel();
@@ -32,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task MockAuditableContextAddAsyncTest()
     {
       var modelA = new MyIntModel();
@@ -46,7 +46,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.IsNotNull(dbContextObjB.Entity.CalculatedValue);
     }
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task MockDbContextFactoryTest()
     {
       var modelA = new MyIntModel();

@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   public class SwaggerPageTest : BaseUnigrationTests
   {
     [TestMethod]
-    [TestCategory("Unigration")]
+    [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerPageTest()
     {
       var myConfiguration = new Dictionary<string, string?>

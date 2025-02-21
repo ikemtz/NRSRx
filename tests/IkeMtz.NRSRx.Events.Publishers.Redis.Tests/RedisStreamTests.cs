@@ -1,3 +1,4 @@
+using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Events;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -9,7 +10,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
   public class RedisStreamTests
   {
     [TestMethod]
-    [TestCategory("Integration")]
+    [TestCategory(TestCategories.Integration)]
     public async Task ValidateRedisPublishAsync()
     {
       var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync("localhost");
@@ -21,7 +22,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     }
 
     [TestMethod]
-    [TestCategory("Unit")]
+    [TestCategory(TestCategories.Unit)]
     public async Task ValidateRedisMoqPublishAsync()
     {
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
