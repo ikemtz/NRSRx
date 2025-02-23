@@ -1,10 +1,11 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using IkeMtz.NRSRx.Core.Models;
 
 namespace IkeMtz.Samples.Models.V1
 {
-  public class CourseUpsertRequest
+  public class CourseUpsertRequest : IIdentifiable
   {
 
     [Required]

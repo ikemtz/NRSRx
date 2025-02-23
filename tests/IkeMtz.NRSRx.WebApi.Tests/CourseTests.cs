@@ -122,6 +122,27 @@ namespace IkeMtz.NRSRx.WebApi.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
+    public async Task UpdateCourseInvalidIdTest()
+    {
+      var originalCourse = Factories.CourseFactory();
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
+        .ConfigureTestServices(x =>
+        {
+          ExecuteOnContext<DatabaseContext>(x, db =>
+          {
+            _ = db.Courses.Add(originalCourse);
+          });
+        }));
+      var client = srv.CreateClient(TestContext);
+      GenerateAuthHeader(client, GenerateTestToken());
+
+
+      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={Guid.NewGuid()}", originalCourse);
+      Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
+    }
+
+    [TestMethod]
+    [TestCategory(TestCategories.Unigration)]
     public async Task DeleteCourseTest()
     {
       var item = Factories.CourseFactory();

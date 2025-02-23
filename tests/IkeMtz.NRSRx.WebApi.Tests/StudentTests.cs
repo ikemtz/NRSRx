@@ -33,7 +33,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
           });
         }));
       var client = srv.CreateClient(TestContext);
-      GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("MyTestClaim", Guid.NewGuid().ToString()) }));
+      GenerateAuthHeader(client, GenerateTestToken([new Claim("MyTestClaim", Guid.NewGuid().ToString())]));
       //Get 
       var resp = await client.GetAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}");
       var httpStudent = await DeserializeResponseAsync<Student>(resp);

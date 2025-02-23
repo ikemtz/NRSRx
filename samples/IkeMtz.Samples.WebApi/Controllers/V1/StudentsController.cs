@@ -57,6 +57,7 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     [HttpPut]
     [ProducesResponseType(Status200OK, Type = typeof(Student))]
     [ValidateModel]
+    [ValidateMatchingId]
     public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] StudentUpsertRequest request)
     {
       var obj = await _databaseContext.Students.FirstOrDefaultAsync(t => t.Id == id)
