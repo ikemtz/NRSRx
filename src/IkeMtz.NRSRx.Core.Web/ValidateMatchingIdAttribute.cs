@@ -21,7 +21,6 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="context">The action executing context.</param>
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-      var controller = (ControllerBase)context.Controller;
       context.ActionArguments.TryGetValue("id", out dynamic id);
       if (id == null)
       {
