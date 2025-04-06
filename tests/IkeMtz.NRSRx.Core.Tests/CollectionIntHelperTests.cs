@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [ExpectedException(typeof(ArgumentNullException))]
     public void NullRefOnNullDestinationCollectionTest()
     {
-      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      using var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
       context.SyncIntCollections<CollectionIntModel, CollectionIntModel>(srcList, null, null);
     }
@@ -27,7 +27,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     [ExpectedException(typeof(ArgumentNullException))]
     public void Conversion_NullRefOnNullDestinationCollectionTest()
     {
-      var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
+      using var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
       context.SyncIntCollections<CollectionIntModelDto, CollectionIntModel>(srcList, null, null);
     }
