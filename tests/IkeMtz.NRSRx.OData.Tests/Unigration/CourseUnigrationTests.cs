@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
@@ -59,7 +59,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
@@ -85,7 +85,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true");
       var content = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(content.ToLower().Contains("updatedby"));
+      Assert.IsFalse(content.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       StringAssert.Contains(content, item.Id.ToString());
       StringAssert.Contains(content, item.Title);
     }
@@ -111,7 +111,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true&$expand={nameof(SchoolCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Course.Title, envelope.Value.First().Title);

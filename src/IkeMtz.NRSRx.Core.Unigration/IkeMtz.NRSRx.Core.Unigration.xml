@@ -351,6 +351,23 @@
             <param name="testContext">The MSTest <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> for logging.</param>
             <returns>The configured options builder.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.LinqExtensions">
+            <summary>
+            Provides extension methods for LINQ queries.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.LinqExtensions.RandomAsync``1(System.Linq.IQueryable{``0},System.Nullable{System.Int32})">
+            <summary>
+            Returns a random element from the source collection asynchronously.
+            </summary>
+            <typeparam name="T">The type of the elements of source.</typeparam>
+            <param name="source">An IQueryable&lt;T&gt; to return a random element from.</param>
+            <param name="recordCount">The number of elements in the source collection. If null, the count will be determined automatically.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains a random element from the source collection.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when the source collection is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the count is less than 2.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the source collection is empty.</exception>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.Events.MockRedisStreamFactory">
             <summary>
             Factory for creating mock Redis stream connections and subscribers for testing purposes.

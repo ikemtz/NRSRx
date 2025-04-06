@@ -36,7 +36,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(School.Name, envelope.Value.First().Name);
@@ -61,7 +61,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(School.Name)},{nameof(School.Id)}),aggregate(id with countdistinct as total))");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       StringAssert.Contains(resp, School.Id.ToString());
       StringAssert.Contains(resp, School.Name);
     }
@@ -87,7 +87,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(schoolCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(schoolCourse.School.Name, envelope.Value.First().Name);
