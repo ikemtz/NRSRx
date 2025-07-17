@@ -19,8 +19,8 @@ namespace IkeMtz.NRSRx.Core.Models
   }
 
   /// <summary>  
-  /// Represents an OData envelope for a collection of entities.  
-  /// </summary>  
+  /// Represents the base class for OData envelopes that do not require entities to implement <see cref="IIdentifiable"/>.  
+  /// This class is used to encapsulate a collection of entities without identifier constraints.  
   /// <typeparam name="TEntity">The type of the entity.</typeparam>  
   public class ODataEnvelope<TEntity>
     where TEntity : class, new()
