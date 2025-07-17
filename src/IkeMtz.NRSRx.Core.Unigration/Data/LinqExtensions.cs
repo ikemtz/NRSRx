@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       {
         throw new InvalidOperationException("Source collection is empty.");
       }
-      var random = new Random(DateTime.Now.Microsecond);
+      var random = Random.Shared;
       var index = random.Next(0, recordCount.Value);
       return await source.Skip(index).FirstAsync();
     }
