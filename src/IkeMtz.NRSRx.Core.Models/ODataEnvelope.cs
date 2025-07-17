@@ -6,7 +6,8 @@ using Newtonsoft.Json;
 namespace IkeMtz.NRSRx.Core.Models
 {
   /// <summary>  
-  /// Represents an OData envelope for entities with a specified identifier type.  
+  /// Represents an OData envelope that extends <see cref="ODataEnvelope{TEntity}"/>  
+  /// to support entities with a specified identifier type.  
   /// </summary>  
   /// <typeparam name="TEntity">The type of the entity.</typeparam>  
   /// <typeparam name="TIdentityType">The type of the identifier.</typeparam>  
