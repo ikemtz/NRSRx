@@ -176,14 +176,15 @@
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2">
             <summary>  
-            Represents an OData envelope for entities with a specified identifier type.  
+            Represents an OData envelope that extends <see cref="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1"/>  
+            to support entities with a specified identifier type.  
             </summary>  
             <typeparam name="TEntity">The type of the entity.</typeparam>  
             <typeparam name="TIdentityType">The type of the identifier.</typeparam>  
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1">
             <summary>  
-            Represents an OData envelope for a collection of entities.  
+            Represents an OData response with a collection of entities.  
             </summary>  
             <typeparam name="TEntity">The type of the entity.</typeparam>  
         </member>
@@ -203,23 +204,6 @@
             </summary>  
             <param name="t">The collection of entities.</param>  
             <returns>An OData envelope containing the entities.</returns>  
-        </member>
-        <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2.Value">
-            <summary>
-            Gets or sets the collection of entities.
-            </summary>
-        </member>
-        <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2.Count">
-            <summary>
-            Gets or sets the count of entities.
-            </summary>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2.Create(System.Collections.Generic.IEnumerable{`0})">
-            <summary>
-            Creates an OData envelope from the specified collection of entities.
-            </summary>
-            <param name="t">The collection of entities.</param>
-            <returns>An OData envelope containing the entities.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.SimpleMapperHelper">
             <summary>

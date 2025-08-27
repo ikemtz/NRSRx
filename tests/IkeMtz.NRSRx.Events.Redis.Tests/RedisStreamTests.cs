@@ -323,20 +323,18 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(InvalidProgramException))]
     public async Task ValidateSubscriptionState()
     {
       var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateSubscriber();
-      await Subscriber.Object.Subscribe();
+      await Assert.ThrowsExactlyAsync<InvalidProgramException>(async () => await Subscriber.Object.Subscribe());
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(InvalidProgramException))]
     public async Task ValidateSubscriptionIdentityTypeState()
     {
       var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent, Guid>.CreateSubscriber();
-      await Subscriber.Object.Subscribe();
+      await Assert.ThrowsExactlyAsync<InvalidProgramException>(async () => await Subscriber.Object.Subscribe());
     }
 
     [TestMethod]

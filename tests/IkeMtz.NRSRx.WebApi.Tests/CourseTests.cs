@@ -68,7 +68,6 @@ namespace IkeMtz.NRSRx.WebApi.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [ExpectedException(typeof(JsonReaderException))]
     public async Task SaveCourseJsonReaderExceptionsTest()
     {
       var item = Factories.CourseFactory();
@@ -78,7 +77,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.xml", item);
       _ = resp.EnsureSuccessStatusCode();
-      _ = await DeserializeResponseAsync<Course>(resp);
+      await Assert.ThrowsExactlyAsync<JsonReaderException>(async () => _ = await DeserializeResponseAsync<Course>(resp));
     }
 
     [TestMethod]
