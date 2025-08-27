@@ -265,7 +265,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var msg = new SampleMessage();
       await publisher.PublishAsync(msg);
       Database
-        .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.Equals(nameof(SampleMessage))), It.IsAny<RedisValue>(), null, null, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamAddAsync(publisher.StreamKey, It.Is<RedisValue>(x => x.Equals(nameof(SampleMessage))), It.IsAny<RedisValue>(), null, null, false, null, StreamTrimMode.KeepReferences, CommandFlags.None), Times.Once);
     }
 
     [TestMethod]
@@ -295,14 +295,14 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
 
       _ = Database
-        .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<int>(), It.IsAny<RedisValue>(), null, null, CommandFlags.None))
+        .Setup(x => x.StreamPendingMessagesAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<int>(), It.IsAny<RedisValue>(), null, null, null, CommandFlags.None))
         .Returns(Task.FromResult(new[] { new StreamPendingMessageInfo() }));
 
       var subscriber = new RedisStreamSubscriberMock(Connection.Object);
       _ = subscriber.Init();
       _ = await subscriber.GetPendingMessagesAsync();
       Database
-         .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, It.IsAny<int>(), "Unit Test", null, null, CommandFlags.None),
+         .Verify(t => t.StreamPendingMessagesAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, It.IsAny<int>(), "Unit Test", null, null, null, CommandFlags.None),
          Times.Once);
       Database
          .Verify(t => t.StreamClaimAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), 10000, It.IsAny<RedisValue[]>(), CommandFlags.None), Times.Exactly(2));
