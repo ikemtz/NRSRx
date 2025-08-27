@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ProjectGuid>B70FF97D-44E9-4794-858F-2F3B8C74E995</ProjectGuid>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -9,10 +9,10 @@
     <DocumentationFile>./IkeMtz.Samples.SignalR.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.SignalR\IkeMtz.NRSRx.Core.SignalR.csproj" />

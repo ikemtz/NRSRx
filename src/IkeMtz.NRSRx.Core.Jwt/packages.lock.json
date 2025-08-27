@@ -4,12 +4,12 @@
     ".NETStandard,Version=v2.1": {
       "Microsoft.IdentityModel.Protocols.OpenIdConnect": {
         "type": "Direct",
-        "requested": "[8.5.0, )",
-        "resolved": "8.5.0",
-        "contentHash": "Wt+fcb0m4pNgmeM2FbGQE+cD7lkvmeiqtudup9WOz9P3XkCvW/yBK0w+c7uIRTAgp6QHFV1RKhk5/vSGXJulmg==",
+        "requested": "[8.14.0, )",
+        "resolved": "8.14.0",
+        "contentHash": "afwKt+g52FXMu5Hsgpm6cFSFh40WYbnvXKJDCCBjcV10m6eXRwN2SBpg3auyyA6mYDZVaEtxYaOLXqsZAz4oig==",
         "dependencies": {
-          "Microsoft.IdentityModel.Protocols": "8.5.0",
-          "System.IdentityModel.Tokens.Jwt": "8.5.0",
+          "Microsoft.IdentityModel.Protocols": "8.14.0",
+          "System.IdentityModel.Tokens.Jwt": "8.14.0",
           "System.Text.Json": "8.0.5"
         }
       },
@@ -25,9 +25,9 @@
       },
       "System.Text.Encodings.Web": {
         "type": "Direct",
-        "requested": "[8.0.0, )",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "W+LotQsM4wBJ4PG7uRkyul4wqL4Fz7R4ty6uXrCNZUhbaHYANgrPaYR2ZpMVpdCjQEJ17Jr1NMN8hv4SHaHY4A==",
         "dependencies": {
           "System.Buffers": "4.5.1",
           "System.Memory": "4.5.5",
@@ -38,14 +38,6 @@
         "type": "Transitive",
         "resolved": "8.0.0",
         "contentHash": "3WA9q9yVqJp222P3x1wYIGDAkpjAku0TMUaaQV22g6L67AI0LdOIrVS7Ht2vJfLHGSPVuqN94vIr15qn+HEkHw=="
-      },
-      "Microsoft.Bcl.Memory": {
-        "type": "Transitive",
-        "resolved": "9.0.0",
-        "contentHash": "bTUtGfpGyJnohQzjdXbtc7MqNzkv7CWUSRz54+ucNm0i32rZiIU0VdVPHDBShOl1qhVKRjW8mnEBz3d2vH93tQ==",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        }
       },
       "Microsoft.Bcl.TimeProvider": {
         "type": "Transitive",
@@ -72,44 +64,43 @@
       },
       "Microsoft.IdentityModel.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.5.0",
-        "contentHash": "wdhxpIzpCW49+MR0oeoJqjDA8vtVXCJPrqXx19UsUOpnE+8PX9byVdFJuVPtT8tkExhU+c8eQxw6OLNQW3i0wg=="
+        "resolved": "8.14.0",
+        "contentHash": "iwbCpSjD3ehfTwBhtSNEtKPK0ICun6ov7Ibx6ISNA9bfwIyzI2Siwyi9eJFCJBwxowK9xcA1mj+jBWiigeqgcQ=="
       },
       "Microsoft.IdentityModel.JsonWebTokens": {
         "type": "Transitive",
-        "resolved": "8.5.0",
-        "contentHash": "Wbx1JbFosCdRaQU8TPDrlHfHx3+f7ef7ivDvyooQec7AmOC+uDXpPUiki7qYklSj6OXxfvtPzyMZBqQuEJrccA==",
+        "resolved": "8.14.0",
+        "contentHash": "4jOpiA4THdtpLyMdAb24dtj7+6GmvhOhxf5XHLYWmPKF8ApEnApal1UnJsKO4HxUWRXDA6C4WQVfYyqsRhpNpQ==",
         "dependencies": {
           "Microsoft.Bcl.TimeProvider": "8.0.1",
-          "Microsoft.IdentityModel.Tokens": "8.5.0"
+          "Microsoft.IdentityModel.Tokens": "8.14.0"
         }
       },
       "Microsoft.IdentityModel.Logging": {
         "type": "Transitive",
-        "resolved": "8.5.0",
-        "contentHash": "UCTOGVp7h+PHrI4Q/yV0LT2k7dbjlzrnFhfqDUsQ91rOFH8ZNRMZYFY/J79KWSl+SZNnu3ecap31z//NevUaEw==",
+        "resolved": "8.14.0",
+        "contentHash": "eqqnemdW38CKZEHS6diA50BV94QICozDZEvSrsvN3SJXUFwVB9gy+/oz76gldP7nZliA16IglXjXTCTdmU/Ejg==",
         "dependencies": {
-          "Microsoft.IdentityModel.Abstractions": "8.5.0"
+          "Microsoft.IdentityModel.Abstractions": "8.14.0"
         }
       },
       "Microsoft.IdentityModel.Protocols": {
         "type": "Transitive",
-        "resolved": "8.5.0",
-        "contentHash": "MuhcFUKXT2CZuybaeBgfUplRlFbQNUN5Q/QLnID8L1pCQ1OZtIF/mvX+DuE7uaMEG/YkOhrStWFyu2MYqh09Hg==",
+        "resolved": "8.14.0",
+        "contentHash": "rLr9HmibIpwkrOnsYyF3SGKx+6q2ewKDc3xzITngydqflG3TDVqAaby7yFRbP8du43If2S44fseoAkaL8A0Ivg==",
         "dependencies": {
-          "Microsoft.IdentityModel.Tokens": "8.5.0"
+          "Microsoft.IdentityModel.Tokens": "8.14.0"
         }
       },
       "Microsoft.IdentityModel.Tokens": {
         "type": "Transitive",
-        "resolved": "8.5.0",
-        "contentHash": "dYxp8/JvBpRD5c4H9jBJbKRJnvzvqayEXajr8e1JFdEVMvQXAylPWNwnXghzuGCjKc4bbel2pnDKlKjQnWZlgQ==",
+        "resolved": "8.14.0",
+        "contentHash": "lKIZiBiGd36k02TCdMHp1KlNWisyIvQxcYJvIkz7P4gSQ9zi8dgh6S5Grj8NNG7HWYIPfQymGyoZ6JB5d1Lo1g==",
         "dependencies": {
-          "Microsoft.Bcl.Memory": "9.0.0",
           "Microsoft.Bcl.TimeProvider": "8.0.1",
           "Microsoft.CSharp": "4.5.0",
           "Microsoft.Extensions.Logging.Abstractions": "2.1.0",
-          "Microsoft.IdentityModel.Logging": "8.5.0",
+          "Microsoft.IdentityModel.Logging": "8.14.0",
           "System.Diagnostics.DiagnosticSource": "6.0.2",
           "System.Security.Cryptography.Cng": "4.5.0",
           "System.Text.Json": "8.0.5"
@@ -136,11 +127,11 @@
       },
       "System.IdentityModel.Tokens.Jwt": {
         "type": "Transitive",
-        "resolved": "8.5.0",
-        "contentHash": "ZUdVIyD2mJg5+hOtjnHFQRp+wCZraV6XTp734LFIGwVnCbvcgYKgsiUvlBCiS6fXs6wdY8wlMa7cFluD+RE+6g==",
+        "resolved": "8.14.0",
+        "contentHash": "EYGgN/S+HK7S6F3GaaPLFAfK0UzMrkXFyWCvXpQWFYmZln3dqtbyIO7VuTM/iIIPMzkelg8ZLlBPvMhxj6nOAA==",
         "dependencies": {
-          "Microsoft.IdentityModel.JsonWebTokens": "8.5.0",
-          "Microsoft.IdentityModel.Tokens": "8.5.0"
+          "Microsoft.IdentityModel.JsonWebTokens": "8.14.0",
+          "Microsoft.IdentityModel.Tokens": "8.14.0"
         }
       },
       "System.Memory": {

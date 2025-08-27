@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ProjectGuid>67CF33561CC7472A98EFB73C85F89F13</ProjectGuid>
@@ -35,17 +35,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MSTest.TestAdapter" Version="3.8.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.10.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.10.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
-    <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.9.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />

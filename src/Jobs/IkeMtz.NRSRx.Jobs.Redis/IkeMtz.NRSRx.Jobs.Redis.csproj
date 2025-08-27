@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -42,13 +42,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.13" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.5.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
-    <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />  
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.10.3" />
+    <PackageReference Include="StackExchange.Redis" Version="2.9.11" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />  
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

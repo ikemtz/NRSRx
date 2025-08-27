@@ -34,13 +34,13 @@
     <DocumentationFile>./IkeMtz.NRSRx.Events.Publishers.Redis.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
+    <PackageReference Include="StackExchange.Redis" Version="2.9.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Events.Abstraction\IkeMtz.NRSRx.Events.Abstraction.csproj" />
