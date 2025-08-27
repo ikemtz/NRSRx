@@ -22,7 +22,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       DbContext = DbContextFactory.CreateInMemoryDbContext<TestDbContext>(TestContext);
       _ = DbContext.MyModel.Add(ModelA);
       _ = DbContext.MyModel.Add(ModelB);
-      _ = DbContext.SaveChangesAsync();
+      _ = await DbContext.SaveChangesAsync();
       return DbContext;
     }
 
@@ -37,26 +37,23 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public async Task RandomTestWitOneCount()
     {
       await InitDbContextAsync();
-      var result = await DbContext.MyModel.RandomAsync(1);
+      await Assert.ThrowsExactlyAsync<ArgumentOutOfRangeException>(async () => await DbContext.MyModel.RandomAsync(1));
     }
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentException))]
     public async Task RandomTestWitNull()
     {
-      var result = await LinqExtensions.RandomAsync<MyIntModel>(null);
+      await Assert.ThrowsExactlyAsync<ArgumentException>(async () => await LinqExtensions.RandomAsync<MyIntModel>(null));
     }
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(InvalidOperationException))]
     public async Task RandomTestWitEmptyDbSet()
     {
       DbContext = DbContextFactory.CreateInMemoryDbContext<TestDbContext>(TestContext);
-      await DbContext.MyModel.RandomAsync();
+      await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () => await DbContext.MyModel.RandomAsync());
     }
   }
 }

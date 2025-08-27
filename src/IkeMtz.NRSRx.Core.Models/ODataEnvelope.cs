@@ -12,15 +12,15 @@ namespace IkeMtz.NRSRx.Core.Models
   /// <typeparam name="TEntity">The type of the entity.</typeparam>  
   /// <typeparam name="TIdentityType">The type of the identifier.</typeparam>  
   public class ODataEnvelope<TEntity, TIdentityType>
-      : ODataEnvelope<TEntity>
-      where TIdentityType : IComparable
-      where TEntity : class, IIdentifiable<TIdentityType>, new()
+        : ODataEnvelope<TEntity>
+        where TIdentityType : IComparable
+        where TEntity : class, IIdentifiable<TIdentityType>, new()
   {
   }
 
   /// <summary>  
-  /// Represents the base class for OData envelopes that do not require entities to implement <see cref="IIdentifiable"/>.  
-  /// This class is used to encapsulate a collection of entities without identifier constraints.  
+  /// Represents an OData response with a collection of entities.  
+  /// </summary>  
   /// <typeparam name="TEntity">The type of the entity.</typeparam>  
   public class ODataEnvelope<TEntity>
     where TEntity : class, new()

@@ -14,44 +14,40 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void NullRefOnNullDestinationCollectionTest()
     {
       using var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
-      context.SyncIntCollections<CollectionIntModel, CollectionIntModel>(srcList, null, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncIntCollections<CollectionIntModel, CollectionIntModel>(srcList, null, null));
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Conversion_NullRefOnNullDestinationCollectionTest()
     {
       using var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
-      context.SyncIntCollections<CollectionIntModelDto, CollectionIntModel>(srcList, null, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncIntCollections<CollectionIntModelDto, CollectionIntModel>(srcList, null, null));
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void NullRefOnNullContextTest()
     {
       TestAuditableDbContext? context = null;
       var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
       var destList = new List<CollectionIntModel>();
-      context.SyncIntCollections(srcList, destList, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncIntCollections(srcList, destList, null));
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void Conversion_NullRefOnNullContextTest()
+    public void ConversionNullRefOnNullContextTest()
     {
       TestAuditableDbContext? context = null;
       var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
       var destList = new List<CollectionIntModel>();
-      context.SyncIntCollections(srcList, destList, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncIntCollections(srcList, destList, null));
     }
 
     [TestMethod]

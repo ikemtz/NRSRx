@@ -14,44 +14,40 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void NullRefOnNullDestinationCollectionTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
-      context.SyncGuidCollections<CollectionGuidModel, CollectionGuidModel>(srcList, null, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncGuidCollections<CollectionGuidModel, CollectionGuidModel>(srcList, null, null));
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Conversion_NullRefOnNullDestinationCollectionTest()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModelDto(), new CollectionGuidModelDto() };
-      context.SyncGuidCollections<CollectionGuidModelDto, CollectionGuidModel>(srcList, null, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncGuidCollections<CollectionGuidModelDto, CollectionGuidModel>(srcList, null, null));
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void NullRefOnNullContextTest()
     {
       TestAuditableDbContext? context = null;
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
       var destList = new List<CollectionGuidModel>();
-      context.SyncGuidCollections(srcList, destList, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncGuidCollections(srcList, destList, null));
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Conversion_NullRefOnNullContextTest()
     {
       TestAuditableDbContext? context = null;
       var srcList = new[] { new CollectionGuidModelDto(), new CollectionGuidModelDto() };
       var destList = new List<CollectionGuidModel>();
-      context.SyncGuidCollections(srcList, destList, null);
+      Assert.ThrowsExactly<ArgumentNullException>(() => context.SyncGuidCollections(srcList, destList, null));
     }
 
     [TestMethod]

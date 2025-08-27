@@ -4,22 +4,20 @@
         <name>IkeMtz.NRSRx.Core.Models</name>
     </assembly>
     <members>
-        <member name="P:IkeMtz.NRSRx.Core.Models.CompositeKeyODataEnvelope`1.Value">
+        <member name="T:IkeMtz.NRSRx.Core.Constants">
             <summary>
-            Gets or sets the collection of entities.
+            Provides application-wide constants.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Core.Models.CompositeKeyODataEnvelope`1.Count">
+        <member name="F:IkeMtz.NRSRx.Core.Constants.jsonSerializerSettings">
             <summary>
-            Gets or sets the count of entities.
+            The default JSON serializer settings with camel case property names and reference loop handling set to ignore.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Models.CompositeKeyODataEnvelope`1.Create(System.Collections.Generic.IEnumerable{`0})">
+        <member name="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerSettings">
             <summary>
-            Creates an OData envelope from the specified collection of entities.
+            Gets the default JSON serializer settings.
             </summary>
-            <param name="t">The collection of entities.</param>
-            <returns>An OData envelope containing the entities.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper">
             <summary>
@@ -176,18 +174,36 @@
             Gets or sets the tenant identifier.
             </summary>
         </member>
-        <member name="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1">
-            <summary>
-            Represents an OData envelope for entities with a <see cref="T:System.Guid"/> identifier.
-            </summary>
-            <typeparam name="TEntity">The type of the entity.</typeparam>
-        </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`2">
-            <summary>
-            Represents an OData envelope for entities with a specified identifier type.
-            </summary>
-            <typeparam name="TEntity">The type of the entity.</typeparam>
-            <typeparam name="TIdentityType">The type of the identifier.</typeparam>
+            <summary>  
+            Represents an OData envelope that extends <see cref="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1"/>  
+            to support entities with a specified identifier type.  
+            </summary>  
+            <typeparam name="TEntity">The type of the entity.</typeparam>  
+            <typeparam name="TIdentityType">The type of the identifier.</typeparam>  
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1">
+            <summary>  
+            Represents an OData response with a collection of entities.  
+            </summary>  
+            <typeparam name="TEntity">The type of the entity.</typeparam>  
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1.Value">
+            <summary>  
+            Gets or sets the collection of entities.  
+            </summary>  
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1.Count">
+            <summary>  
+            Gets or sets the count of entities.  
+            </summary>  
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>  
+            Creates an OData envelope from the specified collection of entities.  
+            </summary>  
+            <param name="t">The collection of entities.</param>  
+            <returns>An OData envelope containing the entities.</returns>  
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.SimpleMapperHelper">
             <summary>
@@ -332,21 +348,6 @@
             <param name="value">The value to validate.</param>
             <param name="validationContext">The context information about the validation operation.</param>
             <returns>An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> class.</returns>
-        </member>
-        <member name="T:IkeMtz.NRSRx.Core.Constants">
-            <summary>
-            Provides application-wide constants.
-            </summary>
-        </member>
-        <member name="F:IkeMtz.NRSRx.Core.Constants.jsonSerializerSettings">
-            <summary>
-            The default JSON serializer settings with camel case property names and reference loop handling set to ignore.
-            </summary>
-        </member>
-        <member name="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerSettings">
-            <summary>
-            Gets the default JSON serializer settings.
-            </summary>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.ICurrentUserProvider">
             <summary>

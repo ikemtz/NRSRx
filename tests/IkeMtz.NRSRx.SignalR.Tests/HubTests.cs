@@ -58,13 +58,12 @@ namespace IkeMtz.NRSRx.SignalR.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [ExpectedException(typeof(HttpRequestException))]
     public async Task NotificationHub401Test()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, Startup>());
 
       var connection = srv.BuildSignalrConnection("notificationHub", GenerateTestToken());
-      await connection.StartAsync().ConfigureAwait(false);
+      await Assert.ThrowsExactlyAsync<HttpRequestException>(async () => await connection.StartAsync().ConfigureAwait(false));
     }
   }
 }

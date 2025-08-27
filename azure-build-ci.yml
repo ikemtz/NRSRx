@@ -1,4 +1,4 @@
-name: 8.1.$(DayOfYear)$(Rev:.rr)
+name: 9.1.$(DayOfYear)$(Rev:.rr)
 pool:
   vmImage: "windows-latest"
 
@@ -43,9 +43,9 @@ jobs:
         persistCredentials: true
 
       - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 8.0.x"
+        displayName: "Use .NET Core sdk 9.x"
         inputs:
-          version: 8.x
+          version: 9.x
 
       - task: Bash@3
         displayName: "Setting development environment variables"
