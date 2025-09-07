@@ -36,10 +36,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.10.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
     <PackageReference Include="Serilog.Sinks.Splunk" Version="5.1.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.9.11" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Events\IkeMtz.NRSRx.Events.Subscribers.Redis\IkeMtz.NRSRx.Events.Subscribers.Redis.csproj" />

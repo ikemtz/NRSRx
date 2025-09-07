@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OData;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -124,7 +125,12 @@ namespace IkeMtz.NRSRx.Core.OData
                 {
                   options.AddRouteComponents($"odata/{x.Key.GroupName}",
                           x.Value,
-                          builder => builder.AddSingleton<IODataSerializerProvider, NrsrxODataSerializerProvider>())
+                          builder => builder
+                            .AddSingleton<IODataSerializerProvider, NrsrxODataSerializerProvider>()
+                            .AddScoped<ODataMessageWriterSettings>(_ => new ODataMessageWriterSettings
+                            {
+                              Validations = ValidationKinds.None,
+                            }))
                        .EnableQueryFeatures(MaxTop)
                        .EnableAttributeRouting = true;
                 });
