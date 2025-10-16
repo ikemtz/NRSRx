@@ -7,7 +7,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   <PropertyGroup>
-    <NoWarn>1701;1702;CS1591;MSTEST0049;</NoWarn>
+    <NoWarn>1701;1702;CS1591;MSTEST0049;IDE0130;</NoWarn>
     <DocumentationFile>./IkeMtz.Samples.OData.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

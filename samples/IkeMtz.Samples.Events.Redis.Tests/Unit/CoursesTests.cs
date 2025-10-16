@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace IkeMtz.Samples.Events.Tests.Unit
+namespace IkeMtz.Samples.Events.Redis.Tests.Unit
 {
   [TestClass]
+  [DoNotParallelize()]
   public partial class CoursesTests : BaseUnigrationTests
   {
     [TestMethod]

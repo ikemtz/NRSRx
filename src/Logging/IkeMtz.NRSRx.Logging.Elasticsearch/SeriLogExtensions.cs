@@ -69,8 +69,8 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
             {
-              diagnosticContext.Set("UserName", httpContext.User?.Identity?.Name);
-              diagnosticContext.Set("RemoteIpAddress", httpContext.Connection?.RemoteIpAddress?.ToString());
+              diagnosticContext.Set("UserName", httpContext.User?.Identity?.Name ?? "Anonymous");
+              diagnosticContext.Set("RemoteIpAddress", httpContext.Connection?.RemoteIpAddress?.ToString() ?? "255.255.255.255");
             };
       });
     }

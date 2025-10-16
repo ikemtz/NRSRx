@@ -5,7 +5,7 @@ using static IkeMtz.NRSRx.Core.Unigration.TestDataFactory;
 
 namespace IkeMtz.Samples.Tests
 {
-  [DoNotParallelize]
+  [DoNotParallelize()]
   public static partial class Factories
   {
     public static School SchoolFactory()

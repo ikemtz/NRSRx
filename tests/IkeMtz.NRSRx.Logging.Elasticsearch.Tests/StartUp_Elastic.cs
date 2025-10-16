@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
 {
-  [DoNotParallelize]
+  [DoNotParallelize()]
   public class StartUp_Elastic(IConfiguration configuration) : CoreWebApiStartup(configuration)
   {
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>

@@ -20,7 +20,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <NoWarn>1701;1702;IDE0060;S4792;CS8604;CS8602;CS8604;</NoWarn>
+    <NoWarn>1701;1702;IDE0060;S4792;CS8604;CS8602;CS8604;IDE0130;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Logging.Elasticsearch.xml</DocumentationFile>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
