@@ -62,8 +62,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(School.Name)},{nameof(School.Id)}),aggregate(id with countdistinct as total))");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
-      StringAssert.Contains(resp, School.Id.ToString());
-      StringAssert.Contains(resp, School.Name);
+      Assert.Contains(School.Id.ToString(), resp);
+      Assert.Contains(School.Name, resp);
     }
 
     [TestMethod]
@@ -105,8 +105,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=5000&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {data}");
-      Assert.IsTrue(data.Contains("The limit of '100'"));
-      Assert.IsTrue(data.Contains("The value from the incoming request is '5000'"));
+      Assert.Contains("The limit of '100'", data);
+      Assert.Contains("The value from the incoming request is '5000'", data);
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
     }
 
@@ -140,7 +140,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=100&$count=true&$compute={nameof(school.SchoolCourses)}/$count as Courses&$select={nameof(school.Id)},Courses");
       var data = await resp.Content.ReadAsStringAsync();
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(data);
-      Assert.IsTrue(data.Contains($"\"id\":\"{school.Id}\",\"Courses\":4"));
+      Assert.Contains($"\"id\":\"{school.Id}\",\"Courses\":4", data);
     }
 
     [TestMethod]

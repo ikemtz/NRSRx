@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
@@ -38,11 +39,21 @@ namespace IkeMtz.NRSRx.Core.SignalR
     {
       SetupLogging(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
+      SetupUserIdProvider(services);
       SetupMiscDependencies(services);
       _ = services.AddSignalR();
       var healthCheckBuilder = services.AddHealthChecks();
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupHealthChecks(services, healthCheckBuilder);
+    }
+
+    /// <summary>
+    /// Sets up the user ID provider for SignalR communications.
+    /// </summary>
+    /// <param name="services">The service collection to add the user ID provider to.</param>
+    public virtual void SetupUserIdProvider(IServiceCollection services)
+    {
+      services.AddSingleton<IUserIdProvider, UserIdProvider>();
     }
 
     /// <summary>
@@ -86,12 +97,12 @@ namespace IkeMtz.NRSRx.Core.SignalR
             {
               OnMessageReceived = messageReceivedContext =>
                   {
-                  if (messageReceivedContext.Request.Query.TryGetValue("access_token", out StringValues accessToken))
-                  {
-                    messageReceivedContext.Token = accessToken;
+                    if (messageReceivedContext.Request.Query.TryGetValue("access_token", out StringValues accessToken))
+                    {
+                      messageReceivedContext.Token = accessToken;
+                    }
+                    return Task.CompletedTask;
                   }
-                  return Task.CompletedTask;
-                }
             };
           });
     }

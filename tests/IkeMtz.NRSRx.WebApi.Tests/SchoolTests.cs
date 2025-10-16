@@ -60,7 +60,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var dbContext = srv.GetDbContext<DatabaseContext>();
       var dbSchools = await dbContext.Schools.ToListAsync();
 
-      Assert.AreEqual(1, dbSchools.Count);
+      Assert.HasCount(1, dbSchools);
       var dbSchool = dbSchools.FirstOrDefault();
       Assert.IsNotNull(dbSchool);
       Assert.AreEqual(httpSchool.CreatedOnUtc, dbSchool.CreatedOnUtc);
@@ -111,7 +111,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var dbContext = srv.GetDbContext<DatabaseContext>();
       var dbSchools = await dbContext.Schools.ToListAsync();
 
-      Assert.AreEqual(1, dbSchools.Count);
+      Assert.HasCount(1, dbSchools);
       var updatedDbSchool = dbSchools.FirstOrDefault();
       Assert.IsNotNull(updatedDbSchool);
       Assert.IsNotNull(updatedDbSchool.UpdatedOnUtc);
@@ -143,7 +143,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var dbContext = srv.GetDbContext<DatabaseContext>();
       var dbSchools = await dbContext.Schools.ToListAsync();
 
-      Assert.AreEqual(0, dbSchools.Count);
+      Assert.IsEmpty(dbSchools);
     }
   }
 }

@@ -4,8 +4,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Data;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -56,8 +56,8 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
       var body = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {body}");
-      Assert.IsFalse(body.ToLower().Contains("updatedby"));
-      StringAssert.Contains(body, Course.Num);
+      Assert.DoesNotContain("updatedby", body.ToLower());
+      Assert.Contains(Course.Num, body);
     }
 
     [TestMethod]
@@ -87,9 +87,9 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       TestContext.WriteLine($"Server Reponse: {resp}");
 
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.DoesNotContain("updatedby", resp.ToLower());
       Assert.AreEqual(1, envelope?.Value.First().SchoolCourses.Count);
-      StringAssert.Contains(resp, course.Num);
+      Assert.Contains(course.Num, resp);
     }
 
     [TestMethod]
@@ -112,8 +112,8 @@ namespace IkeMtz.Samples.OData.Tests.Integration
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.Contains(resp, "total");
+      Assert.DoesNotContain("updatedby", resp.ToLower());
+      Assert.Contains("total", resp);
     }
   }
 }

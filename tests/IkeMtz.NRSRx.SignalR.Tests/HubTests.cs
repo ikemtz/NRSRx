@@ -10,11 +10,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.SignalR.Tests
 {
   [TestClass]
+  [DoNotParallelize]
   public partial class HubTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [Timeout(4000)]
+    [Timeout(4000, CooperativeCancellation = true)]
     public void ValidateSignalRStartup()
     {
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.

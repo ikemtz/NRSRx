@@ -56,7 +56,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s?$apply=groupby(({nameof(Student.FirstName)},{nameof(Student.BirthDate)}))");
       var body = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {body}");
-      Assert.IsFalse(body.ToLower().Contains("updatedby"));
+      Assert.DoesNotContain("updatedby", body.ToLower());
       StringAssert.Contains(body, Student.FirstName);
     }
 
@@ -91,7 +91,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       TestContext.WriteLine($"Server Reponse: {resp}");
 
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.DoesNotContain("updatedby", resp.ToLower());
       Assert.AreEqual(1, envelope?.Value.First().StudentCourses.Count);
       StringAssert.Contains(resp, student.FirstName);
     }
@@ -116,8 +116,8 @@ namespace IkeMtz.Samples.OData.Tests.Integration
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.Contains(resp, "total");
+      Assert.DoesNotContain("updatedby", resp.ToLower());
+      Assert.Contains("total", resp);
     }
   }
 }
