@@ -62,7 +62,13 @@ namespace IkeMtz.NRSRx.Core.Models.Helpers
       where TEnumValueType : IEnumValue<TIdentityType>, new()
     {
       var tEnum = typeof(TEnum);
-      return Enum.GetValues(tEnum).Cast<int>().Select(t => new TEnumValueType { Id = (TIdentityType)(t as dynamic), Name = Enum.GetName(tEnum, t) });
+      return Enum.GetValues(tEnum)
+        .Cast<object>()
+        .Select(t => new TEnumValueType
+        {
+          Id = (TIdentityType)Convert.ChangeType(t, typeof(TIdentityType)),
+          Name = Enum.GetName(tEnum, t)
+        });
     }
   }
 }

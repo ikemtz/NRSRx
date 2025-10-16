@@ -7,6 +7,7 @@ using Moq;
 namespace IkeMtz.NRSRx.Logging.ApplicationInsights.Tests
 {
   [TestClass]
+  [DoNotParallelize]
   public class AppInsightsLoggingTests : BaseUnigrationTests
   {
     [TestMethod]

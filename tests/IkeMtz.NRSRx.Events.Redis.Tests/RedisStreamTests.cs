@@ -17,6 +17,7 @@ using RedisStreamConsumerMetadata = IkeMtz.NRSRx.Events.Subscribers.Redis.RedisS
 namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 {
   [TestClass]
+  [DoNotParallelize]
   public class RedisStreamTests
   {
     [TestMethod]
@@ -184,7 +185,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
       }
 
       var result = await publisher.Database.StreamInfoAsync(publisher.StreamKey);
-      Assert.IsTrue(10 <= result.Length);
+      Assert.IsLessThanOrEqualTo(result.Length, 10);
     }
 
     [TestMethod]

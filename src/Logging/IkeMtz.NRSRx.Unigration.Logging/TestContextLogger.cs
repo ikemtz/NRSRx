@@ -1,6 +1,5 @@
 using IkeMtz.NRSRx.Core;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
 namespace IkeMtz.NRSRx.Unigration.Logging
@@ -13,6 +12,7 @@ namespace IkeMtz.NRSRx.Unigration.Logging
   /// </remarks>
   /// <param name="categoryName">The category name for the logger.</param>
   /// <param name="testContext">The MSTest <see cref="TestContext"/> for logging.</param>
+  [DoNotParallelize]
   public class TestContextLogger(string categoryName, TestContext testContext) : ILogger
   {
     private readonly TestContext testContext = testContext;

@@ -1,12 +1,11 @@
 using IkeMtz.NRSRx.Core.Unigration.WebApi;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Tests
 {
-  public class UnitTestStartup : CoreWebApiIntegrationTestStartup<StartUp_AppInsights>
+  [DoNotParallelize]
+  public class UnitTestStartup(IConfiguration configuration) : CoreWebApiIntegrationTestStartup<StartUp_AppInsights>(new StartUp_AppInsights(configuration))
   {
-    public UnitTestStartup(IConfiguration configuration) : base(new StartUp_AppInsights(configuration))
-    {
-    }
   }
 }

@@ -7,11 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.Logging.Splunk.Tests
 {
-  public class StartUp_Splunk : CoreWebApiStartup
+  public class StartUp_Splunk(IConfiguration configuration) : CoreWebApiStartup(configuration)
   {
-    public StartUp_Splunk(IConfiguration configuration) : base(configuration)
-    {
-    }
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       app?.UseSerilog();
 

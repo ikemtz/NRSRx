@@ -36,7 +36,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.DoesNotContain("updatedby", resp.ToLower());
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.FirstName, envelope.Value.First().FirstName);
@@ -61,9 +61,9 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$apply=groupby(({nameof(item.FirstName)},{nameof(item.Id)}),aggregate(id with countdistinct as total))");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
-      StringAssert.Contains(resp, item.Id.ToString());
-      StringAssert.Contains(resp, item.FirstName);
+      Assert.DoesNotContain("updatedby", resp.ToLower());
+      Assert.Contains(item.Id.ToString(), resp);
+      Assert.Contains(item.FirstName, resp);
     }
 
     [TestMethod]
@@ -87,7 +87,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$count=true&$expand={nameof(StudentCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
-      Assert.IsFalse(resp.ToLower().Contains("updatedby"));
+      Assert.DoesNotContain("updatedby", resp.ToLower());
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Student.FirstName, envelope.Value.First().FirstName);
@@ -105,8 +105,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s?$top=5000&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {data}");
-      Assert.IsTrue(data.Contains("The limit of '100'"));
-      Assert.IsTrue(data.Contains("The value from the incoming request is '5000'"));
+      Assert.Contains("The limit of '100'", data);
+      Assert.Contains("The value from the incoming request is '5000'", data);
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
     }
 

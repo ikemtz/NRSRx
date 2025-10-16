@@ -31,7 +31,7 @@ namespace IkeMtz.NRSRx.Core.Tests
           return dbContext;
         }, srcList, logger);
       Assert.AreEqual(300, result);
-      Assert.AreEqual(2, dbContextList.Count);
+      Assert.HasCount(2, dbContextList);
     }
   }
 }

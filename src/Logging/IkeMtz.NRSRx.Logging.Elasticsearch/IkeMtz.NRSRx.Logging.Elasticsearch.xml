@@ -16,6 +16,11 @@
             <param name="hostBuilder">The host builder.</param>
             <returns>The configured host builder.</returns>
         </member>
+        <member name="P:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.Logger">
+            <summary>
+            Gets or sets the global Serilog logger instance.
+            </summary>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.SeriLogExtensions.SetupConsoleLogging(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Func{Serilog.Configuration.LoggerMinimumLevelConfiguration,Serilog.LoggerConfiguration})">
             <summary>
             Sets up console logging using Serilog sinks.

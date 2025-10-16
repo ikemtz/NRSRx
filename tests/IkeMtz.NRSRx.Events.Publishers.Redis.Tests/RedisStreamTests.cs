@@ -5,6 +5,7 @@ using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 {
+  [DoNotParallelize]
   [TestClass]
   public class RedisStreamTests
   {

@@ -22,9 +22,10 @@ namespace IkeMtz.NRSRx.Core.Web
       return hostBuilder.UseSerilog();
     }
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    internal static ILogger Logger { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    /// <summary>
+    /// Gets or sets the global Serilog logger instance.
+    /// </summary>
+    public static ILogger? Logger { get; set; }
 
     /// <summary>
     /// Sets up console logging using Serilog sinks.
@@ -68,9 +69,9 @@ namespace IkeMtz.NRSRx.Core.Web
       {
         options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
             {
-          diagnosticContext.Set("UserName", httpContext.User?.Identity?.Name);
-          diagnosticContext.Set("RemoteIpAddress", httpContext.Connection?.RemoteIpAddress?.ToString());
-        };
+              diagnosticContext.Set("UserName", httpContext.User?.Identity?.Name);
+              diagnosticContext.Set("RemoteIpAddress", httpContext.Connection?.RemoteIpAddress?.ToString());
+            };
       });
     }
   }
