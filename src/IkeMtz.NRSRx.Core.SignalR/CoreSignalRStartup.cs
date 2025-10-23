@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace IkeMtz.NRSRx.Core.SignalR
@@ -82,7 +83,6 @@ namespace IkeMtz.NRSRx.Core.SignalR
     {
       JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
       JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
-      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
       _ = builder
           .AddJwtBearer(options =>
           {
