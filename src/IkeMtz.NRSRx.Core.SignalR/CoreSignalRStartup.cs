@@ -81,6 +81,8 @@ namespace IkeMtz.NRSRx.Core.SignalR
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
       JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
       _ = builder
           .AddJwtBearer(options =>
           {
