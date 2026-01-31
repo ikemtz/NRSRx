@@ -62,7 +62,7 @@ jobs:
           noCache: true
           verbosityRestore: "Minimal"
 
-      - task: Assembly-Info-NetCore@2
+      - task: Assembly-Info-NetCore@3
         displayName: "Set Assembly Manifest Data"
         inputs:
           InsertAttributes: true
@@ -185,7 +185,7 @@ jobs:
           ArtifactName: "sample_webapi_drop"
           publishLocation: "Container"
 
-      - task: GitTag@5
+      - task: GitTag@7
         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         inputs:
           workingdir: "$(SYSTEM.DEFAULTWORKINGDIRECTORY)"
