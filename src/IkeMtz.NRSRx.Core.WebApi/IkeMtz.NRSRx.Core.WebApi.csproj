@@ -26,6 +26,7 @@
   <PropertyGroup>
     <NoWarn>1701;1702;CS8618;CS8602;CS8604;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Core.WebApi.xml</DocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12" />
@@ -47,6 +48,12 @@
     <None Include="..\..\build\ProfilePic.jpg">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 </Project>
