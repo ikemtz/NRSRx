@@ -24,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public void GenerateAlphaChars()
     {
       var result = TestDataFactory.StringGenerator(50);
-      Assert.DoesNotMatchRegex(new Regex(@"/d"), result);
+      StringAssert.DoesNotMatch(result, new Regex(@"/d"));
       Assert.DoesNotContain("  ", result);
       Assert.IsTrue(char.IsUpper(result.First()));
       Assert.IsLessThanOrEqualTo(result.Length, 45, $"generated string is not long enough, expected: 50, actual: {result.Length}");

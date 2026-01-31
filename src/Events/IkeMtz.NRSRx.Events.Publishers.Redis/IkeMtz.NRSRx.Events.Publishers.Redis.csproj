@@ -35,12 +35,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.12" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StackExchange.Redis" Version="2.9.32" />
+    <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Events.Abstraction\IkeMtz.NRSRx.Events.Abstraction.csproj" />

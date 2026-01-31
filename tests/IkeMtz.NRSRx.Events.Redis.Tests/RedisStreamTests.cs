@@ -274,14 +274,18 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
     public async Task ValidateRedisMoqSubscriberGetMessagesAsync()
     {
       var (Connection, Database) = MockRedisStreamFactory.CreateMockConnection();
+      //Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), count: messageCount ?? Options.MessagesPerBatchCount)
       _ = Database
         .Setup(x => x.StreamReadGroupAsync(It.IsAny<RedisKey>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), It.IsAny<RedisValue>(), 5, false, CommandFlags.None))
-        .Returns(Task.FromResult(Array.Empty<StreamEntry>()));
+        .Returns(Task.FromResult(new StreamEntry[] {
+          new("a", [new("letter", "a")]),
+          new("b", [new("letter", "b")]),
+        }));
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(Connection.Object);
       _ = subscriber.Init();
-      _ = await subscriber.GetMessagesAsync();
+      var result = await subscriber.GetMessagesAsync();
       Database
-        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 5, false, CommandFlags.None), Times.Once);
+        .Verify(t => t.StreamReadGroupAsync(subscriber.StreamKey, subscriber.ConsumerGroupName, subscriber.ConsumerName.GetValueOrDefault(), null, 5, false, null, It.IsAny<CommandFlags>()), Times.Once);
     }
     class RedisStreamSubscriberMock(IConnectionMultiplexer connection) : RedisStreamSubscriber<SampleMessage, CreateEvent>(connection)
     {
