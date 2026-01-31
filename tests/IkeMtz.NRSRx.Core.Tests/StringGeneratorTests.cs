@@ -18,7 +18,8 @@ namespace IkeMtz.NRSRx.Core.Tests
        {
          var result = StringGenerator(1000, true);
          Assert.AreNotEqual(lastString, result);
-         Assert.IsLessThanOrEqualTo(result.Length, 990, $"generated string is not long enough, expected: 990, actual: {result.Length}");
+         Assert.IsGreaterThanOrEqualTo(990, result.Length, $"generated string is not long enough, expected >= 990, actual: {result.Length}");
+         Assert.IsLessThanOrEqualTo(1000, result.Length, $"generated string is too long, expected <= 1000, actual: {result.Length}");
          lastString = result;
        });
     }
@@ -32,7 +33,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         var result = StringGenerator(1000, false);
         Assert.AreNotEqual(lastString, result);
-        Assert.IsLessThanOrEqualTo(result.Length, 990, $"generated string is not long enough, expected: 990, actual: {result.Length}");
+        Assert.IsGreaterThanOrEqualTo(990, result.Length, $"generated string is not long enough, expected: 990, actual: {result.Length}");
         lastString = result;
       });
     }

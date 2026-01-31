@@ -13,6 +13,7 @@ using Moq;
 namespace IkeMtz.NRSRx.Logging.Splunk.Tests
 {
   [TestClass]
+  [DoNotParallelize]
   public class SplunkLoggingTests : BaseUnigrationTests
   {
     [TestMethod]

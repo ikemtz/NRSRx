@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.Core.Tests
         new OAuthScope("B", "Z"),
         new OAuthScope("C", "Y"),
       ]);
-      Assert.AreEqual(3, result.Count);
+      Assert.HasCount(3, result);
     }
   }
 }

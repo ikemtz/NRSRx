@@ -32,6 +32,12 @@
             </summary>
             <param name="services">The service collection.</param>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.SignalR.CoreSignalrStartup.SetupUserIdProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up the user ID provider for SignalR communications.
+            </summary>
+            <param name="services">The service collection to add the user ID provider to.</param>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.SignalR.CoreSignalrStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             Configures the HTTP request pipeline.
@@ -50,6 +56,24 @@
             Maps SignalR hubs to endpoints.
             </summary>
             <param name="endpoints">The endpoint route builder.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.SignalR.UserIdProvider">
+            <summary>
+            Provides a mechanism to retrieve the user ID from a SignalR connection context using a specified claim type.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.SignalR.UserIdProvider.UserIdClaimType">
+            <summary>
+            Gets or sets the claim type used to identify the user ID in SignalR connections.
+            Default claim type is "sub" (subject).
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.SignalR.UserIdProvider.GetUserId(Microsoft.AspNetCore.SignalR.HubConnectionContext)">
+            <summary>
+            Retrieves the user ID from the specified <see cref="T:Microsoft.AspNetCore.SignalR.HubConnectionContext"/> using the claim type defined in <see cref="P:IkeMtz.NRSRx.Core.SignalR.UserIdProvider.UserIdClaimType"/>.
+            </summary>
+            <param name="connection">The SignalR hub connection context.</param>
+            <returns>The user ID as a string if found; otherwise, null.</returns>
         </member>
     </members>
 </doc>

@@ -1,19 +1,19 @@
 using System;
 using IkeMtz.Samples.Models.V1;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IkeMtz.NRSRx.Core.Unigration.TestDataFactory;
 
 namespace IkeMtz.Samples.Tests
 {
+  [DoNotParallelize()]
   public static partial class Factories
   {
     public static School SchoolFactory()
     {
-      //TODO: Create a bettery string generator
-      var fullName = Guid.NewGuid().ToString();
       var school = CreateIdentifiable<School>();
-      school.Name = fullName[..6];
-      school.FullName = fullName[..30];
-      school.TenantId = fullName[..5];
+      school.Name = StringGenerator(6);
+      school.FullName = StringGenerator(50);
+      school.TenantId = StringGenerator(4);
       return school;
     }
 

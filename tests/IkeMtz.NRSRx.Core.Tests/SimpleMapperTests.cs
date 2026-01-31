@@ -24,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       source.SampleStrings.Add("This better work!");
       var dest = SimpleMapper<ValidationTestObjectA>.Instance.Convert(source);
       Assert.AreEqual(Guid.Empty, dest.Id);
-      Assert.AreEqual(0, dest.SampleStrings.Count);
+      Assert.IsEmpty(dest.SampleStrings);
       Assert.AreEqual(source.SampleDecimal, dest.SampleDecimal);
       Assert.AreEqual(source.SampleGuid, dest.SampleGuid);
       Assert.AreEqual(source.SampleInt, dest.SampleInt);
@@ -51,7 +51,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       source.SampleStrings.Add("This better work!");
       var dest = SimpleMapper<ValidationTestObjectA>.Instance.Convert(source);
       Assert.AreEqual(source.Id, dest.Id);
-      Assert.AreEqual(0, dest.SampleStrings.Count);
+      Assert.IsEmpty(dest.SampleStrings);
       Assert.AreEqual(source.SampleDecimal, dest.SampleDecimal);
       Assert.AreEqual(source.SampleGuid, dest.SampleGuid);
       Assert.AreEqual(source.SampleInt, dest.SampleInt);
@@ -84,7 +84,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       source.SampleStrings.Add("This better work!");
       var dest = SimpleMapper<ValidationTestObjectA, ValidationTestObjectB>.Instance.Convert(source);
       Assert.AreEqual(Guid.Empty, dest.Id);
-      Assert.AreEqual(0, dest.SampleStrings.Count);
+      Assert.IsEmpty(dest.SampleStrings);
       Assert.AreEqual(source.SampleDecimal, dest.SampleDecimal);
       Assert.AreEqual(source.SampleGuid, dest.SampleGuid);
       Assert.AreEqual(source.SampleInt, dest.SampleInt);

@@ -26,6 +26,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
   /// <summary>
   /// Base class for integration tests, providing common functionality for setting up and running tests.
   /// </summary>
+  [DoNotParallelize]
   public class BaseUnigrationTests
   {
     /// <summary>

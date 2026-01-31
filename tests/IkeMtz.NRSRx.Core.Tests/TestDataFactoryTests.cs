@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var result = TestDataFactory.StringGenerator(6, false, characterSet: CharacterSets.Numeric);
       Assert.DoesNotContain("  ", result);
       Assert.AreEqual(6, result.Length);
-      Assert.IsLessThanOrEqualTo(result.Length, 6, $"generated string is not long enough, expected: 6, actual: {result.Length}");
+      Assert.IsLessThanOrEqualTo(result.Length, 6, $"Generated string was over the maximum: 6, actual: {result.Length}");
       Assert.IsTrue(char.IsNumber(result.First()));
     }
   }

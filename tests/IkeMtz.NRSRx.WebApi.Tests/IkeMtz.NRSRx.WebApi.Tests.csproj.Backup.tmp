@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
-  <PropertyGroup >
+  <PropertyGroup>
     <NoWarn>1701;1702;CS1591;CS8618;CS8892;MSTEST0049;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.WebApi.Tests.xml</DocumentationFile>
   </PropertyGroup>

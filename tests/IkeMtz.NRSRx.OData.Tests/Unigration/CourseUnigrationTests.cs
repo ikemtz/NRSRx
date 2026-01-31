@@ -129,8 +129,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$top=5000&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Reponse: {data}");
-      Assert.IsTrue(data.Contains("The limit of '100'"));
-      Assert.IsTrue(data.Contains("The value from the incoming request is '5000'"));
+      Assert.Contains("The limit of '100'", data);
+      Assert.Contains("The value from the incoming request is '5000'", data);
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
     }
   }

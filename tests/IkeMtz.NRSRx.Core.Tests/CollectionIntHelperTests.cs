@@ -64,7 +64,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         dest.Value = src.Value;
       });
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
       Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
@@ -82,7 +82,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         dest.Value = src.Value;
       });
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
       Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
@@ -97,7 +97,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var destList = context.CollectionIntModels.ToList();
       srcList.First().Value = "Validate Update";
       context.SyncIntCollections(srcList, destList);
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
       Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
@@ -112,7 +112,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var destList = context.CollectionIntModels.ToList();
       srcList.First().Value = "Validate Update";
       context.SyncIntCollections(srcList, destList);
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
       Assert.AreEqual("Validate Update", destList.First().Value);
     }
 
@@ -130,7 +130,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         wasCalled = true;
       });
-      Assert.AreEqual(0, destList.Count);
+      Assert.IsEmpty(destList);
       Assert.IsFalse(wasCalled);
     }
 
@@ -148,7 +148,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         wasCalled = true;
       });
-      Assert.AreEqual(0, destList.Count);
+      Assert.IsEmpty(destList);
       Assert.IsFalse(wasCalled);
     }
 
@@ -163,7 +163,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       {
         dest.Value = src.Value;
       });
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
     }
 
     [TestMethod]
@@ -177,7 +177,7 @@ namespace IkeMtz.NRSRx.Core.Tests
      {
        dest.Value = src.Value;
      });
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
     }
 
 
@@ -189,7 +189,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var srcList = new[] { new CollectionIntModel(), new CollectionIntModel() };
       var destList = new List<CollectionIntModel> { };
       context.SyncIntCollections(srcList, destList);
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
     }
 
     [TestMethod]
@@ -200,7 +200,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var srcList = new[] { new CollectionIntModelDto(), new CollectionIntModelDto() };
       var destList = new List<CollectionIntModel> { };
       context.SyncIntCollections(srcList, destList);
-      Assert.AreEqual(2, destList.Count);
+      Assert.HasCount(2, destList);
     }
   }
 }
