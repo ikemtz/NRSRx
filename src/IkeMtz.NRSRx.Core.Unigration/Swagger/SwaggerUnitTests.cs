@@ -4,7 +4,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
