@@ -1,6 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.Web.Swagger
@@ -31,11 +31,7 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
         {
           continue;
         }
-        else if (parameter.Description == null)
-        {
-          parameter.Description = description.ModelMetadata?.Description;
-        }
-        parameter.Required |= description.IsRequired;
+        else parameter.Description ??= description.ModelMetadata?.Description;
       }
     }
   }

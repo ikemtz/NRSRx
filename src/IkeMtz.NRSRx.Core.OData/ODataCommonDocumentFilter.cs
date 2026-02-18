@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.OData

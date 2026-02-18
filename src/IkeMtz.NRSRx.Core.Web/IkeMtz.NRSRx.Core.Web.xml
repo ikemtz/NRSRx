@@ -367,7 +367,7 @@
             Operation filter to add authorization responses and security requirements to Swagger operations.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter.Apply(Microsoft.OpenApi.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
             <summary>
             Applies the filter to the specified operation.
             </summary>
@@ -381,7 +381,7 @@
             <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
             Once they are fixed and published, this class can be removed.</remarks>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter.Apply(Microsoft.OpenApi.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
             <summary>
             Applies the filter to the specified operation.
             </summary>
@@ -416,7 +416,7 @@
             Gets the application configuration.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Apply(Microsoft.OpenApi.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
             <summary>
             Applies the filter to the specified Swagger document.
             </summary>

@@ -1,6 +1,6 @@
 using System.Linq;
 using Microsoft.Extensions.Configuration;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.Web.Swagger
