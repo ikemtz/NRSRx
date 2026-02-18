@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public static TServiceType GetTestService<TServiceType>(this TestServer testServer) where TServiceType : class
     {
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
-      return testServer.Host.Services.GetService<TServiceType>();
+      return testServer.Services.GetService<TServiceType>();
     }
 
     /// <summary>

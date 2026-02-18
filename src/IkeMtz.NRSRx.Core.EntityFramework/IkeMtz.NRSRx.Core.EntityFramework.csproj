@@ -3,7 +3,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ProjectGuid>00E643EF-9E58-48FA-9FB9-4736B272DA4B</ProjectGuid>
     <Authors>IkeMtz</Authors>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryType>Git</RepositoryType>
     <Company>IkeMtz</Company>

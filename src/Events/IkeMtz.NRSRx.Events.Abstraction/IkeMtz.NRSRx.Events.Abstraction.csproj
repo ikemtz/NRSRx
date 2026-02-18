@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProjectGuid>9D63F8C6-E3AF-407D-B4C7-DDCE78F51499</ProjectGuid>
     <LangVersion>8.0</LangVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryType>Git</RepositoryType>
     <Company>IkeMtz</Company>
