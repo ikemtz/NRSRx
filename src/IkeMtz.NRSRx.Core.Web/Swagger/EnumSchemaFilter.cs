@@ -20,13 +20,13 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
         foreach (var i in enumValues)
         {
           var enumVal = Convert.ToInt64(i);
-          schema.Enum.Add(JsonNode.Parse($"{enumVal} - {i}"));
+          schema.Enum.Add(JsonValue.Create($"{enumVal} - {i}"));
           //if (attribs.Any())
           //{
           //  var defaultVal = Convert.ToInt64(attribs.First().ConstructorArguments.First().Value);
           //  if (enumVal == defaultVal)
           //  {
-          //    schema..Default = JsonNode.Parse($"{enumVal} - {i}");
+          //    schema..Default = JsonValue.Create($"{enumVal} - {i}");
           //  }
           //}
         }
