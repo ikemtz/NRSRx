@@ -969,11 +969,7 @@
           "System.ComponentModel.Annotations": "[5.0.0, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Reflection": "[4.3.0, )",
-<<<<<<< HEAD
           "System.Text.Json": "[9.0.15, )",
-=======
-          "System.Text.Json": "[8.0.0, )",
->>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
           "System.Text.RegularExpressions": "[4.3.1, )",
           "System.ValueTuple": "[4.6.1, )"
         }

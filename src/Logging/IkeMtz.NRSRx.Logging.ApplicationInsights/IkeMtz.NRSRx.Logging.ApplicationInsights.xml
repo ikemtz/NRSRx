@@ -23,22 +23,14 @@
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupApplicationInsights(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-<<<<<<< HEAD
             Sets up application to utilize Application Insights on Azure.
-=======
-            Sets up application to utlize Application Insights on Azure.
->>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
             </summary>
             <param name="startup"></param>
             <param name="services"></param>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupDevelopmentApplicationInsights(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-<<<<<<< HEAD
             Sets up application to utilize Application Insights on Azure in development mode.
-=======
-            Sets up application to utlize Application Insights on Azure in development mode.
->>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
             </summary>
             <param name="startup"></param>
             <param name="services"></param>

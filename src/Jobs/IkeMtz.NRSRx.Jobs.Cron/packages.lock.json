@@ -1017,25 +1017,10 @@
           "System.Runtime": "4.3.0"
         }
       },
-<<<<<<< HEAD
       "System.Text.Json": {
         "type": "Transitive",
         "resolved": "9.0.15",
         "contentHash": "rQUurOZYEo81Cvq253gO4FTDO9r+RBUBQVI3q7qwS31SH1wtUfP+Aw23I81ZkFSUBC4f1hPqea0wxo15rR5/dA=="
-=======
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
-      },
-      "System.Text.Json": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "OdrZO2WjkiEG6ajEFRABTRCi/wuXQPxeV6g8xvUJqdxMvvuCCEk86zPla8UiIQJz3durtUEbNyY/3lIhS0yZvQ==",
-        "dependencies": {
-          "System.Text.Encodings.Web": "8.0.0"
-        }
->>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
       },
       "System.Text.RegularExpressions": {
         "type": "Transitive",
@@ -1075,11 +1060,7 @@
           "System.ComponentModel.Annotations": "[5.0.0, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Reflection": "[4.3.0, )",
-<<<<<<< HEAD
           "System.Text.Json": "[9.0.15, )",
-=======
-          "System.Text.Json": "[8.0.0, )",
->>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
           "System.Text.RegularExpressions": "[4.3.1, )",
           "System.ValueTuple": "[4.6.1, )"
         }

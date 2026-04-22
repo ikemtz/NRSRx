@@ -82,11 +82,7 @@
             Initializes the token validator with the specified metadata address and audiences.
             </summary>
             <param name="metaDataAddress">The metadata address.</param>
-<<<<<<< HEAD
             <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by separating them with a comma. </param>
-=======
-            <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by seperating them with a comma. </param>
->>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
             <returns>A task that represents the asynchronous operation.</returns>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Jwt.TokenValidator.InitAsync(System.String,System.String,System.String)">
@@ -95,11 +91,7 @@
             </summary>
             <param name="metaDataAddress">The metadata address of the identity server.</param>
             <param name="issuer">The value specified in the "iss" (issuer) claim.</param>
-<<<<<<< HEAD
             <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by separating them with a comma. </param>
-=======
-            <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by seperating them with a comma. </param>
->>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
             <returns>A task that represents the asynchronous operation.</returns>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Jwt.TokenValidator.ValidateToken(System.String)">
