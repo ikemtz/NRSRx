@@ -28,8 +28,7 @@ namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
-      var course = await DeserializeResponseAsync<Course>(resp);
+      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item, TestContext.CancellationToken);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == item.Id)), Times.Once);
     }
@@ -49,8 +48,7 @@ namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={item.Id}", item);
-      var course = await DeserializeResponseAsync<Course>(resp);
+      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={item.Id}", item); 
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == item.Id)), Times.Once);
     }
@@ -69,8 +67,7 @@ namespace IkeMtz.Samples.Events.Redis.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"api/v1/{nameof(Course)}s.json?id={item.Id}");
-      var course = await DeserializeResponseAsync<Course>(resp);
+      var resp = await client.DeleteAsync($"api/v1/{nameof(Course)}s.json?id={item.Id}", TestContext.CancellationToken);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Course>(t => t.Id == item.Id)), Times.Once);
     }

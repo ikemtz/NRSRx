@@ -9,8 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -116,13 +116,11 @@ namespace IkeMtz.NRSRx.Core.WebApi
              options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
              SetupMvcOptions(services, options);
            })
-           .AddNewtonsoftJson(options =>
+           .AddJsonOptions(options =>
            {
-             options
-                 .UseCamelCasing(true)
-                 .SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-             options.SerializerSettings.Converters.Add(new StringEnumConverter());
-             options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+             options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
            })
            .AddXmlSerializerFormatters();
       _ = services

@@ -1,6 +1,6 @@
 using IkeMtz.NRSRx.Core;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.Unigration.Logging
 {
@@ -68,7 +68,7 @@ namespace IkeMtz.NRSRx.Unigration.Logging
         testContext.WriteLine($"State: {state?.ToString()}");
         if (exception != null)
         {
-          testContext.WriteLine($"Exception: {JsonConvert.SerializeObject(exception, Constants.JsonSerializerSettings)}");
+          testContext.WriteLine($"Exception: {JsonSerializer.Serialize(exception, Constants.JsonSerializerOptions)}");
         }
       }
     }

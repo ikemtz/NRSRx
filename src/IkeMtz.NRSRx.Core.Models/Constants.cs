@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace IkeMtz.NRSRx.Core
 {
@@ -9,17 +9,33 @@ namespace IkeMtz.NRSRx.Core
   public static class Constants
   {
     /// <summary>
-    /// The default JSON serializer settings with camel case property names and reference loop handling set to ignore.
+    /// The default JSON serializer options with camel case property names.
     /// </summary>
-    private static readonly JsonSerializerSettings jsonSerializerSettings = new()
-    {
-      ContractResolver = new CamelCasePropertyNamesContractResolver(),
-      ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-    };
-
+    private static JsonSerializerOptions jsonSerializerOptions;
     /// <summary>
-    /// Gets the default JSON serializer settings.
+    /// Gets the default JSON serializer options.
     /// </summary>
-    public static JsonSerializerSettings JsonSerializerSettings => jsonSerializerSettings;
+    public static JsonSerializerOptions JsonSerializerOptions
+    {
+      get
+      {
+        if (jsonSerializerOptions == null)
+        {
+          jsonSerializerOptions = new JsonSerializerOptions
+          {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
+            /*
+             * This value reflects the max expansion depth of odata queries; adjust as necessary
+             */
+            MaxDepth = 10,
+            AllowTrailingCommas = true,
+          };
+          jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+        }
+
+        return jsonSerializerOptions;
+      }
+    }
   }
 }

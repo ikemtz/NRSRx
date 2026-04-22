@@ -55,12 +55,6 @@
           "Microsoft.SourceLink.Common": "8.0.0"
         }
       },
-      "Newtonsoft.Json": {
-        "type": "Direct",
-        "requested": "[13.0.4, )",
-        "resolved": "13.0.4",
-        "contentHash": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A=="
-      },
       "Swashbuckle.AspNetCore": {
         "type": "Direct",
         "requested": "[9.0.6, )",
@@ -774,10 +768,10 @@
       "ikemtz.nrsrx.core.models": {
         "type": "Project",
         "dependencies": {
-          "Newtonsoft.Json": "[13.0.4, )",
           "System.ComponentModel.Annotations": "[5.0.0, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Reflection": "[4.3.0, )",
+          "System.Text.Json": "[8.0.0, )",
           "System.Text.RegularExpressions": "[4.3.1, )",
           "System.ValueTuple": "[4.6.1, )"
         }

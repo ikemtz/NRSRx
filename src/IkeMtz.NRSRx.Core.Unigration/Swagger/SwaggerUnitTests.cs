@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.OpenApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 {
@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 
       result = FixSwaggerDocument(result);
 
-      var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
+      var doc = JsonSerializer.Deserialize<OpenApiDocument>(result, Constants.JsonSerializerOptions);
       Assert.AreEqual($"{version}.0", doc.Info.Version);
       return doc;
     }
@@ -86,7 +86,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
 
       result = FixSwaggerDocument(result);
 
-      var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
+      var doc = JsonSerializer.Deserialize<OpenApiDocument>(result, Constants.JsonSerializerOptions);
 
       var paths = doc.Paths.Select(t => t.Key).ToList();
       paths.ForEach(x => StringAssert.StartsWith(x, swaggerReverseProxyDocumentFilter, $"Path {x} does not start with the desired '/./'"));

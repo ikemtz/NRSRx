@@ -31,8 +31,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.json", item);
-      var school = await DeserializeResponseAsync<School>(resp);
+      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.json", item, TestContext.CancellationToken);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<School>(t => t.Id == item.Id)), Times.Once);
     }
@@ -51,8 +50,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(School)}s.json?id={item.Id}", item);
-      var school = await DeserializeResponseAsync<School>(resp);
+      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(School)}s.json?id={item.Id}", item, TestContext.CancellationToken);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<School>(t => t.Id == item.Id)), Times.Once);
     }
@@ -71,8 +69,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"api/v1/{nameof(School)}s.json?id={item.Id}");
-      var school = await DeserializeResponseAsync<School>(resp);
+      var resp = await client.DeleteAsync($"api/v1/{nameof(School)}s.json?id={item.Id}", TestContext.CancellationToken);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<School>(t => t.Id == item.Id)), Times.Once);
     }

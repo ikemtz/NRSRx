@@ -9,14 +9,14 @@
             Provides application-wide constants.
             </summary>
         </member>
-        <member name="F:IkeMtz.NRSRx.Core.Constants.jsonSerializerSettings">
+        <member name="F:IkeMtz.NRSRx.Core.Constants.jsonSerializerOptions">
             <summary>
-            The default JSON serializer settings with camel case property names and reference loop handling set to ignore.
+            The default JSON serializer options with camel case property names.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerSettings">
+        <member name="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerOptions">
             <summary>
-            Gets the default JSON serializer settings.
+            Gets the default JSON serializer options.
             </summary>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper">

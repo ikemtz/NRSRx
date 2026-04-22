@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
@@ -10,7 +11,7 @@ using IkeMtz.Samples.OData;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.OData.Tests
 {
@@ -37,7 +38,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(School.Name, envelope.Value.First().Name);
     }
@@ -88,7 +89,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(schoolCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(schoolCourse.School.Name, envelope.Value.First().Name);
       Assert.AreEqual(schoolCourse.Id, envelope.Value.First().SchoolCourses.First().Id);
@@ -113,7 +114,6 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [Ignore("Waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task ComputeMinSchoolTest()
     {
       var school = Factories.SchoolFactory();
@@ -139,13 +139,12 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=100&$count=true&$compute={nameof(school.SchoolCourses)}/$count as Courses&$select={nameof(school.Id)},Courses");
       var data = await resp.Content.ReadAsStringAsync();
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(data);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(data, Constants.JsonSerializerOptions);
       Assert.Contains($"\"id\":\"{school.Id}\",\"Courses\":4", data);
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [Ignore("waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task GetMaxSchoolsTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());

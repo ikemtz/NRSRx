@@ -1,4 +1,5 @@
-using Newtonsoft.Json;
+using System.Text.Json;
+using IkeMtz.NRSRx.Core;
 
 namespace IkeMtz.NRSRx.Jobs.Cron
 {
@@ -43,7 +44,7 @@ namespace IkeMtz.NRSRx.Jobs.Cron
       if (File.Exists(filePath))
       {
         var json = await File.ReadAllTextAsync(filePath);
-        return JsonConvert.DeserializeObject<CronJobState>(json) ?? new CronJobState();
+        return JsonSerializer.Deserialize<CronJobState>(json) ?? new CronJobState();
       }
       else return new CronJobState();
     }
@@ -62,7 +63,7 @@ namespace IkeMtz.NRSRx.Jobs.Cron
         LastRunDateTimeUtc = TimeProvider.GetUtcNow(),
         NextRunDateTimeUtc = nextExecutionDateTimeUtc
       };
-      await File.WriteAllTextAsync(filePath, JsonConvert.SerializeObject(cronJobState));
+      await File.WriteAllTextAsync(filePath, JsonSerializer.Serialize(cronJobState, Constants.JsonSerializerOptions));
       return cronJobState;
     }
 

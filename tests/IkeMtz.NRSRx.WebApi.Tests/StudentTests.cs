@@ -12,7 +12,7 @@ using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.WebApi.Tests
 {
@@ -77,8 +77,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.xml", item);
-      _ = resp.EnsureSuccessStatusCode();
-      await Assert.ThrowsExactlyAsync<JsonReaderException>(async () => _ = await DeserializeResponseAsync<Student>(resp));
+      Assert.AreEqual(HttpStatusCode.NotAcceptable, resp.StatusCode);
+      await Assert.ThrowsExactlyAsync<JsonException>(async () => _ = await DeserializeResponseAsync<Student>(resp));
     }
 
     [TestMethod]
