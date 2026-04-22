@@ -27,7 +27,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$count=true");
-      TestContext.WriteLine($"Server Response: {resp}");
+      TestContext.WriteLine($"Server Reponse: {resp}");
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Student>>(resp, Constants.JsonSerializerOptions);
       Assert.AreEqual(envelope?.Count, envelope?.Value.Count());
       envelope?.Value.ToList().ForEach(t =>

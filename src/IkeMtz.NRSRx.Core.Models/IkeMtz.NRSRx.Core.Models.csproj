@@ -41,7 +41,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+<<<<<<< HEAD
     <PackageReference Include="System.Text.Json" Version="9.0.15" />
+=======
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+>>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />

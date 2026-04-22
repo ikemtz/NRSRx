@@ -12,7 +12,11 @@
         <member name="M:IkeMtz.NRSRx.Jobs.Core.JobExtensions.SetupSplunk(IkeMtz.NRSRx.Jobs.Core.IJob,Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Sets up the asp.net core application to log to a Splunk instance using a Splunk Http Event Collector.
+<<<<<<< HEAD
             Reference: https://docs.splunk.com/Documentation/SplunkCloud/8.2.2106/Data/UsetheHTTPEventCollector
+=======
+            Refernce: https://docs.splunk.com/Documentation/SplunkCloud/8.2.2106/Data/UsetheHTTPEventCollector
+>>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
             Note: The following configuration variables are required:
             SPLUNK_HOST => The url of the splunk collector endpoint (ie: http(s)://{Splunk Host}/services/collector)
             SPLUNK_TOKEN => Security token 

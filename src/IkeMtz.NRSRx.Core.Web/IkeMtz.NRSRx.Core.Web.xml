@@ -11,7 +11,11 @@
         </member>
         <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.IdentityAudiences">
             <summary>
+<<<<<<< HEAD
             Gets or sets the identity audiences.  Multiples can be specified by separating them with a comma.
+=======
+            Gets or sets the identity audiences.  Multiples can be specified by seperating them with a comma.
+>>>>>>> 30f82530477fc280391f957ab8924d0156d93ef3
             </summary>
         </member>
         <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.IdentityProvider">
