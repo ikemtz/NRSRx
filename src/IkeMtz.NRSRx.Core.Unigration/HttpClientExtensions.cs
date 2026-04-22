@@ -1,5 +1,7 @@
 using System.Net.Http;
-using System.Net.Http.Formatting;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IkeMtz.NRSRx.Core.Unigration.Http
@@ -16,13 +18,13 @@ namespace IkeMtz.NRSRx.Core.Unigration.Http
     /// <param name="client">The HTTP client.</param>
     /// <param name="requestUri">The URI to send the request to.</param>
     /// <param name="value">The content to send.</param>
+    /// <param name="cancellationToken"></param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the HTTP response message.</returns>
-    public static Task<HttpResponseMessage> PostAsJsonAsync<T>(this HttpClient client, string requestUri, T value)
+    public static Task<HttpResponseMessage> PostAsJsonAsync<T>(this HttpClient client, string requestUri, T value, CancellationToken? cancellationToken = null)
     {
-      return client.PostAsync(requestUri, value, new JsonMediaTypeFormatter()
-      {
-        SerializerSettings = Constants.JsonSerializerSettings
-      });
+      var json = JsonSerializer.Serialize(value, Constants.JsonSerializerOptions);
+      var content = new StringContent(json, Encoding.UTF8, "application/json");
+      return client.PostAsync(requestUri, content, cancellationToken ?? CancellationToken.None);
     }
 
     /// <summary>
@@ -32,13 +34,13 @@ namespace IkeMtz.NRSRx.Core.Unigration.Http
     /// <param name="client">The HTTP client.</param>
     /// <param name="requestUri">The URI to send the request to.</param>
     /// <param name="value">The content to send.</param>
+    /// <param name="cancellationToken"></param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the HTTP response message.</returns>
-    public static Task<HttpResponseMessage> PutAsJsonAsync<T>(this HttpClient client, string requestUri, T value)
+    public static Task<HttpResponseMessage> PutAsJsonAsync<T>(this HttpClient client, string requestUri, T value, CancellationToken? cancellationToken = null)
     {
-      return client.PutAsync(requestUri, value, new JsonMediaTypeFormatter()
-      {
-        SerializerSettings = Constants.JsonSerializerSettings
-      });
+      var json = JsonSerializer.Serialize(value, Constants.JsonSerializerOptions);
+      var content = new StringContent(json, Encoding.UTF8, "application/json");
+      return client.PutAsync(requestUri, content, cancellationToken ?? CancellationToken.None);
     }
   }
 }

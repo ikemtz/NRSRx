@@ -947,8 +947,8 @@
       },
       "Newtonsoft.Json": {
         "type": "Transitive",
-        "resolved": "13.0.4",
-        "contentHash": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A=="
+        "resolved": "13.0.3",
+        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
       "Newtonsoft.Json.Bson": {
         "type": "Transitive",
@@ -1822,10 +1822,10 @@
       "ikemtz.nrsrx.core.models": {
         "type": "Project",
         "dependencies": {
-          "Newtonsoft.Json": "[13.0.4, )",
           "System.ComponentModel.Annotations": "[5.0.0, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Reflection": "[4.3.0, )",
+          "System.Text.Json": "[8.0.0, )",
           "System.Text.RegularExpressions": "[4.3.1, )",
           "System.ValueTuple": "[4.6.1, )"
         }
@@ -1883,7 +1883,6 @@
           "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "[9.0.12, )",
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "[8.15.0, )",
           "Moq": "[4.18.4, )",
-          "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[9.0.0, )",
           "StackExchange.Redis": "[2.10.1, )",
           "Swashbuckle.AspNetCore": "[9.0.6, )",
@@ -1901,7 +1900,6 @@
           "Microsoft.Extensions.Configuration.Binder": "[9.0.12, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.12, )",
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "[8.15.0, )",
-          "Newtonsoft.Json": "[13.0.4, )",
           "Swashbuckle.AspNetCore": "[9.0.6, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Text.Encodings.Web": "[9.0.12, )",
@@ -2021,7 +2019,6 @@
           "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "[9.0.12, )",
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "[8.15.0, )",
           "Moq": "[4.18.4, )",
-          "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[9.0.0, )",
           "StackExchange.Redis": "[2.10.1, )",
           "System.Net.Http": "[4.3.4, )",
@@ -2036,7 +2033,6 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[9.0.12, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.12, )",
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "[8.15.0, )",
-          "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[9.0.0, )",
           "Serilog.Enrichers.Environment": "[3.0.1, )",
           "Serilog.Sinks.Console": "[6.1.1, )",
@@ -2052,7 +2048,6 @@
           "MSTest.TestFramework": "[4.0.2, )",
           "Microsoft.Extensions.Configuration.UserSecrets": "[9.0.12, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.12, )",
-          "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[9.0.0, )",
           "StackExchange.Redis": "[2.10.1, )"
         }

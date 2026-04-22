@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Events.Abstraction.Redis;
-using Newtonsoft.Json;
+using System.Text.Json;
 using StackExchange.Redis;
 
 namespace IkeMtz.NRSRx.Events.Subscribers.Redis
@@ -163,7 +163,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     {
       ValidateInit();
       var data = await Database.StreamReadGroupAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), count: messageCount ?? Options.MessagesPerBatchCount);
-      return data.SelectMany(t => t.Values.Select(v => (t.Id, JsonConvert.DeserializeObject<TEntity>(v.Value))));
+      return data.SelectMany(t => t.Values.Select(v => (t.Id, JsonSerializer.Deserialize<TEntity>(v.Value))));
     }
 
     /// <summary>
@@ -205,7 +205,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
           if (messageIds.Length != 0)
           {
             var data = await Database.StreamClaimAsync(StreamKey, ConsumerGroupName, ConsumerName.GetValueOrDefault(), 10000, messageIds);
-            messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, JsonConvert.DeserializeObject<TEntity>(v.Value)))));
+            messageList.AddRange(data.SelectMany(t => t.Values.Select(v => (t.Id, JsonSerializer.Deserialize<TEntity>(v.Value)))));
           }
           var deadMessageIds = pendingMessages
             .Where(t => t.DeliveryCount > Options.MaxMessageProcessRetry)

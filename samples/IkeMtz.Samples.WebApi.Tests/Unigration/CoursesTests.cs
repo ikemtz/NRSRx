@@ -23,10 +23,10 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
+      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item, TestContext.CancellationToken);
       _ = resp.EnsureSuccessStatusCode();
       var content = await resp.Content.ReadAsStringAsync();
-      StringAssert.Contains(content, "PendingCertification");
+      Assert.Contains("PendingCertification", content);
       var httpCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpCourse);
       Assert.AreEqual("IntegrationTester@email.com", httpCourse.CreatedBy);

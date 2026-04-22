@@ -1,6 +1,6 @@
 using System.Text;
 using IkeMtz.NRSRx.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.Events.Abstraction
 {
@@ -17,7 +17,7 @@ namespace IkeMtz.NRSRx.Events.Abstraction
     /// <returns>A byte array representing the JSON-encoded entity.</returns>
     public static byte[] JsonEncode<TEntity>(TEntity entity)
     {
-      var json = JsonConvert.SerializeObject(entity, Constants.JsonSerializerSettings);
+      var json = JsonSerializer.Serialize(entity, Constants.JsonSerializerOptions);
       return Encoding.UTF8.GetBytes(json);
     }
 
@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.Events.Abstraction
     public static TEntity JsonDecode<TEntity>(byte[] buffer)
     {
       var json = Encoding.UTF8.GetString(buffer);
-      return JsonConvert.DeserializeObject<TEntity>(json, Constants.JsonSerializerSettings);
+      return JsonSerializer.Deserialize<TEntity>(json, Constants.JsonSerializerOptions);
     }
   }
 }

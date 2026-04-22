@@ -18,8 +18,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Serilog;
+using System.Threading;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
@@ -109,7 +111,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = resp.EnsureSuccessStatusCode();
       var respBody = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
       TestContext.WriteLine($"Identity Server HttpResponse: {respBody}");
-      dynamic o = JsonConvert.DeserializeObject(respBody);
+      dynamic o = JsonSerializer.Deserialize<JsonNode>(respBody);
       return o.access_token;
     }
 
@@ -153,12 +155,13 @@ namespace IkeMtz.NRSRx.Core.Unigration
     /// </summary>
     /// <typeparam name="T">The type to deserialize to.</typeparam>
     /// <param name="httpResponseMessage">The HTTP response message.</param>
+    /// <param name="cancellationToken"></param>
     /// <returns>The deserialized object.</returns>
-    public async Task<T?> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
+    public async Task<T?> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage, CancellationToken? cancellationToken = null)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
-      var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
-      return JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
+      var content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken ?? CancellationToken.None);
+      return JsonSerializer.Deserialize<T>(content, Constants.JsonSerializerOptions);
     }
 
     /// <summary>
@@ -200,9 +203,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
     /// <returns>The deep copy of the object.</returns>
     public T JsonClone<T>(T source)
     {
-      return JsonConvert.DeserializeObject<T>(
-        JsonConvert.SerializeObject(source, Constants.JsonSerializerSettings),
-          Constants.JsonSerializerSettings);
+      return JsonSerializer.Deserialize<T>(
+        JsonSerializer.Serialize(source, Constants.JsonSerializerOptions),
+          Constants.JsonSerializerOptions);
     }
   }
 }

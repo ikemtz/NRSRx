@@ -19,7 +19,7 @@ namespace IkeMtz.NRSRx.OData.Tests {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class SnapShotResources {
@@ -63,28 +63,32 @@ namespace IkeMtz.NRSRx.OData.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;html&gt;
         ///&lt;head&gt;
-        ///    &lt;title&gt;OData Endpoint Routing Debugger&lt;/title&gt;
-        ///    &lt;style&gt;
-        ///        table {
-        ///            font-family: arial, sans-serif;
-        ///            border-collapse: collapse;
-        ///            width: 100%;
-        ///        }
-        ///        td,
-        ///        th {
-        ///            border: 1px solid #dddddd;
-        ///            text-align: left;
-        ///            padding: 8px;
-        ///        }
-        ///        tr:nth-child(even) {
-        ///            background-color: #dddddd;
-        ///        }
-        ///    &lt;/style&gt;
+        ///&lt;title&gt;OData Endpoint Routing Debugger&lt;/title&gt;
+        ///&lt;style&gt;
+        ///    table {
+        ///        font-family: arial, sans-serif;
+        ///        border-collapse: collapse;
+        ///        width: 100%;
+        ///    }
+        ///    td,
+        ///    th {
+        ///        border: 1px solid #dddddd;
+        ///        text-align: left;
+        ///        padding: 8px;
+        ///    }
+        ///    tr:nth-child(even) {
+        ///        background-color: #dddddd;
+        ///    }
+        ///&lt;/style&gt;
         ///&lt;/head&gt;
         ///&lt;body&gt;
-        ///    &lt;h1 id=&quot;odata&quot;&gt;OData Endpoint Mappings&lt;/h1&gt;
-        ///    &lt;p&gt;
-        ///        &lt; [rest of string was truncated]&quot;;.
+        ///&lt;h1 id=&quot;odata&quot;&gt;OData Endpoint Mappings&lt;/h1&gt;
+        ///&lt;p&gt;
+        ///    &lt;a href=&quot;#standard&quot;&gt;Go to non-OData endpoint mappings&lt;/a&gt;
+        ///&lt;/p&gt;
+        ///&lt;table&gt;
+        ///    &lt;tr&gt;
+        ///  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ODataDebugPage {
             get {

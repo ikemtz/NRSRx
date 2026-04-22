@@ -121,6 +121,7 @@ namespace IkeMtz.NRSRx.Core.OData
           {
             options.TimeZone = TimeZoneInfo.Utc;
             options.RouteOptions.EnableControllerNameCaseInsensitive = true;
+            options.SkipToken();
             ODataModelProvider.EdmModels.ToList().ForEach(x =>
                 {
                   options.AddRouteComponents($"odata/{x.Key.GroupName}",

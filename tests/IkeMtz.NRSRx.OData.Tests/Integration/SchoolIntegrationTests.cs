@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
@@ -9,7 +10,7 @@ using IkeMtz.Samples.OData;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.OData.Tests
 {
@@ -36,7 +37,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$filter=id eq {item.Id}");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       Assert.AreEqual(item.Name, envelope?.Value.First().Name);
     }
 
@@ -67,7 +68,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}&$filter=id eq {item.Id}");
 
       Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Name, envelope.Value.First().Name);
       Assert.AreEqual(item.SchoolCourses.First().Id, envelope.Value.First().SchoolCourses.First().Id);

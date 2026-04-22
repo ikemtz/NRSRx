@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace IkeMtz.NRSRx.Core.Web
 {
@@ -12,13 +13,13 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <summary>
     /// Gets or sets the authorization endpoint.
     /// </summary>
-    [JsonProperty(PropertyName = "authorization_endpoint")]
+    [JsonPropertyName("authorization_endpoint")]
     public string AuthorizeEndpoint { get; set; }
 
     /// <summary>
     /// Gets or sets the token endpoint.
     /// </summary>
-    [JsonProperty(PropertyName = "token_endpoint")]
+    [JsonPropertyName("token_endpoint")]
     public string TokenEndpoint { get; set; }
 
     /// <summary>

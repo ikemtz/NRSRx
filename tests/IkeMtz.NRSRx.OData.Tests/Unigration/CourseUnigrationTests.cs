@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
@@ -9,7 +10,7 @@ using IkeMtz.Samples.OData;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.OData.Tests
 {
@@ -36,7 +37,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
     }
@@ -60,7 +61,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Title, envelope.Value.First().Title);
     }
@@ -112,7 +113,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true&$expand={nameof(SchoolCourse)}s");
       TestContext.WriteLine($"Server Reponse: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(item.Course.Title, envelope.Value.First().Title);
       Assert.AreEqual(item.Id, envelope.Value.First().SchoolCourses.First().Id);

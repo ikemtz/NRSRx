@@ -16,7 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Jwt = System.IdentityModel.Tokens.Jwt;
@@ -264,7 +264,7 @@ namespace IkeMtz.NRSRx.Core.Web
           .GetAsync($"{appSettings?.IdentityProvider}.well-known/openid-configuration").Result;
       resp.EnsureSuccessStatusCode();
       var content = resp.Content.ReadAsStringAsync().Result;
-      return OpenIdConfiguration = JsonConvert.DeserializeObject<OpenIdConfiguration>(content);
+      return OpenIdConfiguration = JsonSerializer.Deserialize<OpenIdConfiguration>(content);
     }
 
     /// <summary>

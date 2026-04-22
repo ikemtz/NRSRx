@@ -118,12 +118,6 @@
           "MSTest.Analyzers": "4.0.2"
         }
       },
-      "Newtonsoft.Json": {
-        "type": "Direct",
-        "requested": "[13.0.4, )",
-        "resolved": "13.0.4",
-        "contentHash": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A=="
-      },
       "Serilog.AspNetCore": {
         "type": "Direct",
         "requested": "[9.0.0, )",
@@ -1305,6 +1299,14 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Text.Json": {
+        "type": "Transitive",
+        "resolved": "8.0.0",
+        "contentHash": "OdrZO2WjkiEG6ajEFRABTRCi/wuXQPxeV6g8xvUJqdxMvvuCCEk86zPla8UiIQJz3durtUEbNyY/3lIhS0yZvQ==",
+        "dependencies": {
+          "System.Text.Encodings.Web": "8.0.0"
+        }
+      },
       "System.Threading": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -1344,10 +1346,10 @@
       "ikemtz.nrsrx.core.models": {
         "type": "Project",
         "dependencies": {
-          "Newtonsoft.Json": "[13.0.4, )",
           "System.ComponentModel.Annotations": "[5.0.0, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Reflection": "[4.3.0, )",
+          "System.Text.Json": "[8.0.0, )",
           "System.Text.RegularExpressions": "[4.3.1, )",
           "System.ValueTuple": "[4.6.1, )"
         }
@@ -1389,7 +1391,6 @@
           "MSTest.TestFramework": "[4.0.2, )",
           "Microsoft.Extensions.Configuration.UserSecrets": "[9.0.12, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.12, )",
-          "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[9.0.0, )",
           "StackExchange.Redis": "[2.10.1, )"
         }

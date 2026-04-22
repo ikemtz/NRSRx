@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Models.V1;
@@ -9,7 +10,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace IkeMtz.Samples.OData.Tests.Unigration
 {
@@ -37,7 +38,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
 
       //Validate OData Result
       TestContext.WriteLine($"Server Reponse: {resp}");
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       Assert.AreEqual(objA.Name, envelope?.Value.First().Name);
     }
 
@@ -63,7 +64,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
 
       //Validate OData Result
       TestContext.WriteLine($"Server Reponse: {resp}");
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
+      var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       StringAssert.Contains(resp, "schoolCourses@odata.count\":1");
       Assert.AreEqual(dbSchool.Name, envelope?.Value.First().Name);
     }
@@ -81,7 +82,6 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       //Validate OData Result
       TestContext.WriteLine($"Server Reponse: {content}");
       _ = resp.EnsureSuccessStatusCode();
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(content);
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
   }

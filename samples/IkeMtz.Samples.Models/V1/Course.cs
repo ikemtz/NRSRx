@@ -29,8 +29,8 @@ namespace IkeMtz.Samples.Models.V1
     public string? UpdatedBy { get; set; }
     public DateTimeOffset? UpdatedOnUtc { get; set; }
     public int? UpdateCount { get; set; }
-    public virtual ICollection<StudentCourse> StudentCourses { get; }
-    public virtual ICollection<SchoolCourse> SchoolCourses { get; }
+    public virtual ICollection<StudentCourse> StudentCourses { get; set; }
+    public virtual ICollection<SchoolCourse> SchoolCourses { get; set; }
   }
 
 }
