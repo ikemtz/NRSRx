@@ -36,18 +36,18 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
 
       await SaveChangesInBatchAsync(async (entityName, totalEstimatedRecords) =>
       {
-        for (var currentRecorIndex = 0; currentRecorIndex < totalEstimatedRecords; currentRecorIndex += batchSize)
+        for (var currentRecordIndex = 0; currentRecordIndex < totalEstimatedRecords; currentRecordIndex += batchSize)
         {
           var dbContext = dbContextFactory();
           optimizedChangeTrackerSettings.ApplySettings(dbContext);
           var batchStartTime = DateTime.UtcNow;
-          var batch = entities.Skip(currentRecorIndex).Take(batchSize);
+          var batch = entities.Skip(currentRecordIndex).Take(batchSize);
           totalActualRecordsSaved += await ProcessEntityBatchAsync(dbContext, batch);
 
           logger?.LogInformation("Saved batch of {entityName} records in {elapsedTimeInMs} ms, approximate remaining items {pendingRecordCount}",
                 entityName,
                 Math.Ceiling(DateTime.UtcNow.Subtract(batchStartTime).TotalMilliseconds),
-             Math.Abs(totalEstimatedRecords - (currentRecorIndex + batch.Count())));
+             Math.Abs(totalEstimatedRecords - (currentRecordIndex + batch.Count())));
         }
         return totalActualRecordsSaved;
       }, entities, logger, batchSize);
@@ -61,14 +61,14 @@ namespace IkeMtz.NRSRx.Core.EntityFramework
       var totalEstimatedRecords = entities.Count();
       var overallStarttime = DateTime.UtcNow;
 
-      logger?.LogInformation("Saving {totalRecords} {entityName} records via SaveChangesInBatchAsync in batches of {batchSize}",
+      logger?.LogInformation("Saving {TotalRecords} {EntityName} records via SaveChangesInBatchAsync in batches of {BatchSize}",
         totalEstimatedRecords,
         entityName,
         batchSize);
 
       var totalActualRecordsSaved = await batchLogicAsync(entityName, totalEstimatedRecords);
 
-      logger?.LogInformation("Saved {totalActualRecords} records via SaveChangesInBatchAsync in {elapstedTimeInMs} ms",
+      logger?.LogInformation("Saved {TotalActualRecords} records via SaveChangesInBatchAsync in {ElapsedTimeInMs} ms",
         totalActualRecordsSaved,
         Math.Ceiling(DateTime.UtcNow.Subtract(overallStarttime).TotalMilliseconds));
 

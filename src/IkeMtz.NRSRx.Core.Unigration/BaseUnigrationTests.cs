@@ -135,7 +135,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       }
       catch (Exception ex)
       {
-        TestContext.WriteLine($"DB Creation Exception Occured: {ex}");
+        TestContext.WriteLine($"DB Creation Exception Occurred: {ex}");
       }
       TestContext.WriteLine($"Executing {nameof(ExecuteOnContext)}<{nameof(TDbContext)}> Logic");
       callback(db);

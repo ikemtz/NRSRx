@@ -18,14 +18,14 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
         schema.Format = null;
         var enumValues = Enum.GetValues(context.Type);
         var attribType = typeof(DefaultValueAttribute);
-        var attribs = context.Type.GetCustomAttributesData().Where(w => w.AttributeType == attribType);
+        var attributes = context.Type.GetCustomAttributesData().Where(w => w.AttributeType == attribType);
         foreach (var i in enumValues)
         {
           var enumVal = Convert.ToInt64(i);
           schema.Enum.Add(new OpenApiString($"{enumVal} - {i}"));
-          if (attribs.Any())
+          if (attributes.Any())
           {
-            var defaultVal = Convert.ToInt64(attribs.First().ConstructorArguments.First().Value);
+            var defaultVal = Convert.ToInt64(attributes.First().ConstructorArguments.First().Value);
             if (enumVal == defaultVal)
             {
               schema.Default = new OpenApiString($"{enumVal} - {i}");

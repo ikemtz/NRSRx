@@ -1612,7 +1612,7 @@
           "StackExchange.Redis": "[2.10.1, )"
         }
       },
-      "ikemtz.nrsrx.logging.elasticsearch": {
+      "ikemtz.nrsrx.logging.elasticcsearch": {
         "type": "Project",
         "dependencies": {
           "IkeMtz.NRSRx.Core.Web": "[1.0.0, )",

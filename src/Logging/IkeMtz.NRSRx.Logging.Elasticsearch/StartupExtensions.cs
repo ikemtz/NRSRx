@@ -52,7 +52,7 @@ namespace IkeMtz.NRSRx.Core.Web
         var username = startup.Configuration.GetValue<string>("ELASTICSEARCH_USERNAME");
         var password = startup.Configuration.GetValue<string>("ELASTICSEARCH_PASSWORD");
         var apiKey = startup.Configuration.GetValue<string>("ELASTICSEARCH_APIKEY");
-        var elastiOptions = new ElasticsearchSinkOptions(new Uri(host))
+        var elasticOptions = new ElasticsearchSinkOptions(new Uri(host))
         {
           IndexFormat = $"{startup.StartupAssembly?.GetName().Name?.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yy-MM}",
           AutoRegisterTemplate = true,
@@ -71,17 +71,17 @@ namespace IkeMtz.NRSRx.Core.Web
         });
         if (!string.IsNullOrWhiteSpace(password))
         {
-          elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.BasicAuthentication(username, password));
+          elasticOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.BasicAuthentication(username, password));
         }
         else if (!string.IsNullOrWhiteSpace(apiKey))
         {
-          elastiOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
+          elasticOptions.ModifyConnectionSettings = config => modifyConfigSettings(() => config.ApiKeyAuthentication(username, apiKey));
         }
         return minimumLogLevelConfig(new LoggerConfiguration().MinimumLevel)
               .Enrich.FromLogContext()
               .Enrich.WithMachineName()
               .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-              .WriteTo.Elasticsearch(elastiOptions)
+              .WriteTo.Elasticsearch(elasticOptions)
               .Enrich.WithProperty("Environment", environment)
               .CreateLogger();
       });

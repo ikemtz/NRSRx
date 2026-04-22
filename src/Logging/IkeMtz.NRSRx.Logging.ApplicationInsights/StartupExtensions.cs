@@ -10,7 +10,7 @@ namespace IkeMtz.NRSRx.Core.Web
   public static class StartupExtensions
   {
     /// <summary>
-    /// Sets up application to utlize Application Insights on Azure.
+    /// Sets up application to utilize Application Insights on Azure.
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="services"></param>
@@ -27,7 +27,7 @@ namespace IkeMtz.NRSRx.Core.Web
     }
 
     /// <summary>
-    /// Sets up application to utlize Application Insights on Azure in development mode.
+    /// Sets up application to utilize Application Insights on Azure in development mode.
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="services"></param>

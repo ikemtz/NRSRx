@@ -37,7 +37,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true");
 
       //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       Assert.AreEqual(objA.Name, envelope?.Value.First().Name);
     }
@@ -63,7 +63,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(SchoolCourse)}s($count=true;$top=0)");
 
       //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<School>>(resp, Constants.JsonSerializerOptions);
       StringAssert.Contains(resp, "schoolCourses@odata.count\":1");
       Assert.AreEqual(dbSchool.Name, envelope?.Value.First().Name);
@@ -80,7 +80,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s/{Guid.NewGuid()}");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {content}");
+      TestContext.WriteLine($"Server Response: {content}");
       _ = resp.EnsureSuccessStatusCode();
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }

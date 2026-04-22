@@ -1,0 +1,1 @@
+npx cspell lint "**/*.cs"

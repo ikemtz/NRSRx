@@ -27,7 +27,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.AreEqual(envelope?.Count, envelope?.Value.Count());
       envelope?.Value.ToList().ForEach(t =>
@@ -56,7 +56,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
       var body = await resp.Content.ReadAsStringAsync();
-      TestContext.WriteLine($"Server Reponse: {body}");
+      TestContext.WriteLine($"Server Response: {body}");
       Assert.DoesNotContain("updatedby", body.ToLower());
       Assert.Contains(Course.Num, body);
     }
@@ -85,7 +85,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
 
       var resp = await client.GetStringAsync(
         $"odata/v1/{nameof(Course)}s?$filter=id eq {course.Id}&$expand={nameof(course.SchoolCourses)},{nameof(course.StudentCourses)}");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
 
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.DoesNotContain("updatedby", resp.ToLower());
@@ -112,7 +112,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$apply=aggregate(id with countdistinct as total)");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.DoesNotContain("updatedby", resp.ToLower());
       Assert.Contains("total", resp);
     }

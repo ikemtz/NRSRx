@@ -18,7 +18,7 @@ namespace IkeMtz.Samples.Redis.Jobs
     {
       var prog = new Program
       {
-        RunContinously = false,
+        RunContinuously = false,
         SecsBetweenRuns = 15,
       };
       await prog.RunAsync();
