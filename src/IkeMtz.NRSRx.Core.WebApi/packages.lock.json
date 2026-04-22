@@ -763,8 +763,8 @@
       },
       "System.Text.Json": {
         "type": "Transitive",
-        "resolved": "9.0.12",
-        "contentHash": "wHv2GrfYd4/uaoZQJj6NOR8M0AlnWJ2/MFAHQomSMqk+/rSIY6AlcitL6LXbTgXf8+ngGjAAmQm17kfbNplQ9w=="
+        "resolved": "9.0.15",
+        "contentHash": "rQUurOZYEo81Cvq253gO4FTDO9r+RBUBQVI3q7qwS31SH1wtUfP+Aw23I81ZkFSUBC4f1hPqea0wxo15rR5/dA=="
       },
       "System.Text.RegularExpressions": {
         "type": "Transitive",
@@ -804,7 +804,7 @@
           "System.ComponentModel.Annotations": "[5.0.0, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Reflection": "[4.3.0, )",
-          "System.Text.Json": "[8.0.0, )",
+          "System.Text.Json": "[9.0.15, )",
           "System.Text.RegularExpressions": "[4.3.1, )",
           "System.ValueTuple": "[4.6.1, )"
         }
@@ -821,7 +821,7 @@
           "Swashbuckle.AspNetCore": "[9.0.6, )",
           "System.Net.Http": "[4.3.4, )",
           "System.Text.Encodings.Web": "[9.0.12, )",
-          "System.Text.Json": "[9.0.12, )",
+          "System.Text.Json": "[9.0.15, )",
           "System.Text.RegularExpressions": "[4.3.1, )"
         }
       }
