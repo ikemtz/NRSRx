@@ -135,7 +135,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       }
       catch (Exception ex)
       {
-        TestContext.WriteLine($"DB Creation Exception Occured: {ex}");
+        TestContext.WriteLine($"DB Creation Exception Occurred: {ex}");
       }
       TestContext.WriteLine($"Executing {nameof(ExecuteOnContext)}<{nameof(TDbContext)}> Logic");
       callback(db);
@@ -161,6 +161,10 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
       var content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken ?? CancellationToken.None);
+      if (string.IsNullOrWhiteSpace(content))
+      {
+        return default;
+      }
       return JsonSerializer.Deserialize<T>(content, Constants.JsonSerializerOptions);
     }
 

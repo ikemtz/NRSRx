@@ -20,10 +20,10 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
     [TestCategory("RedisIntegration")]
     public async Task SampleJobTest()
     {
-      //arange
+      //arrange
       var program = new IntegrationProgram(new Program(), TestContext)
       {
-        RunContinously = false,
+        RunContinuously = false,
         SecsBetweenRuns = 10,
       };
       _ = program.SetupHost();
@@ -60,7 +60,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
     {
       var program = new IntegrationProgram(new Program(), TestContext)
       {
-        RunContinously = false,
+        RunContinuously = false,
         SecsBetweenRuns = 10,
       };
       _ = program.SetupHost();

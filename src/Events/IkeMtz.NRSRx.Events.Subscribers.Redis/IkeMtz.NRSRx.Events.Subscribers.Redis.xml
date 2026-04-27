@@ -46,7 +46,7 @@
             <typeparam name="TEvent">The type of the event.</typeparam>
             <typeparam name="TIdentityType">The type of the identity.</typeparam>
         </member>
-        <member name="T:IkeMtz.NRSRx.Events.Subscribers.Redis.RedisStreamSubscriber`3.MessageRecievedEventHandler">
+        <member name="T:IkeMtz.NRSRx.Events.Subscribers.Redis.RedisStreamSubscriber`3.MessageReceivedEventHandler">
             <summary>
             Delegate for handling received messages.
             </summary>

@@ -23,10 +23,10 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task SampleSplitSchoolCreatedEventTest()
     {
-      //arange
+      //arrange
       var program = new SplitMessageUnigrationProgram(new SplitProgram(), TestContext)
       {
-        RunContinously = false,
+        RunContinuously = false,
         SecsBetweenRuns = 1,
         EnableParallelFunctionProcessing = true,
       };

@@ -14,7 +14,7 @@
             <param name="allowedPermissions">The allowed permissions.</param>
             <param name="allowScopes">Indicates whether scopes are allowed.</param>
             <param name="permissionClaimType">The type of the permission claim.</param>
-            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="permissionClaimSeparator">The separator for permission claims.</param>
             <param name="scopeClaimType">The type of the scope claim.</param>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute.#ctor(System.String[],System.Boolean,System.String,System.Char,System.String)">
@@ -27,7 +27,7 @@
             <param name="allowedPermissions">The allowed permissions.</param>
             <param name="allowScopes">Indicates whether scopes are allowed.</param>
             <param name="permissionClaimType">The type of the permission claim.</param>
-            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="permissionClaimSeparator">The separator for permission claims.</param>
             <param name="scopeClaimType">The type of the scope claim.</param>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Authorization.BaseActionFilterAttribute.HasPermission(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
@@ -43,7 +43,7 @@
             </summary>
             <param name="type">The type of the claim.</param>
             <param name="claims">The user's claims.</param>
-            <param name="permissionsSeperator">Function to separate permissions.</param>
+            <param name="permissionsSeparator">Function to separate permissions.</param>
             <returns>True if a matching permission claim is found; otherwise, false.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Authorization.ExpandPermissionsFilterAttribute">
@@ -59,7 +59,7 @@
             <param name="expandClause">The expand clause to be modified if permissions are not met.</param>
             <param name="allowScopes">Indicates whether scopes are allowed.</param>
             <param name="permissionClaimType">The type of the permission claim.</param>
-            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="permissionClaimSeparator">The separator for permission claims.</param>
             <param name="scopeClaimType">The type of the scope claim.</param>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Authorization.ExpandPermissionsFilterAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
@@ -80,7 +80,7 @@
             <param name="allowedPermissions">The allowed permissions.</param>
             <param name="allowScopes">Indicates whether scopes are allowed.</param>
             <param name="permissionClaimType">The type of the permission claim.</param>
-            <param name="permissionClaimSeperator">The separator for permission claims.</param>
+            <param name="permissionClaimSeparator">The separator for permission claims.</param>
             <param name="scopeClaimType">The type of the scope claim.</param>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Authorization.PermissionsFilterAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">

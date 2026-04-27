@@ -80,7 +80,7 @@
             </summary>
             <typeparam name="TProgram">The type of the program.</typeparam>
         </member>
-        <member name="P:IkeMtz.NRSRx.Jobs.Core.JobBase`1.RunContinously">
+        <member name="P:IkeMtz.NRSRx.Jobs.Core.JobBase`1.RunContinuously">
             <summary>
             Gets or sets a value indicating whether the job should run continuously.
             </summary>

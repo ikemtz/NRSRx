@@ -48,7 +48,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     /// Delegate for handling received messages.
     /// </summary>
     /// <param name="entity">The received entity.</param>
-    public delegate void MessageRecievedEventHandler(TEntity entity);
+    public delegate void MessageReceivedEventHandler(TEntity entity);
 
     /// <summary>
     /// Gets or sets the consumer name.
@@ -88,7 +88,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     /// <summary>
     /// Occurs when a message is received.
     /// </summary>
-    public event MessageRecievedEventHandler OnMessageReceived;
+    public event MessageReceivedEventHandler OnMessageReceived;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RedisStreamSubscriber{TEntity, TEvent, TIdentityType}"/> class.
@@ -269,7 +269,7 @@ namespace IkeMtz.NRSRx.Events.Subscribers.Redis
     {
       if (OnMessageReceived == null)
       {
-        throw new InvalidProgramException("On Message Recieved event must be handled before subscribing");
+        throw new InvalidProgramException("On Message Received event must be handled before subscribing");
       }
       while (true)
       {

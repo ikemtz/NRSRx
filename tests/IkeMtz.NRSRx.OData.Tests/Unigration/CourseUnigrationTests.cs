@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
@@ -59,7 +59,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
@@ -85,7 +85,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true");
       var content = await resp.Content.ReadAsStringAsync();
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(content.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       StringAssert.Contains(content, item.Id.ToString());
       StringAssert.Contains(content, item.Title);
@@ -111,7 +111,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true&$expand={nameof(SchoolCourse)}s");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Course>>(resp, Constants.JsonSerializerOptions);
       Assert.IsNotNull(envelope);
@@ -129,7 +129,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$top=5000&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
-      TestContext.WriteLine($"Server Reponse: {data}");
+      TestContext.WriteLine($"Server Response: {data}");
       Assert.Contains("The limit of '100'", data);
       Assert.Contains("The value from the incoming request is '5000'", data);
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);

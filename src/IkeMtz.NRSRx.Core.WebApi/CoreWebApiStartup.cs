@@ -116,12 +116,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
              options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
              SetupMvcOptions(services, options);
            })
-           .AddJsonOptions(options =>
-           {
-             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-             options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-           })
+           .AddJsonOptions(options => Constants.ConfigureJsonSerializerOptions(options.JsonSerializerOptions))
            .AddXmlSerializerFormatters();
       _ = services
            .AddApiVersioning(options =>

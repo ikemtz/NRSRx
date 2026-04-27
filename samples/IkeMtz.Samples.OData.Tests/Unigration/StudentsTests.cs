@@ -37,7 +37,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$count=true");
 
       //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Student>>(resp, Constants.JsonSerializerOptions);
       Assert.AreEqual(objA.FirstName, envelope?.Value.First().FirstName);
     }
@@ -62,7 +62,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s/noLimit?$count=true&$top=500");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {content}");
+      TestContext.WriteLine($"Server Response: {content}");
       _ = resp.EnsureSuccessStatusCode();
       var envelope = JsonSerializer.Deserialize<ODataEnvelope<Student>>(content, Constants.JsonSerializerOptions);
       Assert.AreEqual(objA.FirstName, envelope?.Value.First().FirstName);
@@ -88,7 +88,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s?$count=true&$top=300");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {content}");
+      TestContext.WriteLine($"Server Response: {content}");
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       StringAssert.Contains(content, "The limit of '100' for Top query has been exceeded. The value from the incoming request is '300'.");
     }
@@ -104,7 +104,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s/{Guid.NewGuid()}");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
-      TestContext.WriteLine($"Server Reponse: {content}");
+      TestContext.WriteLine($"Server Response: {content}");
       _ = resp.EnsureSuccessStatusCode();
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }

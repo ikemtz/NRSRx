@@ -11,7 +11,7 @@ namespace IkeMtz.NRSRx.Jobs.Tests.Unigration
   {
     public UnigrationProgram(Program program, TestContext testContext) : base(program, testContext)
     {
-      RunContinously = false;
+      RunContinuously = false;
     }
 
     public override IServiceCollection SetupDependencies(IServiceCollection services) =>

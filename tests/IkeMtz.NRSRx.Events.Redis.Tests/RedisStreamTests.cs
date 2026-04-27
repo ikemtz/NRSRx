@@ -355,7 +355,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    public async Task ValidateMockMessageRecieved()
+    public async Task ValidateMockMessageReceived()
     {
       var message = new SampleMessage();
       var (Subscriber, _) = MockRedisStreamFactory<SampleMessage, CreateEvent>.CreateSubscriber([message]);
@@ -365,7 +365,7 @@ namespace IkeMtz.NRSRx.Events.Publishers.Redis.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    public async Task ValidateSubscriberMessageRecieved()
+    public async Task ValidateSubscriberMessageReceived()
     {
       var (Connection, _) = MockRedisStreamFactory.CreateMockConnection();
       var subscriber = new RedisStreamSubscriber<SampleMessage, CreateEvent>(Connection.Object);

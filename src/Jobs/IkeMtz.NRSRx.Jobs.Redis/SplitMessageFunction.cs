@@ -10,7 +10,7 @@ using StackExchange.Redis;
 namespace IkeMtz.NRSRx.Jobs.Redis
 {
   /// <summary>
-  /// This message function is geared towards supporting the Fanout pattern.
+  /// This message function is geared towards supporting the Fan-Out pattern.
   /// </summary>
   /// <typeparam name="TSplitMessageFunction">The type of the split message function.</typeparam>
   /// <typeparam name="TEntity">The type of the entity.</typeparam>
