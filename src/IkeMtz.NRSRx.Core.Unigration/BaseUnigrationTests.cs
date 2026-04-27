@@ -161,6 +161,10 @@ namespace IkeMtz.NRSRx.Core.Unigration
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
       var content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken ?? CancellationToken.None);
+      if (string.IsNullOrWhiteSpace(content))
+      {
+        return default;
+      }
       return JsonSerializer.Deserialize<T>(content, Constants.JsonSerializerOptions);
     }
 

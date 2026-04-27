@@ -78,7 +78,6 @@ namespace IkeMtz.NRSRx.WebApi.Tests
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.xml", item);
       Assert.AreEqual(HttpStatusCode.NotAcceptable, resp.StatusCode);
-      await Assert.ThrowsExactlyAsync<JsonException>(async () => _ = await DeserializeResponseAsync<Student>(resp));
     }
 
     [TestMethod]

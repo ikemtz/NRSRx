@@ -19,23 +19,29 @@ namespace IkeMtz.NRSRx.Core
     {
       get
       {
-        if (jsonSerializerOptions == null)
-        {
-          jsonSerializerOptions = new JsonSerializerOptions
-          {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true,
-            /*
-             * This value reflects the max expansion depth of odata queries; adjust as necessary
-             */
-            MaxDepth = 10,
-            AllowTrailingCommas = true,
-          };
-          jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-        }
-
-        return jsonSerializerOptions;
+        return jsonSerializerOptions ??= ConfigureJsonSerializerOptions();
       }
+    }
+
+    /// <summary>
+    /// Configures a <see cref="JsonSerializerOptions"/> instance with the application's standard defaults.
+    /// </summary>
+    /// <param name="options">
+    /// An optional <see cref="JsonSerializerOptions"/> instance to configure. If <c>null</c>, a new
+    /// instance will be created and assigned to the internal default field.
+    /// </param>
+    /// <returns>The configured <see cref="JsonSerializerOptions"/> instance.</returns>
+    public static JsonSerializerOptions ConfigureJsonSerializerOptions(JsonSerializerOptions? options = null)
+    {
+      options ??= new JsonSerializerOptions();
+      options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+      options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+      options.WriteIndented = true;
+      options.MaxDepth = 10;
+      options.AllowTrailingCommas = true;
+      options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+      options.Converters.Add(new JsonStringEnumConverter());
+      return options;
     }
   }
 }

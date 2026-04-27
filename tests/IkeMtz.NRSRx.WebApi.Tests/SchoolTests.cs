@@ -76,7 +76,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.xml", item, TestContext.CancellationToken);
-      await Assert.ThrowsExactlyAsync<JsonException>(async () => _ = await DeserializeResponseAsync<School>(resp));
+      Assert.AreEqual(HttpStatusCode.NotAcceptable, resp.StatusCode);
     }
 
     [TestMethod]

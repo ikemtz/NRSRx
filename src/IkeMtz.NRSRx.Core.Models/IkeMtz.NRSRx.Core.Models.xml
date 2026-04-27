@@ -19,6 +19,16 @@
             Gets the default JSON serializer options.
             </summary>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.Constants.ConfigureJsonSerializerOptions(System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            Configures a <see cref="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerOptions"/> instance with the application's standard defaults.
+            </summary>
+            <param name="options">
+            An optional <see cref="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerOptions"/> instance to configure. If <c>null</c>, a new
+            instance will be created and assigned to the internal default field.
+            </param>
+            <returns>The configured <see cref="P:IkeMtz.NRSRx.Core.Constants.JsonSerializerOptions"/> instance.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Models.Helpers.EnumHelper">
             <summary>
             Provides helper methods for working with enums.

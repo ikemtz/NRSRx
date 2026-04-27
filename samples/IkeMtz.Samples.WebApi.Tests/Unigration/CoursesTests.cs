@@ -60,7 +60,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
       _ = resp.EnsureSuccessStatusCode();
       var content = await resp.Content.ReadAsStringAsync();
-      StringAssert.Contains(content, "PendingCertification");
+      Assert.Contains("PendingCertification", content);
       var httpUpdatedCourse = await DeserializeResponseAsync<Course>(resp);
       Assert.IsNotNull(httpUpdatedCourse);
       Assert.AreEqual("IntegrationTester@email.com", httpUpdatedCourse.UpdatedBy);
