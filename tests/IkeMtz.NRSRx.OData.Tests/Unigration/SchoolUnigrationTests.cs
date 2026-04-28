@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.IsNotNull(envelope);
@@ -60,7 +60,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(School.Name)},{nameof(School.Id)}),aggregate(id with countdistinct as total))");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       Assert.Contains(School.Id.ToString(), resp);
       Assert.Contains(School.Name, resp);
@@ -86,7 +86,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(schoolCourse)}s");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
       Assert.IsNotNull(envelope);
@@ -104,7 +104,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=5000&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
-      TestContext.WriteLine($"Server Reponse: {data}");
+      TestContext.WriteLine($"Server Response: {data}");
       Assert.Contains("The limit of '100'", data);
       Assert.Contains("The value from the incoming request is '5000'", data);
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
@@ -154,7 +154,7 @@ namespace IkeMtz.NRSRx.OData.Tests
 
       var resp = await client.GetAsync($"odata/v1/{nameof(School)}s/nolimit?$top=500&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
-      TestContext.WriteLine($"Server Reponse: {data}");
+      TestContext.WriteLine($"Server Response: {data}");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
 

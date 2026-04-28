@@ -18,7 +18,7 @@ namespace IkeMtz.NRSRx.Jobs.Core
     /// <summary>
     /// Gets or sets a value indicating whether the job should run continuously.
     /// </summary>
-    public virtual bool RunContinously { get; set; } = true;
+    public virtual bool RunContinuously { get; set; } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether parallel function processing is enabled.
@@ -82,7 +82,7 @@ namespace IkeMtz.NRSRx.Jobs.Core
       var functions = GetFunctions(loggerFactory);
       var firstRun = true;
       var successResult = true;
-      while (RunContinously || firstRun)
+      while (RunContinuously || firstRun)
       {
         if (EnableParallelFunctionProcessing)
         {
@@ -107,7 +107,7 @@ namespace IkeMtz.NRSRx.Jobs.Core
         firstRun = false;
         logger.LogInformation("Finished running jobs, going to sleep for {SecsBetweenRuns} seconds.", SecsBetweenRuns);
 
-        if (RunContinously) Thread.Sleep(SleepTimeSpan);
+        if (RunContinuously) Thread.Sleep(SleepTimeSpan);
       }
       return successResult;
     }

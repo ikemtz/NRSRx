@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task SampleJobTest()
     {
-      //arange
+      //arrange
       var program = new UnigrationProgram(new Program(), TestContext);
       program.ExecuteOnContext<DatabaseContext>(x => x.Courses.Add(Factories.CourseFactory()));
 

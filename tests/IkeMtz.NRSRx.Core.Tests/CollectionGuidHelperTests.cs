@@ -168,7 +168,7 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    public void Converstion_AddItemsToCollection()
+    public void Conversion_AddItemsToCollection()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModelDto(), new CollectionGuidModelDto() };
@@ -194,7 +194,7 @@ namespace IkeMtz.NRSRx.Core.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
-    public void Converstion_AddItemsToCollection_SimpleMapper()
+    public void Conversion_AddItemsToCollection_SimpleMapper()
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModelDto(), new CollectionGuidModelDto() };

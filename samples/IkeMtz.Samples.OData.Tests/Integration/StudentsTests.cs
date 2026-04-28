@@ -26,7 +26,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$count=true");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
       Assert.AreEqual(envelope?.Count, envelope?.Value.Count());
       envelope?.Value.ToList().ForEach(t =>
@@ -55,7 +55,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
       var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s?$apply=groupby(({nameof(Student.FirstName)},{nameof(Student.BirthDate)}))");
       var body = await resp.Content.ReadAsStringAsync();
-      TestContext.WriteLine($"Server Reponse: {body}");
+      TestContext.WriteLine($"Server Response: {body}");
       Assert.DoesNotContain("updatedby", body.ToLower());
       StringAssert.Contains(body, Student.FirstName);
     }
@@ -88,7 +88,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
 
       var resp = await client.GetStringAsync(
         $"odata/v1/{nameof(Student)}s?$filter=id eq {student.Id}&$expand={nameof(student.StudentCourses)},{nameof(student.StudentSchools)}");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
 
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
       Assert.DoesNotContain("updatedby", resp.ToLower());
@@ -115,7 +115,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$apply=aggregate(id with countdistinct as total)");
-      TestContext.WriteLine($"Server Reponse: {resp}");
+      TestContext.WriteLine($"Server Response: {resp}");
       Assert.DoesNotContain("updatedby", resp.ToLower());
       Assert.Contains("total", resp);
     }
