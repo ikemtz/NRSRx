@@ -39,7 +39,7 @@ namespace IkeMtz.NRSRx.Core
       options.WriteIndented = true;
       options.MaxDepth = 10;
       options.AllowTrailingCommas = true;
-      options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+      options.ReferenceHandler = ReferenceHandler.Preserve;
       options.Converters.Add(new JsonStringEnumConverter());
       return options;
     }

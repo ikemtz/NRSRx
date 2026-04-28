@@ -25,6 +25,11 @@ namespace IkeMtz.NRSRx.Core.Models
   public class ODataEnvelope<TEntity>
     where TEntity : class, new()
   {
+    /// <summary>
+    /// Gets or sets the OData context string returned by the service (maps to the
+    /// "@odata.context" JSON property). This typically contains a metadata/context URL
+    /// that describes the payload and its type information.
+    /// </summary>
     [JsonPropertyName("@odata.context")]
     public string Context { get; set; }
     /// <summary>  

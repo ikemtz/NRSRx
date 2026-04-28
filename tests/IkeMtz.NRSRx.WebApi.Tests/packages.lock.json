@@ -17,17 +17,6 @@
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "8.0.1"
         }
       },
-      "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
-        "type": "Direct",
-        "requested": "[9.0.15, )",
-        "resolved": "9.0.15",
-        "contentHash": "AwrBZkfDDIZC/MWtK5UuxmCePuKgc58nrIUaZh1mmHN3hx//sJDtgxHMPaUmZ9s/0NWWifp4zUeW0IdKh/b7UA==",
-        "dependencies": {
-          "Microsoft.AspNetCore.JsonPatch": "9.0.15",
-          "Newtonsoft.Json": "13.0.3",
-          "Newtonsoft.Json.Bson": "1.0.2"
-        }
-      },
       "Microsoft.AspNetCore.SignalR.Client": {
         "type": "Direct",
         "requested": "[9.0.15, )",
@@ -429,6 +418,16 @@
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Newtonsoft.Json": "13.0.3"
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+        "type": "Transitive",
+        "resolved": "9.0.15",
+        "contentHash": "AwrBZkfDDIZC/MWtK5UuxmCePuKgc58nrIUaZh1mmHN3hx//sJDtgxHMPaUmZ9s/0NWWifp4zUeW0IdKh/b7UA==",
+        "dependencies": {
+          "Microsoft.AspNetCore.JsonPatch": "9.0.15",
+          "Newtonsoft.Json": "13.0.3",
+          "Newtonsoft.Json.Bson": "1.0.2"
         }
       },
       "Microsoft.AspNetCore.Mvc.Versioning": {
@@ -1877,7 +1876,6 @@
           "IkeMtz.NRSRx.Core.Models": "[1.0.0, )",
           "IkeMtz.NRSRx.Core.Web": "[1.0.0, )",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[9.0.15, )",
-          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "[9.0.15, )",
           "Microsoft.AspNetCore.OData": "[9.4.1, )",
           "Microsoft.EntityFrameworkCore": "[9.0.15, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.15, )",
@@ -1954,7 +1952,6 @@
           "IkeMtz.NRSRx.Core.Models": "[1.0.0, )",
           "IkeMtz.NRSRx.Core.Web": "[1.0.0, )",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[9.0.15, )",
-          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "[9.0.15, )",
           "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": "[5.1.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.15, )",
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "[8.17.0, )",
