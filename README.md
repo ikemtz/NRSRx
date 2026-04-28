@@ -8,67 +8,62 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=NRSRx&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=NRSRx)
 [![Nuget Package](https://img.shields.io/nuget/dt/IkeMtz.NRSRx.Core.Models.svg)](https://www.nuget.org/packages?q=nrsrx)
 
-# NRSRX
-NRSRx is an opinionated, flexible, and extensible framework that will expedite the development of back-end services built on asp.net 6 - 8.  It does this by addressing some cross-cutting concerns that typically require development effort, letting you focus on your business challenges.
+# NRSRx
+NRSRx is an opinionated, extensible framework that accelerates building back-end services on modern .NET. The repository contains reusable libraries, samples and utilities used across microservices built by the authoring organization.
 
-## Cross cutting concerns
+Supported framework targets in this workspace:
 
-NRSRx is highly configurable and extensible, but these are the cross-cutting concerns that are addressed:
+- `.NET 9` (apps and samples)
+- `.NET Standard 2.1` and `.NET Standard 2.0` (libraries)
 
-*  Externalized configuration 
-    -	appsettings.json
-    -	User Secrets (useful in development environments)
-    - Environment Variables (useful in containerized and cloud platforms)
-*  Authentication
-    -	JWT based authentication (commonly used in [OAuth2](https://oauth.net/2/) and [OIDC](https://openid.net/connect/) authentication workflows)
-* Authorization
-    -	Role-based authorization via asp.net request authorization filter
-*  Swagger
-    -	Setup as an OIDC client to facilitate authorization
-*  Data persistence
-    -	Entity Framework with entity-based auditing
-*  Multi-Tenancy
-    -	Asp.net request authorization filter
-*  Versioning
-   *  Api and model 
-   *  Adhere's to [Microsoft REST Guidelines for versioning](https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#12-versioning)
-*  Logging
-    -	Application Insights (supported via [IkeMtz.NRSRx.Logging.ApplicationInsights](https://www.nuget.org/packages/IkeMtz.NRSRx.Logging.ApplicationInsights/) library)
-    -	Elastisearch (supported via [IkeMtz.NRSRx.Logging.Elasticsearch](https://www.nuget.org/packages/IkeMtz.NRSRx.Logging.Elasticsearch/) library)
-    -	Splunk (Support via [IkeMtz.NRSRx.Logging.Splunk](https://www.nuget.org/packages/IkeMtz.NRSRx.Logging.Splunk/) library)
-* Eventing
-    -	Azure Service Bus (supported via [IkeMtz.NRSRx.Events.Publishers.ServiceBus](https://www.nuget.org/packages/IkeMtz.NRSRx.Events.Publishers.ServiceBus/) library)
-    -	Redis Streams (supported via [IkeMtz.NRSRx.Events.Publishers.Redis](https://www.nuget.org/packages/IkeMtz.NRSRx.Events.Publishers.Redis/) library)
-* Unit testability
-    - MSTest (services built on NRSRx can easily achieve 95%+ code coverage)
+Key features and cross-cutting concerns:
 
-## Adaptability
+- Externalized configuration (`appsettings.json`, user secrets, environment variables)
+- Authentication and authorization (JWT / OIDC integration)
+- Swagger / OpenAPI support (Swashbuckle + `Microsoft.OpenApi` models)
+- OData support (filters/operation filters for documentation)
+- Data persistence (Entity Framework Core patterns)
+- Logging (Application Insights, Elasticsearch, Splunk extensions)
+- Eventing (Azure Service Bus, Redis Streams)
+- API Versioning and model version support
 
-Most of the features built into NRSRx are customizable or removable all together.  Don't want authentication?  Remove it.  Nothing in the NRSRx framework is private, internal or sealed, so expansion is a breeze.
+Projects and samples
 
-## Flavors
+- Core libraries: `src/IkeMtz.NRSRx.Core.*`
+- Samples: `samples/IkeMtz.Samples.OData`, `samples/IkeMtz.Samples.WebApi`, `samples/IkeMtz.Samples.SignalR`, `samples/IkeMtz.Samples.Events.Redis`
 
-NRSRx services come in three different flavors.
+Getting started
 
-- OData
-- WebApi
-- SignalR
-- GraphQL (coming soon)
+1. Install the .NET SDK for the targeted runtimes (recommended: .NET 9).
+2. Restore and build:
 
-## Sample Services
+```bash
+dotnet restore
+dotnet build -c Release
+```
 
-- [Samples.Events.Redis](./samples/IkeMtz.Samples.Events.Redis): 
-  
-  A sample WebApi web application that will publish events to Redis streams and persist data to SQL server using Entity Framework.
+3. Run tests:
 
-- [Samples.OData](./samples/IkeMtz.Samples.OData)
+```bash
+dotnet test
+```
 
-  A sample OData web application that reads data from SQL Server using Entity Framework.
+Running samples
 
-- [Samples.SignalR](./samples/IkeMtz.Samples.SignalR)
+- Each sample is a self-contained ASP.NET app under `samples/`.
+- From the sample folder, run `dotnet run` or use your IDE.
+- Swagger UI is available when running a sample if `DisableSwagger` is not set; several projects include document/operation filters for OData and reverse-proxy scenarios.
 
-  A sample SignalR web application.
+Swagger and OpenAPI notes
 
-## Quality
+- This solution uses `Swashbuckle.AspNetCore` and `Microsoft.OpenApi.Models`. Document and operation filters have been migrated to consume `Microsoft.OpenApi` model types (e.g. `OpenApiDocument`, `OpenApiOperation`, `OpenApiSchema`).
 
-Every change that goes into the NRSRx framework goes through full unit and integration tests on [Azure Devops](https://ikemtz.visualstudio.com/Devops/_build?definitionId=32) pipelines.
+Contributing
+
+- Fork and submit pull requests.
+- Follow existing coding patterns and add unit tests for new behavior.
+
+License and contact
+
+- See the repository root for license information. For questions, open an issue or PR.
+

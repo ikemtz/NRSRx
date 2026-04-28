@@ -28,3 +28,4 @@ Hmac
 appsettings
 Pkce
 APIKEY
+Newtonsoft
