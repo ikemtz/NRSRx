@@ -79,8 +79,8 @@ namespace IkeMtz.NRSRx.Jobs.Cron
       CronJobState.NextRunDateTimeUtc ??= nextRunTime;
       if (ExecuteOnStartup || CronJobState.NextRunDateTimeUtc <= TimeProvider.GetUtcNow())
       {
-        var nextOccurence = Schedule.GetNextOccurrence(CronJobState.LastRunDateTimeUtc.Value.DateTime);
-        CronJobState = await CronJobStateProvider.UpdateCronJobStateAsync<TFunction>(nextOccurence);
+        var nextOccurrence = Schedule.GetNextOccurrence(CronJobState.LastRunDateTimeUtc.Value.DateTime);
+        CronJobState = await CronJobStateProvider.UpdateCronJobStateAsync<TFunction>(nextOccurrence);
         ExecuteOnStartup = false;
         Logger.LogInformation("Executing {FunctionName} function, at {LastRunTime}.  Next run time is: {NextRuntime}", GetType().Name, CronJobState.LastRunDateTimeUtc, CronJobState.NextRunDateTimeUtc);
         return await ExecuteAsync();
