@@ -198,6 +198,13 @@
             </summary>  
             <typeparam name="TEntity">The type of the entity.</typeparam>  
         </member>
+        <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1.Context">
+            <summary>
+            Gets or sets the OData context string returned by the service (maps to the
+            "@odata.context" JSON property). This typically contains a metadata/context URL
+            that describes the payload and its type information.
+            </summary>
+        </member>
         <member name="P:IkeMtz.NRSRx.Core.Models.ODataEnvelope`1.Value">
             <summary>  
             Gets or sets the collection of entities.  

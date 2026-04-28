@@ -19,6 +19,16 @@
             Gets or sets the test server configuration.
             </summary>
         </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.jsonSerializerSettings">
+            <summary>
+            The default JSON serializer settings with camel case property names and reference loop handling set to ignore.
+            </summary>
+        </member>
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.JsonSerializerSettings">
+            <summary>
+            Gets the default JSON serializer settings.
+            </summary>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GenerateAuthHeader(System.Net.Http.HttpClient,System.String)">
             <summary>
             Generates an authentication header for the specified HTTP client using the provided token.
@@ -54,13 +64,12 @@
             <param name="services">The service collection.</param>
             <param name="callback">The callback action.</param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.DeserializeResponseAsync``1(System.Net.Http.HttpResponseMessage,System.Nullable{System.Threading.CancellationToken})">
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.DeserializeResponseAsync``1(System.Net.Http.HttpResponseMessage)">
             <summary>
             Deserializes the response content to the specified type.
             </summary>
             <typeparam name="T">The type to deserialize to.</typeparam>
             <param name="httpResponseMessage">The HTTP response message.</param>
-            <param name="cancellationToken"></param>
             <returns>The deserialized object.</returns>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.TestWebHostBuilder``2">
