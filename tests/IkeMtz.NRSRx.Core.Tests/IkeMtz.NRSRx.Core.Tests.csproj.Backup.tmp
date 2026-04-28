@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ProjectGuid>CAB43D4A-563D-4942-A080-CF2A883836A0</ProjectGuid>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
+    <DocumentationFile>./IkeMtz.NRSRx.Core.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="9.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.12" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.12" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.15.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Authorization\IkeMtz.NRSRx.Core.Authorization.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Jwt\IkeMtz.NRSRx.Core.Jwt.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.ApplicationInsights\IkeMtz.NRSRx.Logging.ApplicationInsights.csproj" />
+    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Unigration.Logging\IkeMtz.NRSRx.Unigration.Logging.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

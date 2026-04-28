@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <ProjectGuid>D760D847-DA47-4939-87A5-25CEBE04E727</ProjectGuid>
+    <Nullable>enable</Nullable>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702;CS1591;CS8618;CS8892;MSTEST0049;</NoWarn>
+    <DocumentationFile>./IkeMtz.NRSRx.WebApi.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="SampleWeb\Models\**" />
+    <EmbeddedResource Remove="SampleWeb\Models\**" />
+    <None Remove="SampleWeb\Models\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\CoursesController.cs" Link="SampleWeb\Controllers\V1\CoursesController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\SchoolsController.cs" Link="SampleWeb\Controllers\V1\SchoolsController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Controllers\V1\StudentsController.cs" Link="SampleWeb\Controllers\V1\StudentsController.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Data\DatabaseContext.cs" Link="SampleWeb\Data\DatabaseContext.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\Startup.cs" Link="SampleWeb\Startup.cs" />
+    <Compile Include="..\..\samples\IkeMtz.Samples.WebApi\VersionDefinitions.cs" Link="SampleWeb\VersionDefinitions.cs" />
+    <Compile Include="..\IkeMtz.NRSRx.OData.Tests\Factories.cs" Link="Factories.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="9.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.12" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.12" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.15.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\samples\IkeMtz.Samples.Models\IkeMtz.Samples.Models.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.EntityFramework\IkeMtz.NRSRx.Core.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.Unigration\IkeMtz.NRSRx.Core.Unigration.csproj" />
+    <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.ApplicationInsights\IkeMtz.NRSRx.Logging.ApplicationInsights.csproj" />
+    <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Elasticsearch\IkeMtz.NRSRx.Logging.Elasticsearch.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SampleWeb\Data\" />
+  </ItemGroup>
+</Project>
