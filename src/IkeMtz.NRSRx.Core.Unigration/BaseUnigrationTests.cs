@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Unigration.Logging;
@@ -18,10 +19,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Serilog;
-using System.Threading;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
@@ -40,6 +40,20 @@ namespace IkeMtz.NRSRx.Core.Unigration
     /// Gets or sets the test server configuration.
     /// </summary>
     public IConfiguration TestServerConfiguration { get; set; }
+
+    /// <summary>
+    /// The default JSON serializer settings with camel case property names and reference loop handling set to ignore.
+    /// </summary>
+    private static readonly JsonSerializerSettings jsonSerializerSettings = new()
+    {
+      ContractResolver = new CamelCasePropertyNamesContractResolver(),
+      ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
+
+    /// <summary>
+    /// Gets the default JSON serializer settings.
+    /// </summary>
+    public static JsonSerializerSettings JsonSerializerSettings => jsonSerializerSettings;
 
     /// <summary>
     /// Generates an authentication header for the specified HTTP client using the provided token.
@@ -61,9 +75,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public string GenerateTestToken(IEnumerable<Claim>? testClaims = null)
     {
       return GenerateTestToken(x =>
-     {
-       testClaims?.ToList().ForEach(x.Add);
-     });
+      {
+        testClaims?.ToList().ForEach(x.Add);
+      });
     }
 
     /// <summary>
@@ -111,7 +125,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = resp.EnsureSuccessStatusCode();
       var respBody = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
       TestContext.WriteLine($"Identity Server HttpResponse: {respBody}");
-      dynamic o = JsonSerializer.Deserialize<JsonNode>(respBody);
+      dynamic o = JsonConvert.DeserializeObject(respBody);
       return o.access_token;
     }
 
@@ -135,7 +149,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       }
       catch (Exception ex)
       {
-        TestContext.WriteLine($"DB Creation Exception Occurred: {ex}");
+        TestContext.WriteLine($"DB Creation Exception Occured: {ex}");
       }
       TestContext.WriteLine($"Executing {nameof(ExecuteOnContext)}<{nameof(TDbContext)}> Logic");
       callback(db);
@@ -155,17 +169,12 @@ namespace IkeMtz.NRSRx.Core.Unigration
     /// </summary>
     /// <typeparam name="T">The type to deserialize to.</typeparam>
     /// <param name="httpResponseMessage">The HTTP response message.</param>
-    /// <param name="cancellationToken"></param>
     /// <returns>The deserialized object.</returns>
-    public async Task<T?> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage, CancellationToken? cancellationToken = null)
+    public async Task<T?> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
-      var content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken ?? CancellationToken.None);
-      if (string.IsNullOrWhiteSpace(content))
-      {
-        return default;
-      }
-      return JsonSerializer.Deserialize<T>(content, Constants.JsonSerializerOptions);
+      var content = await httpResponseMessage.Content.ReadAsStringAsync(TestContext.CancellationToken).ConfigureAwait(true);
+      return JsonConvert.DeserializeObject<T>(content, JsonSerializerSettings);
     }
 
     /// <summary>
@@ -207,9 +216,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
     /// <returns>The deep copy of the object.</returns>
     public T JsonClone<T>(T source)
     {
-      return JsonSerializer.Deserialize<T>(
-        JsonSerializer.Serialize(source, Constants.JsonSerializerOptions),
-          Constants.JsonSerializerOptions);
+      return JsonConvert.DeserializeObject<T>(
+        JsonConvert.SerializeObject(source, JsonSerializerSettings),
+          JsonSerializerSettings);
     }
   }
 }

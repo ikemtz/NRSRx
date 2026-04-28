@@ -32,7 +32,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
 
       var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$count=true");
       _ = resp.EnsureSuccessStatusCode();
-      var envelope = await DeserializeResponseAsync<ODataEnvelope<Course>>(resp, TestContext.CancellationToken);
+      var envelope = await DeserializeResponseAsync<ODataEnvelope<Course>>(resp);
       Assert.IsNotNull(envelope);
       Assert.AreEqual(objA.Title, envelope.Value.First().Title);
     }
