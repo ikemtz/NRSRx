@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -58,6 +60,46 @@ namespace IkeMtz.NRSRx.Core.Tests
       Assert.AreEqual(6, result.Length);
       Assert.IsLessThanOrEqualTo(result.Length, 6, $"Generated string was over the maximum: 6, actual: {result.Length}");
       Assert.IsTrue(char.IsNumber(result.First()));
+    }
+
+    class TestClass : IIdentifiable<int>
+    {
+      public int Id { get; set; }
+      public int Value { get; set; }
+    }
+
+    [TestMethod]
+    [TestCategory(TestCategories.Unit)]
+    public void TestGenerateUniqueObjectsByIdsAndValues()
+    {
+      int count = 100;
+      int max = 105;
+      var random = new Random();
+      var result = TestDataFactory.GenerateUniqueObjects<TestClass, int>(() => new TestClass
+      {
+        Id = random.Next(0, max),
+        Value = random.Next(count, count + max)
+      }, 100, (x, y) => x.Id.Equals(y.Id) || x.Value.Equals(y.Value));
+
+      Assert.HasCount(count, result);
+      CollectionAssert.AllItemsAreUnique(result.Select(t => t.Id).ToArray());
+    }
+
+    [TestMethod]
+    [TestCategory(TestCategories.Unit)]
+    public void TestGenerateUniqueObjectsIds()
+    {
+      int count = 100;
+      int max = 105;
+      var random = new Random();
+      var result = TestDataFactory.GenerateUniqueObjects<TestClass, int>(() => new TestClass
+      {
+        Id = random.Next(0, max),
+        Value = random.Next(count, count + max)
+      }, 100);
+
+      Assert.HasCount(count, result);
+      CollectionAssert.AllItemsAreUnique(result.Select(t => t.Id).ToArray());
     }
   }
 }
