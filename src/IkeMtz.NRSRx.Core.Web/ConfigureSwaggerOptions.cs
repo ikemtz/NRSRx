@@ -62,7 +62,7 @@ namespace IkeMtz.NRSRx.Core.Web
         }
       }
       var audiences = startup.GetIdentityAudiences(appSettings);
-      if (audiences.Any() && !string.IsNullOrWhiteSpace(appSettings.IdentityProvider))
+      if (audiences.Length != 0 && !string.IsNullOrWhiteSpace(appSettings.IdentityProvider))
       {
         var discoveryDocument = startup.GetOpenIdConfiguration(httpClientFactory, appSettings);
 

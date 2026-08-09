@@ -17,9 +17,9 @@ namespace IkeMtz.Samples.WebApi
     public override string ServiceTitle => $"{nameof(Samples)} WebApi Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => true;
-    public override string[] AdditionalAssemblyXmlDocumentFiles => new[] {
+    public override string[] AdditionalAssemblyXmlDocumentFiles => [
       typeof(Course).Assembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase)
-    };
+    ];
 
     [ExcludeFromCodeCoverage]
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)

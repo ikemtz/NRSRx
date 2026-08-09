@@ -1396,10 +1396,5 @@
             </summary>
             <param name="builder">The authentication builder.</param>
         </member>
-        <member name="T:Microsoft.OpenApi.OpenApiRequestBodyExtension">
-            <summary>
-            Request Body Object
-            </summary>
-        </member>
     </members>
 </doc>

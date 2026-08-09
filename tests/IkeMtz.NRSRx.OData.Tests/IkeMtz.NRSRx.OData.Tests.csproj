@@ -9,7 +9,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <DocumentationFile>./IkeMtz.NRSRx.OData.Tests.xml</DocumentationFile>
-    <NoWarn>1701;1702;CS1591;CS8618;CS8892;</NoWarn>
+    <NoWarn>1701;1702;CS1591;CS8618;CS8892;IDE0130;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="SampleWeb\Models\**" />

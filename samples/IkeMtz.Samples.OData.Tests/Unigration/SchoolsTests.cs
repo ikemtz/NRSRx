@@ -63,7 +63,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       //Validate OData Result
       TestContext.WriteLine($"Server Reponse: {resp}");
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
-      StringAssert.Contains(resp, "schoolCourses@odata.count\":1");
+      Assert.Contains("schoolCourses@odata.count\":1", resp);
       Assert.AreEqual(dbSchool.Name, envelope?.Value.First().Name);
     }
 
