@@ -2,18 +2,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using IkeMtz.NRSRx.Core.OData;
-using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData.Configuration;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.Samples.OData
 {
-  public class Startup : CoreODataStartup
+  public class Startup(IConfiguration configuration) : CoreODataStartup(configuration)
   {
     public override int? MaxTop { get; set; } = 500;
     public override string ServiceTitle => $"{nameof(Samples)} OData Microservice";
@@ -24,13 +22,6 @@ namespace IkeMtz.Samples.OData
     };
 
     public override BaseODataModelProvider ODataModelProvider => new ODataModelProvider();
-
-    public Startup(IConfiguration configuration) : base(configuration)
-    {
-    }
-
-    public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
-      this.SetupApplicationInsights(services);
 
     [ExcludeFromCodeCoverage]
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)

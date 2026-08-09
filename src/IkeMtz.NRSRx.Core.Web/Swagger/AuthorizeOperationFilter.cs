@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.Web.Swagger
@@ -32,14 +32,14 @@ namespace IkeMtz.NRSRx.Core.Web.Swagger
 
         operation.Security = new List<OpenApiSecurityRequirement>();
 
-        var oauth2SecurityScheme = new OpenApiSecurityScheme
+        var oauth2SecurityScheme = new OpenApiSecuritySchemeReference("OAuth2")
         {
-          Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "OAuth2" },
         };
 
         operation.Security.Add(new OpenApiSecurityRequirement
         {
-          [oauth2SecurityScheme] = new[] { "OAuth2" }
+          [oauth2SecurityScheme] = ["OAuth2"]
+
         });
       }
     }

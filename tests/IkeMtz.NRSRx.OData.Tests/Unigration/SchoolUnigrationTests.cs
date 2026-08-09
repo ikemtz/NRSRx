@@ -162,12 +162,20 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory(TestCategories.Unigration)]
     public async Task DeleteSchoolsTest()
     {
-      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient(TestContext);
+      var school = Factories.SchoolFactory();
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
+        .ConfigureTestServices(x =>
+        {
+          ExecuteOnContext<DatabaseContext>(x, db =>
+          {
+            _ = db.Schools.Add(school);
+          });
+        })
+     ); var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s/{Guid.NewGuid()}");
-      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
+      var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s({school.Id})");
+      Assert.AreEqual(HttpStatusCode.NoContent, resp.StatusCode);
     }
   }
 }

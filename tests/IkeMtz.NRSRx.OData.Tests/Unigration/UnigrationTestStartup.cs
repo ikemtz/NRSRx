@@ -7,12 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.NRSRx.OData.Tests
 {
-  public class UnigrationTestStartup
-     : CoreODataUnigrationTestStartup<Startup>
+  public class UnigrationTestStartup(IConfiguration configuration)
+          : CoreODataUnigrationTestStartup<Startup>(new Startup(configuration) { MaxTop = 500 })
   {
-    public UnigrationTestStartup(IConfiguration configuration) : base(new Startup(configuration) { MaxTop = 500 })
-    {
-    }
     public override void SetupAuthentication(AuthenticationBuilder builder)
     {
       builder.SetupTestAuthentication(Configuration, TestContext);

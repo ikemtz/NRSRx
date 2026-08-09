@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IkeMtz.Samples.WebApi
 {
-  public class Startup : CoreWebApiStartup
+  public class Startup(IConfiguration configuration) : CoreWebApiStartup(configuration)
   {
     public override string ServiceTitle => $"{nameof(Samples)} WebApi Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
@@ -20,8 +20,6 @@ namespace IkeMtz.Samples.WebApi
     public override string[] AdditionalAssemblyXmlDocumentFiles => new[] {
       typeof(Course).Assembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase)
     };
-
-    public Startup(IConfiguration configuration) : base(configuration) { }
 
     [ExcludeFromCodeCoverage]
     public override void SetupDatabase(IServiceCollection services, string dbConnectionString)

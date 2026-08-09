@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -96,11 +95,20 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task DeleteStudentTest()
     {
-      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
+      var studentEntity = Factories.StudentFactory();
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
+          .ConfigureTestServices(x =>
+          {
+            ExecuteOnContext<DatabaseContext>(x, db =>
+            {
+              _ = db.Students.Add(studentEntity);
+            });
+          })
+       );
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s/{Guid.NewGuid()}");
+      var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s/{studentEntity.Id}");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
       TestContext.WriteLine($"Server Reponse: {content}");

@@ -486,6 +486,51 @@
             <param name="userName">The name of the user who queued the messages. Default is "NRSRx Test User".</param>
             <returns>A collection of split messages.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.IHostBuilderExtensions">
+            <summary>
+            Provides extension methods for <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> used when constructing
+            test hosts for integration or unigration tests.
+            </summary>
+            <remarks>
+            These helpers forward configuration to the underlying web host builder and
+            enable configuring test-specific services via <see cref="T:Microsoft.AspNetCore.TestHost.TestServer"/> helpers.
+            </remarks>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.IHostBuilderExtensions.ConfigureTestServices(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            Configures test services for the web host built by the provided <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.
+            </summary>
+            <param name="hostBuilder">
+            The host builder to configure. This is the instance that will be used to build the host.
+            </param>
+            <param name="servicesConfiguration">
+            A delegate that receives an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> and configures services
+            for testing. This is forwarded to the web host's <c>ConfigureTestServices</c> method.
+            </param>
+            <returns>
+            The same <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> instance so that additional configuration can be chained.
+            </returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.IHostBuilderExtensions.ConfigureServices(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            Configures services for the web host built by the provided <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.
+            </summary>
+            <param name="hostBuilder">
+            The host builder to configure. This is the instance that will be used to build the host.
+            </param>
+            <param name="servicesConfiguration">
+            A delegate that receives an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> used to register services
+            for the application. This configuration is forwarded to the web host's <c>ConfigureServices</c> method.
+            </param>
+            <returns>
+            The same <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> instance so that additional configuration can be chained.
+            </returns>
+            <remarks>
+            This method is a convenience that forwards the provided <paramref name="servicesConfiguration"/>
+            to the underlying web host builder. It enables configuring services at the host-builder
+            level when creating test hosts.
+            </remarks>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler">
             <summary>
             A fake HTTP message handler for testing purposes.
@@ -1350,6 +1395,11 @@
             Sets up authentication for unigration tests.
             </summary>
             <param name="builder">The authentication builder.</param>
+        </member>
+        <member name="T:Microsoft.OpenApi.OpenApiRequestBodyExtension">
+            <summary>
+            Request Body Object
+            </summary>
         </member>
     </members>
 </doc>

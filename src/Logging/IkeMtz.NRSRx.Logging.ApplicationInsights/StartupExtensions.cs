@@ -22,7 +22,9 @@ namespace IkeMtz.NRSRx.Core.Web
             {
               ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
               ApplicationVersion = startup.GetBuildNumber(),
-              EnableDiagnosticsTelemetryModule = true,
+              EnableDependencyTrackingTelemetryModule = true,
+              EnableRequestTrackingTelemetryModule = true,
+              EnablePerformanceCounterCollectionModule = true,
             });
     }
 
@@ -39,9 +41,9 @@ namespace IkeMtz.NRSRx.Core.Web
             {
               ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
               ApplicationVersion = startup.GetBuildNumber(),
-              EnableDiagnosticsTelemetryModule = true,
-              DeveloperMode = true,
-              EnableDebugLogger = true,
+              //EnableDependencyTrackingTelemetryModule = true,
+              //EnablePerformanceCounterCollectionModule = true,
+              //EnableRequestTrackingTelemetryModule = true,
             });
     }
   }

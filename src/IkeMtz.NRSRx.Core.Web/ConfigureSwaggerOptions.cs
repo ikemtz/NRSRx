@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.Web
@@ -18,36 +18,25 @@ namespace IkeMtz.NRSRx.Core.Web
   /// </summary>
   /// <remarks>This allows API versioning to define a Swagger document per API version after the
   /// <see cref="IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
-  public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+  /// <remarks>
+  /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
+  /// </remarks>
+  /// <param name="serviceProvider">The service provider.</param>
+  /// <param name="configuration">The application configuration.</param>
+  /// <param name="startup">The CoreWebStartup instance.</param>
+  /// <exception cref="ArgumentNullException">Thrown when the startup parameter is null.</exception>
+  public class ConfigureSwaggerOptions(
+    IServiceProvider serviceProvider,
+    IConfiguration configuration,
+    CoreWebStartup startup) : IConfigureOptions<SwaggerGenOptions>
   {
-    private readonly IApiVersionDescriptionProvider provider;
-    private readonly IODataVersionProvider odataVersionProvider;
-    private readonly CoreWebStartup startup;
-    private readonly string apiTitle;
-    private readonly string buildNumber;
-    private readonly IHttpClientFactory httpClientFactory;
-    private readonly AppSettings appSettings;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider.</param>
-    /// <param name="configuration">The application configuration.</param>
-    /// <param name="startup">The CoreWebStartup instance.</param>
-    /// <exception cref="ArgumentNullException">Thrown when the startup parameter is null.</exception>
-    public ConfigureSwaggerOptions(
-      IServiceProvider serviceProvider,
-      IConfiguration configuration,
-      CoreWebStartup startup)
-    {
-      this.startup = startup ?? throw new ArgumentNullException(nameof(startup));
-      provider = serviceProvider.GetService<IApiVersionDescriptionProvider>();
-      odataVersionProvider = serviceProvider.GetService<IODataVersionProvider>();
-      apiTitle = startup.ServiceTitle;
-      buildNumber = startup.GetBuildNumber();
-      httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
-      appSettings = configuration.Get<AppSettings>();
-    }
+    private readonly IApiVersionDescriptionProvider provider = serviceProvider.GetService<IApiVersionDescriptionProvider>();
+    private readonly IODataVersionProvider odataVersionProvider = serviceProvider.GetService<IODataVersionProvider>();
+    private readonly CoreWebStartup startup = startup ?? throw new ArgumentNullException(nameof(startup));
+    private readonly string apiTitle = startup.ServiceTitle;
+    private readonly string buildNumber = startup.GetBuildNumber();
+    private readonly IHttpClientFactory httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+    private readonly AppSettings appSettings = configuration.Get<AppSettings>();
 
     /// <summary>
     /// Configures the Swagger generation options.

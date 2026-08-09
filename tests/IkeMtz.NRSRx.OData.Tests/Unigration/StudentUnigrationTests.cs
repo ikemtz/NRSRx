@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -128,12 +127,23 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory(TestCategories.Unigration)]
     public async Task DeleteStudentsTest()
     {
-      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
+      var item = Factories.StudentCourseFactory(Factories.StudentFactory(), Factories.CourseFactory(), Factories.SchoolFactory());
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
+          .ConfigureTestServices(x =>
+          {
+            ExecuteOnContext<DatabaseContext>(x, db =>
+            {
+              _ = db.Students.Add(item.Student);
+              _ = db.Courses.Add(item.Course);
+              _ = db.StudentCourses.Add(item);
+            });
+          })
+       );
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s/{Guid.NewGuid()}");
-      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
+      var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s({item.StudentId})");
+      Assert.AreEqual(HttpStatusCode.NoContent, resp.StatusCode);
     }
 
     [TestMethod]

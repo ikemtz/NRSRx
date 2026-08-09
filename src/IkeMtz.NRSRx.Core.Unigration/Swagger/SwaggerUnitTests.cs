@@ -4,7 +4,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -55,7 +55,6 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
 
       result = FixSwaggerDocument(result);
-
       var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
       Assert.AreEqual($"{version}.0", doc.Info.Version);
       return doc;

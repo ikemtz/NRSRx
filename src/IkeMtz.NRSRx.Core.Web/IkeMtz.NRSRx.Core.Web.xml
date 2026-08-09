@@ -45,11 +45,23 @@
             </summary>
             <remarks>This allows API versioning to define a Swagger document per API version after the
             <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions"/> class.
+            </remarks>
+            <param name="serviceProvider">The service provider.</param>
+            <param name="configuration">The application configuration.</param>
+            <param name="startup">The CoreWebStartup instance.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the startup parameter is null.</exception>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions.#ctor(System.IServiceProvider,Microsoft.Extensions.Configuration.IConfiguration,IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
             <summary>
-            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions"/> class.
+            Configures the Swagger generation options.
             </summary>
+            <remarks>This allows API versioning to define a Swagger document per API version after the
+            <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+            <remarks>
+            Initializes a new instance of the <see cref="T:IkeMtz.NRSRx.Core.Web.ConfigureSwaggerOptions"/> class.
+            </remarks>
             <param name="serviceProvider">The service provider.</param>
             <param name="configuration">The application configuration.</param>
             <param name="startup">The CoreWebStartup instance.</param>
@@ -367,7 +379,7 @@
             Operation filter to add authorization responses and security requirements to Swagger operations.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.AuthorizeOperationFilter.Apply(Microsoft.OpenApi.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
             <summary>
             Applies the filter to the specified operation.
             </summary>
@@ -381,7 +393,7 @@
             <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
             Once they are fixed and published, this class can be removed.</remarks>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.DefaultValueFilter.Apply(Microsoft.OpenApi.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
             <summary>
             Applies the filter to the specified operation.
             </summary>
@@ -416,7 +428,7 @@
             Gets the application configuration.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.Swagger.ReverseProxyDocumentFilter.Apply(Microsoft.OpenApi.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
             <summary>
             Applies the filter to the specified Swagger document.
             </summary>

@@ -157,7 +157,7 @@
             The list of schema types to be filtered out.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonDocumentFilter.Apply(Microsoft.OpenApi.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
             <summary>
             Applies the filter to the specified Swagger document.
             </summary>
@@ -169,14 +169,14 @@
             Adds common OData query parameters to Swagger documentation for GET operations.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.Apply(Microsoft.OpenApi.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
             <summary>
             Applies the filter to the specified operation.
             </summary>
             <param name="operation">The operation to apply the filter to.</param>
             <param name="context">The context for the filter.</param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.AddParameter(Microsoft.OpenApi.Models.OpenApiOperation,System.String,System.String,System.String)">
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.AddParameter(Microsoft.OpenApi.OpenApiOperation,System.String,Microsoft.OpenApi.JsonSchemaType,System.String)">
             <summary>
             Adds a parameter to the specified operation if it does not already exist.
             </summary>
