@@ -4,7 +4,6 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.OpenApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -49,14 +48,23 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
       // Get the Swagger JSON document
-      var resp = await client.GetAsync($"/swagger/v{version}/swagger.json").ConfigureAwait(true);
+      var resp = await client.GetAsync($"/openapi/v{version}.json").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
 
       result = FixSwaggerDocument(result);
-      var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result, new JsonSerializerSettings() { Error = (x, y) => { } });
-      Assert.AreEqual($"{version}.0", doc.Info.Version);
+      var doc = JsonConvert.DeserializeObject<OpenApiDocument>(result,
+        new JsonSerializerSettings()
+        {
+
+          Error = (x, y) =>
+          {
+            Console.WriteLine("Error");
+          }
+        });
+
+      Assert.AreEqual($"{version}.0.0", doc.Info.Version);
       return doc;
     }
 
@@ -78,7 +86,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.Swagger
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
       // Get the Swagger JSON document
-      var resp = await client.GetAsync($"/swagger/v{version}/swagger.json").ConfigureAwait(true);
+      var resp = await client.GetAsync($"/openapi/v{version}.json").ConfigureAwait(true);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
       var result = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);

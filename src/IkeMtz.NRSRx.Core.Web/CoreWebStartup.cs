@@ -1,15 +1,13 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using IkeMtz.NRSRx.Core.Web.Swagger;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +15,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Jwt = System.IdentityModel.Tokens.Jwt;
 
@@ -211,6 +208,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="options">The Swagger UI options.</param>
     public virtual void SetupSwaggerCommonUi(SwaggerUIOptions options)
     {
+      options.SwaggerEndpoint("/openapi/v1/swagger.json", $"{ServiceTitle} v1");
       options.EnableDeepLinking();
       options.EnableFilter();
       options.DocumentTitle = $"{this.ServiceTitle} - Swagger UI";
@@ -228,22 +226,23 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="options">The Swagger generation options.</param>
     /// <param name="xmlPath">The XML path for comments.</param>
-    public virtual void SetupSwaggerGen(SwaggerGenOptions options, string? xmlPath = null)
+    public virtual void SetupOpenApiDocGeneratrion(OpenApiOptions options, string? xmlPath = null)
     {
-      // add a custom operation filter which sets default values
-      options.OperationFilter<DefaultValueFilter>();
-      options.OperationFilter<AuthorizeOperationFilter>();
-      options.DocumentFilter<ReverseProxyDocumentFilter>();
+      //options.ShouldInclude(new Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription { })
+      //// add a custom operation filter which sets default values
+      //options.OperationFilter<DefaultValueFilter>();
+      //options.OperationFilter<AuthorizeOperationFilter>();
+      //options.DocumentFilter<ReverseProxyDocumentFilter>();
 
-      if (IncludeXmlCommentsInSwaggerDocs)
-      {
-        // Set the comments path for the Swagger JSON and UI.
-        options.IncludeXmlComments(xmlPath ?? StartupAssembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
-      }
-      if (AdditionalAssemblyXmlDocumentFiles?.Length > 0)
-      {
-        AdditionalAssemblyXmlDocumentFiles.ToList().ForEach(f => options.IncludeXmlComments(f));
-      }
+      //if (IncludeXmlCommentsInSwaggerDocs)
+      //{
+      //  // Set the comments path for the Swagger JSON and UI.
+      //  options.IncludeXmlComments(xmlPath ?? StartupAssembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
+      //}
+      //if (AdditionalAssemblyXmlDocumentFiles?.Length > 0)
+      //{
+      //  AdditionalAssemblyXmlDocumentFiles.ToList().ForEach(f => options.IncludeXmlComments(f));
+      //}
     }
 
     private static OpenIdConfiguration OpenIdConfiguration;

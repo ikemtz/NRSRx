@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace IkeMtz.NRSRx.Core.Unigration
 {
@@ -121,9 +120,9 @@ namespace IkeMtz.NRSRx.Core.Unigration
     /// </summary>
     /// <param name="options">The Swagger generation options.</param>
     /// <param name="xmlPath">The XML path for comments.</param>
-    public override void SetupSwaggerGen(SwaggerGenOptions options, string? xmlPath = null)
-    {
-      base.SetupSwaggerGen(options, StartupAssembly.GetXmlCommentsFile());
-    }
+    //public override void SetupSwaggerGen(SwaggerGenOptions options, string? xmlPath = null)
+    //{
+    //  base.SetupSwaggerGen(options, StartupAssembly.GetXmlCommentsFile());
+    //}
   }
 }

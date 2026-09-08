@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace IkeMtz.NRSRx.Core.WebApi
@@ -34,7 +32,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
     {
       SetupAppSettings(services);
       SetupLogging(services);
-      SetupSwagger(services);
+      SetupOpenApi(services);
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       var healthCheckBuilder = services.AddHealthChecks();
       SetupHealthChecks(services, healthCheckBuilder);
@@ -75,7 +73,6 @@ namespace IkeMtz.NRSRx.Core.WebApi
       if (!DisableSwagger && Configuration?.GetValue("DisableSwagger", false) != true)
       {
         _ = app
-        .UseSwagger()
         .UseSwaggerUI(options => SetupSwaggerUI(options, provider));
       }
       _ = app
@@ -83,6 +80,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
      {
        _ = endpoints.MapHealthChecks("/healthz");
        _ = endpoints.MapControllers();
+       _ = endpoints.MapOpenApi();
      });
     }
 
@@ -149,14 +147,14 @@ namespace IkeMtz.NRSRx.Core.WebApi
     /// Sets up Swagger services.
     /// </summary>
     /// <param name="services">The service collection.</param>
-    public virtual void SetupSwagger(IServiceCollection services)
+    public virtual void SetupOpenApi(IServiceCollection services)
     {
       _ = services
         .AddHttpClient()
-        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
-        .AddSwaggerGen(options =>
+        //.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
+        .AddOpenApi(options =>
         {
-          SetupSwaggerGen(options);
+          SetupOpenApiDocGeneratrion(options);
         });
     }
 

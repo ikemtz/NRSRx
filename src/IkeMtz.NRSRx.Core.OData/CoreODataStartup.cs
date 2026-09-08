@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.OData.Formatter.Serialization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.OData;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace IkeMtz.NRSRx.Core.OData
@@ -51,11 +49,20 @@ namespace IkeMtz.NRSRx.Core.OData
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       SetupAuthentication(SetupJwtAuthSchema(services));
       SetupMiscDependencies(services);
-      SetupSwagger(services);
+      SetupOpenApi(services);
       var healthCheckBuilder = services.AddHealthChecks();
       SetupHealthChecks(services, healthCheckBuilder);
     }
-
+    public virtual void SetupOpenApi(IServiceCollection services)
+    {
+      _ = services
+        .AddHttpClient()
+        //.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
+        .AddOpenApi(options =>
+        {
+          SetupOpenApiDocGeneratrion(options);
+        });
+    }
     /// <summary>
     /// Configures the HTTP request pipeline.
     /// </summary>
@@ -80,13 +87,13 @@ namespace IkeMtz.NRSRx.Core.OData
       if (!DisableSwagger && Configuration?.GetValue<bool>("DisableSwagger", false) != true)
       {
         _ = app
-            .UseSwagger()
-            .UseSwaggerUI(SetupSwaggerUI);
+            .UseSwaggerUI(options => SetupSwaggerUI(options));
       }
       _ = app.UseEndpoints(endpoints =>
       {
         _ = endpoints.MapHealthChecks("/healthz");
         _ = endpoints.MapControllers();
+        _ = endpoints.MapOpenApi();
       });
     }
 
@@ -100,7 +107,7 @@ namespace IkeMtz.NRSRx.Core.OData
       foreach (var groupName in ODataModelProvider.GetODataVersions().Select(t => t.GroupName))
       {
         options.SwaggerEndpoint(
-          $"{swaggerJsonRoutePrefix}{groupName}/swagger.json",
+          $"openapi/{groupName}.json",
           groupName.ToUpperInvariant());
       }
       SetupSwaggerCommonUi(options);
@@ -147,13 +154,15 @@ namespace IkeMtz.NRSRx.Core.OData
       _ = services
         .AddHttpClient()
         .AddSingleton<IODataVersionProvider>((x) => this.ODataModelProvider)
-        .AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
-        .AddSwaggerGen(swaggerGenOptions =>
-        {
-          swaggerGenOptions.OperationFilter<ODataCommonOperationFilter>();
-          swaggerGenOptions.DocumentFilter<ODataCommonDocumentFilter>();
-          SetupSwaggerGen(swaggerGenOptions);
-        });
+
+        //.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
+        //.AddSwaggerGen(swaggerGenOptions =>
+        //{
+        //  swaggerGenOptions.OperationFilter<ODataCommonOperationFilter>();
+        //  swaggerGenOptions.DocumentFilter<ODataCommonDocumentFilter>();
+        //  SetupSwaggerGen(swaggerGenOptions);
+        //}
+        ;
     }
   }
 }
