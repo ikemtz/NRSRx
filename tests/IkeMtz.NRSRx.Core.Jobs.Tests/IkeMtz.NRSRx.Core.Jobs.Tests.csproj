@@ -18,7 +18,7 @@
   <ItemGroup>
     <Compile Include="..\IkeMtz.NRSRx.OData.Tests\Factories.cs" Link="Factories.cs" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup> 
     <PackageReference Include="coverlet.collector" Version="10.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

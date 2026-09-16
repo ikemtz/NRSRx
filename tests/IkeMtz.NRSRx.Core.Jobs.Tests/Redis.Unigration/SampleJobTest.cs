@@ -20,10 +20,10 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task SampleJobTest()
     {
-      //arange
+      //arrange
       var program = new UnigrationProgram(new Program(), TestContext)
       {
-        RunContinously = false,
+        RunContinuously = false,
       };
       //act 
 
@@ -41,10 +41,10 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task SampleSchoolCreatedEventTest()
     {
-      //arange
+      //arrange
       var program = new UnigrationProgram(new Program(), TestContext)
       {
-        RunContinously = false,
+        RunContinuously = false,
         SecsBetweenRuns = 1,
         EnableParallelFunctionProcessing = true,
       };

@@ -19,10 +19,10 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Redis.Integration
     [TestCategory("RedisIntegration")]
     public async Task SampleJobSplitFunctionTest()
     {
-      //arange
+      //arrange
       var program = new IntegrationProgram(new Program(), TestContext)
       {
-        RunContinously = false,
+        RunContinuously = false,
         SecsBetweenRuns = 10,
       };
       _ = program.SetupHost();

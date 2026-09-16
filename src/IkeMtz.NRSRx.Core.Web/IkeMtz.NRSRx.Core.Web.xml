@@ -11,7 +11,7 @@
         </member>
         <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.IdentityAudiences">
             <summary>
-            Gets or sets the identity audiences.  Multiples can be specified by seperating them with a comma.
+            Gets or sets the identity audiences.  Multiples can be specified by separating them with a comma.
             </summary>
         </member>
         <member name="P:IkeMtz.NRSRx.Core.Web.AppSettings.IdentityProvider">
@@ -202,7 +202,7 @@
             </summary>
             <param name="options">The Swagger UI options.</param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupOpenApiDocGeneratrion(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.String)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupOpenApiDocGeneration(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.String)">
             <summary>
             Sets up Swagger generation options.
             </summary>

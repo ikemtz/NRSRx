@@ -6,7 +6,7 @@ namespace IkeMtz.NRSRx.Core.Web
   public class AppSettings
   {
     /// <summary>
-    /// Gets or sets the identity audiences.  Multiples can be specified by seperating them with a comma.
+    /// Gets or sets the identity audiences.  Multiples can be specified by separating them with a comma.
     /// </summary>
     public string IdentityAudiences { get; set; }
 

@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Tests.Integration
     [TestCategory("SqlIntegration")]
     public async Task SampleJobTest()
     {
-      //arange
+      //arrange
       var program = new IntegrationProgram(new Program(), TestContext);
       program.ExecuteOnContext<DatabaseContext>(x => x.Courses.Add(Factories.CourseFactory()));
 

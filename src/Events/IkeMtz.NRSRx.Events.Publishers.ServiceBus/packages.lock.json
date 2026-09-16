@@ -15,28 +15,50 @@
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Direct",
+<<<<<<< HEAD
         "requested": "[10.0.11, )",
         "resolved": "10.0.11",
         "contentHash": "fVi053xdpda9Em7vSkmgVxO/PtgC2m78ekReKWsgcyskqY0U82Bz/MONwxpGzI0hElYKJfw+fupqMVeKW3fSaA==",
         "dependencies": {
           "Microsoft.Extensions.Primitives": "10.0.11"
+=======
+        "requested": "[9.0.15, )",
+        "resolved": "9.0.15",
+        "contentHash": "M9s2mDxtfNdS6SbemODzDxHgm+eIhZPSuTc0s0QazQoSceTXTv+OjthKqf8r/FehXtABXD01ijQNdtODDFtnxg==",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "9.0.15"
+>>>>>>> 259e8a0f6156b76abdd054c2653690641c5ed990
         }
       },
       "Microsoft.Extensions.Configuration.Binder": {
         "type": "Direct",
+<<<<<<< HEAD
         "requested": "[10.0.11, )",
         "resolved": "10.0.11",
         "contentHash": "rFn8RuszZn3qquPVkDytMUlPc2+rXl9MCoygwc1XmAgC5vg5/oXJ8hkOosOrLoBLsqdTy4lFwP6iQdPS9uSYOA==",
         "dependencies": {
           "Microsoft.Extensions.Configuration": "10.0.11",
           "Microsoft.Extensions.Configuration.Abstractions": "10.0.11"
+=======
+        "requested": "[9.0.15, )",
+        "resolved": "9.0.15",
+        "contentHash": "6hOTcdyGlJBBHl1DqbnvqSbHsJp814r5HMXGkTH1Jg6IosqwqZhh00/UCUJ0oXrACO096wWuCMfKMIPbnMGWIQ==",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.15"
+>>>>>>> 259e8a0f6156b76abdd054c2653690641c5ed990
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Direct",
+<<<<<<< HEAD
         "requested": "[10.0.11, )",
         "resolved": "10.0.11",
         "contentHash": "/a1aJz4m7ylhEDf25ugQChLQoN5XwoGjWw/BoR/ZWWKsO1v4DdJElS1uyngahz4B/eOzjFk1KNTkarRLE5wsIg=="
+=======
+        "requested": "[9.0.15, )",
+        "resolved": "9.0.15",
+        "contentHash": "4ulUZtcGCPQ/LadApR1QftrRZ0AvxGW6SsVhS3QoTAwZtzhbN6x0VCVPoXsoPkznUrgzy8bi4KZ+kFt5jsP40Q=="
+>>>>>>> 259e8a0f6156b76abdd054c2653690641c5ed990
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
@@ -209,8 +231,13 @@
       },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
+<<<<<<< HEAD
         "resolved": "10.0.11",
         "contentHash": "SXcz+kF+4Oo9b1+55zntpJFYfwb1jw66ioxptyNOOTDc8g2FHnBFWjZpsWfCvZIhzr0x+4e2trVTs4OKwQfBtw==",
+=======
+        "resolved": "9.0.15",
+        "contentHash": "WRPJ9kpIwsOcghRT0tduIqiz7CDv7WsnL4kTJavtHS4j5AW++4LlR63oOSTL2o/zLR4T1z0/FQMgrnsPJ5bpQQ==",
+>>>>>>> 259e8a0f6156b76abdd054c2653690641c5ed990
         "dependencies": {
           "System.Memory": "4.6.3",
           "System.Runtime.CompilerServices.Unsafe": "6.1.2"

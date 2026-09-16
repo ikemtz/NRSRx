@@ -22,10 +22,10 @@ namespace IkeMtz.NRSRx.Core.Authorization
     /// <param name="expandClause">The expand clause to be modified if permissions are not met.</param>
     /// <param name="allowScopes">Indicates whether scopes are allowed.</param>
     /// <param name="permissionClaimType">The type of the permission claim.</param>
-    /// <param name="permissionClaimSeperator">The separator for permission claims.</param>
+    /// <param name="permissionClaimSeparator">The separator for permission claims.</param>
     /// <param name="scopeClaimType">The type of the scope claim.</param>
-    public ExpandPermissionsFilterAttribute(string[] allowedPermissions, string expandClause, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
-     : base(allowedPermissions, allowScopes, permissionClaimType, permissionClaimSeperator, scopeClaimType)
+    public ExpandPermissionsFilterAttribute(string[] allowedPermissions, string expandClause, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeparator = ',', string scopeClaimType = DefaultScopeClaimType)
+     : base(allowedPermissions, allowScopes, permissionClaimType, permissionClaimSeparator, scopeClaimType)
     {
       this.expandClause = expandClause;
     }

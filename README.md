@@ -11,6 +11,10 @@
 # NRSRX
 NRSRx is an opinionated, flexible, and extensible framework that will expedite the development of back-end services built on asp.net 6 - 8.  It does this by addressing some cross-cutting concerns that typically require development effort, letting you focus on your business challenges.
 
+## Naming Guidelines
+
+NRSRx naming guidelines can be found here [./naming-guidelines.md](./naming-guidelines.md).  Following these guidelines will facilitate the rollout of NRSRx on your next project.
+
 ## Cross cutting concerns
 
 NRSRx is highly configurable and extensible, but these are the cross-cutting concerns that are addressed:

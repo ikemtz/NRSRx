@@ -32,7 +32,6 @@
     <PackageReference Include="StackExchange.Redis" Version="3.1.31" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\IkeMtz.NRSRx.Core.WebApi\IkeMtz.NRSRx.Core.WebApi.csproj" />
     <ProjectReference Include="..\..\src\Logging\IkeMtz.NRSRx.Logging.Splunk\IkeMtz.NRSRx.Logging.Splunk.csproj" />

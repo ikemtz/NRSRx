@@ -15,15 +15,15 @@ namespace IkeMtz.NRSRx.Core.Authorization
   /// <param name="allowedPermissions">The allowed permissions.</param>
   /// <param name="allowScopes">Indicates whether scopes are allowed.</param>
   /// <param name="permissionClaimType">The type of the permission claim.</param>
-  /// <param name="permissionClaimSeperator">The separator for permission claims.</param>
+  /// <param name="permissionClaimSeparator">The separator for permission claims.</param>
   /// <param name="scopeClaimType">The type of the scope claim.</param>
-  public abstract class BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = BaseActionFilterAttribute.DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = BaseActionFilterAttribute.DefaultScopeClaimType) : ActionFilterAttribute
+  public abstract class BaseActionFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = BaseActionFilterAttribute.DefaultPermissionClaimType, char permissionClaimSeparator = ',', string scopeClaimType = BaseActionFilterAttribute.DefaultScopeClaimType) : ActionFilterAttribute
   {
     public const string DefaultPermissionClaimType = "permissions";
     public const string DefaultScopeClaimType = "scope";
     public string[] AllowedPermissions { get; private set; } = allowedPermissions;
     public string PermissionClaimType { get; private set; } = permissionClaimType;
-    public char PermissionClaimSeperator { get; private set; } = permissionClaimSeperator;
+    public char PermissionClaimSeparator { get; private set; } = permissionClaimSeparator;
     public bool AllowScopes { get; private set; } = allowScopes;
     public string ScopeClaimType { get; private set; } = scopeClaimType;
 
@@ -47,18 +47,18 @@ namespace IkeMtz.NRSRx.Core.Authorization
     /// </summary>
     /// <param name="type">The type of the claim.</param>
     /// <param name="claims">The user's claims.</param>
-    /// <param name="permissionsSeperator">Function to separate permissions.</param>
+    /// <param name="permissionsSeparator">Function to separate permissions.</param>
     /// <returns>True if a matching permission claim is found; otherwise, false.</returns>
-    public bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, Func<IEnumerable<string>, IEnumerable<string>> permissionsSeperator)
+    public bool HasMatchingPermissionClaim(string type, IEnumerable<Claim> claims, Func<IEnumerable<string>, IEnumerable<string>> permissionsSeparator)
     {
-      permissionsSeperator = permissionsSeperator ?? throw new ArgumentNullException(nameof(permissionsSeperator));
+      permissionsSeparator = permissionsSeparator ?? throw new ArgumentNullException(nameof(permissionsSeparator));
       var permissions = claims
         .Where(f => type.Equals(f?.Type, StringComparison.CurrentCultureIgnoreCase))
         .Select(t => t.Value)
         .Where(t => !string.IsNullOrWhiteSpace(t));
       if (permissions.Any())
       {
-        var userPermissions = permissionsSeperator(permissions);
+        var userPermissions = permissionsSeparator(permissions);
         return userPermissions.Any(a => AllowedPermissions.Any(t => a.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
       }
       return false;

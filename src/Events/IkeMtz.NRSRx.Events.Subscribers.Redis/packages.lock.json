@@ -15,6 +15,7 @@
       },
       "StackExchange.Redis": {
         "type": "Direct",
+<<<<<<< HEAD
         "requested": "[3.1.31, )",
         "resolved": "3.1.31",
         "contentHash": "QillloeZxgw9+IWmnowTrjrn+JV7JIMVzr1JiUpCa7pJQI48rtcqG9yy6u5UBRiTuCiKU5909aRu67Ch6gWVMg==",
@@ -25,6 +26,17 @@
           "System.IO.Hashing": "10.0.5",
           "System.IO.Pipelines": "10.0.5",
           "System.Threading.Channels": "10.0.5"
+=======
+        "requested": "[2.12.14, )",
+        "resolved": "2.12.14",
+        "contentHash": "QiAQg40OP4Owem6/PjIbjEKq2+uIeQYeZ1TCMUnx/QvKugOPxOfC96wjlnBjWHi4Wq9pv9+fDlXGT06XkRZ6Ig==",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
+          "Pipelines.Sockets.Unofficial": "2.2.8",
+          "System.IO.Hashing": "9.0.12",
+          "System.Threading.Channels": "5.0.0"
+>>>>>>> 259e8a0f6156b76abdd054c2653690641c5ed990
         }
       },
       "Microsoft.Bcl.AsyncInterfaces": {
@@ -322,8 +334,13 @@
       },
       "System.IO.Hashing": {
         "type": "Transitive",
+<<<<<<< HEAD
         "resolved": "10.0.11",
         "contentHash": "OzKDcIRkeNJeC8qAsbn8yJXnfTLP1dtkWILe+T56Gf/z+IkAASi7sMqLqJQat08j5z/mRN5xVtoAwbkMNMoBUQ==",
+=======
+        "resolved": "9.0.12",
+        "contentHash": "wn62KwmCAlcXQpfhBtMALPuA6AszoYDWLt3OegcebkIn4psakIPyK1QtzqATgoe1iqGd9cC24kF1uwQ4mma2lg==",
+>>>>>>> 259e8a0f6156b76abdd054c2653690641c5ed990
         "dependencies": {
           "System.Buffers": "4.6.1",
           "System.Memory": "4.6.3"

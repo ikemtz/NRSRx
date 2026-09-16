@@ -35,7 +35,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
       var message = "Hello World";
       var returnMessageFired = false;
 
-      _ = connection.On<string>("OnMessageRecieved", msg =>
+      _ = connection.On<string>("OnMessageReceived", msg =>
       {
         Assert.AreEqual($"IntegrationTester@email.com - {message}", msg);
         returnMessageFired = true;

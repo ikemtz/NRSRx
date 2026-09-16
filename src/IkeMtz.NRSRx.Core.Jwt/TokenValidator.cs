@@ -27,7 +27,7 @@ namespace IkeMtz.NRSRx.Core.Jwt
     /// Initializes the token validator with the specified metadata address and audiences.
     /// </summary>
     /// <param name="metaDataAddress">The metadata address.</param>
-    /// <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by seperating them with a comma. </param>
+    /// <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by separating them with a comma. </param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     public Task InitAsync(string metaDataAddress, string audiences)
     {
@@ -39,7 +39,7 @@ namespace IkeMtz.NRSRx.Core.Jwt
     /// </summary>
     /// <param name="metaDataAddress">The metadata address of the identity server.</param>
     /// <param name="issuer">The value specified in the "iss" (issuer) claim.</param>
-    /// <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by seperating them with a comma. </param>
+    /// <param name="audiences">The audience specified in the "aud" claim.  Multiples audiences can be specified by separating them with a comma. </param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     public async Task InitAsync(string metaDataAddress, string? issuer, string audiences)
     {

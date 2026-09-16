@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.Jobs.Unigration
     {
       Program = program;
       TestContext = testContext;
-      RunContinously = false;
+      RunContinuously = false;
       SecsBetweenRuns = 1;
     }
     /// <summary>

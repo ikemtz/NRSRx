@@ -17,10 +17,10 @@ namespace IkeMtz.NRSRx.Core.Authorization
     /// <param name="allowedPermissions">The allowed permissions.</param>
     /// <param name="allowScopes">Indicates whether scopes are allowed.</param>
     /// <param name="permissionClaimType">The type of the permission claim.</param>
-    /// <param name="permissionClaimSeperator">The separator for permission claims.</param>
+    /// <param name="permissionClaimSeparator">The separator for permission claims.</param>
     /// <param name="scopeClaimType">The type of the scope claim.</param>
-    public PermissionsFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeperator = ',', string scopeClaimType = DefaultScopeClaimType)
-      : base(allowedPermissions, allowScopes, permissionClaimType, permissionClaimSeperator, scopeClaimType)
+    public PermissionsFilterAttribute(string[] allowedPermissions, bool allowScopes = true, string permissionClaimType = DefaultPermissionClaimType, char permissionClaimSeparator = ',', string scopeClaimType = DefaultScopeClaimType)
+      : base(allowedPermissions, allowScopes, permissionClaimType, permissionClaimSeparator, scopeClaimType)
     {
     }
 
