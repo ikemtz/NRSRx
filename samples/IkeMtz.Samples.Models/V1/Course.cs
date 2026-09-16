@@ -18,7 +18,7 @@ namespace IkeMtz.Samples.Models.V1
       SchoolCourses = new HashSet<SchoolCourse>();
     }
 
-    [DefaultValue(0)]
+    [DefaultValue(0.00)]
     public double? AvgScore { get; set; }
     [Required]
     [MaxLength(250)]

@@ -3,6 +3,7 @@ using System.Linq;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Formatter.Serialization;
 using Microsoft.Extensions.Configuration;
@@ -57,10 +58,9 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       _ = services
         .AddHttpClient()
-        //.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
         .AddOpenApi(options =>
         {
-          SetupOpenApiDocGeneratrion(options);
+          SetupOpenApiDocGeneration(options, ServiceTitle);
         });
     }
     /// <summary>
@@ -84,17 +84,18 @@ namespace IkeMtz.NRSRx.Core.OData
       _ = app.UseRouting();
       _ = app.UseAuthentication()
           .UseAuthorization();
-      if (!DisableSwagger && Configuration?.GetValue<bool>("DisableSwagger", false) != true)
-      {
-        _ = app
-            .UseSwaggerUI(options => SetupSwaggerUI(options));
-      }
       _ = app.UseEndpoints(endpoints =>
       {
         _ = endpoints.MapHealthChecks("/healthz");
         _ = endpoints.MapControllers();
         _ = endpoints.MapOpenApi();
       });
+
+      if (!DisableSwagger && Configuration?.GetValue<bool>("DisableSwagger", false) != true)
+      {
+        _ = app
+            .UseSwaggerUI(options => SetupSwaggerUI(options));
+      }
     }
 
     /// <summary>
@@ -122,7 +123,12 @@ namespace IkeMtz.NRSRx.Core.OData
     {
       var mvcBuilder = services
            .AddMvc();
-      _ = services.AddApiVersioning(options => options.ReportApiVersions = true);
+      _ = services.AddApiVersioning(options =>
+      {
+        options.ReportApiVersions = true;
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+      });
       _ = services.AddControllers()
           .AddOData(options =>
           {

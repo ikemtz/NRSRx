@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
+using IkeMtz.NRSRx.Core.Web.OpenApi;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -208,7 +209,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="options">The Swagger UI options.</param>
     public virtual void SetupSwaggerCommonUi(SwaggerUIOptions options)
     {
-      options.SwaggerEndpoint("/openapi/v1/swagger.json", $"{ServiceTitle} v1");
+      options.SwaggerEndpoint("/openapi/v1.json", $"{ServiceTitle} v1");
       options.EnableDeepLinking();
       options.EnableFilter();
       options.DocumentTitle = $"{this.ServiceTitle} - Swagger UI";
@@ -226,8 +227,10 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="options">The Swagger generation options.</param>
     /// <param name="xmlPath">The XML path for comments.</param>
-    public virtual void SetupOpenApiDocGeneratrion(OpenApiOptions options, string? xmlPath = null)
+    public virtual void SetupOpenApiDocGeneration(OpenApiOptions options, string? docTitle)
     {
+      options.AddDocumentTransformer(new DocumentMetaDataTransformer(docTitle));
+      options.AddSchemaTransformer(new EnumSchemaTransformer());
       //options.ShouldInclude(new Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription { })
       //// add a custom operation filter which sets default values
       //options.OperationFilter<DefaultValueFilter>();

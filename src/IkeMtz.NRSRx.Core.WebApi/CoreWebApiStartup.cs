@@ -97,6 +97,8 @@ namespace IkeMtz.NRSRx.Core.WebApi
       {
         options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}{groupName}/swagger.json", groupName.ToUpperInvariant());
       }
+
+
       SetupSwaggerCommonUi(options);
     }
 
@@ -151,10 +153,9 @@ namespace IkeMtz.NRSRx.Core.WebApi
     {
       _ = services
         .AddHttpClient()
-        //.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
         .AddOpenApi(options =>
         {
-          SetupOpenApiDocGeneratrion(options);
+          SetupOpenApiDocGeneration(options, ServiceTitle);
         });
     }
 

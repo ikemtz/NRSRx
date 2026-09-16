@@ -35,16 +35,20 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="services"></param>
     public static void SetupDevelopmentApplicationInsights(this CoreWebStartup startup, IServiceCollection? services)
     {
-      _ = services?
-          .AddApplicationInsightsTelemetry(
-            new ApplicationInsightsServiceOptions()
-            {
-              ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
-              ApplicationVersion = startup.GetBuildNumber(),
-              //EnableDependencyTrackingTelemetryModule = true,
-              //EnablePerformanceCounterCollectionModule = true,
-              //EnableRequestTrackingTelemetryModule = true,
-            });
+      var connectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString");
+      if (!string.IsNullOrWhiteSpace(connectionString))
+      {
+        _ = services?
+            .AddApplicationInsightsTelemetry(
+              new ApplicationInsightsServiceOptions()
+              {
+                ConnectionString = connectionString,
+                ApplicationVersion = startup.GetBuildNumber(),
+                //EnableDependencyTrackingTelemetryModule = true,
+                //EnablePerformanceCounterCollectionModule = true,
+                //EnableRequestTrackingTelemetryModule = true,
+              });
+      }
     }
   }
 }

@@ -12,7 +12,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       this.SetupDevelopmentApplicationInsights(services);
 
-    public override string ServiceTitle => "";
+    public override string ServiceTitle => "App Insights integrated with sample service";
 
     public override Assembly StartupAssembly => this.GetType().Assembly;
   }

@@ -14,7 +14,9 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  [ApiVersion("1.0")]
+  [Route($"odata/v1/[controller]")]
+  [ApiVersion(VersionDefinitions.v1_0)]
+  [ApiController]
   [Authorize]
   [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 6000)]
   public class StudentsController(DatabaseContext databaseContext) : ODataController
@@ -31,7 +33,7 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
-    [HttpGet("odata/v1/students/nolimit")]
+    [HttpGet("nolimit")]
     public IQueryable<Student> NoLimit()
     {
       return databaseContext.Students
@@ -55,7 +57,7 @@ namespace IkeMtz.Samples.OData.Controllers.V1
       }
       databaseContext.Students.Remove(student);
       var result = await databaseContext.SaveChangesAsync();
-      return result == 1 ? NoContent() : StatusCode(Status500InternalServerError,
+      return result == 1 ? Ok() : StatusCode(Status500InternalServerError,
         new ProblemDetails { Title = "An error occurred while deleting the student" });
     }
   }

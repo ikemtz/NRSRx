@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.Swagger;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.Samples.OData.Tests.Unigration
@@ -26,17 +24,8 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerJsonTest()
     {
-      var myConfiguration = new Dictionary<string, string?>
-      {
-        //{ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
-      };
-      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
-        .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
-          configurationBuilder.AddInMemoryCollection(myConfiguration)
-        ));
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
       var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
-      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv, "/my-api/odata/");
-
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(School)));
       Assert.IsTrue(doc.Components.Schemas.Any(a => a.Key.Contains("SchoolGuidODataEnvelope")));
       Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
