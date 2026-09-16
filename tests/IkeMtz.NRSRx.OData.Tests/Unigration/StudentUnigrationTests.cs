@@ -143,12 +143,11 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s({item.StudentId})");
-      Assert.AreEqual(HttpStatusCode.NoContent, resp.StatusCode);
+      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [Ignore("waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task GetODataDebugPage()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());

@@ -3,7 +3,6 @@ using System.Linq;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Formatter.Serialization;
 using Microsoft.Extensions.Configuration;
@@ -60,7 +59,7 @@ namespace IkeMtz.NRSRx.Core.OData
         .AddHttpClient()
         .AddOpenApi(options =>
         {
-          SetupOpenApiDocGeneration(options, ServiceTitle);
+          SetupOpenApiDocGeneration(options);
         });
     }
     /// <summary>
@@ -125,9 +124,10 @@ namespace IkeMtz.NRSRx.Core.OData
            .AddMvc();
       _ = services.AddApiVersioning(options =>
       {
-        options.ReportApiVersions = true;
         options.AssumeDefaultVersionWhenUnspecified = true;
-        options.DefaultApiVersion = new ApiVersion(1, 0);
+        //options.ReportApiVersions = true;
+        //options.AssumeDefaultVersionWhenUnspecified = true;
+        //options.DefaultApiVersion = new ApiVersion(1, 0);
       });
       _ = services.AddControllers()
           .AddOData(options =>

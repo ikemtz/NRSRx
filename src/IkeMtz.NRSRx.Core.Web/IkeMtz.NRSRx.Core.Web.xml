@@ -202,12 +202,11 @@
             </summary>
             <param name="options">The Swagger UI options.</param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupOpenApiDocGeneration(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.String)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.SetupOpenApiDocGeneration(Microsoft.AspNetCore.OpenApi.OpenApiOptions)">
             <summary>
             Sets up Swagger generation options.
             </summary>
             <param name="options">The Swagger generation options.</param>
-            <param name="xmlPath">The XML path for comments.</param>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.GetOpenIdConfiguration(System.Net.Http.IHttpClientFactory,IkeMtz.NRSRx.Core.Web.AppSettings)">
             <summary>

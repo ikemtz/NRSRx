@@ -226,10 +226,9 @@ namespace IkeMtz.NRSRx.Core.Web
     /// Sets up Swagger generation options.
     /// </summary>
     /// <param name="options">The Swagger generation options.</param>
-    /// <param name="xmlPath">The XML path for comments.</param>
-    public virtual void SetupOpenApiDocGeneration(OpenApiOptions options, string? docTitle)
+    public virtual void SetupOpenApiDocGeneration(OpenApiOptions options)
     {
-      options.AddDocumentTransformer(new DocumentMetaDataTransformer(docTitle));
+      options.AddDocumentTransformer(new DocumentMetaDataTransformer(ServiceTitle));
       options.AddSchemaTransformer(new EnumSchemaTransformer());
       //options.ShouldInclude(new Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription { })
       //// add a custom operation filter which sets default values

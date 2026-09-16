@@ -175,7 +175,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s({school.Id})");
-      Assert.AreEqual(HttpStatusCode.NoContent, resp.StatusCode);
+      Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
   }
 }

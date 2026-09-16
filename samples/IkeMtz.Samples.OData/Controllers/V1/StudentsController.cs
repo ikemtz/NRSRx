@@ -14,7 +14,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  [Route($"odata/v1/[controller]")]
+  [Route($"odata/v1/Students")]
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]

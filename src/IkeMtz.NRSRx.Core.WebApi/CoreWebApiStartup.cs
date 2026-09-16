@@ -155,7 +155,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
         .AddHttpClient()
         .AddOpenApi(options =>
         {
-          SetupOpenApiDocGeneration(options, ServiceTitle);
+          SetupOpenApiDocGeneration(options);
         });
     }
 

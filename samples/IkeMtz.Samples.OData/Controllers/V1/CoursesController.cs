@@ -12,7 +12,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  //
+  [Route($"odata/v1/Courses")]
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
@@ -22,7 +22,6 @@ namespace IkeMtz.Samples.OData.Controllers.V1
     [ProducesResponseType(typeof(ODataEnvelope<Course, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet()]
-    [Route($"odata/v1/[controller]")]
     public IQueryable<Course> Get()
     {
       return databaseContext.Courses
