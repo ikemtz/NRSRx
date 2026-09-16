@@ -21,7 +21,7 @@
             Extension methods to setup logging on NRSRx framework
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupApplicationInsights(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupApplicationInsights(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions)">
             <summary>
             Sets up application to utilize Application Insights on Azure.
             </summary>

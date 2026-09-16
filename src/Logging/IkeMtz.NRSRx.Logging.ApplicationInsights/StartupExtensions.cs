@@ -14,18 +14,22 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="services"></param>
-    public static void SetupApplicationInsights(this CoreWebStartup startup, IServiceCollection? services)
+    public static void SetupApplicationInsights(this CoreWebStartup startup, IServiceCollection? services, ApplicationInsightsServiceOptions? options = null)
     {
-      _ = services?
+      var appInsightsConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString");
+      if (!string.IsNullOrWhiteSpace(appInsightsConnectionString))
+      {
+        _ = services?
           .AddApplicationInsightsTelemetry(
-            new ApplicationInsightsServiceOptions()
-            {
-              ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
-              ApplicationVersion = startup.GetBuildNumber(),
-              EnableDependencyTrackingTelemetryModule = true,
-              EnableRequestTrackingTelemetryModule = true,
-              EnablePerformanceCounterCollectionModule = true,
-            });
+           options ?? new ApplicationInsightsServiceOptions()
+           {
+             ConnectionString = appInsightsConnectionString,
+             ApplicationVersion = startup.GetBuildNumber(),
+             EnableDependencyTrackingTelemetryModule = true,
+             EnableRequestTrackingTelemetryModule = true,
+             EnablePerformanceCounterCollectionModule = true,
+           });
+      }
     }
 
     /// <summary>
@@ -35,20 +39,16 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="services"></param>
     public static void SetupDevelopmentApplicationInsights(this CoreWebStartup startup, IServiceCollection? services)
     {
-      var connectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString");
-      if (!string.IsNullOrWhiteSpace(connectionString))
+      var appInsightsConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString");
+
+      SetupApplicationInsights(startup, services, new ApplicationInsightsServiceOptions
       {
-        _ = services?
-            .AddApplicationInsightsTelemetry(
-              new ApplicationInsightsServiceOptions()
-              {
-                ConnectionString = connectionString,
-                ApplicationVersion = startup.GetBuildNumber(),
-                //EnableDependencyTrackingTelemetryModule = true,
-                //EnablePerformanceCounterCollectionModule = true,
-                //EnableRequestTrackingTelemetryModule = true,
-              });
-      }
+        ConnectionString = appInsightsConnectionString,
+        ApplicationVersion = startup.GetBuildNumber(),
+        //EnableDependencyTrackingTelemetryModule = true,
+        //EnablePerformanceCounterCollectionModule = true,
+        //EnableRequestTrackingTelemetryModule = true,
+      });
     }
   }
 }
