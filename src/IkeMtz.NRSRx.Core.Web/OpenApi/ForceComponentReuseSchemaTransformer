@@ -1,0 +1,139 @@
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi; // adjust if your OpenAPI types live in another namespace
+
+namespace YourApp.OpenApi
+{
+    // Implements the lightweight contract used by OpenApiDocumentService.InitializeTransformers:
+    // - If added directly to OpenApiOptions.SchemaTransformers it will be used as-is.
+    // - If wrapped in a TypeBasedOpenApiSchemaTransformer in your version, adapt InitializeTransformer accordingly.
+    public class ForceComponentReuseSchemaTransformer : IOpenApiSchemaTransformer
+    {
+        // Per-scope cache mapping CLR type (or generated signature) to component id
+        private readonly ConcurrentDictionary<string, string> _componentIds = new ConcurrentDictionary<string, string>(StringComparer.Ordinal);
+        private IServiceProvider _services = null!;
+
+        // Called by OpenApiDocumentService.InitializeTransformers when transformer instances are prepared.
+        // Some versions call InitializeTransformer(scopedProvider) -- if your version does that, wrap this in a TypeBased transformer.
+        public virtual IOpenApiSchemaTransformer InitializeTransformer(IServiceProvider scopedServiceProvider)
+        {
+            _services = scopedServiceProvider ?? throw new ArgumentNullException(nameof(scopedServiceProvider));
+            return this;
+        }
+
+        // No-op finalizer (called by OpenApiDocumentService.FinalizeTransformers)
+        public virtual Task FinalizeTransformer()
+        {
+            // keep caches per-scope; nothing to do on finalize
+            return Task.CompletedTask;
+        }
+
+        // Core API the schema service should call for each schema before writing.
+        // Signature assumes: TransformAsync(document, typeName, schema, cancellationToken)
+        // If your IOpenApiSchemaTransformer has a different signature, adapt accordingly.
+        public virtual Task<IOpenApiSchema> TransformAsync(OpenApiDocument document, Type? type, IOpenApiSchema schema, CancellationToken cancellationToken = default)
+        {
+            if (document == null) throw new ArgumentNullException(nameof(document));
+            if (schema == null) return Task.FromResult<IOpenApiSchema>(schema);
+
+            // Determine a stable id for this schema. Prefer CLR type name if available; otherwise fallback to generated hash.
+            string schemaKey = type != null ? type.FullName ?? type.Name : GetSchemaFingerprint(schema);
+
+            // Only attempt to extract component for object/complex schemas
+            if (!IsComplexSchema(schema))
+            {
+                return Task.FromResult(schema);
+            }
+
+            // Ensure document.Components exists
+            if (document.Components == null)
+            {
+                document.Components = new OpenApiComponents();
+            }
+            if (document.Components.Schemas == null)
+            {
+                document.Components.Schemas = new Dictionary<string, IOpenApiSchema>(StringComparer.Ordinal);
+            }
+
+            // Ensure a component id for this schemaKey
+            string componentId = _componentIds.GetOrAdd(schemaKey, key =>
+            {
+                // Derive simple id (strip invalid chars for component ids if needed)
+                string candidate = (type != null ? type.Name : "Schema") + "_" + Math.Abs(schemaKey.GetHashCode()).ToString("X");
+                // Avoid collision
+                string id = candidate;
+                int attempt = 1;
+                while (document.Components.Schemas.ContainsKey(id))
+                {
+                    id = candidate + "_" + (++attempt);
+                }
+                return id;
+            });
+
+            // If component not yet registered, add it and keep the original schema there
+            if (!document.Components.Schemas.ContainsKey(componentId))
+            {
+                document.Components.Schemas[componentId] = schema;
+            }
+
+            // Replace the inline schema with a reference to the component.
+            var referenceSchema = new OpenApiSchema
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.Schema,
+                    Id = componentId
+                }
+            };
+
+            return Task.FromResult<IOpenApiSchema>(referenceSchema);
+        }
+
+        // Helper: treat as complex if it has properties, items, allOf/oneOf/anyOf
+        private static bool IsComplexSchema(IOpenApiSchema schema)
+        {
+            if (schema == null) return false;
+            if (schema.Properties != null && schema.Properties.Count > 0) return true;
+            if (schema.Items != null) return true;
+            if (schema.AllOf != null && schema.AllOf.Count > 0) return true;
+            if (schema.OneOf != null && schema.OneOf.Count > 0) return true;
+            if (schema.AnyOf != null && schema.AnyOf.Count > 0) return true;
+            // treat dictionaries and objects without explicit properties as complex
+            if (schema.Type == JsonSchemaType.Object || schema.AdditionalProperties != null) return true;
+            return false;
+        }
+
+        // Fallback fingerprinting for non-typed inline schemas (very conservative)
+        private static string GetSchemaFingerprint(IOpenApiSchema schema)
+        {
+            // build a simple fingerprint based on structure to increase reuse; keep cheap and deterministic
+            int hash = 17;
+            void Add(object? o)
+            {
+                unchecked { hash = hash * 23 + (o?.GetHashCode() ?? 0); }
+            }
+            Add(schema.Type);
+            Add(schema.Title);
+            Add(schema.Format);
+            if (schema.Properties != null)
+            {
+                foreach (var kvp in schema.Properties)
+                {
+                    Add(kvp.Key);
+                    Add(kvp.Value.Type);
+                    Add(kvp.Value.Format);
+                }
+            }
+            if (schema.Items != null)
+            {
+                Add(schema.Items.Type);
+                Add(schema.Items.Format);
+            }
+            return hash.ToString("X");
+        }
+    }
+}
