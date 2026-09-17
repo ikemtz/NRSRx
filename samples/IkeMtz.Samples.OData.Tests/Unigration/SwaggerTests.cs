@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.Core.Unigration.Swagger;
+using IkeMtz.NRSRx.Core.Unigration.OpenApi;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,7 +16,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetSwaggerIndexPageTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
-      var html = await SwaggerUnitTests.TestHtmlPageAsync(srv);
+      var html = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(html);
     }
 
@@ -25,9 +25,9 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetSwaggerJsonTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
-      var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv);
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(School)));
-      Assert.IsTrue(doc.Components.Schemas.Any(a => a.Key.Contains("ODataEnvelopeOfSchoolAndGuid")));
+      Assert.Contains(a => a.Key.Contains("ODataEnvelopeOfSchoolAndGuid"), doc.Components.Schemas);
       Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
     }
   }

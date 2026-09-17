@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.Core.Unigration.Swagger;
+using IkeMtz.NRSRx.Core.Unigration.OpenApi;
 using IkeMtz.Samples.OData;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -24,9 +24,9 @@ namespace IkeMtz.NRSRx.OData.Tests
         .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
           configurationBuilder.AddInMemoryCollection(myConfiguration)
         ));
-      var htmlPage = await SwaggerUnitTests.TestHtmlPageAsync(srv);
+      var htmlPage = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
-      var jsonDoc = await SwaggerUnitTests.TestJsonDocAsync(srv);
+      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv);
       Assert.IsNotNull(jsonDoc);
     }
   }

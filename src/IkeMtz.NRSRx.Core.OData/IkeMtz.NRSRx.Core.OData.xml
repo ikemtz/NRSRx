@@ -77,6 +77,12 @@
             </summary>
             <param name="services">The service collection.</param>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.SetupOpenApi(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up OpenAPI (Swagger) services including HttpClient and OpenAPI generation.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             Configures the HTTP request pipeline.

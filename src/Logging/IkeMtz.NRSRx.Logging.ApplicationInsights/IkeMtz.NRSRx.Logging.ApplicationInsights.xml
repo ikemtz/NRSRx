@@ -27,6 +27,7 @@
             </summary>
             <param name="startup"></param>
             <param name="services"></param>
+            <param name="options"></param>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.StartupExtensions.SetupDevelopmentApplicationInsights(IkeMtz.NRSRx.Core.Web.CoreWebStartup,Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>

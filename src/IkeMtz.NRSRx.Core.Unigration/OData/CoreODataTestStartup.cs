@@ -110,15 +110,5 @@ namespace IkeMtz.NRSRx.Core.Unigration
       _ = options.Filters.Add<TestContextResponseLoggerAttribute>(int.MaxValue);
       base.SetupMvcOptions(services, options);
     }
-
-    /// <summary>
-    /// Sets up Swagger generation options.
-    /// </summary>
-    /// <param name="options">The Swagger generation options.</param>
-    /// <param name="xmlPath">The XML path for comments.</param>
-    //public override void SetupSwaggerGen(SwaggerGenOptions options, string? xmlPath = null)
-    //{
-    //  base.SetupSwaggerGen(options, StartupAssembly.GetXmlCommentsFile());
-    //}
   }
 }

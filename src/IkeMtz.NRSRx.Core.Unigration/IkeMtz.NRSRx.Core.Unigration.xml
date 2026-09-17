@@ -824,6 +824,28 @@
             <param name="appSettings">The application settings.</param>
             <returns>The OpenID configuration.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests">
+            <summary>
+            Provides utility methods for testing OpenAPI documentation in unit tests.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer)">
+            <summary>
+            Validates and returns the OpenAPI page HTML.
+            </summary>
+            <param name="testServer">The test server instance.</param>
+            <returns>The HTML content of the OpenAPI page.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
+            <summary>
+            Validates and returns the OpenApiDocument in JSON format.
+            </summary>
+            <param name="testServer">The test server instance.</param>
+            <param name="version">The version of the OpenAPI document.</param>
+            <returns>The OpenApiDocument object.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1">
             <summary>
             Abstract base class for setting up a SignalR unigration test startup.
@@ -898,28 +920,6 @@
             </summary>
             <param name="expected">The expected text.</param>
             <param name="actual">The actual text.</param>
-        </member>
-        <member name="T:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests">
-            <summary>
-            Provides utility methods for testing Swagger documentation in unit tests.
-            </summary>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer)">
-            <summary>
-            Validates and returns the Swagger page HTML.
-            </summary>
-            <param name="testServer">The test server instance.</param>
-            <returns>The HTML content of the Swagger page.</returns>
-            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
-            <summary>
-            Validates and returns the OpenApiDocument in JSON format.
-            </summary>
-            <param name="testServer">The test server instance.</param>
-            <param name="version">The version of the Swagger document.</param>
-            <returns>The OpenApiDocument object.</returns>
-            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.TestCategories">
             <summary>

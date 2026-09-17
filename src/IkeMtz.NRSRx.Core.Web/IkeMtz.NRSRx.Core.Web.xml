@@ -297,6 +297,41 @@
             Gets the predefined OpenId scope.
             </summary>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.OpenApi.DocumentMetaDataTransformer">
+            <summary>
+            Transformer to set the OpenApiDocument title to the provided DocumentTitle
+            </summary>
+            <param name="DocumentTitle"></param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.DocumentMetaDataTransformer.#ctor(System.String)">
+            <summary>
+            Transformer to set the OpenApiDocument title to the provided DocumentTitle
+            </summary>
+            <param name="DocumentTitle"></param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.DocumentMetaDataTransformer.TransformAsync(Microsoft.OpenApi.OpenApiDocument,Microsoft.AspNetCore.OpenApi.OpenApiDocumentTransformerContext,System.Threading.CancellationToken)">
+            <summary>
+            Transforms the OpenApiDocument by setting its title to the provided DocumentTitle.
+            </summary>
+            <param name="document"></param>
+            <param name="context"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.OpenApi.EnumSchemaTransformer">
+            <summary>
+            Transformer to transform enum schemas in the OpenApiDocument to include both the enum name and its integer value in the schema's Enum property.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.EnumSchemaTransformer.TransformAsync(Microsoft.OpenApi.OpenApiSchema,Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,System.Threading.CancellationToken)">
+            <summary>
+            Transforms the OpenApiSchema by including both the enum name and its integer value in the schema's Enum property.
+            </summary>
+            <param name="schema"></param>
+            <param name="context"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration">
             <summary>
             Represents the OpenID configuration with endpoints for authorization and token.

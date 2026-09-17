@@ -14,6 +14,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="services"></param>
+    /// <param name="options"></param>
     public static void SetupApplicationInsights(this CoreWebStartup startup, IServiceCollection? services, ApplicationInsightsServiceOptions? options = null)
     {
       var appInsightsConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString");

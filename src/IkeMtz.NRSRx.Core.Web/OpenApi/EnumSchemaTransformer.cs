@@ -8,8 +8,18 @@ using Microsoft.OpenApi;
 
 namespace IkeMtz.NRSRx.Core.Web.OpenApi
 {
+  /// <summary>
+  /// Transformer to transform enum schemas in the OpenApiDocument to include both the enum name and its integer value in the schema's Enum property.
+  /// </summary>
   public class EnumSchemaTransformer : IOpenApiSchemaTransformer
   {
+    /// <summary>
+    /// Transforms the OpenApiSchema by including both the enum name and its integer value in the schema's Enum property.
+    /// </summary>
+    /// <param name="schema"></param>
+    /// <param name="context"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context, CancellationToken cancellationToken)
     {
       if (context?.JsonPropertyInfo?.PropertyType.IsEnum == true)

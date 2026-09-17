@@ -53,6 +53,10 @@ namespace IkeMtz.NRSRx.Core.OData
       var healthCheckBuilder = services.AddHealthChecks();
       SetupHealthChecks(services, healthCheckBuilder);
     }
+    /// <summary>
+    /// Sets up OpenAPI (Swagger) services including HttpClient and OpenAPI generation.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     public virtual void SetupOpenApi(IServiceCollection services)
     {
       _ = services

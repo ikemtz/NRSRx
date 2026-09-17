@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.Core.Unigration.Swagger;
+using IkeMtz.NRSRx.Core.Unigration.OpenApi;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task TestJsonDocAsync()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv);
       Assert.IsNotNull(doc);
     }
 
@@ -24,7 +24,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task TestHtmlPageAsync()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var html = await SwaggerUnitTests.TestHtmlPageAsync(srv);
+      var html = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(html);
     }
 
