@@ -77,6 +77,12 @@
             </summary>
             <param name="services">The service collection.</param>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.SetupOpenApi(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Sets up OpenAPI (Swagger) services including HttpClient and OpenAPI generation.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             Configures the HTTP request pipeline.
@@ -157,7 +163,7 @@
             The list of schema types to be filtered out.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonDocumentFilter.Apply(Microsoft.OpenApi.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
             <summary>
             Applies the filter to the specified Swagger document.
             </summary>
@@ -169,14 +175,14 @@
             Adds common OData query parameters to Swagger documentation for GET operations.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.Apply(Microsoft.OpenApi.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
             <summary>
             Applies the filter to the specified operation.
             </summary>
             <param name="operation">The operation to apply the filter to.</param>
             <param name="context">The context for the filter.</param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.AddParameter(Microsoft.OpenApi.Models.OpenApiOperation,System.String,System.String,System.String)">
+        <member name="M:IkeMtz.NRSRx.Core.OData.ODataCommonOperationFilter.AddParameter(Microsoft.OpenApi.OpenApiOperation,System.String,Microsoft.OpenApi.JsonSchemaType,System.String)">
             <summary>
             Adds a parameter to the specified operation if it does not already exist.
             </summary>
@@ -184,6 +190,50 @@
             <param name="name">The name of the parameter.</param>
             <param name="type">The type of the parameter.</param>
             <param name="description">The description of the parameter.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
+            <summary>
+            Generates a documentation comment ID for a type.
+            Example: T:Namespace.Outer+Inner`1 becomes T:Namespace.Outer.Inner`1
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.PropertyInfo)">
+            <summary>
+            Generates a documentation comment ID for a property.
+            Example: P:Namespace.ContainingType.PropertyName or for an indexer P:Namespace.ContainingType.Item(System.Int32)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type,System.String)">
+            <summary>
+            Generates a documentation comment ID for a property given its container type and property name.
+            Example: P:Namespace.ContainingType.PropertyName
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.MethodInfo)">
+            <summary>
+            Generates a documentation comment ID for a method (or constructor).
+            For example:
+              M:Namespace.ContainingType.MethodName(ParamType1,ParamType2)~ReturnType
+              M:Namespace.ContainingType.#ctor(ParamType)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.GetTypeDocId(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Generates a documentation ID string for a type.
+            This method handles nested types (replacing '+' with '.'),
+            generic types, arrays, pointers, by-ref types, and generic parameters.
+            The <paramref name="includeGenericArguments"/> flag controls whether
+            constructed generic type arguments are emitted, while <paramref name="omitGenericArity"/>
+            controls whether the generic arity marker (e.g. "`1") is appended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.NormalizeDocId(System.String)">
+            <summary>
+            Normalizes a documentation comment ID to match the compiler-style format.
+            Strips the return type suffix for ordinary methods but retains it for conversion operators.
+            </summary>
+            <param name="docId">The documentation comment ID to normalize.</param>
+            <returns>The normalized documentation comment ID.</returns>
         </member>
     </members>
 </doc>

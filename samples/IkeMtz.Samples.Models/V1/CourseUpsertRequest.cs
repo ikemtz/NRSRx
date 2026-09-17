@@ -22,7 +22,7 @@ namespace IkeMtz.Samples.Models.V1
     public string Title { get; set; }
     [MaxLength(500)]
     public string? Description { get; set; }
-    [DefaultValue(0)]
+    [DefaultValue(0.00)]
     public double? PassRate { get; set; }
   }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
@@ -13,41 +14,51 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  [ApiVersion("1.0")]
+  [Route($"odata/v1/Schools")]
+  [ApiVersion(VersionDefinitions.v1_0)]
+  [ApiController]
   [Authorize]
   [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 6000)]
-  public class SchoolsController : ODataController
+  public class SchoolsController(DatabaseContext databaseContext) : ODataController
   {
-    private readonly DatabaseContext _databaseContext;
-
-    public SchoolsController(DatabaseContext databaseContext)
-    {
-      _databaseContext = databaseContext;
-    }
-
     [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet]
     public IQueryable<School> Get()
     {
-      return _databaseContext.Schools
+      return databaseContext.Schools
         .AsNoTracking();
     }
 
     [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
-    [HttpGet("odata/v1/schools/nolimit")]
+    [HttpGet("nolimit")]
     public IQueryable<School> NoLimit()
     {
-      return _databaseContext.Schools
+      return databaseContext.Schools
         .AsNoTracking();
     }
 
-    [HttpDelete]
-    public ActionResult Delete([FromODataUri] Guid key)
+    [HttpDelete()]
+    [ProducesResponseType(Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), Status404NotFound)]
+    public async Task<ActionResult> Delete([FromODataUri] Guid key)
     {
-      return key != Guid.Empty ? Ok() : NotFound();
+      if (Guid.Empty == key)
+      {
+        return BadRequest(new ProblemDetails { Title = "Invalid id was provided" });
+      }
+      var school = await databaseContext.Schools.FirstOrDefaultAsync(t => t.Id == key);
+      if (school == null)
+      {
+        return NotFound(new ProblemDetails { Title = "No School found with the provided id" });
+      }
+      databaseContext.Schools.Remove(school);
+      var result = await databaseContext.SaveChangesAsync();
+      return result == 1 ? Ok() : StatusCode(Status500InternalServerError,
+        new ProblemDetails { Title = "An error occurred while deleting the school" });
     }
   }
 }

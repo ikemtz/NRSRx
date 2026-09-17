@@ -1,11 +1,10 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Data;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -64,7 +63,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       //Validate OData Result
       TestContext.WriteLine($"Server Response: {resp}");
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
-      StringAssert.Contains(resp, "schoolCourses@odata.count\":1");
+      Assert.Contains("schoolCourses@odata.count\":1", resp);
       Assert.AreEqual(dbSchool.Name, envelope?.Value.First().Name);
     }
 
@@ -72,11 +71,20 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task DeleteSchoolTest()
     {
-      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
+      var dbSchool = Factories.SchoolFactory();
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>()
+          .ConfigureTestServices(x =>
+          {
+            ExecuteOnContext<DatabaseContext>(x, db =>
+            {
+              _ = db.Schools.Add(dbSchool);
+            });
+          })
+       );
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s/{Guid.NewGuid()}");
+      var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s/{dbSchool.Id}");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
       TestContext.WriteLine($"Server Response: {content}");

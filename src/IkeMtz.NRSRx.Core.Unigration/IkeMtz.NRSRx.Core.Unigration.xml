@@ -486,6 +486,51 @@
             <param name="userName">The name of the user who queued the messages. Default is "NRSRx Test User".</param>
             <returns>A collection of split messages.</returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.IHostBuilderExtensions">
+            <summary>
+            Provides extension methods for <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> used when constructing
+            test hosts for integration or unigration tests.
+            </summary>
+            <remarks>
+            These helpers forward configuration to the underlying web host builder and
+            enable configuring test-specific services via <see cref="T:Microsoft.AspNetCore.TestHost.TestServer"/> helpers.
+            </remarks>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.IHostBuilderExtensions.ConfigureTestServices(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            Configures test services for the web host built by the provided <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.
+            </summary>
+            <param name="hostBuilder">
+            The host builder to configure. This is the instance that will be used to build the host.
+            </param>
+            <param name="servicesConfiguration">
+            A delegate that receives an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> and configures services
+            for testing. This is forwarded to the web host's <c>ConfigureTestServices</c> method.
+            </param>
+            <returns>
+            The same <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> instance so that additional configuration can be chained.
+            </returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.IHostBuilderExtensions.ConfigureServices(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            Configures services for the web host built by the provided <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.
+            </summary>
+            <param name="hostBuilder">
+            The host builder to configure. This is the instance that will be used to build the host.
+            </param>
+            <param name="servicesConfiguration">
+            A delegate that receives an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> used to register services
+            for the application. This configuration is forwarded to the web host's <c>ConfigureServices</c> method.
+            </param>
+            <returns>
+            The same <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> instance so that additional configuration can be chained.
+            </returns>
+            <remarks>
+            This method is a convenience that forwards the provided <paramref name="servicesConfiguration"/>
+            to the underlying web host builder. It enables configuring services at the host-builder
+            level when creating test hosts.
+            </remarks>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.Fakes.FakeHttpMessageHandler">
             <summary>
             A fake HTTP message handler for testing purposes.
@@ -745,13 +790,6 @@
             <param name="services">The service collection.</param>
             <param name="options">The MVC options.</param>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.SetupSwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions,System.String)">
-            <summary>
-            Sets up Swagger generation options.
-            </summary>
-            <param name="options">The Swagger generation options.</param>
-            <param name="xmlPath">The XML path for comments.</param>
-        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreODataUnigrationTestStartup`1">
             <summary>
             Abstract base class for setting up an OData unigration test startup.
@@ -785,6 +823,28 @@
             <param name="clientFactory">The HTTP client factory.</param>
             <param name="appSettings">The application settings.</param>
             <returns>The OpenID configuration.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests">
+            <summary>
+            Provides utility methods for testing OpenAPI documentation in unit tests.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer)">
+            <summary>
+            Validates and returns the OpenAPI page HTML.
+            </summary>
+            <param name="testServer">The test server instance.</param>
+            <returns>The HTML content of the OpenAPI page.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
+            <summary>
+            Validates and returns the OpenApiDocument in JSON format.
+            </summary>
+            <param name="testServer">The test server instance.</param>
+            <param name="version">The version of the OpenAPI document.</param>
+            <returns>The OpenApiDocument object.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.SignalR.CoreSignalrUnigrationTestStartup`1">
             <summary>
@@ -860,46 +920,6 @@
             </summary>
             <param name="expected">The expected text.</param>
             <param name="actual">The actual text.</param>
-        </member>
-        <member name="T:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests">
-            <summary>
-            Provides utility methods for testing Swagger documentation in unit tests.
-            </summary>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer)">
-            <summary>
-            Validates and returns the Swagger page HTML.
-            </summary>
-            <param name="testServer">The test server instance.</param>
-            <returns>The HTML content of the Swagger page.</returns>
-            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
-            <summary>
-            Validates and returns the OpenApiDocument in JSON format.
-            </summary>
-            <param name="testServer">The test server instance.</param>
-            <param name="version">The version of the Swagger document.</param>
-            <returns>The OpenApiDocument object.</returns>
-            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.TestReverseProxyJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.String,System.Int32)">
-            <summary>
-            Validates the support for reverse proxy in the OpenApiDocument in JSON format.
-            </summary>
-            <param name="testServer">The test server instance.</param>
-            <param name="swaggerReverseProxyDocumentFilter">The reverse proxy document filter.</param>
-            <param name="version">The version of the Swagger document.</param>
-            <returns>The OpenApiDocument object.</returns>
-            <exception cref="T:System.InvalidProgramException">Thrown when the reverse proxy document filter is empty.</exception>
-            <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.Swagger.SwaggerUnitTests.FixSwaggerDocument(System.String)">
-            <summary>
-            Fixes known issues in the Swagger document JSON string.
-            </summary>
-            <param name="result">The Swagger document JSON string.</param>
-            <returns>The fixed Swagger document JSON string.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.TestCategories">
             <summary>
@@ -1356,13 +1376,6 @@
             <param name="appSettings">The application settings.</param>
             <returns>The OpenID configuration.</returns>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.SetupSwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions,System.String)">
-            <summary>
-            Sets up Swagger generation options.
-            </summary>
-            <param name="options">The Swagger generation options.</param>
-            <param name="xmlPath">The XML path for comments.</param>
-        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.CoreWebApiUnigrationTestStartup`1">
             <summary>
             Provides a base class for setting up a unigration test startup for Web API projects.
@@ -1380,6 +1393,50 @@
             Sets up authentication for unigration tests.
             </summary>
             <param name="builder">The authentication builder.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
+            <summary>
+            Generates a documentation comment ID for a type.
+            Example: T:Namespace.Outer+Inner`1 becomes T:Namespace.Outer.Inner`1
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.PropertyInfo)">
+            <summary>
+            Generates a documentation comment ID for a property.
+            Example: P:Namespace.ContainingType.PropertyName or for an indexer P:Namespace.ContainingType.Item(System.Int32)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type,System.String)">
+            <summary>
+            Generates a documentation comment ID for a property given its container type and property name.
+            Example: P:Namespace.ContainingType.PropertyName
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.MethodInfo)">
+            <summary>
+            Generates a documentation comment ID for a method (or constructor).
+            For example:
+              M:Namespace.ContainingType.MethodName(ParamType1,ParamType2)~ReturnType
+              M:Namespace.ContainingType.#ctor(ParamType)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.GetTypeDocId(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Generates a documentation ID string for a type.
+            This method handles nested types (replacing '+' with '.'),
+            generic types, arrays, pointers, by-ref types, and generic parameters.
+            The <paramref name="includeGenericArguments"/> flag controls whether
+            constructed generic type arguments are emitted, while <paramref name="omitGenericArity"/>
+            controls whether the generic arity marker (e.g. "`1") is appended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.NormalizeDocId(System.String)">
+            <summary>
+            Normalizes a documentation comment ID to match the compiler-style format.
+            Strips the return type suffix for ordinary methods but retains it for conversion operators.
+            </summary>
+            <param name="docId">The documentation comment ID to normalize.</param>
+            <returns>The normalized documentation comment ID.</returns>
         </member>
     </members>
 </doc>

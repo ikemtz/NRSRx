@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Models;
-using IkeMtz.NRSRx.Core.Web;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.Authorization;
@@ -14,42 +14,51 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  [ApiVersion("1.0")]
+  [Route($"odata/v1/Students")]
+  [ApiVersion(VersionDefinitions.v1_0)]
+  [ApiController]
   [Authorize]
   [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 6000)]
-  public class StudentsController : ODataController
+  public class StudentsController(DatabaseContext databaseContext) : ODataController
   {
-    private readonly DatabaseContext _databaseContext;
-
-    public StudentsController(DatabaseContext databaseContext)
-    {
-      _databaseContext = databaseContext;
-    }
-
     [ProducesResponseType(typeof(ODataEnvelope<Student, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet]
     public IQueryable<Student> Get()
     {
-      return _databaseContext.Students
+      return databaseContext.Students
         .AsNoTracking();
     }
 
     [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
-    [HttpGet("odata/v1/students/nolimit")]
+    [HttpGet("nolimit")]
     public IQueryable<Student> NoLimit()
     {
-      return _databaseContext.Students
+      return databaseContext.Students
         .AsNoTracking();
     }
 
     [HttpDelete]
-    [ValidateModel]
-    public ActionResult Delete([FromODataUri] Guid key)
+    [ProducesResponseType(Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), Status404NotFound)]
+    public async Task<ActionResult> Delete([FromODataUri] Guid key)
     {
-      return key != Guid.Empty ? Ok() : NotFound();
+      if (Guid.Empty == key)
+      {
+        return BadRequest(new ProblemDetails { Title = "Invalid id was provided" });
+      }
+      var student = await databaseContext.Students.FirstOrDefaultAsync(t => t.Id == key);
+      if (student == null)
+      {
+        return NotFound(new ProblemDetails { Title = "No Student found with the provided id" });
+      }
+      databaseContext.Students.Remove(student);
+      var result = await databaseContext.SaveChangesAsync();
+      return result == 1 ? Ok() : StatusCode(Status500InternalServerError,
+        new ProblemDetails { Title = "An error occurred while deleting the student" });
     }
   }
 }

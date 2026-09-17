@@ -12,24 +12,19 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  [ApiVersion("1.0")]
+  [Route($"odata/v1/Courses")]
+  [ApiVersion(VersionDefinitions.v1_0)]
+  [ApiController]
   [Authorize]
   [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 6000)]
-  public class CoursesController : ODataController
+  public class CoursesController(DatabaseContext databaseContext) : ODataController
   {
-    private readonly DatabaseContext _databaseContext;
-
-    public CoursesController(DatabaseContext databaseContext)
-    {
-      _databaseContext = databaseContext;
-    }
-
     [ProducesResponseType(typeof(ODataEnvelope<Course, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 100, AllowedQueryOptions = AllowedQueryOptions.All)]
-    [HttpGet]
+    [HttpGet()]
     public IQueryable<Course> Get()
     {
-      return _databaseContext.Courses
+      return databaseContext.Courses
         .AsNoTracking();
     }
   }

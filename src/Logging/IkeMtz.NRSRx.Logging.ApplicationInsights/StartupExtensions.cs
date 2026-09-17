@@ -14,16 +14,23 @@ namespace IkeMtz.NRSRx.Core.Web
     /// </summary>
     /// <param name="startup"></param>
     /// <param name="services"></param>
-    public static void SetupApplicationInsights(this CoreWebStartup startup, IServiceCollection? services)
+    /// <param name="options"></param>
+    public static void SetupApplicationInsights(this CoreWebStartup startup, IServiceCollection? services, ApplicationInsightsServiceOptions? options = null)
     {
-      _ = services?
+      var appInsightsConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString");
+      if (!string.IsNullOrWhiteSpace(appInsightsConnectionString))
+      {
+        _ = services?
           .AddApplicationInsightsTelemetry(
-            new ApplicationInsightsServiceOptions()
-            {
-              ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
-              ApplicationVersion = startup.GetBuildNumber(),
-              EnableDiagnosticsTelemetryModule = true,
-            });
+           options ?? new ApplicationInsightsServiceOptions()
+           {
+             ConnectionString = appInsightsConnectionString,
+             ApplicationVersion = startup.GetBuildNumber(),
+             EnableDependencyTrackingTelemetryModule = true,
+             EnableRequestTrackingTelemetryModule = true,
+             EnablePerformanceCounterCollectionModule = true,
+           });
+      }
     }
 
     /// <summary>
@@ -33,16 +40,16 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="services"></param>
     public static void SetupDevelopmentApplicationInsights(this CoreWebStartup startup, IServiceCollection? services)
     {
-      _ = services?
-          .AddApplicationInsightsTelemetry(
-            new ApplicationInsightsServiceOptions()
-            {
-              ConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString"),
-              ApplicationVersion = startup.GetBuildNumber(),
-              EnableDiagnosticsTelemetryModule = true,
-              DeveloperMode = true,
-              EnableDebugLogger = true,
-            });
+      var appInsightsConnectionString = startup.Configuration.GetValue<string>("InstrumentationConnectionString");
+
+      SetupApplicationInsights(startup, services, new ApplicationInsightsServiceOptions
+      {
+        ConnectionString = appInsightsConnectionString,
+        ApplicationVersion = startup.GetBuildNumber(),
+        //EnableDependencyTrackingTelemetryModule = true,
+        //EnablePerformanceCounterCollectionModule = true,
+        //EnableRequestTrackingTelemetryModule = true,
+      });
     }
   }
 }

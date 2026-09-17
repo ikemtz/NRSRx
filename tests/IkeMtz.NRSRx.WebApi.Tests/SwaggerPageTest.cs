@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.Core.Unigration.Swagger;
-using IkeMtz.NRSRx.Core.Web.Swagger;
+using IkeMtz.NRSRx.Core.Unigration.OpenApi;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -19,16 +18,15 @@ namespace IkeMtz.NRSRx.WebApi.Tests
     {
       var myConfiguration = new Dictionary<string, string?>
       {
-        {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
+        //{ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
       };
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>()
         .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
           configurationBuilder.AddInMemoryCollection(myConfiguration)
         ));
-      var htmlPage = await SwaggerUnitTests.TestHtmlPageAsync(srv);
+      var htmlPage = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
-      var jsonDoc = await SwaggerUnitTests.TestJsonDocAsync(srv);
-      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv, "/my-api/");
+      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv);
       Assert.IsNotNull(jsonDoc);
     }
   }

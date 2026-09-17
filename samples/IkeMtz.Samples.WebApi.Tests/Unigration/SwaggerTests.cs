@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
-using IkeMtz.NRSRx.Core.Unigration.Swagger;
-using IkeMtz.NRSRx.Core.Web.Swagger;
+using IkeMtz.NRSRx.Core.Unigration.OpenApi;
 using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.Samples.WebApi.Tests.Unigration
@@ -18,7 +15,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     public async Task GetSwaggerIndexPageTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>());
-      var html = await SwaggerUnitTests.TestHtmlPageAsync(srv);
+      var html = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(html);
     }
 
@@ -26,16 +23,8 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerJsonTest()
     {
-      var myConfiguration = new Dictionary<string, string?>
-      {
-        {ReverseProxyDocumentFilter.SwaggerReverseProxyBasePath, "/my-api"},
-      };
-      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>()
-        .ConfigureAppConfiguration((builderContext, configurationBuilder) =>
-          configurationBuilder.AddInMemoryCollection(myConfiguration)
-        ));
-      var doc = await SwaggerUnitTests.TestJsonDocAsync(srv);
-      _ = await SwaggerUnitTests.TestReverseProxyJsonDocAsync(srv, "/my-api");
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>());
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv);
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
     }

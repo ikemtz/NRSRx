@@ -16,23 +16,15 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
-  public class StudentsController : ControllerBase
+  public class StudentsController(DatabaseContext databaseContext, ILogger<StudentsController> logger) : ControllerBase
   {
-    private readonly DatabaseContext _databaseContext;
-    private readonly ILogger<StudentsController> logger;
-
-    public StudentsController(DatabaseContext databaseContext, ILogger<StudentsController> logger)
-    {
-      _databaseContext = databaseContext;
-      this.logger = logger;
-    }
 
     // Get api/Students
     [HttpGet]
     [ProducesResponseType(Status200OK, Type = typeof(Student))]
     public async Task<ActionResult> Get([FromQuery] Guid id)
     {
-      var obj = await _databaseContext.Students
+      var obj = await databaseContext.Students
         .AsNoTracking()
         .FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
@@ -47,8 +39,8 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     {
       var value = SimpleMapper<StudentUpsertRequest, Student>.Instance.Convert(request);
       value.Id = request.Id;
-      var dbContextObject = _databaseContext.Students.Add(value);
-      _ = await _databaseContext.SaveChangesAsync(logger)
+      var dbContextObject = databaseContext.Students.Add(value);
+      _ = await databaseContext.SaveChangesAsync(logger)
           .ConfigureAwait(false);
       return Ok(dbContextObject.Entity);
     }
@@ -60,10 +52,10 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     [ValidateMatchingId]
     public async Task<ActionResult> Put([FromQuery] Guid id, [FromBody] StudentUpsertRequest request)
     {
-      var obj = await _databaseContext.Students.FirstOrDefaultAsync(t => t.Id == id)
+      var obj = await databaseContext.Students.FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
       SimpleMapper<StudentUpsertRequest, Student>.Instance.ApplyChanges(request, obj);
-      _ = await _databaseContext.SaveChangesAsync(logger)
+      _ = await databaseContext.SaveChangesAsync(logger)
           .ConfigureAwait(false);
       return Ok(obj);
     }
@@ -73,12 +65,12 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
     [ProducesResponseType(Status200OK, Type = typeof(Student))]
     public async Task<ActionResult> Delete([FromQuery] Guid id)
     {
-      var obj = await _databaseContext.Students.FirstOrDefaultAsync(t => t.Id == id)
+      var obj = await databaseContext.Students.FirstOrDefaultAsync(t => t.Id == id)
         .ConfigureAwait(false);
       if (obj != null)
       {
-        _ = _databaseContext.Remove(obj);
-        _ = await _databaseContext.SaveChangesAsync(logger)
+        _ = databaseContext.Remove(obj);
+        _ = await databaseContext.SaveChangesAsync(logger)
             .ConfigureAwait(false);
         return Ok(obj);
       }
