@@ -109,6 +109,17 @@
             </summary>
             <param name="services">The service collection.</param>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.IODataVersionProvider">
+            <summary>
+            Defines a contract for providing OData version descriptions.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.IODataVersionProvider.GetODataVersions">
+            <summary>
+            Gets the collection of OData version descriptions.
+            </summary>
+            <returns>A collection of <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription"/> objects.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.OData.NrsrxODataSerializer">
             <summary>
             Provides a custom OData resource serializer that omits default values for date and numeric types.

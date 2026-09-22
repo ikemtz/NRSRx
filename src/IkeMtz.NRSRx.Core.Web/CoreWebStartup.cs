@@ -228,7 +228,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="options">The Swagger generation options.</param>
     public virtual void SetupOpenApiDocGeneration(OpenApiOptions options)
     {
-      options.AddDocumentTransformer(new DocumentMetaDataTransformer(ServiceTitle));
+      options.AddDocumentTransformer(new DocumentMetaDataTransformer(this));
       options.AddSchemaTransformer(new EnumSchemaTransformer());
       //options.ShouldInclude(new Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription { })
       //// add a custom operation filter which sets default values
