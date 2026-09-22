@@ -837,7 +837,7 @@
             <returns>The HTML content of the OpenAPI page.</returns>
             <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Int32)">
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,IkeMtz.NRSRx.Core.Web.CoreWebStartup,System.Int32)">
             <summary>
             Validates and returns the OpenApiDocument in JSON format.
             </summary>

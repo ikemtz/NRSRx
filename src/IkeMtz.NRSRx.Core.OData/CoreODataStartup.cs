@@ -164,14 +164,6 @@ namespace IkeMtz.NRSRx.Core.OData
       _ = services
         .AddHttpClient()
         .AddSingleton<IODataVersionProvider>((x) => this.ODataModelProvider)
-
-        //.AddTransient<IConfigureOptions<SwaggerGenOptions>>(serviceProvider => new ConfigureSwaggerOptions(serviceProvider, Configuration, this))
-        //.AddSwaggerGen(swaggerGenOptions =>
-        //{
-        //  swaggerGenOptions.OperationFilter<ODataCommonOperationFilter>();
-        //  swaggerGenOptions.DocumentFilter<ODataCommonDocumentFilter>();
-        //  SetupSwaggerGen(swaggerGenOptions);
-        //}
         ;
     }
   }

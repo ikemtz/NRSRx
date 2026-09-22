@@ -300,14 +300,12 @@
         <member name="T:IkeMtz.NRSRx.Core.Web.OpenApi.DocumentMetaDataTransformer">
             <summary>
             Transformer to set the OpenApiDocument title to the provided DocumentTitle
-            </summary>
-            <param name="DocumentTitle"></param>
+            </summary> 
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.DocumentMetaDataTransformer.#ctor(System.String)">
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.DocumentMetaDataTransformer.#ctor(IkeMtz.NRSRx.Core.Web.CoreWebStartup)">
             <summary>
             Transformer to set the OpenApiDocument title to the provided DocumentTitle
-            </summary>
-            <param name="DocumentTitle"></param>
+            </summary> 
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.DocumentMetaDataTransformer.TransformAsync(Microsoft.OpenApi.OpenApiDocument,Microsoft.AspNetCore.OpenApi.OpenApiDocumentTransformerContext,System.Threading.CancellationToken)">
             <summary>
@@ -405,17 +403,6 @@
             </summary>
             <param name="builder">The configuration builder.</param>
             <returns>The configured configuration.</returns>
-        </member>
-        <member name="T:IkeMtz.NRSRx.Core.OData.IODataVersionProvider">
-            <summary>
-            Defines a contract for providing OData version descriptions.
-            </summary>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.OData.IODataVersionProvider.GetODataVersions">
-            <summary>
-            Gets the collection of OData version descriptions.
-            </summary>
-            <returns>A collection of <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription"/> objects.</returns>
         </member>
         <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
             <summary>

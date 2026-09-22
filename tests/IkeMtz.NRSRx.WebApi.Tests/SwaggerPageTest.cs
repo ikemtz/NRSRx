@@ -26,7 +26,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
         ));
       var htmlPage = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
-      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv);
+      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.IsNotNull(jsonDoc);
     }
   }

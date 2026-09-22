@@ -32,12 +32,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
     {
       SetupAppSettings(services);
       SetupLogging(services);
-      SetupOpenApi(services);
       SetupDatabase(services, Configuration.GetValue<string>("DbConnectionString"));
       var healthCheckBuilder = services.AddHealthChecks();
       SetupHealthChecks(services, healthCheckBuilder);
       SetupPublishers(services);
       SetupAuthentication(SetupJwtAuthSchema(services));
+      SetupOpenApi(services);
       SetupMiscDependencies(services);
       var mvcBuilder = SetupCoreEndpointFunctionality(services);
       if (StartupAssembly != null)
@@ -91,14 +91,11 @@ namespace IkeMtz.NRSRx.Core.WebApi
     /// <param name="provider">The API version description provider.</param>
     public virtual void SetupSwaggerUI(SwaggerUIOptions options, IApiVersionDescriptionProvider provider)
     {
-      var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger/" : "./";
       foreach (var groupName in provider.ApiVersionDescriptions
         .Select(s => s.GroupName))
       {
-        options.SwaggerEndpoint($"{swaggerJsonRoutePrefix}{groupName}/swagger.json", groupName.ToUpperInvariant());
+        options.SwaggerEndpoint($"openapi/{groupName}.json", groupName.ToUpperInvariant());
       }
-
-
       SetupSwaggerCommonUi(options);
     }
 

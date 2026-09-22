@@ -35,10 +35,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.12" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.12" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.12" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.22.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.23.0" />
     <PackageReference Include="MSTest.TestFramework" Version="4.4.1" />
     <PackageReference Include="Serilog.Sinks.Splunk" Version="5.2.0" />
-    <PackageReference Include="StackExchange.Redis" Version="3.2.1" />
+    <PackageReference Include="StackExchange.Redis" Version="3.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
   <ItemGroup>
