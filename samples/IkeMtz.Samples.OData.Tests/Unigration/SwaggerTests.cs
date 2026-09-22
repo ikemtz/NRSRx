@@ -25,7 +25,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetSwaggerJsonTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
-      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv);
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(School)));
       Assert.Contains(a => a.Key.Contains("ODataEnvelopeOfSchoolAndGuid"), doc.Components.Schemas);
       Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);

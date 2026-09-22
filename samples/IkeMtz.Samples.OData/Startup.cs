@@ -17,9 +17,9 @@ namespace IkeMtz.Samples.OData
     public override string ServiceTitle => $"{nameof(Samples)} OData Microservice";
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => true;
-    public override string[] AdditionalAssemblyXmlDocumentFiles => new[] {
+    public override string[] AdditionalAssemblyXmlDocumentFiles => [
       typeof(Course).Assembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase)
-    };
+    ];
 
     public override BaseODataModelProvider ODataModelProvider => new ODataModelProvider();
 

@@ -15,7 +15,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     public async Task TestJsonDocAsync()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv);
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new StartUp_AppInsights(null));
       Assert.IsNotNull(doc);
     }
 
