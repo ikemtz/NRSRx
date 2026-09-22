@@ -54,7 +54,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.OpenApi
 
       var readResult = OpenApiDocument.Parse(result);
       var doc = readResult.Document;
-      Assert.AreEqual($"{version}.0.0", doc.Info.Version);
+      Assert.AreEqual($"{version}.0.0.0", doc.Info.Version);
       return doc;
     }
   }
