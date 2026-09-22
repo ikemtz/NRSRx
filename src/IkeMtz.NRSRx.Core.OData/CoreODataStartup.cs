@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -94,7 +95,7 @@ namespace IkeMtz.NRSRx.Core.OData
         _ = endpoints.MapOpenApi();
       });
 
-      if (!DisableSwagger && Configuration?.GetValue<bool>("DisableSwagger", false) != true)
+      if (!DisableSwagger && Configuration?.GetValue("DisableSwagger", false) != true)
       {
         _ = app
             .UseSwaggerUI(options => SetupSwaggerUI(options));
@@ -107,7 +108,6 @@ namespace IkeMtz.NRSRx.Core.OData
     /// <param name="options">The Swagger UI options.</param>
     public virtual void SetupSwaggerUI(SwaggerUIOptions options)
     {
-      var swaggerJsonRoutePrefix = string.IsNullOrEmpty(SwaggerUiRoutePrefix) ? "./swagger/" : "./";
       foreach (var groupName in ODataModelProvider.GetODataVersions().Select(t => t.GroupName))
       {
         options.SwaggerEndpoint(
@@ -129,11 +129,13 @@ namespace IkeMtz.NRSRx.Core.OData
       _ = services.AddApiVersioning(options =>
       {
         options.AssumeDefaultVersionWhenUnspecified = true;
-        //options.ReportApiVersions = true;
-        //options.AssumeDefaultVersionWhenUnspecified = true;
-        //options.DefaultApiVersion = new ApiVersion(1, 0);
       });
       _ = services.AddControllers()
+          .AddJsonOptions(options =>
+          {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.WriteIndented = false;
+          })
           .AddOData(options =>
           {
             options.TimeZone = TimeZoneInfo.Utc;

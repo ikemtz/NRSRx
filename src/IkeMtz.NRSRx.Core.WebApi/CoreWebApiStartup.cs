@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.Json.Serialization;
 using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,7 +46,12 @@ namespace IkeMtz.NRSRx.Core.WebApi
         mvcBuilder.AddApplicationPart(StartupAssembly);
       }
       mvcBuilder.AddControllersAsServices();
-      _ = services.AddControllers();
+      _ = services.AddControllers()
+          .AddJsonOptions(options =>
+          {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.WriteIndented = false;
+          });
     }
 
     /// <summary>
