@@ -57,7 +57,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var body = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Response: {body}");
       Assert.DoesNotContain("updatedby", body.ToLower());
-      StringAssert.Contains(body, Student.FirstName);
+      Assert.Contains(Student.FirstName, body);
     }
 
     [TestMethod]
@@ -93,7 +93,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(resp);
       Assert.DoesNotContain("updatedby", resp.ToLower());
       Assert.AreEqual(1, envelope?.Value.First().StudentCourses.Count);
-      StringAssert.Contains(resp, student.FirstName);
+      Assert.Contains(student.FirstName, resp);
     }
 
     [TestMethod]

@@ -6,6 +6,7 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData;
+using IkeMtz.Samples.OData.Controllers.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -33,7 +34,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
+      var resp = await client.GetStringAsync($"odata/v1/{GetControllerRoute<CoursesController>()}", TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
@@ -57,7 +58,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s");
+      var resp = await client.GetStringAsync(GetFullRoute<CoursesController>(), TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
@@ -82,12 +83,12 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true");
-      var content = await resp.Content.ReadAsStringAsync();
+      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true", TestContext.CancellationToken);
+      var content = await resp.Content.ReadAsStringAsync(TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(content.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
-      StringAssert.Contains(content, item.Id.ToString());
-      StringAssert.Contains(content, item.Title);
+      Assert.Contains(item.Id.ToString(), content);
+      Assert.Contains(item.Title, content);
     }
 
     [TestMethod]
@@ -109,7 +110,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true&$expand={nameof(SchoolCourse)}s");
+      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true&$expand={nameof(SchoolCourse)}s", TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
@@ -126,8 +127,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$top=5000&$count=true");
-      var data = await resp.Content.ReadAsStringAsync();
+      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$top=5000&$count=true", TestContext.CancellationToken);
+      var data = await resp.Content.ReadAsStringAsync(TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {data}");
       Assert.Contains("The limit of '100'", data);
       Assert.Contains("The value from the incoming request is '5000'", data);

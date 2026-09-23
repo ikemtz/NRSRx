@@ -78,6 +78,34 @@
             <param name="source">The source object.</param>
             <returns>The deep copy of the object.</returns>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GetControllerRoute``1">
+            <summary>
+            Gets the controller route name for the specified controller type.
+            This strips the trailing "Controller" suffix from the type name when present.
+            </summary>
+            <typeparam name="T_CONTROLLER">The controller type.</typeparam>
+            <returns>The controller route name (type name without the "Controller" suffix when applicable).</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GetFullRoute``1">
+            <summary>
+            Builds the full route for the specified controller type including API version and
+            whether the controller is an OData controller or a normal Web API controller.
+            </summary>
+            <typeparam name="T_CONTROLLER">The controller type.</typeparam>
+            <returns>
+            A route string in the form of "odata/v{majorVersion}/{controllerName}" for OData controllers
+            or "api/v{majorVersion}/{controllerName}.json" for regular controllers.
+            </returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GetControllerRouteName(System.String)">
+            <summary>
+            Returns the route name for a controller type name by removing the standard
+            "Controller" suffix if it exists. If the name does not end with the suffix,
+            the original name is returned and a warning is written to the test context.
+            </summary>
+            <param name="controllerName">The controller type name.</param>
+            <returns>The controller route name without the "Controller" suffix when applicable.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.CharacterSets">
             <summary>
             Provides predefined sets of characters for various use cases.
