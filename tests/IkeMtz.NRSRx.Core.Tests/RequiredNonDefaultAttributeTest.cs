@@ -22,8 +22,8 @@ namespace IkeMtz.NRSRx.Core.Tests
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel());
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
-      StringAssert.Contains(s, "non-default");
-      StringAssert.Contains(s, "TestGuid");
+      Assert.Contains("non-default", s);
+      Assert.Contains("TestGuid", s);
     }
 
     [TestMethod]
@@ -35,8 +35,8 @@ namespace IkeMtz.NRSRx.Core.Tests
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", new TestModel { TestGuid = Guid.Empty });
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
-      StringAssert.Contains(s, "non-default");
-      StringAssert.Contains(s, "TestGuid");
+      Assert.Contains("non-default", s);
+      Assert.Contains("TestGuid", s);
     }
 
     [TestMethod]
@@ -81,7 +81,7 @@ namespace IkeMtz.NRSRx.Core.Tests
       var resp = await client.PostAsJsonAsync("api/v1/Test.json", payload);
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
       var s = await resp.Content.ReadAsStringAsync();
-      StringAssert.Contains(s, "The strings field requires a non-empty value.");
+      Assert.Contains("The strings field requires a non-empty value.", s);
     }
   }
 }

@@ -7,6 +7,6 @@ namespace IkeMtz.NRSRx.Core.Tests
   {
     public const string V1_0 = "1.0";
 
-    public IEnumerable<string> Versions => new[] { V1_0 };
+    public IEnumerable<string> Versions => [V1_0];
   }
 }

@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using IkeMtz.NRSRx.Core.EntityFramework;
 using IkeMtz.NRSRx.Unigration.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +32,8 @@ namespace IkeMtz.NRSRx.Core.Unigration
   [DoNotParallelize]
   public class BaseUnigrationTests
   {
+    public static readonly string CONTROLLER_NAME_SUFFIX = "Controller";
+    public static readonly int CONTROLLER_NAME_SUFFIX_CHAR_COUNT = 10;
     /// <summary>
     /// Gets or sets the test context.
     /// </summary>
@@ -107,7 +112,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
       };
       var resp = await client.PostAsJsonAsync(TestServerConfiguration.GetValue<string>("IntegrationTestTokenUrl"), payload).ConfigureAwait(true);
       _ = resp.EnsureSuccessStatusCode();
-      var respBody = await resp.Content.ReadAsStringAsync().ConfigureAwait(true);
+      var respBody = await resp.Content.ReadAsStringAsync(TestContext.CancellationToken).ConfigureAwait(true);
       TestContext.WriteLine($"Identity Server HttpResponse: {respBody}");
       dynamic o = JsonConvert.DeserializeObject(respBody);
       return o.access_token;
@@ -157,7 +162,7 @@ namespace IkeMtz.NRSRx.Core.Unigration
     public async Task<T?> DeserializeResponseAsync<T>(HttpResponseMessage httpResponseMessage)
     {
       httpResponseMessage = httpResponseMessage ?? throw new ArgumentNullException(nameof(httpResponseMessage));
-      var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
+      var content = await httpResponseMessage.Content.ReadAsStringAsync(TestContext.CancellationToken).ConfigureAwait(true);
       return JsonConvert.DeserializeObject<T>(content, Constants.JsonSerializerSettings);
     }
 
@@ -203,6 +208,64 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return JsonConvert.DeserializeObject<T>(
         JsonConvert.SerializeObject(source, Constants.JsonSerializerSettings),
           Constants.JsonSerializerSettings);
+    }
+
+    /// <summary>
+    /// Gets the controller route name for the specified controller type.
+    /// This strips the trailing "Controller" suffix from the type name when present.
+    /// </summary>
+    /// <typeparam name="T_CONTROLLER">The controller type.</typeparam>
+    /// <returns>The controller route name (type name without the "Controller" suffix when applicable).</returns>
+    public string GetControllerRoute<T_CONTROLLER>()
+      where T_CONTROLLER : ControllerBase
+    {
+      var type = typeof(T_CONTROLLER);
+      return GetControllerRouteName(type.Name);
+    }
+
+
+    /// <summary>
+    /// Builds the full route for the specified controller type including API version and
+    /// whether the controller is an OData controller or a normal Web API controller.
+    /// </summary>
+    /// <typeparam name="T_CONTROLLER">The controller type.</typeparam>
+    /// <returns>
+    /// A route string in the form of "odata/v{majorVersion}/{controllerName}" for OData controllers
+    /// or "api/v{majorVersion}/{controllerName}.json" for regular controllers.
+    /// </returns>
+    public string GetFullRoute<T_CONTROLLER>()
+      where T_CONTROLLER : ControllerBase
+    {
+      var type = typeof(T_CONTROLLER);
+      var controllerName = GetControllerRouteName(type.Name);
+      var odataControllerType = typeof(ODataController);
+      var majorVersionValue = type.GetCustomAttribute<ApiVersionAttribute>()?.Versions.FirstOrDefault()?.MajorVersion;
+
+      if (type.BaseType == odataControllerType || type.BaseType.BaseType == odataControllerType)
+      {
+        return $"odata/v{majorVersionValue}/{controllerName}";
+      }
+      else
+      {
+        return $"api/v{majorVersionValue}/{controllerName}.json";
+      }
+    }
+
+    /// <summary>
+    /// Returns the route name for a controller type name by removing the standard
+    /// "Controller" suffix if it exists. If the name does not end with the suffix,
+    /// the original name is returned and a warning is written to the test context.
+    /// </summary>
+    /// <param name="controllerName">The controller type name.</param>
+    /// <returns>The controller route name without the "Controller" suffix when applicable.</returns>
+    public string GetControllerRouteName(string controllerName)
+    {
+      if (controllerName.EndsWith(CONTROLLER_NAME_SUFFIX, StringComparison.CurrentCultureIgnoreCase))
+      {
+        return controllerName[..^CONTROLLER_NAME_SUFFIX_CHAR_COUNT];
+      }
+      TestContext.WriteLine("WARNING: {controllerName} does not meet the expected {{ENTITY_NAME}}Controller format.", controllerName);
+      return controllerName;
     }
   }
 }

@@ -88,7 +88,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       //Validate OData Result
       TestContext.WriteLine($"Server Response: {content}");
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
-      StringAssert.Contains(content, "The limit of '100' for Top query has been exceeded. The value from the incoming request is '300'.");
+      Assert.Contains("The limit of '100' for Top query has been exceeded. The value from the incoming request is '300'.", content);
     }
 
     [TestMethod]

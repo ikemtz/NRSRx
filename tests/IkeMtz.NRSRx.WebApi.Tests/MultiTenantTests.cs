@@ -30,7 +30,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
           });
         }));
       var client = srv.CreateClient(TestContext);
-      GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("tids", item.TenantId) }));
+      GenerateAuthHeader(client, GenerateTestToken([new Claim("tids", item.TenantId)]));
 
       var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}");
       var httpSchool = await DeserializeResponseAsync<School>(resp);
@@ -69,7 +69,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
           });
         }));
       var client = srv.CreateClient(TestContext);
-      GenerateAuthHeader(client, GenerateTestToken(new[] { new Claim("tids", item.TenantId) }));
+      GenerateAuthHeader(client, GenerateTestToken([new Claim("tids", item.TenantId)]));
       //Get 
       var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}x");
       var result = await resp.Content.ReadAsStringAsync();
