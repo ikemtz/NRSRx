@@ -30,7 +30,6 @@ namespace IkeMtz.Samples.OData.Controllers.V1
         .AsNoTracking();
     }
 
-    [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet("nolimit")]

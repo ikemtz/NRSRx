@@ -9,6 +9,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using IkeMtz.Samples.WebApi;
+using IkeMtz.Samples.WebApi.Controllers.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -35,7 +36,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken([new Claim("MyTestClaim", Guid.NewGuid().ToString())]));
       //Get 
-      var resp = await client.GetAsync($"api/v1/{nameof(School)}s.json?id={item.Id}");
+      var resp = await client.GetAsync($"{GetFullRoute<SchoolsController>()}?id={item.Id}");
       var httpSchool = await DeserializeResponseAsync<School>(resp);
       Assert.IsNotNull(httpSchool);
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
@@ -51,7 +52,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.json", item);
+      var resp = await client.PostAsJsonAsync($"{GetFullRoute<SchoolsController>()}", item);
       _ = resp.EnsureSuccessStatusCode();
       var httpSchool = await DeserializeResponseAsync<School>(resp);
       Assert.IsNotNull(httpSchool);
@@ -75,7 +76,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(School)}s.xml", item);
+      var resp = await client.PostAsJsonAsync($"api/v1/{GetControllerRoute<SchoolsController>()}.xml", item);
       _ = resp.EnsureSuccessStatusCode();
       await Assert.ThrowsExactlyAsync<JsonReaderException>(async () => _ = await DeserializeResponseAsync<School>(resp));
     }
@@ -99,7 +100,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var updatedSchool = JsonClone(originalSchool);
       updatedSchool.Name = Guid.NewGuid().ToString()[..6];
 
-      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(School)}s.json?id={updatedSchool.Id}", updatedSchool);
+      var resp = await client.PutAsJsonAsync($"{GetFullRoute<SchoolsController>()}?id={updatedSchool.Id}", updatedSchool);
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedSchool = await DeserializeResponseAsync<School>(resp);
       Assert.IsNotNull(httpUpdatedSchool);
@@ -134,7 +135,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"api/v1/{nameof(School)}s.json?id={item.Id}");
+      var resp = await client.DeleteAsync($"{GetFullRoute<SchoolsController>()}?id={item.Id}");
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedSchool = await DeserializeResponseAsync<School>(resp);
       Assert.IsNotNull(httpUpdatedSchool);

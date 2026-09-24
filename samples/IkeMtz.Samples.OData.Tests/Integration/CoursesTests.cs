@@ -6,6 +6,7 @@ using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
+using IkeMtz.Samples.OData.Controllers.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,7 +26,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true");
+      var resp = await client.GetStringAsync($"{GetFullRoute<CoursesController>()}?$count=true");
       TestContext.WriteLine($"Server Response: {resp}");
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
       Assert.AreEqual(envelope?.Count, envelope?.Value.Count());
@@ -53,7 +54,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
        );
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
-      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
+      var resp = await client.GetAsync($"{GetFullRoute<CoursesController>()}?$apply=groupby(({nameof(Course.Num)},{nameof(Course.Title)}))");
       var body = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Response: {body}");
       Assert.DoesNotContain("updatedby", body.ToLower());
@@ -83,7 +84,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       GenerateAuthHeader(client, GenerateTestToken());
 
       var resp = await client.GetStringAsync(
-        $"odata/v1/{nameof(Course)}s?$filter=id eq {course.Id}&$expand={nameof(course.SchoolCourses)},{nameof(course.StudentCourses)}");
+        $"{GetFullRoute<CoursesController>()}?$filter=id eq {course.Id}&$expand={nameof(course.SchoolCourses)},{nameof(course.StudentCourses)}");
       TestContext.WriteLine($"Server Response: {resp}");
 
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
@@ -110,7 +111,7 @@ namespace IkeMtz.Samples.OData.Tests.Integration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$apply=aggregate(id with countdistinct as total)");
+      var resp = await client.GetStringAsync($"{GetFullRoute<CoursesController>()}?$apply=aggregate(id with countdistinct as total)");
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.DoesNotContain("updatedby", resp.ToLower());
       Assert.Contains("total", resp);

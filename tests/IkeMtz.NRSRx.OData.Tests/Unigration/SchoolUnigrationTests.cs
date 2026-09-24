@@ -7,6 +7,7 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData;
+using IkeMtz.Samples.OData.Controllers.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,7 +35,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s");
+      var resp = await client.GetStringAsync($"{GetFullRoute<SchoolsController>()}");
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
@@ -59,7 +60,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$apply=groupby(({nameof(School.Name)},{nameof(School.Id)}),aggregate(id with countdistinct as total))");
+      var resp = await client.GetStringAsync($"{GetFullRoute<SchoolsController>()}?$apply=groupby(({nameof(School.Name)},{nameof(School.Id)}),aggregate(id with countdistinct as total))");
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       Assert.Contains(School.Id.ToString(), resp);
@@ -85,7 +86,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(schoolCourse)}s");
+      var resp = await client.GetStringAsync($"{GetFullRoute<SchoolsController>()}?$count=true&$expand={nameof(schoolCourse)}s");
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
@@ -102,7 +103,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=5000&$count=true");
+      var resp = await client.GetAsync($"{GetFullRoute<SchoolsController>()}?$top=5000&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Response: {data}");
       Assert.Contains("The limit of '100'", data);
@@ -137,7 +138,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(School)}s?$top=100&$count=true&$compute={nameof(school.SchoolCourses)}/$count as Courses&$select={nameof(school.Id)},Courses");
+      var resp = await client.GetAsync($"{GetFullRoute<SchoolsController>()}?$top=100&$count=true&$compute={nameof(school.SchoolCourses)}/$count as Courses&$select={nameof(school.Id)},Courses");
       var data = await resp.Content.ReadAsStringAsync();
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(data);
       Assert.Contains($"\"id\":\"{school.Id}\",\"Courses\":4", data);
@@ -152,7 +153,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(School)}s/nolimit?$top=500&$count=true");
+      var resp = await client.GetAsync($"{GetFullRoute<SchoolsController>()}/nolimit?$top=500&$count=true");
       var data = await resp.Content.ReadAsStringAsync();
       TestContext.WriteLine($"Server Response: {data}");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
@@ -174,7 +175,7 @@ namespace IkeMtz.NRSRx.OData.Tests
      ); var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"odata/v1/{nameof(School)}s({school.Id})");
+      var resp = await client.DeleteAsync($"{GetFullRoute<SchoolsController>()}/({school.Id})");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
   }

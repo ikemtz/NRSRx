@@ -9,6 +9,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using IkeMtz.Samples.WebApi;
+using IkeMtz.Samples.WebApi.Controllers.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -27,7 +28,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       GenerateAuthHeader(client, GenerateTestToken(x =>
         x.Remove(x.First(t => t.Type == JwtRegisteredClaimNames.Email))));
 
-      var result = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
+      var result = await client.PostAsJsonAsync($"{GetFullRoute<CoursesController>()}", item);
       Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
     }
 
@@ -53,7 +54,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var updatedCourse = JsonClone(originalCourse);
       updatedCourse.Num = Guid.NewGuid().ToString()[..6];
 
-      var result = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
+      var result = await client.PutAsJsonAsync($"{GetFullRoute<CoursesController>()}?id={updatedCourse.Id}", updatedCourse);
       Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
     }
   }

@@ -9,6 +9,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using IkeMtz.Samples.WebApi;
+using IkeMtz.Samples.WebApi.Controllers.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -35,7 +36,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken([new Claim("MyTestClaim", Guid.NewGuid().ToString())]));
       //Get 
-      var resp = await client.GetAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}");
+      var resp = await client.GetAsync($"{GetFullRoute<StudentsController>()}?id={item.Id}");
       var httpStudent = await DeserializeResponseAsync<Student>(resp);
 
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
@@ -52,7 +53,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.json", item);
+      var resp = await client.PostAsJsonAsync($"{GetFullRoute<StudentsController>()}", item);
       _ = resp.EnsureSuccessStatusCode();
       var httpStudent = await DeserializeResponseAsync<Student>(resp);
       Assert.IsNotNull(httpStudent);
@@ -76,7 +77,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.xml", item);
+      var resp = await client.PostAsJsonAsync($"api/v1/{GetControllerRoute<StudentsController>()}.xml", item);
       _ = resp.EnsureSuccessStatusCode();
       await Assert.ThrowsExactlyAsync<JsonReaderException>(async () => _ = await DeserializeResponseAsync<Student>(resp));
     }
@@ -100,7 +101,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var updatedStudent = JsonClone(originalStudent);
       updatedStudent.Title = Guid.NewGuid().ToString()[..6];
 
-      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Student)}s.json?id={updatedStudent.Id}", updatedStudent);
+      var resp = await client.PutAsJsonAsync($"{GetFullRoute<StudentsController>()}?id={updatedStudent.Id}", updatedStudent);
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedStudent = await DeserializeResponseAsync<Student>(resp);
       Assert.IsNotNull(httpUpdatedStudent);
@@ -135,7 +136,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}");
+      var resp = await client.DeleteAsync($"{GetFullRoute<StudentsController>()}?id={item.Id}");
       _ = resp.EnsureSuccessStatusCode();
       var httpUpdatedStudent = await DeserializeResponseAsync<Student>(resp);
       Assert.IsNotNull(httpUpdatedStudent);
