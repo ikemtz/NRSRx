@@ -143,7 +143,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"{GetFullRoute<StudentsController>()}/({item.StudentId})");
+      var resp = await client.DeleteAsync($"{GetFullRoute<StudentsController>()}({item.StudentId})");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
 

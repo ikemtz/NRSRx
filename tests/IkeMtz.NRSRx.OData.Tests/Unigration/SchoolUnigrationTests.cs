@@ -111,10 +111,8 @@ namespace IkeMtz.NRSRx.OData.Tests
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
     }
 
-
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [Ignore("Waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task ComputeMinSchoolTest()
     {
       var school = Factories.SchoolFactory();
@@ -146,7 +144,6 @@ namespace IkeMtz.NRSRx.OData.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    [Ignore("waiting for fix: https://github.com/OData/AspNetCoreOData/issues/420")]
     public async Task GetMaxSchoolsTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
@@ -175,7 +172,7 @@ namespace IkeMtz.NRSRx.OData.Tests
      ); var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"{GetFullRoute<SchoolsController>()}/({school.Id})");
+      var resp = await client.DeleteAsync($"{GetFullRoute<SchoolsController>()}({school.Id})");
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
     }
   }
