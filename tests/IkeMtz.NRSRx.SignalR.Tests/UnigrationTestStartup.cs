@@ -4,10 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace IkeMtz.NRSRx.SignalR.Tests
 {
-  public class UnigrationTestStartup : CoreSignalrUnigrationTestStartup<Startup>
+  public class UnigrationTestStartup(IConfiguration configuration) : CoreSignalrUnigrationTestStartup<Startup>(new Startup(configuration))
   {
-    public UnigrationTestStartup(IConfiguration configuration) : base(new Startup(configuration))
-    {
-    }
   }
 }

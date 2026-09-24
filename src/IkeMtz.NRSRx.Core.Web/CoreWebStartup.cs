@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Jwt = System.IdentityModel.Tokens.Jwt;
@@ -29,7 +30,7 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <summary>
     /// Gets the title of the microservice.
     /// </summary>
-    public abstract string? ServiceTitle { get; }
+    public abstract OpenApiInfo ServiceInfo { get; }
 
     /// <summary>
     /// Gets the assembly of the startup class.
@@ -209,10 +210,10 @@ namespace IkeMtz.NRSRx.Core.Web
     /// <param name="options">The Swagger UI options.</param>
     public virtual void SetupSwaggerCommonUi(SwaggerUIOptions options)
     {
-      options.SwaggerEndpoint("/openapi/v1.json", $"{ServiceTitle} v1");
+      options.SwaggerEndpoint("/openapi/v1.json", $"{ServiceInfo.Title} v1");
       options.EnableDeepLinking();
       options.EnableFilter();
-      options.DocumentTitle = $"{this.ServiceTitle} - Swagger UI";
+      options.DocumentTitle = $"{ServiceInfo.Title} - Swagger UI";
       options.RoutePrefix = SwaggerUiRoutePrefix;
       options.HeadContent += "<meta name=\"robots\" content=\"none\" />";
       options.OAuthClientId(Configuration.GetValue<string>("SwaggerClientId"));

@@ -4,6 +4,7 @@ using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 
 namespace IkeMtz.NRSRx.Logging.Splunk.Tests
 {
@@ -13,7 +14,7 @@ namespace IkeMtz.NRSRx.Logging.Splunk.Tests
       app?.UseSerilog();
 
 
-    public override string ServiceTitle => "";
+    public override OpenApiInfo ServiceInfo => new() { Title = "" };
 
     public override Assembly StartupAssembly => this.GetType().Assembly;
   }

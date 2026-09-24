@@ -72,7 +72,7 @@
             Abstract base class for setting up a NRSRx application.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.ServiceTitle">
+        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.ServiceInfo">
             <summary>
             Gets the title of the microservice.
             </summary>

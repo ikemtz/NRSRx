@@ -8,13 +8,18 @@ using IkeMtz.Samples.Models.V1;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 using StackExchange.Redis;
 
 namespace IkeMtz.Samples.Events.Redis
 {
   public class Startup(IConfiguration configuration) : CoreWebApiStartup(configuration)
   {
-    public override string ServiceTitle => $"{nameof(IkeMtz.Samples.Events.Redis)} WebApi Microservice";
+
+    public override OpenApiInfo ServiceInfo => new()
+    {
+      Title = $"{nameof(IkeMtz.Samples.Events.Redis)} WebApi Microservice"
+    };
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
 
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) => this.SetupConsoleLogging(app);

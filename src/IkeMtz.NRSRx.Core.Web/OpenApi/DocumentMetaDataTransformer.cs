@@ -20,9 +20,10 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
     public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
     {
       var buildNumber = startup.GetBuildNumber();
-      document.Info.Title = startup.ServiceTitle;
-      document.Info.Description = $"<div style='color:gray;font-weight:bold'>Build #: <span style='font-weight:bolder'>{buildNumber}</span></div>";
-      document.Info.Version = buildNumber;
+      document.Info = startup.ServiceInfo;
+      document.Info.Description = startup.ServiceInfo.Description ??
+        $"<div style='color:gray;font-weight:bold'>Build #: <span style='font-weight:bolder'>{buildNumber}</span></div>";
+      document.Info.Version = startup.ServiceInfo.Version ?? buildNumber;
       return Task.CompletedTask;
     }
   }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 
 namespace IkeMtz.NRSRx.Core.SignalR
 {
@@ -25,7 +26,7 @@ namespace IkeMtz.NRSRx.Core.SignalR
     /// <summary>
     /// Gets the title of the microservice.
     /// </summary>
-    public override string? ServiceTitle => null;
+    public override OpenApiInfo ServiceInfo => null;
 
     /// <summary>
     /// Gets the assembly of the startup class.
