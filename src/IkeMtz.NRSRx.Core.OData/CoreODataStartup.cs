@@ -135,6 +135,7 @@ namespace IkeMtz.NRSRx.Core.OData
           {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.JsonSerializerOptions.WriteIndented = false;
+            options.JsonSerializerOptions.MaxDepth = 256;
           })
           .AddOData(options =>
           {
