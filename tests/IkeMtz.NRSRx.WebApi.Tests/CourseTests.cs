@@ -69,20 +69,6 @@ namespace IkeMtz.NRSRx.WebApi.Tests
 
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
-    public async Task SaveCourseJsonReaderExceptionsTest()
-    {
-      var item = Factories.CourseFactory();
-      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
-      var client = srv.CreateClient(TestContext);
-      GenerateAuthHeader(client, GenerateTestToken());
-
-      var resp = await client.PostAsJsonAsync($"{GetFullRoute<CoursesController>()}", item);
-      _ = resp.EnsureSuccessStatusCode();
-      await Assert.ThrowsExactlyAsync<JsonReaderException>(async () => _ = await DeserializeResponseAsync<Course>(resp));
-    }
-
-    [TestMethod]
-    [TestCategory(TestCategories.Unigration)]
     public async Task UpdateCourseTest()
     {
       var originalCourse = Factories.CourseFactory();

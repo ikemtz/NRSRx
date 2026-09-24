@@ -48,7 +48,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
-      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id ={Guid.NewGuid()}&tid = xyz");
+      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id={Guid.NewGuid()}&tid=xyz");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
@@ -72,7 +72,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken([new Claim("tids", item.TenantId)]));
       //Get 
-      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id ={item.Id}&tid ={item.TenantId}x");
+      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id={item.Id}&tid={item.TenantId}x");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
@@ -87,7 +87,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
-      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id ={Guid.NewGuid()}");
+      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id={Guid.NewGuid()}");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);
