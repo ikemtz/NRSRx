@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.EntityFramework;
+using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Unigration.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
@@ -266,6 +267,19 @@ namespace IkeMtz.NRSRx.Core.Unigration
       }
       TestContext.WriteLine("WARNING: {controllerName} does not meet the expected {{ENTITY_NAME}}Controller format.", controllerName);
       return controllerName;
+    }
+
+    public string GetODataEnvelopeName<T_ENTITY>()
+      where T_ENTITY: IIdentifiable<Guid>, IIdentifiable
+    {
+      return GetODataEnvelopeName<T_ENTITY, Guid>();
+    }
+    public string GetODataEnvelopeName<T_ENTITY, T_IDENTITY_TYPE>()
+      where T_IDENTITY_TYPE: IComparable
+      where T_ENTITY : IIdentifiable<T_IDENTITY_TYPE>
+ 
+    {
+      return $"ODataEnvelopeOf{typeof(T_ENTITY).Name}And{typeof(T_IDENTITY_TYPE).Name}";
     }
   }
 }

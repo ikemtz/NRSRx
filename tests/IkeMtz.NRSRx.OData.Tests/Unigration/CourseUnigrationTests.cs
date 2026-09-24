@@ -83,7 +83,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true", TestContext.CancellationToken);
+      var resp = await client.GetAsync($"{GetFullRoute<CoursesController>()}?$orderby=title&$apply=groupby(({nameof(item.Title)},{nameof(item.Id)}),aggregate({nameof(item.Id)} with countdistinct as total,{nameof(item.PassRate)} with sum as sumPassRate,{nameof(item.AvgScore)} with max as maxScore))&$count=true", TestContext.CancellationToken);
       var content = await resp.Content.ReadAsStringAsync(TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(content.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
@@ -110,7 +110,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Course)}s?$count=true&$expand={nameof(SchoolCourse)}s", TestContext.CancellationToken);
+      var resp = await client.GetStringAsync($"{GetFullRoute<CoursesController>()}?$count=true&$expand={nameof(SchoolCourse)}s", TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", System.StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Course>>(resp);
@@ -127,7 +127,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$top=5000&$count=true", TestContext.CancellationToken);
+      var resp = await client.GetAsync($"{GetFullRoute<CoursesController>()}?$top=5000&$count=true", TestContext.CancellationToken);
       var data = await resp.Content.ReadAsStringAsync(TestContext.CancellationToken);
       TestContext.WriteLine($"Server Response: {data}");
       Assert.Contains("The limit of '100'", data);

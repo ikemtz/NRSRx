@@ -4,6 +4,7 @@ using IkeMtz.NRSRx.Core.Unigration.Events;
 using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.NRSRx.Events;
 using IkeMtz.Samples.Events.Redis;
+using IkeMtz.Samples.Events.Redis.Controllers.V1;
 using IkeMtz.Samples.Events.Tests.Integration;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
@@ -31,7 +32,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Student)}s.json", item);
+      var resp = await client.PostAsJsonAsync($"{GetFullRoute<StudentsController>()}", item);
       var student = await DeserializeResponseAsync<Student>(resp);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Student>(t => t.Id == item.Id)), Times.Once);
@@ -51,7 +52,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}", item);
+      var resp = await client.PutAsJsonAsync($"{GetFullRoute<StudentsController>()}?id={item.Id}", item);
       var student = await DeserializeResponseAsync<Student>(resp);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Student>(t => t.Id == item.Id)), Times.Once);
@@ -71,7 +72,7 @@ namespace IkeMtz.Samples.Events.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"api/v1/{nameof(Student)}s.json?id={item.Id}");
+      var resp = await client.DeleteAsync($"{GetFullRoute<StudentsController>()}?id={item.Id}");
       var student = await DeserializeResponseAsync<Student>(resp);
       _ = resp.EnsureSuccessStatusCode();
       mockPublisher.Verify(t => t.PublishAsync(It.Is<Student>(t => t.Id == item.Id)), Times.Once);

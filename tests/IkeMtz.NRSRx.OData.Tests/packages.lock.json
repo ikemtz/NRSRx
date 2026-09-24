@@ -152,12 +152,12 @@
       },
       "StackExchange.Redis": {
         "type": "Direct",
-        "requested": "[3.3.0, )",
-        "resolved": "3.3.0",
-        "contentHash": "vSB6W7F85IJ9gYAHPcRsQYLGODptvm8kmp1z2XwmKHYWifHiGGDQHzYkNNUKk3bzODOoOM2fuy7nUeNp1MHIKA==",
+        "requested": "[3.3.1, )",
+        "resolved": "3.3.1",
+        "contentHash": "AnA3ZuYnOQl2Hh/PXqV+JagA6QO8hiHovHBOc0PKz+uafVSsI0lYPQy8D0rklCC5Wpmc9MznEw+Lpt8e+LaB9w==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
-          "RESPite": "3.3.0",
+          "RESPite": "3.3.1",
           "System.IO.Hashing": "10.0.12"
         }
       },
@@ -904,8 +904,8 @@
       },
       "RESPite": {
         "type": "Transitive",
-        "resolved": "3.3.0",
-        "contentHash": "pzHmX5/ffYxDs0liGPwbAQ9c9xRmbhtJ6XnZOpktHAs9x7MTqQByEXiySXzT3xPZ/l8U95OfVUYvm/BOBK6f6w=="
+        "resolved": "3.3.1",
+        "contentHash": "1Ky6rOjP9YjA8eXWWSJDTSRgVQiRXwsKnET+X5hDuONJqq8KbYLQrTUjMg8gsdyKzwj74ivEioTuQd4mVhthdQ=="
       },
       "Serilog": {
         "type": "Transitive",
@@ -1169,7 +1169,7 @@
           "Moq": "[4.20.72, )",
           "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[10.0.0, )",
-          "StackExchange.Redis": "[3.3.0, )"
+          "StackExchange.Redis": "[3.3.1, )"
         }
       },
       "ikemtz.nrsrx.core.web": {
@@ -1209,14 +1209,14 @@
           "AspNetCore.HealthChecks.Redis": "[9.0.0, )",
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[10.0.12, )",
-          "StackExchange.Redis": "[3.3.0, )"
+          "StackExchange.Redis": "[3.3.1, )"
         }
       },
       "ikemtz.nrsrx.events.subscribers.redis": {
         "type": "Project",
         "dependencies": {
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
-          "StackExchange.Redis": "[3.3.0, )"
+          "StackExchange.Redis": "[3.3.1, )"
         }
       },
       "ikemtz.nrsrx.logging.applicationinsights": {
@@ -1256,7 +1256,7 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[10.0.12, )",
           "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[10.0.0, )",
-          "StackExchange.Redis": "[3.3.0, )"
+          "StackExchange.Redis": "[3.3.1, )"
         }
       },
       "ikemtz.samples.models": {

@@ -45,7 +45,7 @@
     <PackageReference Include="MSTest.TestFramework" Version="4.4.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
-    <PackageReference Include="StackExchange.Redis" Version="3.3.0" />
+    <PackageReference Include="StackExchange.Redis" Version="3.3.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IkeMtz.NRSRx.Core.Models\IkeMtz.NRSRx.Core.Models.csproj" />

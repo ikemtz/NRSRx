@@ -764,9 +764,9 @@
             </summary>
             <param name="startup">The startup instance.</param>
         </member>
-        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.ServiceTitle">
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.ServiceInfo">
             <summary>
-            Gets the service title.
+            Gets the service info.
             </summary>
         </member>
         <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreODataTestStartup`1.StartupAssembly">
@@ -1336,9 +1336,9 @@
             Gets the startup instance.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.ServiceTitle">
+        <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.ServiceInfo">
             <summary>
-            Gets the service title.
+            Gets the service OpenApiInfo.
             </summary>
         </member>
         <member name="P:IkeMtz.NRSRx.Core.Unigration.CoreWebApiTestStartup`1.StartupAssembly">

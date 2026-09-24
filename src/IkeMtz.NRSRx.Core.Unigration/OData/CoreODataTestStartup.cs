@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Core.Unigration
@@ -41,9 +42,12 @@ namespace IkeMtz.NRSRx.Core.Unigration
     }
 
     /// <summary>
-    /// Gets the service title.
+    /// Gets the service info.
     /// </summary>
-    public override string ServiceTitle => Startup.ServiceTitle;
+    public override OpenApiInfo ServiceInfo => new()
+    {
+      Title = Startup.ServiceInfo.Title,
+    };
 
     /// <summary>
     /// Gets the startup assembly.

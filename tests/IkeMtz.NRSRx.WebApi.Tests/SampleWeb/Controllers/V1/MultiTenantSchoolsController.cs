@@ -14,21 +14,15 @@ namespace IkeMtz.Samples.WebApi.Controllers.V1
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
-  public class MultiTenantSchoolsController : ControllerBase
+  public class MultiTenantSchoolsController(DatabaseContext databaseContext) : ControllerBase
   {
-    private readonly DatabaseContext _databaseContext;
-    public MultiTenantSchoolsController(DatabaseContext databaseContext)
-    {
-      _databaseContext = databaseContext;
-    }
-
     // Get api/MultiTenantSchools
     [HttpGet]
     [ProducesResponseType(Status200OK, Type = typeof(School))]
     [SampleTenantFilter()]
     public async Task<ActionResult> Get([FromQuery] Guid id, [FromQuery] string tid)
     {
-      var obj = await _databaseContext.Schools
+      var obj = await databaseContext.Schools
         .AsNoTracking()
         .FirstOrDefaultAsync(t => t.Id == id && t.TenantId == tid)
         .ConfigureAwait(false);

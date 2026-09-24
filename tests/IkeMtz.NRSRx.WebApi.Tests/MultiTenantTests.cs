@@ -7,6 +7,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
 using IkeMtz.Samples.WebApi;
+using IkeMtz.Samples.WebApi.Controllers.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -32,7 +33,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken([new Claim("tids", item.TenantId)]));
 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}");
+      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id={item.Id}&tid={item.TenantId}");
       var httpSchool = await DeserializeResponseAsync<School>(resp);
       Assert.IsNotNull(httpSchool);
       Assert.AreEqual(HttpStatusCode.OK, resp.StatusCode);
@@ -47,7 +48,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={Guid.NewGuid()}&tid=xyz");
+      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id ={Guid.NewGuid()}&tid = xyz");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
@@ -71,7 +72,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken([new Claim("tids", item.TenantId)]));
       //Get 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={item.Id}&tid={item.TenantId}x");
+      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id ={item.Id}&tid ={item.TenantId}x");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.Unauthorized, resp.StatusCode);
@@ -86,7 +87,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
       //Get 
-      var resp = await client.GetAsync($"api/v1/MultiTenant{nameof(School)}s.json?id={Guid.NewGuid()}");
+      var resp = await client.GetAsync($"{GetFullRoute<MultiTenantSchoolsController>()}?id ={Guid.NewGuid()}");
       var result = await resp.Content.ReadAsStringAsync();
 
       Assert.AreEqual(HttpStatusCode.BadRequest, resp.StatusCode);

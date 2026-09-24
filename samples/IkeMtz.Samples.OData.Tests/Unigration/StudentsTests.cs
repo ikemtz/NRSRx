@@ -5,6 +5,7 @@ using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
+using IkeMtz.Samples.OData.Controllers.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,7 +33,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(Student)}s?$count=true");
+      var resp = await client.GetStringAsync($"{GetFullRoute<StudentsController>()}?$count=true");
 
       //Validate OData Result
       TestContext.WriteLine($"Server Response: {resp}");
@@ -57,13 +58,13 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s/noLimit?$count=true&$top=500");
+      var resp = await client.GetAsync($"{GetFullRoute<StudentsController>()}/noLimit?$count=true&$top=500");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
       TestContext.WriteLine($"Server Response: {content}");
       _ = resp.EnsureSuccessStatusCode();
-      var envelope = JsonConvert.DeserializeObject<ODataEnvelope<Student>>(content);
-      Assert.AreEqual(objA.FirstName, envelope?.Value.First().FirstName);
+      var envelope = JsonConvert.DeserializeObject<Student[]>(content);
+      Assert.AreEqual(objA.FirstName, envelope?.First().FirstName);
     }
 
     [TestMethod]
@@ -83,7 +84,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(Student)}s?$count=true&$top=300");
+      var resp = await client.GetAsync($"{GetFullRoute<StudentsController>()}?$count=true&$top=300");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
       TestContext.WriteLine($"Server Response: {content}");
@@ -108,7 +109,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.DeleteAsync($"odata/v1/{nameof(Student)}s/{studentEntity.Id}");
+      var resp = await client.DeleteAsync($"{GetFullRoute<StudentsController>()}/{studentEntity.Id}");
       var content = await resp.Content.ReadAsStringAsync();
       //Validate OData Result
       TestContext.WriteLine($"Server Response: {content}");

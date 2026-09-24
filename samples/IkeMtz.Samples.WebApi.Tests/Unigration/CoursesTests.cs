@@ -5,6 +5,7 @@ using IkeMtz.NRSRx.Core.Unigration.Http;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.Tests;
+using IkeMtz.Samples.WebApi.Controllers.V1;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,7 +24,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.PostAsJsonAsync($"api/v1/{nameof(Course)}s.json", item);
+      var resp = await client.PostAsJsonAsync($"{GetFullRoute<CoursesController>()}", item);
       _ = resp.EnsureSuccessStatusCode();
       var content = await resp.Content.ReadAsStringAsync();
       Assert.Contains("PendingCertification", content);
@@ -57,7 +58,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var updatedCourse = JsonClone(originalCourse);
       updatedCourse.Num = Guid.NewGuid().ToString()[..6];
 
-      var resp = await client.PutAsJsonAsync($"api/v1/{nameof(Course)}s.json?id={updatedCourse.Id}", updatedCourse);
+      var resp = await client.PutAsJsonAsync($"{GetFullRoute<CoursesController>()}?id={updatedCourse.Id}", updatedCourse);
       _ = resp.EnsureSuccessStatusCode();
       var content = await resp.Content.ReadAsStringAsync();
       Assert.Contains("PendingCertification", content);

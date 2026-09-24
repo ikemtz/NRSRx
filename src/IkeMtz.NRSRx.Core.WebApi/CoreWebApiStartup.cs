@@ -51,6 +51,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
           {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.JsonSerializerOptions.WriteIndented = false;
+            options.JsonSerializerOptions.MaxDepth = 256;
           });
     }
 
