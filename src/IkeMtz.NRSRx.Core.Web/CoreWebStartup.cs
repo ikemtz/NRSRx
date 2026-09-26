@@ -230,21 +230,7 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       options.AddDocumentTransformer(new DocumentMetaDataTransformer(ServiceTitle));
       options.AddSchemaTransformer(new EnumSchemaTransformer());
-      //options.ShouldInclude(new Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription { })
-      //// add a custom operation filter which sets default values
-      //options.OperationFilter<DefaultValueFilter>();
-      //options.OperationFilter<AuthorizeOperationFilter>();
-      //options.DocumentFilter<ReverseProxyDocumentFilter>();
-
-      //if (IncludeXmlCommentsInSwaggerDocs)
-      //{
-      //  // Set the comments path for the Swagger JSON and UI.
-      //  options.IncludeXmlComments(xmlPath ?? StartupAssembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase));
-      //}
-      //if (AdditionalAssemblyXmlDocumentFiles?.Length > 0)
-      //{
-      //  AdditionalAssemblyXmlDocumentFiles.ToList().ForEach(f => options.IncludeXmlComments(f));
-      //}
+      options.AddSchemaTransformer<RefGeneratingSchemaTransformer>();
     }
 
     private static OpenIdConfiguration OpenIdConfiguration;
