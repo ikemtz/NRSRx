@@ -332,6 +332,13 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer">
+            <summary>
+            Transformer that ensures schema nodes are componentized by assigning a stable
+            schema id to each schema's metadata. This causes the OpenApiSchemaService to
+            emit $ref references instead of recursively inlining schemas.
+            </summary>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration">
             <summary>
             Represents the OpenID configuration with endpoints for authorization and token.

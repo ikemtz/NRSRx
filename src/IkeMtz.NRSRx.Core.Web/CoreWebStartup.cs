@@ -230,7 +230,6 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       options.AddDocumentTransformer(new DocumentMetaDataTransformer(ServiceTitle));
       options.AddSchemaTransformer(new EnumSchemaTransformer());
-      options.AddSchemaTransformer<RefGeneratingSchemaTransformer>();
     }
 
     private static OpenIdConfiguration OpenIdConfiguration;
