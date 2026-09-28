@@ -6,6 +6,7 @@ using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.OData;
+using IkeMtz.Samples.OData.Controllers.V1;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -33,7 +34,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$filter=id eq {item.Id}");
+      var resp = await client.GetStringAsync($"{GetFullRoute<SchoolsController>()}?$filter=id eq {item.Id}");
       TestContext.WriteLine($"Server Response: {resp}");
       Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);
@@ -64,7 +65,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetStringAsync($"odata/v1/{nameof(School)}s?$count=true&$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}&$filter=id eq {item.Id}");
+      var resp = await client.GetStringAsync($"{GetFullRoute<SchoolsController>()}?$count=true&$expand={nameof(item.SchoolCourses)},{nameof(item.StudentSchools)}&$filter=id eq {item.Id}");
 
       Assert.IsFalse(resp.Contains("updatedby", StringComparison.CurrentCultureIgnoreCase));
       var envelope = JsonConvert.DeserializeObject<ODataEnvelope<School>>(resp);

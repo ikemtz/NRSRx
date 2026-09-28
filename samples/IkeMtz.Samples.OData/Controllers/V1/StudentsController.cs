@@ -14,11 +14,11 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.Samples.OData.Controllers.V1
 {
-  [Route($"odata/v1/Students")]
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
   [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 6000)]
+  [Route("odata/v{version:apiVersion}/[controller]")]
   public class StudentsController(DatabaseContext databaseContext) : ODataController
   {
     [ProducesResponseType(typeof(ODataEnvelope<Student, Guid>), Status200OK)]
@@ -30,7 +30,6 @@ namespace IkeMtz.Samples.OData.Controllers.V1
         .AsNoTracking();
     }
 
-    [Produces("application/json")]
     [ProducesResponseType(typeof(ODataEnvelope<School, Guid>), Status200OK)]
     [EnableQuery(MaxTop = 500, AllowedQueryOptions = AllowedQueryOptions.All)]
     [HttpGet("nolimit")]

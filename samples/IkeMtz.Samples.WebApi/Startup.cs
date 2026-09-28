@@ -9,12 +9,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 
 namespace IkeMtz.Samples.WebApi
 {
   public class Startup(IConfiguration configuration) : CoreWebApiStartup(configuration)
   {
-    public override string ServiceTitle => $"{nameof(Samples)} WebApi Microservice";
+
+    public override OpenApiInfo ServiceInfo => new()
+    {
+      Title = $"{nameof(Samples)} WebApi Microservice"
+    };
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => true;
     public override string[] AdditionalAssemblyXmlDocumentFiles => [

@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using IkeMtz.NRSRx.Core.Web;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.OpenApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -42,7 +43,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.OpenApi
     /// <param name="version">The version of the OpenAPI document.</param>
     /// <returns>The OpenApiDocument object.</returns>
     /// <exception cref="ArgumentNullException">Thrown when the test server is null.</exception>
-    public static async Task<OpenApiDocument> TestJsonDocAsync(TestServer testServer, int version = 1)
+    public static async Task<OpenApiDocument> TestJsonDocAsync(TestServer testServer, CoreWebStartup coreWebStartup, int version = 1)
     {
       testServer = testServer ?? throw new ArgumentNullException(nameof(testServer));
       var client = testServer.CreateClient();
@@ -54,7 +55,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.OpenApi
 
       var readResult = OpenApiDocument.Parse(result);
       var doc = readResult.Document;
-      Assert.AreEqual($"{version}.0.0", doc.Info.Version);
+      Assert.AreEqual(coreWebStartup.GetBuildNumber(), doc.Info.Version);
       return doc;
     }
   }

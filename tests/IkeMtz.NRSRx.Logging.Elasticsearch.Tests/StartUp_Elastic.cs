@@ -4,6 +4,7 @@ using IkeMtz.NRSRx.Core.WebApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
@@ -14,8 +15,7 @@ namespace IkeMtz.NRSRx.Logging.Elasticsearch.Tests
     public override void SetupLogging(IServiceCollection? services = null, IApplicationBuilder? app = null) =>
       this.SetupElasticsearch(app);
 
-
-    public override string ServiceTitle => "";
+    public override OpenApiInfo ServiceInfo => new() { Title = "" };
 
     public override Assembly StartupAssembly => this.GetType().Assembly;
   }

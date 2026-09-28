@@ -56,7 +56,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
-      context.CollectionGuidModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel() });
+      context.CollectionGuidModels.AddRange([srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel()]);
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       srcList.First().Value = "Validate Update";
@@ -74,7 +74,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModelDto(), new CollectionGuidModelDto() };
-      context.CollectionGuidModels.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionGuidModel() });
+      context.CollectionGuidModels.AddRange([srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionGuidModel()]);
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       srcList.First().Value = "Validate Update";
@@ -92,7 +92,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
-      context.CollectionGuidModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel() });
+      context.CollectionGuidModels.AddRange([srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel()]);
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       srcList.First().Value = "Validate Update";
@@ -107,7 +107,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModelDto(), new CollectionGuidModelDto() };
-      context.CollectionGuidModels.AddRange(new[] { srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionGuidModel() });
+      context.CollectionGuidModels.AddRange([srcList.First().ToCollectionModel(), srcList.Last().ToCollectionModel(), new CollectionGuidModel()]);
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       srcList.First().Value = "Validate Update";
@@ -122,7 +122,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
-      context.CollectionGuidModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel() });
+      context.CollectionGuidModels.AddRange([srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel()]);
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       var wasCalled = false;
@@ -140,7 +140,7 @@ namespace IkeMtz.NRSRx.Core.Tests
     {
       var context = DbContextFactory.CreateInMemoryAuditableDbContext<TestAuditableDbContext>(TestContext);
       var srcList = new[] { new CollectionGuidModel(), new CollectionGuidModel() };
-      context.CollectionGuidModels.AddRange(new[] { srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel() });
+      context.CollectionGuidModels.AddRange([srcList.First().Clone(), srcList.Last().Clone(), new CollectionGuidModel()]);
       _ = context.SaveChanges();
       var destList = context.CollectionGuidModels.ToList();
       var wasCalled = false;

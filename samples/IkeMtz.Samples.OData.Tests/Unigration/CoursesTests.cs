@@ -7,6 +7,7 @@ using IkeMtz.Samples.Data;
 using IkeMtz.Samples.Tests;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using IkeMtz.Samples.OData.Controllers.V1;
 
 namespace IkeMtz.Samples.OData.Tests.Unigration
 {
@@ -30,7 +31,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       var client = srv.CreateClient(TestContext);
       GenerateAuthHeader(client, GenerateTestToken());
 
-      var resp = await client.GetAsync($"odata/v1/{nameof(Course)}s?$count=true");
+      var resp = await client.GetAsync($"{GetFullRoute<CoursesController>()}?$count=true");
       _ = resp.EnsureSuccessStatusCode();
       var envelope = await DeserializeResponseAsync<ODataEnvelope<Course>>(resp);
       Assert.IsNotNull(envelope);

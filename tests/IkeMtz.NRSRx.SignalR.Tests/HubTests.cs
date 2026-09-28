@@ -21,7 +21,7 @@ namespace IkeMtz.NRSRx.SignalR.Tests
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
       var startup = new Startup(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-      Assert.IsNull(startup.ServiceTitle);
+      Assert.IsNull(startup.ServiceInfo);
       Assert.IsNotNull(startup.StartupAssembly);
     }
 

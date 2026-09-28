@@ -34,7 +34,7 @@ namespace IkeMtz.NRSRx.Core.Jobs.Redis.Tests.Unigration
         if (firstRun)
         {
           firstRun = false;
-          return SplitMessage<School>.FromCollection(new[] { Factories.SchoolFactory() }, "unigration test", "NRSRx test user");
+          return SplitMessage<School>.FromCollection([Factories.SchoolFactory()], "unigration test", "NRSRx test user");
         }
         else
         {

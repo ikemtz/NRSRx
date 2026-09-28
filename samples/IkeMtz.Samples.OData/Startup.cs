@@ -8,18 +8,23 @@ using IkeMtz.Samples.OData.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 
 namespace IkeMtz.Samples.OData
 {
   public class Startup(IConfiguration configuration) : CoreODataStartup(configuration)
   {
     public override int? MaxTop { get; set; } = 500;
-    public override string ServiceTitle => $"{nameof(Samples)} OData Microservice";
+
+    public override OpenApiInfo ServiceInfo => new()
+    {
+      Title = $"{nameof(Samples)} OData Microservice"
+    };
     public override Assembly StartupAssembly => typeof(Startup).Assembly;
     public override bool IncludeXmlCommentsInSwaggerDocs => true;
-    public override string[] AdditionalAssemblyXmlDocumentFiles => new[] {
+    public override string[] AdditionalAssemblyXmlDocumentFiles => [
       typeof(Course).Assembly.Location.Replace(".dll", ".xml", StringComparison.InvariantCultureIgnoreCase)
-    };
+    ];
 
     public override BaseODataModelProvider ODataModelProvider => new ODataModelProvider();
 
