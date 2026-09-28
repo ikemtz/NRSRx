@@ -7,6 +7,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.OpenApi;
 using System.Text.Json.Serialization.Metadata;
 using Microsoft.OpenApi;
+using System.Linq;
+using System.Text.Json;
 
 namespace IkeMtz.NRSRx.Core.Web.OpenApi
 {
@@ -18,12 +20,19 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
   public sealed class RefGeneratingSchemaTransformer : IOpenApiSchemaTransformer
   {
     public const string SCHEMA_PROPERTY_NAME = $"{OpenApiConstants.ExtensionFieldNamePrefix}{OpenApiConstants.Schema}-id";
-    private readonly IOptionsMonitor<OpenApiOptions>? _optionsMonitor;
+    private readonly IOptionsMonitor<OpenApiOptions> OptionsMonitor;
+    private readonly JsonSerializerOptions JsonSerializationOptions;
+    private readonly Dictionary<string, OpenApiOptions> DocumentOptions = [];
 
     public RefGeneratingSchemaTransformer(IServiceProvider services)
     {
       ArgumentNullException.ThrowIfNull(services);
-      _optionsMonitor = services.GetService<IOptionsMonitor<OpenApiOptions>>();
+      OptionsMonitor = services.GetRequiredService<IOptionsMonitor<OpenApiOptions>>();
+      JsonSerializationOptions = services.GetService<JsonSerializerOptions>() ??
+        new JsonSerializerOptions
+        {
+
+        };
     }
 
     public Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context, CancellationToken cancellationToken)
@@ -32,73 +41,48 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
       {
         return Task.CompletedTask;
       }
-
-      var jsonTypeInfo = context.JsonTypeInfo;
-      var schemaId = CreateSchemaReferenceId(context.DocumentName, jsonTypeInfo);
-
-      // If this is the concrete OpenApiSchema type we can set Metadata directly.
-      if (schema is OpenApiSchema openApiSchema)
+      DocumentOptions.TryGetValue(context.DocumentName, out var documentOptions);
+      if (documentOptions == null)
       {
-        openApiSchema.Metadata ??= new Dictionary<string, object?>();
-        openApiSchema.Metadata[SCHEMA_PROPERTY_NAME] = schemaId;
+        DocumentOptions.Add(context.DocumentName, OptionsMonitor.Get(context.DocumentName));
       }
-      else
+
+      schema.Properties = schema.Properties?.Select(schemaPropKvp =>
       {
-        // Best-effort: try to set a Metadata property via reflection without throwing.
-        try
+        var value = schemaPropKvp.Value;
+        if (value != null && value.Items != null)
         {
-          var metadataProp = schema.GetType().GetProperty("Metadata");
-          if (metadataProp != null)
+          var genericTypeArgumentType = context.JsonTypeInfo.Type.GenericTypeArguments[0];
+          var genericTypeArgument = JsonTypeInfo.CreateJsonTypeInfo(genericTypeArgumentType, JsonSerializationOptions);
+          //var referenceId = CreateSchemaReferenceId(documentOptions, context.JsonTypeInfo);
+          //JsonTypeInfo.CreateJsonTypeInfo()
+
+          return new KeyValuePair<string, IOpenApiSchema>(schemaPropKvp.Key, new OpenApiSchema
           {
-            if (metadataProp.GetValue(schema) is IDictionary<string, object?> existing)
-            {
-              existing[SCHEMA_PROPERTY_NAME] = schemaId;
-            }
-            else
-            {
-              var dict = new Dictionary<string, object?>
-              {
-                [SCHEMA_PROPERTY_NAME] = schemaId
-              };
-              metadataProp.SetValue(schema, dict);
-            }
-          }
+            Type = value.Type,
+            //Items = new OpenApiSchemaReference
+            //{
+
+            //}
+
+          });
         }
-        catch
-        {
-          // Ignore - transformer must not fail the generation pipeline.
-        }
-      }
+        return schemaPropKvp;
+      }).ToDictionary();
 
       return Task.CompletedTask;
     }
 
-    private string CreateSchemaReferenceId(string documentName, JsonTypeInfo jsonTypeInfo)
+    public string? CreateSchemaReferenceId(OpenApiOptions openApiOptions, JsonTypeInfo jsonTypeInfo)
     {
-      try
+
+      var id = openApiOptions.CreateSchemaReferenceId(jsonTypeInfo);
+      if (!string.IsNullOrEmpty(id))
       {
-        if (_optionsMonitor != null && !string.IsNullOrEmpty(documentName))
-        {
-          var opts = _optionsMonitor.Get(documentName);
-          if (opts.CreateSchemaReferenceId != null)
-          {
-            var id = opts.CreateSchemaReferenceId(jsonTypeInfo);
-            if (!string.IsNullOrEmpty(id))
-            {
-              return id;
-            }
-          }
-        }
-      }
-      catch
-      {
-        // swallow and fall back to deterministic id
+        return id;
       }
 
-      var type = jsonTypeInfo.Type;
-      var fullName = type.FullName ?? type.Name;
-      var sanitized = fullName.Replace('.', '_').Replace('+', '_').Replace('`', '_');
-      return sanitized;
+      return null;
     }
 
   }
