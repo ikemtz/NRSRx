@@ -365,6 +365,12 @@
             Cache of document-specific <see cref="T:Microsoft.AspNetCore.OpenApi.OpenApiOptions"/> keyed by document name.
             </summary>
         </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.GeneratedReferencableComponents">
+            <summary>
+            Cache of schema names that have been generated and that are now referencable.
+            Schema names follow the "{documentName}.{entityTypeName}" format.
+            </summary>
+        </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.#ctor(System.IServiceProvider)">
             <summary>
             Creates a new instance of <see cref="T:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer"/>.
@@ -374,35 +380,29 @@
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.TransformAsync(Microsoft.OpenApi.OpenApiSchema,Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,System.Threading.CancellationToken)">
             <summary>
-            This Schema transformer will temporarily replace all self-referencing entity properties with a
-            <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> property.  This avoids the endless loop and subsequent exceptions
+            Temporarily replaces self-referencing entity properties with an
+            <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> to avoid recursive schema expansion and
+            subsequent exceptions during schema generation. The transformer will look up
+            document-specific OpenAPI options and use schema metadata to discover entity names
+            before replacing matching properties with dynamic references.
             </summary>
-            <param name="schema"></param>
-            <param name="context"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
+            <param name="schema">The <see cref="T:Microsoft.OpenApi.OpenApiSchema"/> to transform.</param>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext"/> containing JSON type information and document name.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> used to cancel the operation.</param>
+            <returns>A completed <see cref="T:System.Threading.Tasks.Task"/>; the transformation is applied in-place on <paramref name="schema"/>.</returns>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreatePropertyDynamicRef(Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Collections.Generic.KeyValuePair{System.String,Microsoft.OpenApi.IOpenApiSchema})">
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreatePropertyDynamicRef(System.String,System.String,System.Collections.Generic.KeyValuePair{System.String,Microsoft.OpenApi.IOpenApiSchema})">
             <summary>
-            Inspects a schema property and, when the property's metadata contains a schema id that
-            matches the current context type, replaces the property with an <see cref="T:Microsoft.OpenApi.OpenApiSchema"/>
-            that contains a <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> pointing to the corresponding
-            component schema. The method will recurse into nested properties to apply the same
-            transformation where applicable.
+            Inspects a schema property and, when the property's metadata contains a schema id,
+            either replaces it with an <see cref="T:Microsoft.OpenApi.OpenApiSchema"/> containing a
+            <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> that points to the appropriate component schema
+            or recursively inspects nested properties. This method also tracks generated referencable
+            components to avoid producing duplicate references.
             </summary>
-            <param name="context">The schema transformer context containing <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo"/> and document name.</param>
-            <param name="documentOpenApiOptions">The OpenAPI options for the current document used to generate reference ids.</param>
+            <param name="documentName">The name of the OpenAPI document used to qualify component identifiers.</param>
+            <param name="entityTypeName">The entity type name that represents the parent schema being processed.</param>
             <param name="schemaPropKvp">The property key/value pair to inspect and possibly replace.</param>
             <returns>The original or modified property key/value pair.</returns>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreateSchemaReferenceId(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Type)">
-            <summary>
-            Creates a schema reference id for the provided <paramref name="referencedType"/> using
-            the provided <paramref name="openApiOptions"/> and the configured <see cref="T:System.Text.Json.JsonSerializerOptions"/>.
-            </summary>
-            <param name="openApiOptions">The OpenAPI options used to generate the schema id.</param>
-            <param name="referencedType">The .NET type to create a schema reference id for.</param>
-            <returns>The generated schema reference id or <c>null</c> if one cannot be created.</returns>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.TransformAsync(Microsoft.OpenApi.OpenApiDocument,Microsoft.AspNetCore.OpenApi.OpenApiDocumentTransformerContext,System.Threading.CancellationToken)">
             <summary>

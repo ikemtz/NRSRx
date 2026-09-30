@@ -48,6 +48,12 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
     public readonly Dictionary<string, OpenApiOptions> DocumentOpenApiOptionsDic = [];
 
     /// <summary>
+    /// Cache of schema names that have been generated and that are now referencable.
+    /// Schema names follow the "{documentName}.{entityTypeName}" format.
+    /// </summary>
+    public static readonly HashSet<string> GeneratedReferencableComponents = [];
+
+    /// <summary>
     /// Creates a new instance of <see cref="RefGeneratingSchemaTransformer"/>.
     /// </summary>
     /// <param name="services">The service provider used to resolve required services.</param>
@@ -60,13 +66,16 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
         new JsonSerializerOptions();
     }
     /// <summary>
-    /// This Schema transformer will temporarily replace all self-referencing entity properties with a
-    /// <see cref="OpenApiSchema.DynamicRef"/> property.  This avoids the endless loop and subsequent exceptions
+    /// Temporarily replaces self-referencing entity properties with an
+    /// <see cref="OpenApiSchema.DynamicRef"/> to avoid recursive schema expansion and
+    /// subsequent exceptions during schema generation. The transformer will look up
+    /// document-specific OpenAPI options and use schema metadata to discover entity names
+    /// before replacing matching properties with dynamic references.
     /// </summary>
-    /// <param name="schema"></param>
-    /// <param name="context"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="schema">The <see cref="OpenApiSchema"/> to transform.</param>
+    /// <param name="context">The <see cref="OpenApiSchemaTransformerContext"/> containing JSON type information and document name.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> used to cancel the operation.</param>
+    /// <returns>A completed <see cref="Task"/>; the transformation is applied in-place on <paramref name="schema"/>.</returns>
     public Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context, CancellationToken cancellationToken)
     {
       if (schema == null || context?.JsonTypeInfo == null)
@@ -79,58 +88,63 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
         documentOpenApiOptions = OptionsMonitor.Get(context.DocumentName);
         DocumentOpenApiOptionsDic.Add(context.DocumentName, documentOpenApiOptions);
       }
-
-      schema.Properties = schema.Properties?.Select(schemaPropKvp =>
+      if (schema.Properties?.Count > 0 && schema.Metadata.TryGetValue(SCHEMA_PROPERTY_NAME, out var entityNameObj))
       {
-        return CreatePropertyDynamicRef(context, documentOpenApiOptions, schemaPropKvp);
-      }).ToDictionary();
+        var entityName = entityNameObj.ToString();
+        if (!string.IsNullOrWhiteSpace(entityName))
+        {
+          schema.Properties = schema.Properties?.Select(schemaPropKvp =>
+          {
+            return CreatePropertyDynamicRef(context.DocumentName, entityName.ToString(), schemaPropKvp);
+          }).ToDictionary();
+        }
+      }
 
       return Task.CompletedTask;
     }
     /// <summary>
-    /// Inspects a schema property and, when the property's metadata contains a schema id that
-    /// matches the current context type, replaces the property with an <see cref="OpenApiSchema"/>
-    /// that contains a <see cref="OpenApiSchema.DynamicRef"/> pointing to the corresponding
-    /// component schema. The method will recurse into nested properties to apply the same
-    /// transformation where applicable.
+    /// Inspects a schema property and, when the property's metadata contains a schema id,
+    /// either replaces it with an <see cref="OpenApiSchema"/> containing a
+    /// <see cref="OpenApiSchema.DynamicRef"/> that points to the appropriate component schema
+    /// or recursively inspects nested properties. This method also tracks generated referencable
+    /// components to avoid producing duplicate references.
     /// </summary>
-    /// <param name="context">The schema transformer context containing <see cref="JsonTypeInfo"/> and document name.</param>
-    /// <param name="documentOpenApiOptions">The OpenAPI options for the current document used to generate reference ids.</param>
+    /// <param name="documentName">The name of the OpenAPI document used to qualify component identifiers.</param>
+    /// <param name="entityTypeName">The entity type name that represents the parent schema being processed.</param>
     /// <param name="schemaPropKvp">The property key/value pair to inspect and possibly replace.</param>
     /// <returns>The original or modified property key/value pair.</returns>
-    public KeyValuePair<string, IOpenApiSchema> CreatePropertyDynamicRef(OpenApiSchemaTransformerContext context, OpenApiOptions documentOpenApiOptions, KeyValuePair<string, IOpenApiSchema> schemaPropKvp)
+    public KeyValuePair<string, IOpenApiSchema> CreatePropertyDynamicRef(string documentName, string entityTypeName, KeyValuePair<string, IOpenApiSchema> schemaPropKvp)
     {
       if (schemaPropKvp.Value is OpenApiSchema value && value.Enum == null && value.Metadata != null && !string.IsNullOrEmpty(value.Metadata[SCHEMA_PROPERTY_NAME]?.ToString()))
       {
         var propertyTypeName = value.Metadata[SCHEMA_PROPERTY_NAME].ToString();
-        var contextType = context.JsonTypeInfo.Type;
-        if (propertyTypeName.Equals(contextType.Name))
+        var fullyQualifiedPropertyTypeName = $"{documentName}.{propertyTypeName}";
+        var componentSchemaUrl = $"{COMPONENT_SCHEMA_PREFIX}{propertyTypeName}";
+        if (GeneratedReferencableComponents.Contains(fullyQualifiedPropertyTypeName))
         {
-          var referenceId = CreateSchemaReferenceId(documentOpenApiOptions, contextType);
-          return new KeyValuePair<string, IOpenApiSchema>(schemaPropKvp.Key, new OpenApiSchema()
+          return new KeyValuePair<string, IOpenApiSchema>(schemaPropKvp.Key, new OpenApiSchema
           {
-            DynamicRef = $"{COMPONENT_SCHEMA_PREFIX}{referenceId}"
+            DynamicRef = componentSchemaUrl,
           });
+        }
+        else if (propertyTypeName.Equals(entityTypeName, StringComparison.CurrentCultureIgnoreCase))
+        {
+          GeneratedReferencableComponents.Add(fullyQualifiedPropertyTypeName);
+          return new KeyValuePair<string, IOpenApiSchema>(schemaPropKvp.Key, new OpenApiSchema
+          {
+            DynamicRef = componentSchemaUrl
+          });
+        }
+        else
+        {
+          GeneratedReferencableComponents.Add(fullyQualifiedPropertyTypeName);
         }
         value.Properties = value.Properties?.Select(subSchemaPropKvp =>
         {
-          return CreatePropertyDynamicRef(context, documentOpenApiOptions, subSchemaPropKvp);
+          return CreatePropertyDynamicRef(documentName, propertyTypeName, subSchemaPropKvp);
         }).ToDictionary();
       }
       return schemaPropKvp;
-    }
-    /// <summary>
-    /// Creates a schema reference id for the provided <paramref name="referencedType"/> using
-    /// the provided <paramref name="openApiOptions"/> and the configured <see cref="JsonSerializerOptions"/>.
-    /// </summary>
-    /// <param name="openApiOptions">The OpenAPI options used to generate the schema id.</param>
-    /// <param name="referencedType">The .NET type to create a schema reference id for.</param>
-    /// <returns>The generated schema reference id or <c>null</c> if one cannot be created.</returns>
-    public string? CreateSchemaReferenceId(OpenApiOptions openApiOptions, Type referencedType)
-    {
-      var referencedJsonTypeInfo = JsonTypeInfo.CreateJsonTypeInfo(referencedType, JsonSerializationOptions);
-      var id = openApiOptions.CreateSchemaReferenceId(referencedJsonTypeInfo);
-      return id;
     }
 
     /// <summary>
@@ -153,7 +167,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
           {
             if (propertyKvp.Value.DynamicRef != null)
             {
-              var propertyRefSchema = new OpenApiSchemaReference($"{COMPONENT_SCHEMA_PREFIX}{schemaKvp.Key}", document)
+              var propertyRefSchema = new OpenApiSchemaReference(propertyKvp.Value.DynamicRef, document)
               {
                 Type = JsonSchemaType.Object,
               };
