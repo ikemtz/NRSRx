@@ -391,24 +391,7 @@
             <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> used to cancel the operation.</param>
             <returns>A completed <see cref="T:System.Threading.Tasks.Task"/>; the transformation is applied in-place on <paramref name="schema"/>.</returns>
         </member>
-<<<<<<< HEAD
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreatePropertyDynamicRef(System.String,System.String,System.Collections.Generic.KeyValuePair{System.String,Microsoft.OpenApi.IOpenApiSchema})">
-=======
-        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreatePropertyDynamicRef(Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Collections.Generic.KeyValuePair{System.String,Microsoft.OpenApi.IOpenApiSchema})">
-            <summary>
-            Inspects a schema property and, when the property's metadata contains a schema id that
-            matches the current context type, replaces the property with an <see cref="T:Microsoft.OpenApi.OpenApiSchema"/>
-            that contains a <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> pointing to the corresponding
-            component schema. The method will recurse into nested properties to apply the same
-            transformation where applicable.
-            </summary>
-            <param name="context">The schema transformer context containing <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo"/> and document name.</param>
-            <param name="documentOpenApiOptions">The OpenAPI options for the current document used to generate reference ids.</param>
-            <param name="schemaPropKvp">The property key/value pair to inspect and possibly replace.</param>
-            <returns>The original or modified property key/value pair.</returns>
-        </member>
-        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreateSchemaReferenceId(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Type)">
->>>>>>> f0ae865e2b8d72059b1fa69f40c4603731f79ad2
             <summary>
             Inspects a schema property and, when the property's metadata contains a schema id,
             either replaces it with an <see cref="T:Microsoft.OpenApi.OpenApiSchema"/> containing a
