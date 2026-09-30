@@ -231,8 +231,8 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       return options.AddDocumentTransformer(new DocumentMetaDataTransformer(this))
        .AddSchemaTransformer<EnumSchemaTransformer>()
-     //  .AddSchemaTransformer<RefGeneratingSchemaTransformer>()
-     //  .AddDocumentTransformer<RefGeneratingSchemaTransformer>()
+       .AddSchemaTransformer<RefGeneratingSchemaTransformer>()
+       .AddDocumentTransformer<RefGeneratingSchemaTransformer>()
        ;
     }
 
