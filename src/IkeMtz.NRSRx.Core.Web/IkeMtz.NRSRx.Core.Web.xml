@@ -360,7 +360,7 @@
             JSON serializer options used to create <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo"/> instances when generating schema ids.
             </summary>
         </member>
-        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.DocumentOptions">
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.DocumentOpenApiOptionsDic">
             <summary>
             Cache of document-specific <see cref="T:Microsoft.AspNetCore.OpenApi.OpenApiOptions"/> keyed by document name.
             </summary>
@@ -381,6 +381,19 @@
             <param name="context"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreatePropertyDynamicRef(Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Collections.Generic.KeyValuePair{System.String,Microsoft.OpenApi.IOpenApiSchema})">
+            <summary>
+            Inspects a schema property and, when the property's metadata contains a schema id that
+            matches the current context type, replaces the property with an <see cref="T:Microsoft.OpenApi.OpenApiSchema"/>
+            that contains a <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> pointing to the corresponding
+            component schema. The method will recurse into nested properties to apply the same
+            transformation where applicable.
+            </summary>
+            <param name="context">The schema transformer context containing <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo"/> and document name.</param>
+            <param name="documentOpenApiOptions">The OpenAPI options for the current document used to generate reference ids.</param>
+            <param name="schemaPropKvp">The property key/value pair to inspect and possibly replace.</param>
+            <returns>The original or modified property key/value pair.</returns>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreateSchemaReferenceId(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Type)">
             <summary>
