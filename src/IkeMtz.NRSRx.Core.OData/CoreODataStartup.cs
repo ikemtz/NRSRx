@@ -1,11 +1,14 @@
 using System;
 using System.Linq;
 using System.Text.Json.Serialization;
+using IkeMtz.NRSRx.Core.OData.OpenApi;
 using IkeMtz.NRSRx.Core.Web;
+using IkeMtz.NRSRx.Core.Web.OpenApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Formatter.Serialization;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -168,6 +171,16 @@ namespace IkeMtz.NRSRx.Core.OData
         .AddHttpClient()
         .AddSingleton<IODataVersionProvider>((x) => this.ODataModelProvider)
         ;
+    }
+    /// <summary>
+    /// Sets up Swagger generation options.
+    /// </summary>
+    /// <param name="options">The Swagger generation options.</param>
+    public override OpenApiOptions SetupOpenApiDocGeneration(OpenApiOptions options)
+    {
+     return base.SetupOpenApiDocGeneration(options)
+      .AddDocumentTransformer<SecurityTransformer>()
+      ;
     }
   }
 }

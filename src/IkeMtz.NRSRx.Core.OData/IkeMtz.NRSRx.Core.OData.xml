@@ -109,6 +109,12 @@
             </summary>
             <param name="services">The service collection.</param>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.SetupOpenApiDocGeneration(Microsoft.AspNetCore.OpenApi.OpenApiOptions)">
+            <summary>
+            Sets up Swagger generation options.
+            </summary>
+            <param name="options">The Swagger generation options.</param>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.OData.IODataVersionProvider">
             <summary>
             Defines a contract for providing OData version descriptions.
