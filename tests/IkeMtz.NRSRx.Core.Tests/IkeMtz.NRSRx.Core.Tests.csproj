@@ -8,11 +8,11 @@
     <UserSecretsId>0529e308-e320-4c75-8786-d4a20adec187</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS1591;CS8618;</NoWarn>
+    <NoWarn>1701;1702;CS1591;CS8618;ASPDEPR008;</NoWarn>
     <DocumentationFile>./IkeMtz.NRSRx.Core.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup> 
-    <PackageReference Include="coverlet.collector" Version="10.0.1"> 
+    <PackageReference Include="coverlet.collector" Version="10.1.0"> 
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

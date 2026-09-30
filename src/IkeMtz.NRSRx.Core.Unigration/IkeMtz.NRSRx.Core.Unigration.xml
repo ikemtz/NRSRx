@@ -9,6 +9,16 @@
             Base class for integration tests, providing common functionality for setting up and running tests.
             </summary>
         </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.CONTROLLER_NAME_SUFFIX">
+            <summary>
+            Controller Name Suffix
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.CONTROLLER_NAME_SUFFIX_CHAR_COUNT">
+            <summary>
+            Controller Name Controller Character Count
+            </summary>
+        </member>
         <member name="P:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.TestContext">
             <summary>
             Gets or sets the test context.
@@ -105,6 +115,25 @@
             </summary>
             <param name="controllerName">The controller type name.</param>
             <returns>The controller route name without the "Controller" suffix when applicable.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GetODataEnvelopeName``1">
+            <summary>
+            Gets the standardized OData envelope type name for the specified entity type using a
+            <see cref="T:System.Guid"/> identity type.
+            </summary>
+            <typeparam name="T_ENTITY">The entity type that implements <see cref="T:IkeMtz.NRSRx.Core.Models.IIdentifiable`1"/>.</typeparam>
+            <returns>A string containing the envelope type name for the entity and <see cref="T:System.Guid"/> identity.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.BaseUnigrationTests.GetODataEnvelopeName``2">
+            <summary>
+            Gets the standardized OData envelope type name for the specified entity and identity types.
+            </summary>
+            <typeparam name="T_ENTITY">The entity type that implements <see cref="T:IkeMtz.NRSRx.Core.Models.IIdentifiable`1"/>.</typeparam>
+            <typeparam name="T_IDENTITY_TYPE">The identity type used by the entity.</typeparam>
+            <returns>
+            A string in the format <c>ODataEnvelopeOf{EntityTypeName}And{IdentityTypeName}</c> that can be
+            used as a unique envelope type identifier in tests.
+            </returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.CharacterSets">
             <summary>
@@ -870,6 +899,7 @@
             Validates and returns the OpenApiDocument in JSON format.
             </summary>
             <param name="testServer">The test server instance.</param>
+            <param name="coreWebStartup">The startup class instance.</param>
             <param name="version">The version of the OpenAPI document.</param>
             <returns>The OpenApiDocument object.</returns>
             <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>

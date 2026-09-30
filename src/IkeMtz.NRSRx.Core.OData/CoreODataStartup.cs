@@ -179,7 +179,7 @@ namespace IkeMtz.NRSRx.Core.OData
     public override OpenApiOptions SetupOpenApiDocGeneration(OpenApiOptions options)
     {
      return base.SetupOpenApiDocGeneration(options)
-      .AddDocumentTransformer<SecurityTransformer>()
+      .AddDocumentTransformer<ODataTransformer>()
       ;
     }
   }

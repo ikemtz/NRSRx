@@ -336,6 +336,13 @@
             Implements <see cref="T:Microsoft.AspNetCore.OpenApi.IOpenApiSchemaTransformer"/> to modify individual schemas and
             <see cref="T:Microsoft.AspNetCore.OpenApi.IOpenApiDocumentTransformer"/> to update document-level schema components.
             </summary>
+            <seealso href="https://github.com/dotnet/aspnetcore/issues/63857"/>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.COMPONENT_SCHEMA_PREFIX">
+            <summary>
+            Prefix used for component schema references inside an OpenAPI document.
+            This value is the standard path prefix for component schemas (e.g. "#/components/schemas/").
+            </summary>
         </member>
         <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.SCHEMA_PROPERTY_NAME">
             <summary>
@@ -367,14 +374,13 @@
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.TransformAsync(Microsoft.OpenApi.OpenApiSchema,Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,System.Threading.CancellationToken)">
             <summary>
-            Transforms an individual <see cref="T:Microsoft.OpenApi.OpenApiSchema"/>. If the schema contains properties
-            with metadata matching <see cref="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.SCHEMA_PROPERTY_NAME"/>, those properties will be replaced
-            with a dynamic reference to the corresponding component schema.
+            This Schema transformer will temporarily replace all self-referencing entity properties with a
+            <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> property.  This avoids the endless loop and subsequent exceptions
             </summary>
-            <param name="schema">The schema to transform.</param>
-            <param name="context">The transformation context which includes the JSON type information and document name.</param>
-            <param name="cancellationToken">Cancellation token.</param>
-            <returns>A completed <see cref="T:System.Threading.Tasks.Task"/>. The transformation is applied in-place on <paramref name="schema"/>.</returns>
+            <param name="schema"></param>
+            <param name="context"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreateSchemaReferenceId(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Type)">
             <summary>
@@ -388,7 +394,7 @@
         <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.TransformAsync(Microsoft.OpenApi.OpenApiDocument,Microsoft.AspNetCore.OpenApi.OpenApiDocumentTransformerContext,System.Threading.CancellationToken)">
             <summary>
             Transforms the <see cref="T:Microsoft.OpenApi.OpenApiDocument"/> by converting any schema properties that were
-            previously marked with a dynamic reference into concrete <see cref="T:Microsoft.OpenApi.OpenApiSchemaReference"/>
+            previously marked with a <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> into concrete <see cref="T:Microsoft.OpenApi.OpenApiSchemaReference"/>
             instances that point to the appropriate component schema.
             </summary>
             <param name="document">The OpenAPI document to transform.</param>

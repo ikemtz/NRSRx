@@ -17,8 +17,15 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
   /// Implements <see cref="IOpenApiSchemaTransformer"/> to modify individual schemas and
   /// <see cref="IOpenApiDocumentTransformer"/> to update document-level schema components.
   /// </summary>
+  /// <seealso href="https://github.com/dotnet/aspnetcore/issues/63857"/>
   public sealed class RefGeneratingSchemaTransformer : IOpenApiSchemaTransformer, IOpenApiDocumentTransformer
   {
+
+    /// <summary>
+    /// Prefix used for component schema references inside an OpenAPI document.
+    /// This value is the standard path prefix for component schemas (e.g. "#/components/schemas/").
+    /// </summary>
+    public const string COMPONENT_SCHEMA_PREFIX = "#/components/schemas/";
     /// <summary>
     /// Metadata property name used on schema properties to indicate the referenced type name.
     /// The name is formed from the OpenAPI extension prefix and the schema identifier suffix.
@@ -38,7 +45,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
     /// <summary>
     /// Cache of document-specific <see cref="OpenApiOptions"/> keyed by document name.
     /// </summary>
-    public readonly Dictionary<string, OpenApiOptions> DocumentOptions = new();
+    public readonly Dictionary<string, OpenApiOptions> DocumentOptions = [];
 
     /// <summary>
     /// Creates a new instance of <see cref="RefGeneratingSchemaTransformer"/>.
@@ -52,16 +59,14 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
       JsonSerializationOptions = services.GetService<JsonSerializerOptions>() ??
         new JsonSerializerOptions();
     }
-
     /// <summary>
-    /// Transforms an individual <see cref="OpenApiSchema"/>. If the schema contains properties
-    /// with metadata matching <see cref="SCHEMA_PROPERTY_NAME"/>, those properties will be replaced
-    /// with a dynamic reference to the corresponding component schema.
+    /// This Schema transformer will temporarily replace all self-referencing entity properties with a
+    /// <see cref="OpenApiSchema.DynamicRef"/> property.  This avoids the endless loop and subsequent exceptions
     /// </summary>
-    /// <param name="schema">The schema to transform.</param>
-    /// <param name="context">The transformation context which includes the JSON type information and document name.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>A completed <see cref="Task"/>. The transformation is applied in-place on <paramref name="schema"/>.</returns>
+    /// <param name="schema"></param>
+    /// <param name="context"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context, CancellationToken cancellationToken)
     {
       if (schema == null || context?.JsonTypeInfo == null)
@@ -86,7 +91,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
             var referenceId = CreateSchemaReferenceId(documentOptions, contextType);
             return new KeyValuePair<string, IOpenApiSchema>(schemaPropKvp.Key, new OpenApiSchema()
             {
-              DynamicRef = $"#/components/schemas/{referenceId}"
+              DynamicRef = $"{COMPONENT_SCHEMA_PREFIX}{referenceId}"
             });
           }
         }
@@ -112,7 +117,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
 
     /// <summary>
     /// Transforms the <see cref="OpenApiDocument"/> by converting any schema properties that were
-    /// previously marked with a dynamic reference into concrete <see cref="OpenApiSchemaReference"/>
+    /// previously marked with a <see cref="OpenApiSchema.DynamicRef"/> into concrete <see cref="OpenApiSchemaReference"/>
     /// instances that point to the appropriate component schema.
     /// </summary>
     /// <param name="document">The OpenAPI document to transform.</param>
@@ -130,7 +135,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
           {
             if (propertyKvp.Value.DynamicRef != null)
             {
-              var propertyRefSchema = new OpenApiSchemaReference($"#/components/schemas/{schemaKvp.Key}", document)
+              var propertyRefSchema = new OpenApiSchemaReference($"{COMPONENT_SCHEMA_PREFIX}{schemaKvp.Key}", document)
               {
                 Type = JsonSchemaType.Object,
               };
