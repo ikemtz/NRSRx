@@ -330,6 +330,78 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer">
+            <summary>
+            Transforms OpenAPI schemas by generating references for properties marked with a schema id metadata.
+            Implements <see cref="T:Microsoft.AspNetCore.OpenApi.IOpenApiSchemaTransformer"/> to modify individual schemas and
+            <see cref="T:Microsoft.AspNetCore.OpenApi.IOpenApiDocumentTransformer"/> to update document-level schema components.
+            </summary>
+            <seealso href="https://github.com/dotnet/aspnetcore/issues/63857"/>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.COMPONENT_SCHEMA_PREFIX">
+            <summary>
+            Prefix used for component schema references inside an OpenAPI document.
+            This value is the standard path prefix for component schemas (e.g. "#/components/schemas/").
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.SCHEMA_PROPERTY_NAME">
+            <summary>
+            Metadata property name used on schema properties to indicate the referenced type name.
+            The name is formed from the OpenAPI extension prefix and the schema identifier suffix.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.OptionsMonitor">
+            <summary>
+            Monitors <see cref="T:Microsoft.AspNetCore.OpenApi.OpenApiOptions"/> instances so options can be looked up per document.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.JsonSerializationOptions">
+            <summary>
+            JSON serializer options used to create <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo"/> instances when generating schema ids.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.DocumentOptions">
+            <summary>
+            Cache of document-specific <see cref="T:Microsoft.AspNetCore.OpenApi.OpenApiOptions"/> keyed by document name.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.#ctor(System.IServiceProvider)">
+            <summary>
+            Creates a new instance of <see cref="T:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer"/>.
+            </summary>
+            <param name="services">The service provider used to resolve required services.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="services"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.TransformAsync(Microsoft.OpenApi.OpenApiSchema,Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,System.Threading.CancellationToken)">
+            <summary>
+            This Schema transformer will temporarily replace all self-referencing entity properties with a
+            <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> property.  This avoids the endless loop and subsequent exceptions
+            </summary>
+            <param name="schema"></param>
+            <param name="context"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.CreateSchemaReferenceId(Microsoft.AspNetCore.OpenApi.OpenApiOptions,System.Type)">
+            <summary>
+            Creates a schema reference id for the provided <paramref name="referencedType"/> using
+            the provided <paramref name="openApiOptions"/> and the configured <see cref="T:System.Text.Json.JsonSerializerOptions"/>.
+            </summary>
+            <param name="openApiOptions">The OpenAPI options used to generate the schema id.</param>
+            <param name="referencedType">The .NET type to create a schema reference id for.</param>
+            <returns>The generated schema reference id or <c>null</c> if one cannot be created.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.TransformAsync(Microsoft.OpenApi.OpenApiDocument,Microsoft.AspNetCore.OpenApi.OpenApiDocumentTransformerContext,System.Threading.CancellationToken)">
+            <summary>
+            Transforms the <see cref="T:Microsoft.OpenApi.OpenApiDocument"/> by converting any schema properties that were
+            previously marked with a <see cref="P:Microsoft.OpenApi.OpenApiSchema.DynamicRef"/> into concrete <see cref="T:Microsoft.OpenApi.OpenApiSchemaReference"/>
+            instances that point to the appropriate component schema.
+            </summary>
+            <param name="document">The OpenAPI document to transform.</param>
+            <param name="context">The transformer context.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>A completed <see cref="T:System.Threading.Tasks.Task"/>. The transformation is applied in-place on <paramref name="document"/>.</returns>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.OpenIdConfiguration">
             <summary>
             Represents the OpenID configuration with endpoints for authorization and token.

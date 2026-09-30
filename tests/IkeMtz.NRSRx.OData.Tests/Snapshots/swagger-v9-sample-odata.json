@@ -1,0 +1,1839 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Samples OData Microservice",
+    "description": "<div style='color:gray;font-weight:bold'>Build #: <span style='font-weight:bolder'>1.0.0.0</span></div>",
+    "version": "1.0"
+  },
+  "paths": {
+    "/odata/v1/Courses": {
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "operationId": "odata/v1/Courses",
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Specifies the logic to pull back a subset of records.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "description": "Specifies the values used to sort the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$apply",
+            "in": "query",
+            "description": "Specifies aggregation behavior for the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "The $select system query option allows the clients to requests a limited set of properties for each entry.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "Specifies the subset of entries by count.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "description": "Indicates the related entities to be represented inline. The default maximum depth is 2.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "Specifies the count of entries to skip.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$compute",
+            "in": "query",
+            "description": "Specifies computed properties that can be used in $select, $filter or $orderby expressions.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "description": "Indicates whether or not to include a total entry count.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;odata.metadata=minimal;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/json;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseGuidODataEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/Schools": {
+      "get": {
+        "tags": [
+          "Schools"
+        ],
+        "operationId": "odata/v1/Schools",
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Specifies the logic to pull back a subset of records.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "description": "Specifies the values used to sort the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$apply",
+            "in": "query",
+            "description": "Specifies aggregation behavior for the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "The $select system query option allows the clients to requests a limited set of properties for each entry.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "Specifies the subset of entries by count.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "description": "Indicates the related entities to be represented inline. The default maximum depth is 2.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "Specifies the count of entries to skip.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$compute",
+            "in": "query",
+            "description": "Specifies computed properties that can be used in $select, $filter or $orderby expressions.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "description": "Indicates whether or not to include a total entry count.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;odata.metadata=minimal;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/json;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/schools/nolimit": {
+      "get": {
+        "tags": [
+          "Schools"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Specifies the logic to pull back a subset of records.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "description": "Specifies the values used to sort the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$apply",
+            "in": "query",
+            "description": "Specifies aggregation behavior for the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "The $select system query option allows the clients to requests a limited set of properties for each entry.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "Specifies the subset of entries by count.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "description": "Indicates the related entities to be represented inline. The default maximum depth is 2.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "Specifies the count of entries to skip.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$compute",
+            "in": "query",
+            "description": "Specifies computed properties that can be used in $select, $filter or $orderby expressions.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "description": "Indicates whether or not to include a total entry count.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/Schools({key})": {
+      "delete": {
+        "tags": [
+          "Schools"
+        ],
+        "operationId": "odata/v1/Schools({key})",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/Schools/{key}": {
+      "delete": {
+        "tags": [
+          "Schools"
+        ],
+        "operationId": "odata/v1/Schools/{key}",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/Students": {
+      "get": {
+        "tags": [
+          "Students"
+        ],
+        "operationId": "odata/v1/Students",
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Specifies the logic to pull back a subset of records.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "description": "Specifies the values used to sort the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$apply",
+            "in": "query",
+            "description": "Specifies aggregation behavior for the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "The $select system query option allows the clients to requests a limited set of properties for each entry.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "Specifies the subset of entries by count.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "description": "Indicates the related entities to be represented inline. The default maximum depth is 2.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "Specifies the count of entries to skip.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$compute",
+            "in": "query",
+            "description": "Specifies computed properties that can be used in $select, $filter or $orderby expressions.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "description": "Indicates whether or not to include a total entry count.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;odata.metadata=minimal;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=minimal;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=full;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.metadata=none;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=true;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;odata.streaming=false;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;IEEE754Compatible=false": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/json;IEEE754Compatible=true": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGuidODataEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/students/nolimit": {
+      "get": {
+        "tags": [
+          "Students"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Specifies the logic to pull back a subset of records.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "description": "Specifies the values used to sort the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$apply",
+            "in": "query",
+            "description": "Specifies aggregation behavior for the collection of entries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "The $select system query option allows the clients to requests a limited set of properties for each entry.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "Specifies the subset of entries by count.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "description": "Indicates the related entities to be represented inline. The default maximum depth is 2.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "Specifies the count of entries to skip.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "$compute",
+            "in": "query",
+            "description": "Specifies computed properties that can be used in $select, $filter or $orderby expressions.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "description": "Indicates whether or not to include a total entry count.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolGuidODataEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/Students({key})": {
+      "delete": {
+        "tags": [
+          "Students"
+        ],
+        "operationId": "odata/v1/Students({key})",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    },
+    "/odata/v1/Students/{key}": {
+      "delete": {
+        "tags": [
+          "Students"
+        ],
+        "operationId": "odata/v1/Students/{key}",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Course": {
+        "required": [
+          "createdBy",
+          "createdOnUtc",
+          "department",
+          "id",
+          "num",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CourseStatus"
+          },
+          "department": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string"
+          },
+          "num": {
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "passRate": {
+            "type": "number",
+            "format": "double",
+            "default": 0,
+            "nullable": true
+          },
+          "avgScore": {
+            "type": "number",
+            "format": "double",
+            "default": 0,
+            "nullable": true
+          },
+          "createdBy": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "maxLength": 250,
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOnUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "studentCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentCourse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "schoolCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SchoolCourse"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CourseGuidODataEnvelope": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Course"
+            },
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CourseStatus": {
+        "enum": [
+          "0 - PendingCertification",
+          "1 - Certified",
+          "8 - Finalized"
+        ],
+        "type": "string"
+      },
+      "Gender": {
+        "enum": [
+          "1 - Male",
+          "2 - Female",
+          "3 - Other",
+          "4 - Unknown"
+        ],
+        "type": "string",
+        "default": "4 - Unknown"
+      },
+      "School": {
+        "required": [
+          "createdBy",
+          "createdOnUtc",
+          "fullName",
+          "id",
+          "name",
+          "tenantId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "fullName": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "tenantId": {
+            "maxLength": 5,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdBy": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "maxLength": 250,
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOnUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "schoolCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SchoolCourse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "studentSchools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentSchool"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SchoolCourse": {
+        "required": [
+          "avgScore",
+          "courseId",
+          "createdBy",
+          "createdOnUtc",
+          "id",
+          "passRate",
+          "schoolId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "schoolId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "courseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "passRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "avgScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdBy": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "maxLength": 250,
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOnUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "course": {
+            "$ref": "#/components/schemas/Course"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SchoolGuidODataEnvelope": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/School"
+            },
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Student": {
+        "required": [
+          "birthDate",
+          "createdBy",
+          "createdOnUtc",
+          "email",
+          "firstName",
+          "gender",
+          "id",
+          "lastName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "middleName": {
+            "maxLength": 250,
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "email": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "tel1": {
+            "maxLength": 15,
+            "type": "string",
+            "nullable": true
+          },
+          "tel2": {
+            "maxLength": 15,
+            "type": "string",
+            "nullable": true
+          },
+          "courseCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdBy": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "maxLength": 250,
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOnUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "studentCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentCourse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "studentSchools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentSchool"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentCourse": {
+        "required": [
+          "courseId",
+          "createdBy",
+          "createdOnUtc",
+          "finalScore",
+          "id",
+          "schoolCourseId",
+          "schoolId",
+          "semester",
+          "studentId",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "schoolId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "courseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "schoolCourseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "semester": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "finalScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdBy": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "updatedBy": {
+            "maxLength": 250,
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOnUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "student": {
+            "$ref": "#/components/schemas/Student"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "course": {
+            "$ref": "#/components/schemas/Course"
+          },
+          "schoolCourse": {
+            "$ref": "#/components/schemas/SchoolCourse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentGuidODataEnvelope": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Student"
+            },
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentSchool": {
+        "required": [
+          "createdBy",
+          "createdOnUtc",
+          "enrollmentDate",
+          "id",
+          "schoolId",
+          "studentId",
+          "tenantId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "schoolId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tenantId": {
+            "maxLength": 5,
+            "minLength": 1,
+            "type": "string"
+          },
+          "enrollmentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "updatedBy": {
+            "maxLength": 250,
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOnUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "student": {
+            "$ref": "#/components/schemas/Student"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

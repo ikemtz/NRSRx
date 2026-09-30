@@ -227,10 +227,13 @@ namespace IkeMtz.NRSRx.Core.Web
     /// Sets up Swagger generation options.
     /// </summary>
     /// <param name="options">The Swagger generation options.</param>
-    public virtual void SetupOpenApiDocGeneration(OpenApiOptions options)
+    public virtual OpenApiOptions SetupOpenApiDocGeneration(OpenApiOptions options)
     {
-      options.AddDocumentTransformer(new DocumentMetaDataTransformer(this));
-      options.AddSchemaTransformer(new EnumSchemaTransformer());
+      return options.AddDocumentTransformer(new DocumentMetaDataTransformer(this))
+       .AddSchemaTransformer<EnumSchemaTransformer>()
+     //  .AddSchemaTransformer<RefGeneratingSchemaTransformer>()
+     //  .AddDocumentTransformer<RefGeneratingSchemaTransformer>()
+       ;
     }
 
     private static OpenIdConfiguration OpenIdConfiguration;
