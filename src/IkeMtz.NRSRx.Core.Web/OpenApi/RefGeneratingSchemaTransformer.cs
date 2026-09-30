@@ -114,7 +114,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
         }
         value.Properties = value.Properties?.Select(subSchemaPropKvp =>
         {
-          return CreatePropertyDynamicRef(context, documentOpenApiOptions, schemaPropKvp);
+          return CreatePropertyDynamicRef(context, documentOpenApiOptions, subSchemaPropKvp);
         }).ToDictionary();
       }
       return schemaPropKvp;
