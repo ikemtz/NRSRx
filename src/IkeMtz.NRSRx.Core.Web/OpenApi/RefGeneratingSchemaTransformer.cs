@@ -45,7 +45,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
     /// <summary>
     /// Cache of document-specific <see cref="OpenApiOptions"/> keyed by document name.
     /// </summary>
-    public readonly Dictionary<string, OpenApiOptions> DocumentOptions = [];
+    public readonly Dictionary<string, OpenApiOptions> DocumentOpenApiOptionsDic = [];
 
     /// <summary>
     /// Creates a new instance of <see cref="RefGeneratingSchemaTransformer"/>.
@@ -73,34 +73,52 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
       {
         return Task.CompletedTask;
       }
-      DocumentOptions.TryGetValue(context.DocumentName, out var documentOptions);
-      if (documentOptions == null)
+      DocumentOpenApiOptionsDic.TryGetValue(context.DocumentName, out var documentOpenApiOptions);
+      if (documentOpenApiOptions == null)
       {
-        documentOptions = OptionsMonitor.Get(context.DocumentName);
-        DocumentOptions.Add(context.DocumentName, documentOptions);
+        documentOpenApiOptions = OptionsMonitor.Get(context.DocumentName);
+        DocumentOpenApiOptionsDic.Add(context.DocumentName, documentOpenApiOptions);
       }
 
       schema.Properties = schema.Properties?.Select(schemaPropKvp =>
       {
-        if (schemaPropKvp.Value is OpenApiSchema value && value.Metadata != null && value.Metadata[SCHEMA_PROPERTY_NAME] != null)
-        {
-          var propertyTypeName = value.Metadata[SCHEMA_PROPERTY_NAME].ToString();
-          var contextType = context.JsonTypeInfo.Type;
-          if (propertyTypeName.Equals(contextType.Name))
-          {
-            var referenceId = CreateSchemaReferenceId(documentOptions, contextType);
-            return new KeyValuePair<string, IOpenApiSchema>(schemaPropKvp.Key, new OpenApiSchema()
-            {
-              DynamicRef = $"{COMPONENT_SCHEMA_PREFIX}{referenceId}"
-            });
-          }
-        }
-        return schemaPropKvp;
+        return CreatePropertyDynamicRef(context, documentOpenApiOptions, schemaPropKvp);
       }).ToDictionary();
 
       return Task.CompletedTask;
     }
-
+    /// <summary>
+    /// Inspects a schema property and, when the property's metadata contains a schema id that
+    /// matches the current context type, replaces the property with an <see cref="OpenApiSchema"/>
+    /// that contains a <see cref="OpenApiSchema.DynamicRef"/> pointing to the corresponding
+    /// component schema. The method will recurse into nested properties to apply the same
+    /// transformation where applicable.
+    /// </summary>
+    /// <param name="context">The schema transformer context containing <see cref="JsonTypeInfo"/> and document name.</param>
+    /// <param name="documentOpenApiOptions">The OpenAPI options for the current document used to generate reference ids.</param>
+    /// <param name="schemaPropKvp">The property key/value pair to inspect and possibly replace.</param>
+    /// <returns>The original or modified property key/value pair.</returns>
+    public KeyValuePair<string, IOpenApiSchema> CreatePropertyDynamicRef(OpenApiSchemaTransformerContext context, OpenApiOptions documentOpenApiOptions, KeyValuePair<string, IOpenApiSchema> schemaPropKvp)
+    {
+      if (schemaPropKvp.Value is OpenApiSchema value && value.Enum == null && value.Metadata != null && !string.IsNullOrEmpty(value.Metadata[SCHEMA_PROPERTY_NAME]?.ToString()))
+      {
+        var propertyTypeName = value.Metadata[SCHEMA_PROPERTY_NAME].ToString();
+        var contextType = context.JsonTypeInfo.Type;
+        if (propertyTypeName.Equals(contextType.Name))
+        {
+          var referenceId = CreateSchemaReferenceId(documentOpenApiOptions, contextType);
+          return new KeyValuePair<string, IOpenApiSchema>(schemaPropKvp.Key, new OpenApiSchema()
+          {
+            DynamicRef = $"{COMPONENT_SCHEMA_PREFIX}{referenceId}"
+          });
+        }
+        value.Properties = value.Properties?.Select(subSchemaPropKvp =>
+        {
+          return CreatePropertyDynamicRef(context, documentOpenApiOptions, subSchemaPropKvp);
+        }).ToDictionary();
+      }
+      return schemaPropKvp;
+    }
     /// <summary>
     /// Creates a schema reference id for the provided <paramref name="referencedType"/> using
     /// the provided <paramref name="openApiOptions"/> and the configured <see cref="JsonSerializerOptions"/>.
