@@ -33,8 +33,15 @@ namespace IkeMtz.NRSRx.Core.Unigration
   [DoNotParallelize]
   public class BaseUnigrationTests
   {
-    public static readonly string CONTROLLER_NAME_SUFFIX = "Controller";
-    public static readonly int CONTROLLER_NAME_SUFFIX_CHAR_COUNT = 10;
+    /// <summary>
+    /// Controller Name Suffix
+    /// </summary>
+    public const string CONTROLLER_NAME_SUFFIX = "Controller";
+
+    /// <summary>
+    /// Controller Name Controller Character Count
+    /// </summary>
+    public const int CONTROLLER_NAME_SUFFIX_CHAR_COUNT = 10;
     /// <summary>
     /// Gets or sets the test context.
     /// </summary>
@@ -269,15 +276,30 @@ namespace IkeMtz.NRSRx.Core.Unigration
       return controllerName;
     }
 
+    /// <summary>
+    /// Gets the standardized OData envelope type name for the specified entity type using a
+    /// <see cref="Guid"/> identity type.
+    /// </summary>
+    /// <typeparam name="T_ENTITY">The entity type that implements <see cref="IIdentifiable{Guid}"/>.</typeparam>
+    /// <returns>A string containing the envelope type name for the entity and <see cref="Guid"/> identity.</returns>
     public string GetODataEnvelopeName<T_ENTITY>()
       where T_ENTITY: IIdentifiable<Guid>, IIdentifiable
     {
       return GetODataEnvelopeName<T_ENTITY, Guid>();
     }
+
+    /// <summary>
+    /// Gets the standardized OData envelope type name for the specified entity and identity types.
+    /// </summary>
+    /// <typeparam name="T_ENTITY">The entity type that implements <see cref="IIdentifiable{T_IDENTITY_TYPE}"/>.</typeparam>
+    /// <typeparam name="T_IDENTITY_TYPE">The identity type used by the entity.</typeparam>
+    /// <returns>
+    /// A string in the format <c>ODataEnvelopeOf{EntityTypeName}And{IdentityTypeName}</c> that can be
+    /// used as a unique envelope type identifier in tests.
+    /// </returns>
     public string GetODataEnvelopeName<T_ENTITY, T_IDENTITY_TYPE>()
       where T_IDENTITY_TYPE: IComparable
       where T_ENTITY : IIdentifiable<T_IDENTITY_TYPE>
- 
     {
       return $"ODataEnvelopeOf{typeof(T_ENTITY).Name}And{typeof(T_IDENTITY_TYPE).Name}";
     }

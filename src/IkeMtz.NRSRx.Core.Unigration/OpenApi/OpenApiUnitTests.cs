@@ -40,6 +40,7 @@ namespace IkeMtz.NRSRx.Core.Unigration.OpenApi
     /// Validates and returns the OpenApiDocument in JSON format.
     /// </summary>
     /// <param name="testServer">The test server instance.</param>
+    /// <param name="coreWebStartup">The startup class instance.</param>
     /// <param name="version">The version of the OpenAPI document.</param>
     /// <returns>The OpenApiDocument object.</returns>
     /// <exception cref="ArgumentNullException">Thrown when the test server is null.</exception>

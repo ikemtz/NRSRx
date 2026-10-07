@@ -109,6 +109,12 @@
             </summary>
             <param name="services">The service collection.</param>
         </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.CoreODataStartup.SetupOpenApiDocGeneration(Microsoft.AspNetCore.OpenApi.OpenApiOptions)">
+            <summary>
+            Sets up Swagger generation options.
+            </summary>
+            <param name="options">The Swagger generation options.</param>
+        </member>
         <member name="T:IkeMtz.NRSRx.Core.OData.IODataVersionProvider">
             <summary>
             Defines a contract for providing OData version descriptions.
@@ -201,6 +207,28 @@
             <param name="name">The name of the parameter.</param>
             <param name="type">The type of the parameter.</param>
             <param name="description">The description of the parameter.</param>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.OData.OpenApi.ODataTransformer">
+            <summary>
+            Provides transformations for an OpenAPI document to adapt it for OData endpoints.
+            </summary>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.OpenApi.ODataTransformer.TransformAsync(Microsoft.OpenApi.OpenApiDocument,Microsoft.AspNetCore.OpenApi.OpenApiDocumentTransformerContext,System.Threading.CancellationToken)">
+            <summary>
+            Transforms the provided <see cref="T:Microsoft.OpenApi.OpenApiDocument"/> by filtering out internal or
+            versioned OData paths and by adding OData query string parameters to GET operations.
+            </summary>
+            <param name="document">The OpenAPI document to transform.</param>
+            <param name="context">Contextual information provided by the OpenAPI generator.</param>
+            <param name="cancellationToken">Token to observe while performing the transformation.</param>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.OData.OpenApi.ODataTransformer.AddODataQueryStringParameters(Microsoft.OpenApi.OpenApiOperation)">
+            <summary>
+            Adds the standard OData query string parameters (for example, $filter, $orderby, $top, etc.)
+            to the supplied <see cref="T:Microsoft.OpenApi.OpenApiOperation"/> so they appear in the generated OpenAPI
+            specification for GET endpoints.
+            </summary>
+            <param name="value">The operation to which OData query parameters will be added.</param>
         </member>
         <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
             <summary>
