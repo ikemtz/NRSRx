@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.OpenApi;
+using IkeMtz.NRSRx.WebApi.Tests.Controllers;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.WebApi.Tests
 {
   [TestClass]
-  public class SwaggerPageTest : BaseUnigrationTests
+  public class SwaggerTests : BaseUnigrationTests
   {
     [TestMethod]
     [TestCategory(TestCategories.Unigration)]
@@ -28,6 +29,16 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       Assert.IsNotNull(htmlPage);
       var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.IsNotNull(jsonDoc);
+    }
+
+    [TestMethod]
+    [TestCategory(TestCategories.Unigration)]
+    public async Task GetSwaggerJsonTest()
+    {
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
+      Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
+      Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
     }
   }
 }
