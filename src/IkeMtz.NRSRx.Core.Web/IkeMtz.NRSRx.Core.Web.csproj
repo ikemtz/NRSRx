@@ -28,17 +28,19 @@
     <DocumentationFile>./IkeMtz.NRSRx.Core.Web.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.12" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.12" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.12" />
+    <PackageReference Include="IkeMtz.AspNetCore.OpenApi" Version="10.0.13.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.13" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.13" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.23.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.402">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" /> 
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.3.0" /> 
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\build\ProfilePic.jpg">

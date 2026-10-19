@@ -4,6 +4,18 @@
         <name>IkeMtz.NRSRx.WebApi.Tests</name>
     </assembly>
     <members>
+        <member name="T:IkeMtz.NRSRx.WebApi.Tests.Controllers.Issue63857Controller">
+            <summary>
+            Controller for demonstrating issue 63857
+            </summary>
+            <seealso href="https://github.com/dotnet/aspnetcore/issues/63857"/>
+        </member>
+        <member name="M:IkeMtz.NRSRx.WebApi.Tests.Controllers.Issue63857Controller.#ctor(Microsoft.Extensions.Logging.ILogger{IkeMtz.NRSRx.WebApi.Tests.Controllers.Issue63857Controller})">
+            <summary>
+            Controller for demonstrating issue 63857
+            </summary>
+            <seealso href="https://github.com/dotnet/aspnetcore/issues/63857"/>
+        </member>
         <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
             <summary>
             Generates a documentation comment ID for a type.

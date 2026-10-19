@@ -8,11 +8,14 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace IkeMtz.NRSRx.WebApi.Tests.Controllers
 {
+  /// <summary>
+  /// Controller for demonstrating issue 63857
+  /// </summary>
+  /// <seealso href="https://github.com/dotnet/aspnetcore/issues/63857"/>
   [Route("api/v{version:apiVersion}/[controller].{format}"), FormatFilter]
   [ApiVersion(VersionDefinitions.v1_0)]
   [ApiController]
   [Authorize]
-  /// <seealso href="https://github.com/dotnet/aspnetcore/issues/63857"/>
   public class Issue63857Controller(ILogger<Issue63857Controller> logger) : ControllerBase
   {
     [HttpGet]
