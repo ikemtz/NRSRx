@@ -37,6 +37,7 @@ namespace IkeMtz.NRSRx.OData.Tests
     [TestCategory(TestCategories.Unigration)]
     public async Task DisableSwaggerPageTest()
     {
+      Startup.DisableSwagger = null;
       var myConfiguration = new Dictionary<string, string?>
       {
         {"DisableSwagger", "true"},
