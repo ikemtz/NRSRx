@@ -229,7 +229,10 @@ namespace IkeMtz.NRSRx.Core.Web
     public virtual OpenApiOptions SetupOpenApiDocGeneration(OpenApiOptions options)
     {
       return options.AddDocumentTransformer(new DocumentMetaDataTransformer(this))
-       .AddSchemaTransformer<EnumSchemaTransformer>()
+        .AddSchemaTransformer<EnumSchemaTransformer>()
+        .AddDocumentTransformer(new DocumentMetaDataTransformer(this))
+        .AddSchemaTransformer<RefGeneratingSchemaTransformer>()
+        .AddDocumentTransformer<RefGeneratingSchemaTransformer>()
        ;
     }
 

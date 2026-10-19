@@ -35,6 +35,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
+      Assert.AreEqual(19, doc.Components.Schemas.Count);
+
     }
 
     [TestMethod]

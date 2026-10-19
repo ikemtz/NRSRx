@@ -24,6 +24,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       Assert.IsNotNull(htmlPage);
       var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.IsNotNull(jsonDoc);
+      Assert.AreEqual(12, jsonDoc.Components?.Schemas?.Count);
     }
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
