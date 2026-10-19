@@ -97,7 +97,7 @@
             Gets the JWT role claim mapping.
             </summary>
         </member>
-        <member name="P:IkeMtz.NRSRx.Core.Web.CoreWebStartup.DisableSwagger">
+        <member name="F:IkeMtz.NRSRx.Core.Web.CoreWebStartup.DisableSwagger">
             <summary>
             Gets a value indicating whether Swagger is disabled.
             </summary>
@@ -221,6 +221,18 @@
             Gets the build number.
             </summary>
             <returns>The build number.</returns>
+        </member>
+        <member name="M:IkeMtz.NRSRx.Core.Web.CoreWebStartup.GetDisableSwagger">
+            <summary>
+            Gets a value that indicates whether Swagger UI should be disabled.
+            </summary>
+            <remarks>
+            The first call to this method will lazily initialize the static <c>DisableSwagger</c>
+            field from configuration using the key <c>"DisableSwagger"</c>. If the configuration
+            value is not present or <c>Configuration</c> is <c>null</c>, the flag defaults to <c>false</c>.
+            The resolved value is cached in the static field for subsequent calls.
+            </remarks>
+            <returns><c>true</c> when Swagger is disabled; otherwise <c>false</c>.</returns>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Web.HttpUserProvider">
             <summary>
