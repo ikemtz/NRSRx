@@ -77,7 +77,7 @@ namespace IkeMtz.NRSRx.Core.WebApi
        .UseAuthentication()
        .UseAuthorization();
 
-      if (!DisableSwagger && Configuration?.GetValue("DisableSwagger", false) != true)
+      if (!GetDisableSwagger())
       {
         _ = app
         .UseSwaggerUI(options => SetupSwaggerUI(options, provider));
@@ -87,7 +87,10 @@ namespace IkeMtz.NRSRx.Core.WebApi
      {
        _ = endpoints.MapHealthChecks("/healthz");
        _ = endpoints.MapControllers();
-       _ = endpoints.MapOpenApi();
+       if (!GetDisableSwagger())
+       {
+         _ = endpoints.MapOpenApi();
+       }
      });
     }
 
@@ -156,11 +159,14 @@ namespace IkeMtz.NRSRx.Core.WebApi
     public virtual void SetupOpenApi(IServiceCollection services)
     {
       _ = services
-        .AddHttpClient()
-        .AddOpenApi(options =>
-        {
-          SetupOpenApiDocGeneration(options);
-        });
+        .AddHttpClient();
+      if (!GetDisableSwagger())
+      {
+        _ = services.AddOpenApi(options =>
+         {
+           SetupOpenApiDocGeneration(options);
+         });
+      }
     }
 
     /// <summary>

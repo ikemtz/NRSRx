@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using IkeMtz.NRSRx.Core.OData.OpenApi;
 using IkeMtz.NRSRx.Core.Web;
-using IkeMtz.NRSRx.Core.Web.OpenApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.OData;
@@ -64,11 +63,14 @@ namespace IkeMtz.NRSRx.Core.OData
     public virtual void SetupOpenApi(IServiceCollection services)
     {
       _ = services
-        .AddHttpClient()
-        .AddOpenApi(options =>
-        {
-          SetupOpenApiDocGeneration(options);
-        });
+        .AddHttpClient();
+      if (!GetDisableSwagger())
+      {
+        _ = services.AddOpenApi(options =>
+         {
+           SetupOpenApiDocGeneration(options);
+         });
+      }
     }
     /// <summary>
     /// Configures the HTTP request pipeline.
@@ -95,10 +97,13 @@ namespace IkeMtz.NRSRx.Core.OData
       {
         _ = endpoints.MapHealthChecks("/healthz");
         _ = endpoints.MapControllers();
-        _ = endpoints.MapOpenApi();
+        if (!GetDisableSwagger())
+        {
+          _ = endpoints.MapOpenApi();
+        }
       });
 
-      if (!DisableSwagger && Configuration?.GetValue("DisableSwagger", false) != true)
+      if (!GetDisableSwagger())
       {
         _ = app
             .UseSwaggerUI(options => SetupSwaggerUI(options));
@@ -178,9 +183,9 @@ namespace IkeMtz.NRSRx.Core.OData
     /// <param name="options">The Swagger generation options.</param>
     public override OpenApiOptions SetupOpenApiDocGeneration(OpenApiOptions options)
     {
-     return base.SetupOpenApiDocGeneration(options)
-      .AddDocumentTransformer<ODataTransformer>()
-      ;
+      return base.SetupOpenApiDocGeneration(options)
+       .AddDocumentTransformer<ODataTransformer>()
+       ;
     }
   }
 }

@@ -51,11 +51,10 @@ namespace IkeMtz.NRSRx.Core.Web
     /// Gets the JWT role claim mapping.
     /// </summary>
     public virtual string JwtRoleClaimMapping { get; } = "role";
-
     /// <summary>
     /// Gets a value indicating whether Swagger is disabled.
     /// </summary>
-    public virtual bool DisableSwagger { get; }
+    public static bool? DisableSwagger = null;
 
     /// <summary>
     /// Gets a value indicating whether to include XML comments in Swagger documentation.
@@ -231,8 +230,6 @@ namespace IkeMtz.NRSRx.Core.Web
     {
       return options.AddDocumentTransformer(new DocumentMetaDataTransformer(this))
        .AddSchemaTransformer<EnumSchemaTransformer>()
-       .AddSchemaTransformer<RefGeneratingSchemaTransformer>()
-       .AddDocumentTransformer<RefGeneratingSchemaTransformer>()
        ;
     }
 
@@ -267,6 +264,21 @@ namespace IkeMtz.NRSRx.Core.Web
         StartupAssembly.GetCustomAttribute<AssemblyVersionAttribute>()?.Version ??
         StartupAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ??
         "unknown";
+    }
+    /// <summary>
+    /// Gets a value that indicates whether Swagger UI should be disabled.
+    /// </summary>
+    /// <remarks>
+    /// The first call to this method will lazily initialize the static <c>DisableSwagger</c>
+    /// field from configuration using the key <c>"DisableSwagger"</c>. If the configuration
+    /// value is not present or <c>Configuration</c> is <c>null</c>, the flag defaults to <c>false</c>.
+    /// The resolved value is cached in the static field for subsequent calls.
+    /// </remarks>
+    /// <returns><c>true</c> when Swagger is disabled; otherwise <c>false</c>.</returns>
+    public bool GetDisableSwagger()
+    {
+      DisableSwagger ??= Configuration?.GetValue<bool>("DisableSwagger") ?? false;
+      return DisableSwagger.Value;
     }
   }
 }
