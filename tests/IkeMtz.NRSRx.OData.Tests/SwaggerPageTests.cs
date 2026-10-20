@@ -14,7 +14,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   [TestClass]
   public class SwaggerPageTests : BaseUnigrationTests
   {
-    [TestMethod]
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerPageTest()
     {
@@ -22,7 +22,7 @@ namespace IkeMtz.NRSRx.OData.Tests
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var htmlPage = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
-      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
+      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
       Assert.IsNotNull(jsonDoc);
       Assert.AreEqual(12, jsonDoc.Components?.Schemas?.Count);
     }
