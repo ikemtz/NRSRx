@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
@@ -35,6 +36,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
+      Assert.HasCount(5, doc.Paths);
+      Assert.AreEqual(14, doc.Paths.Sum(t => t.Value.Operations?.Count));
       Assert.HasCount(19, doc.Components.Schemas);
 
       var entities = new List<string>

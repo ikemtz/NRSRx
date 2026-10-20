@@ -32,6 +32,8 @@ namespace IkeMtz.NRSRx.WebApi.Tests.Controllers
   {
     public Guid Id { get; set; }
     public required string Name { get; set; }
+    public User? Manager { get; set; }
+    public ICollection<User> Subordinates { get; set; } = [];
     public ICollection<Order> Orders { get; set; } = [];
     public ICollection<Product> Products { get; set; } = [];
     public ICollection<Car> Cars { get; set; } = [];
