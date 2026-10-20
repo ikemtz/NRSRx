@@ -27,6 +27,7 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
+      Assert.AreEqual(11, doc.Components?.Schemas?.Count);
     }
   }
 }

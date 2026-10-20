@@ -29,6 +29,7 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(School)));
       Assert.Contains(a => a.Key.Contains(GetODataEnvelopeName<School>()), doc.Components.Schemas);
       Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
+      Assert.AreEqual(12, doc.Components?.Schemas?.Count);
     }
   }
 }
