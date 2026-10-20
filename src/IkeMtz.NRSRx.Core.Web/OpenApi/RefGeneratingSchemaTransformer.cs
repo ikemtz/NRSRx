@@ -130,10 +130,10 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
         {
           GeneratedReferencableComponents.Add(fullyQualifiedPropertyTypeName);
         }
-        //value.Properties = value.Properties?.Select(subSchemaPropKvp =>
-        //{
-        //  return CreatePropertyDynamicRef(documentName, propertyTypeName, subSchemaPropKvp);
-        //}).ToDictionary();
+        value.Properties = value.Properties?.Select(subSchemaPropKvp =>
+        {
+          return CreatePropertyDynamicRef(documentName, propertyTypeName, subSchemaPropKvp);
+        }).ToDictionary();
       }
       return schemaPropKvp;
     }

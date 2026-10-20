@@ -34,31 +34,31 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       Startup.DisableSwagger = null;
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
-      Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
       Assert.HasCount(19, doc.Components.Schemas);
 
       var entities = new List<string>
       {
-         nameof(Car)
-        ,nameof(Course)
-        ,nameof(CourseStatus)
-        ,nameof(CourseUpsertRequest)
-        ,nameof(Gender)
-        ,nameof(Hourse)
-        ,nameof(Order)
-        ,nameof(Plan)
-        ,nameof(Product)
-        ,nameof(Right)
-        ,nameof(Salary)
-        ,nameof(School)
-        ,nameof(SchoolCourse)
-        ,nameof(SchoolUpsertRequest)
-        ,nameof(Student)
-        ,nameof(StudentCourse)
-        ,nameof(StudentSchool)
-        ,nameof(StudentUpsertRequest)
-        ,nameof(User)
+        nameof(Car),
+        nameof(Hourse),
+        nameof(Order),
+        nameof(Plan),
+        nameof(Product),
+        nameof(Right),
+        nameof(Salary),
+        nameof(User),
+
+        nameof(CourseStatus),
+        nameof(Gender),
+        nameof(Course),
+        nameof(CourseUpsertRequest),
+        nameof(School),
+        nameof(SchoolCourse),
+        nameof(SchoolUpsertRequest),
+        nameof(Student),
+        nameof(StudentCourse),
+        nameof(StudentSchool),
+        nameof(StudentUpsertRequest),
       };
       foreach (var entity in entities)
       {

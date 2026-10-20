@@ -40,12 +40,11 @@ namespace IkeMtz.NRSRx.WebApi.Tests.Controllers
     public ICollection<Right> Rights { get; set; } = [];
     public ICollection<Salary> Salarys { get; set; } = [];
   }
-
-  public class Order { public User? User { get; set; } }
-  public class Product { public User? User { get; set; } }
   public class Car { public User? User { get; set; } }
   public class Hourse { public User? User { get; set; } }
+  public class Order { public User? User { get; set; } }
   public class Plan { public User? User { get; set; } }
+  public class Product { public User? User { get; set; } }
   public class Right { public User? User { get; set; } }
   public class Salary { public User? User { get; set; } }
 }
