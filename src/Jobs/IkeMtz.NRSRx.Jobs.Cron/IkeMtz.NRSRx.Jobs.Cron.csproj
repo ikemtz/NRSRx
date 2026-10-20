@@ -53,7 +53,6 @@
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework" Version="4.5.1" />
     <PackageReference Include="NCrontab.Signed" Version="3.4.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IkeMtz.NRSRx.Jobs.Core\IkeMtz.NRSRx.Jobs.Core.csproj" />

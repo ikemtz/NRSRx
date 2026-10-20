@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.OpenApi;
 using IkeMtz.NRSRx.WebApi.Tests.Controllers;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -33,10 +35,38 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       Startup.DisableSwagger = null;
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
-      Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
-      Assert.AreEqual(19, doc.Components.Schemas.Count);
+      Assert.HasCount(5, doc.Paths);
+      Assert.AreEqual(14, doc.Paths.Sum(t => t.Value.Operations?.Count));
+      Assert.HasCount(19, doc.Components.Schemas);
 
+      var entities = new List<string>
+      {
+        nameof(Car),
+        nameof(Hourse),
+        nameof(Order),
+        nameof(Plan),
+        nameof(Product),
+        nameof(Right),
+        nameof(Salary),
+        nameof(User),
+
+        nameof(CourseStatus),
+        nameof(Gender),
+        nameof(Course),
+        nameof(CourseUpsertRequest),
+        nameof(School),
+        nameof(SchoolCourse),
+        nameof(SchoolUpsertRequest),
+        nameof(Student),
+        nameof(StudentCourse),
+        nameof(StudentSchool),
+        nameof(StudentUpsertRequest),
+      };
+      foreach (var entity in entities)
+      {
+        Assert.IsTrue(doc.Components.Schemas.ContainsKey(entity), $"Schema {entity} not found");
+      }
     }
 
     [TestMethod]
