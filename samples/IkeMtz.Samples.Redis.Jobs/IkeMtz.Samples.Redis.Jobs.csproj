@@ -39,7 +39,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="4.5.1" />
     <PackageReference Include="Serilog.Sinks.Splunk" Version="5.2.0" />
     <PackageReference Include="StackExchange.Redis" Version="3.4.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Events\IkeMtz.NRSRx.Events.Subscribers.Redis\IkeMtz.NRSRx.Events.Subscribers.Redis.csproj" />

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.OpenApi;
 using IkeMtz.NRSRx.WebApi.Tests.Controllers;
+using IkeMtz.Samples.Models.V1;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -35,8 +36,34 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
-      Assert.AreEqual(19, doc.Components.Schemas.Count);
+      Assert.HasCount(19, doc.Components.Schemas);
 
+      var entities = new List<string>
+      {
+         nameof(Car)
+        ,nameof(Course)
+        ,nameof(CourseStatus)
+        ,nameof(CourseUpsertRequest)
+        ,nameof(Gender)
+        ,nameof(Hourse)
+        ,nameof(Order)
+        ,nameof(Plan)
+        ,nameof(Product)
+        ,nameof(Right)
+        ,nameof(Salary)
+        ,nameof(School)
+        ,nameof(SchoolCourse)
+        ,nameof(SchoolUpsertRequest)
+        ,nameof(Student)
+        ,nameof(StudentCourse)
+        ,nameof(StudentSchool)
+        ,nameof(StudentUpsertRequest)
+        ,nameof(User)
+      };
+      foreach (var entity in entities)
+      {
+        Assert.IsTrue(doc.Components.Schemas.ContainsKey(entity), $"Schema {entity} not found");
+      }
     }
 
     [TestMethod]

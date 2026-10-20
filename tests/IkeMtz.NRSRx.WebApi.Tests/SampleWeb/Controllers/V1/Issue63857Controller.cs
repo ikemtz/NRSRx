@@ -34,7 +34,6 @@ namespace IkeMtz.NRSRx.WebApi.Tests.Controllers
     public required string Name { get; set; }
     public ICollection<Order> Orders { get; set; } = [];
     public ICollection<Product> Products { get; set; } = [];
-    public ICollection<Course> Courses { get; set; } = [];
     public ICollection<Car> Cars { get; set; } = [];
     public ICollection<Hourse> Hourses { get; set; } = [];
     public ICollection<Plan> Plans { get; set; } = [];
@@ -44,7 +43,6 @@ namespace IkeMtz.NRSRx.WebApi.Tests.Controllers
 
   public class Order { public User? User { get; set; } }
   public class Product { public User? User { get; set; } }
-  public class Course { public User? User { get; set; } }
   public class Car { public User? User { get; set; } }
   public class Hourse { public User? User { get; set; } }
   public class Plan { public User? User { get; set; } }
