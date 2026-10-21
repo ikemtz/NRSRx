@@ -886,7 +886,7 @@
             Provides utility methods for testing OpenAPI documentation in unit tests.
             </summary>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer)">
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestHtmlPageAsync(Microsoft.AspNetCore.TestHost.TestServer,System.Threading.CancellationToken)">
             <summary>
             Validates and returns the OpenAPI page HTML.
             </summary>
@@ -894,7 +894,7 @@
             <returns>The HTML content of the OpenAPI page.</returns>
             <exception cref="T:System.ArgumentNullException">Thrown when the test server is null.</exception>
         </member>
-        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,IkeMtz.NRSRx.Core.Web.CoreWebStartup,System.Int32)">
+        <member name="M:IkeMtz.NRSRx.Core.Unigration.OpenApi.OpenApiUnitTests.TestJsonDocAsync(Microsoft.AspNetCore.TestHost.TestServer,IkeMtz.NRSRx.Core.Web.CoreWebStartup,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Validates and returns the OpenApiDocument in JSON format.
             </summary>
@@ -1181,6 +1181,31 @@
             <typeparam name="TImplementationType">The type of the implementation.</typeparam>
             <param name="testServer">The test server instance.</param>
             <returns>The service instance cast to the specified implementation type.</returns>
+        </member>
+        <member name="T:IkeMtz.NRSRx.Core.Unigration.Timespans">
+            <summary>
+            Provides millisecond constants for common time spans.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.Timespans.ThirtySeconds">
+            <summary>
+            The number of milliseconds in half a minute.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.Timespans.OneMinute">
+            <summary>
+            The number of milliseconds in one minute.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.Timespans.TwoMinutes">
+            <summary>
+            The number of milliseconds in two minutes.
+            </summary>
+        </member>
+        <member name="F:IkeMtz.NRSRx.Core.Unigration.Timespans.ThreeMinutes">
+            <summary>
+            The number of milliseconds in three minutes.
+            </summary>
         </member>
         <member name="T:IkeMtz.NRSRx.Core.Unigration.WebApi.CoreWebApiIntegrationTestStartup`1">
             <summary>

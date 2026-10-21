@@ -367,6 +367,11 @@
             Monitors <see cref="T:Microsoft.AspNetCore.OpenApi.OpenApiOptions"/> instances so options can be looked up per document.
             </summary>
         </member>
+        <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.Logger">
+            <summary>
+            Logger for the transformer.
+            </summary>
+        </member>
         <member name="F:IkeMtz.NRSRx.Core.Web.OpenApi.RefGeneratingSchemaTransformer.DocumentOpenApiOptionsDic">
             <summary>
             Cache of document-specific <see cref="T:Microsoft.AspNetCore.OpenApi.OpenApiOptions"/> keyed by document name.

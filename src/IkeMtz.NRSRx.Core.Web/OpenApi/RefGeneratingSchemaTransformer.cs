@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 
@@ -36,6 +37,11 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
     public readonly IOptionsMonitor<OpenApiOptions> OptionsMonitor;
 
     /// <summary>
+    /// Logger for the transformer.
+    /// </summary>
+    public readonly ILogger<RefGeneratingSchemaTransformer> Logger;
+
+    /// <summary>
     /// Cache of document-specific <see cref="OpenApiOptions"/> keyed by document name.
     /// </summary>
     public readonly Dictionary<string, OpenApiOptions> DocumentOpenApiOptionsDic = [];
@@ -55,6 +61,7 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
     {
       ArgumentNullException.ThrowIfNull(services);
       OptionsMonitor = services.GetRequiredService<IOptionsMonitor<OpenApiOptions>>();
+      Logger = services.GetRequiredService<ILogger<RefGeneratingSchemaTransformer>>();
     }
     /// <summary>
     /// Temporarily replaces self-referencing entity properties with an
@@ -149,6 +156,11 @@ namespace IkeMtz.NRSRx.Core.Web.OpenApi
     /// <returns>A completed <see cref="Task"/>. The transformation is applied in-place on <paramref name="document"/>.</returns>
     public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
     {
+      if (document.Components == null)
+      {
+        Logger.LogWarning("OpenApiDocument.Components is null for document {DocumentTitle}. No schema transformation will be applied.", document.Info.Title);
+        return Task.CompletedTask;
+      }
       document.Components.Schemas = document.Components.Schemas.Select(schemaKvp =>
       {
         if (schemaKvp.Value.Properties != null && schemaKvp.Value.Properties.Any(a => a.Value.DynamicRef != null))
