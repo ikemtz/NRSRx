@@ -10,12 +10,12 @@ namespace IkeMtz.NRSRx.Core.Tests
   public class SwaggerTests : BaseUnigrationTests
   {
 
-    [TestMethod]
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
     [TestCategory(TestCategories.Unigration)]
     public async Task TestJsonDocAsync()
     {
       using var srv = new TestServer(TestWebHostBuilder<StartUp_AppInsights, UnitTestStartup>());
-      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new StartUp_AppInsights(null));
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new StartUp_AppInsights(null), cancellationToken: TestContext.CancellationToken);
       Assert.IsNotNull(doc);
     }
 

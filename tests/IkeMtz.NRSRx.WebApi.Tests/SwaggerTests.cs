@@ -16,7 +16,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests
   [TestClass]
   public class SwaggerTests : BaseUnigrationTests
   {
-    [TestMethod]
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerPageTest()
     {
@@ -28,13 +28,13 @@ namespace IkeMtz.NRSRx.WebApi.Tests
       Assert.IsNotNull(jsonDoc);
     }
 
-    [TestMethod]
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerJsonTest()
     {
       Startup.DisableSwagger = null;
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
-      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
       Assert.HasCount(5, doc.Paths);
       Assert.AreEqual(14, doc.Paths.Sum(t => t.Value.Operations?.Count));

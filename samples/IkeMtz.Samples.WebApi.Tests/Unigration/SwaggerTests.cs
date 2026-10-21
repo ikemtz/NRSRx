@@ -19,12 +19,12 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
       Assert.IsNotNull(html);
     }
 
-    [TestMethod]
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerJsonTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>());
-      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
       Assert.AreEqual(11, doc.Components?.Schemas?.Count);

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
@@ -14,7 +15,7 @@ namespace IkeMtz.NRSRx.OData.Tests
   [TestClass]
   public class SwaggerPageTests : BaseUnigrationTests
   {
-    [TestMethod]
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerPageTest()
     {
@@ -22,10 +23,40 @@ namespace IkeMtz.NRSRx.OData.Tests
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var htmlPage = await OpenApiUnitTests.TestHtmlPageAsync(srv);
       Assert.IsNotNull(htmlPage);
-      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
+      var jsonDoc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
       Assert.IsNotNull(jsonDoc);
       Assert.AreEqual(12, jsonDoc.Components?.Schemas?.Count);
     }
+
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
+    [TestCategory(TestCategories.Unigration)]
+    public async Task GetSwaggerJsonTest()
+    {
+      using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
+      Assert.IsTrue(doc.Components.Schemas?.ContainsKey(nameof(Course)));
+      Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
+      Assert.AreEqual(12, doc.Components?.Schemas?.Count);
+      var entities = new List<string>
+      {
+        nameof(CourseStatus),
+        nameof(Gender),
+
+        nameof(Course),
+        nameof(School),
+        nameof(Student),
+        nameof(SchoolCourse),
+        nameof(StudentSchool),
+        nameof(StudentCourse),
+      };
+      foreach (var entity in entities)
+      {
+        Assert.IsTrue(doc.Components?.Schemas.ContainsKey(entity));
+      }
+      Assert.AreEqual(3,
+        doc.Components?.Schemas.Keys.Where(t => t.StartsWith("ODataEnvelopeOf")).Count());
+    }
+
     [TestMethod]
     [TestCategory(TestCategories.Unit)]
     public void ValidateODataEnvelopName()

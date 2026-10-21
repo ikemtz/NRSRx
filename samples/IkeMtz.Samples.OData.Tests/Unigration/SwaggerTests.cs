@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using IkeMtz.NRSRx.Core.Unigration;
 using IkeMtz.NRSRx.Core.Unigration.OpenApi;
@@ -16,16 +17,16 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     public async Task GetSwaggerIndexPageTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
-      var html = await OpenApiUnitTests.TestHtmlPageAsync(srv);
+      var html = await OpenApiUnitTests.TestHtmlPageAsync(srv, cancellationToken: TestContext.CancellationToken);
       Assert.IsNotNull(html);
     }
 
-    [TestMethod]
+    [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
     [TestCategory(TestCategories.Unigration)]
     public async Task GetSwaggerJsonTest()
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
-      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null));
+      var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
       Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(School)));
       Assert.Contains(a => a.Key.Contains(GetODataEnvelopeName<School>()), doc.Components.Schemas);
       Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
