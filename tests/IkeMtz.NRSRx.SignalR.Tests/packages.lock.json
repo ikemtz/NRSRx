@@ -139,13 +139,13 @@
       },
       "StackExchange.Redis": {
         "type": "Direct",
-        "requested": "[3.4.5, )",
-        "resolved": "3.4.5",
-        "contentHash": "LtbEuNmaW6N75tvLAlXoDGDJHTCwmrHFL8/9OeQknWoCWcZhUcUnPvG2ijSO7tTyC7XID9LskIu42spa0b/nMQ==",
+        "requested": "[3.4.20, )",
+        "resolved": "3.4.20",
+        "contentHash": "eIPMxCzqw3BMWp1GOOcafs7RPrScSHiCT9b1DIEJ49h9b7tHBw21+rN6gLWdQmJzvR+Wzwx3obmCp3FpgKuUSg==",
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
-          "RESPite": "3.4.5",
-          "System.IO.Hashing": "10.0.12"
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.13",
+          "RESPite": "3.4.20",
+          "System.IO.Hashing": "10.0.13"
         }
       },
       "AspNetCore.HealthChecks.Redis": {
@@ -1209,8 +1209,8 @@
       },
       "RESPite": {
         "type": "Transitive",
-        "resolved": "3.4.5",
-        "contentHash": "EzMx67+IXC8lQRI78yeSBWKCTn9qvSIaale6XZ1RJLKpr2NJqmptgn3UqgguWqoeGUsoohiy3SWeiVLAj1n9DA=="
+        "resolved": "3.4.20",
+        "contentHash": "MRBfXbMStwHGzM2UsbWsmh7mF/WDh4kNonrhOj5HLfkVp+PIstu4MuElusyJLHu5MkOIQj9+u1xWQ5YeJTveHQ=="
       },
       "Serilog": {
         "type": "Transitive",
@@ -1317,8 +1317,8 @@
       },
       "System.IO.Hashing": {
         "type": "Transitive",
-        "resolved": "10.0.12",
-        "contentHash": "jDix4bBMYnpZdSPcnY+KDV6ik3SRMzpMKby/bZl/XUwIiflwRNAFZ0oOl61R/pSaveIJ8t1gs2BUlrGsPs/bcg=="
+        "resolved": "10.0.13",
+        "contentHash": "ZlcywyQ7FJmgOV2nctdfOEPGS0kRK8T2CdOoPr6F4HPYpmjSo6GQfj3yTyOzNO6B+2U84/JKSPkJJMWqLmVsMw=="
       },
       "System.Memory.Data": {
         "type": "Transitive",
@@ -1405,7 +1405,7 @@
           "Moq": "[4.21.0, )",
           "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[10.0.0, )",
-          "StackExchange.Redis": "[3.4.5, )"
+          "StackExchange.Redis": "[3.4.20, )"
         }
       },
       "ikemtz.nrsrx.core.web": {
@@ -1447,14 +1447,14 @@
           "AspNetCore.HealthChecks.Redis": "[9.0.0, )",
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[10.0.13, )",
-          "StackExchange.Redis": "[3.4.5, )"
+          "StackExchange.Redis": "[3.4.20, )"
         }
       },
       "ikemtz.nrsrx.events.subscribers.redis": {
         "type": "Project",
         "dependencies": {
           "IkeMtz.NRSRx.Events.Abstraction": "[1.0.0, )",
-          "StackExchange.Redis": "[3.4.5, )"
+          "StackExchange.Redis": "[3.4.20, )"
         }
       },
       "ikemtz.nrsrx.logging.applicationinsights": {
@@ -1478,7 +1478,7 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[10.0.13, )",
           "Newtonsoft.Json": "[13.0.4, )",
           "Serilog.AspNetCore": "[10.0.0, )",
-          "StackExchange.Redis": "[3.4.5, )"
+          "StackExchange.Redis": "[3.4.20, )"
         }
       },
       "ikemtz.samples.signalr": {

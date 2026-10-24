@@ -25,7 +25,14 @@ namespace IkeMtz.Samples.WebApi.Tests.Unigration
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationWebApiTestStartup>());
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
-      Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(Course)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Course)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(School)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Student)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(CourseStatus)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Gender)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(SchoolCourse)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(StudentCourse)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(StudentSchool)));
       Assert.AreEqual($"{nameof(Samples)} WebApi Microservice", doc.Info.Title);
       Assert.AreEqual(11, doc.Components?.Schemas?.Count);
     }

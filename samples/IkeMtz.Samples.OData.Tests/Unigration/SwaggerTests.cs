@@ -27,7 +27,14 @@ namespace IkeMtz.Samples.OData.Tests.Unigration
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationODataTestStartup>());
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
-      Assert.IsTrue(doc.Components.Schemas.ContainsKey(nameof(School)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Course)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(School)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Student)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(CourseStatus)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Gender)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(SchoolCourse)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(StudentCourse)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(StudentSchool)));
       Assert.Contains(a => a.Key.Contains(GetODataEnvelopeName<School>()), doc.Components.Schemas);
       Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
       Assert.AreEqual(12, doc.Components?.Schemas?.Count);

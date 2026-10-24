@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using IkeMtz.NRSRx.Core.Models;
 using IkeMtz.Samples.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace IkeMtz.NRSRx.WebApi.Tests.Controllers
     }
   }
 
-  public class User
+  public class User : IIdentifiable
   {
     public Guid Id { get; set; }
     public required string Name { get; set; }
@@ -42,11 +43,11 @@ namespace IkeMtz.NRSRx.WebApi.Tests.Controllers
     public ICollection<Right> Rights { get; set; } = [];
     public ICollection<Salary> Salarys { get; set; } = [];
   }
-  public class Car { public User? User { get; set; } }
-  public class Hourse { public User? User { get; set; } }
-  public class Order { public User? User { get; set; } }
-  public class Plan { public User? User { get; set; } }
-  public class Product { public User? User { get; set; } }
-  public class Right { public User? User { get; set; } }
-  public class Salary { public User? User { get; set; } }
+  public class Car : IIdentifiable { public Guid Id { get; set; } public User? User { get; set; } }
+  public class Hourse : IIdentifiable { public Guid Id { get; set; } public User? User { get; set; } }
+  public class Order : IIdentifiable { public Guid Id { get; set; } public User? User { get; set; } }
+  public class Plan : IIdentifiable { public Guid Id { get; set; } public User? User { get; set; } }
+  public class Product : IIdentifiable { public Guid Id { get; set; } public User? User { get; set; } }
+  public class Right : IIdentifiable { public Guid Id { get; set; } public User? User { get; set; } }
+  public class Salary : IIdentifiable { public Guid Id { get; set; } public User? User { get; set; } }
 }

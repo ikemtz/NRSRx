@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IkeMtz.NRSRx.OData.Tests
 {
   [TestClass]
+  [DoNotParallelize]
   public class SwaggerPageTests : BaseUnigrationTests
   {
     [TestMethod, Timeout(Timespans.ThirtySeconds, CooperativeCancellation = false)]
@@ -34,7 +35,15 @@ namespace IkeMtz.NRSRx.OData.Tests
     {
       using var srv = new TestServer(TestWebHostBuilder<Startup, UnigrationTestStartup>());
       var doc = await OpenApiUnitTests.TestJsonDocAsync(srv, new Startup(null), cancellationToken: TestContext.CancellationToken);
-      Assert.IsTrue(doc.Components.Schemas?.ContainsKey(nameof(Course)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Course)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(School)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Student)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(CourseStatus)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(Gender)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(SchoolCourse)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(StudentCourse)));
+      Assert.IsTrue(doc.Components?.Schemas?.ContainsKey(nameof(StudentSchool)));
+
       Assert.AreEqual($"{nameof(Samples)} OData Microservice", doc.Info.Title);
       Assert.AreEqual(12, doc.Components?.Schemas?.Count);
       var entities = new List<string>
